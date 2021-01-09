@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    class Certificacion
+    [Table("Certificaciones")]
+    public class Certificacion
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -6,18 +6,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    class Procedimiento
+    [Table("Procedimientos")]
+    public class Procedimiento
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public int Numero { get; set; }
 
         public string Nombre { get; set; }
 
-        public string Descripcion { get; set; }
-
-        
+        public string Descripcion { get; set;}
 
     }
 }

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CopyStart.Entities
 {
-    class Recibo
+    [Table("Recibos")]
+    public class Recibo
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

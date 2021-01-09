@@ -7,16 +7,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CopyStart.Entities
 {
     [Table("RepuestosProcedimientos")]
-    class RepuestoProcedimiento
+    public class RepuestoProcedimiento
     {
         [Key]
         public Guid Id { get; set; }
 
-        public long ProcedimientoId { get; set; }
+        public Guid ProcedimientoId { get; set; }
         [ForeignKey("ProcedimientoId")]
         public Procedimiento Procedimientos { get; set; }
 
-        public long RepuestoId { get; set; }
+        public Guid RepuestoId { get; set; }
         [ForeignKey("RepuestoId")]
         public Repuesto Repuesto { get; set; }
        

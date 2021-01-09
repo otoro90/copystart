@@ -5,13 +5,14 @@ using System.Text;
 
 namespace CopyStart.Entities
 {
-    class ProcedimientoTipoServicio
+    [Table("ProcedimientosTipoServicios")]
+    public class ProcedimientoTipoServicio
     {
-        public long ProcedimientoId { get; set; }
+        public Guid ProcedimientoId { get; set; }
         [ForeignKey("ProcedimientoId")]
         public Procedimiento Procedimientos { get; set; }
         
-        public long TipoServicioId { get; set; }
+        public Guid TipoServicioId { get; set; }
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicio { get; set; }
     }

@@ -6,10 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    class Solicitud
+    [Table("Solicitudes")]
+    public class Solicitud
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Incidencia { get; set; }
 

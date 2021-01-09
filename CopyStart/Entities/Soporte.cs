@@ -6,20 +6,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    class Soporte
+    [Table("Soportes")]
+    public class Soporte
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
-        public long ReciboId { get; set; }
+        public Guid ReciboId { get; set; }
         [ForeignKey("ReciboId")]
         public Recibo Recibo { get; set; }
         
-        public long FacturaId { get; set; }
+        public Guid FacturaId { get; set; }
         [ForeignKey("FacturaId")]
         public Factura Factura { get; set; }
 
-        public long CertificacionId { get; set; }
+        public Guid CertificacionId { get; set; }
         [ForeignKey("CertificacionId")]
         public Certificacion Certificacion { get; set; }
     }

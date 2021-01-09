@@ -1,17 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CopyStart.Entities
 {
-    [Table("Activos")]
-    class Diagnostico
+    [Table("Diagnosticos")]
+    public class Diagnostico
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Descripción { get; set; }
 
@@ -22,7 +20,7 @@ namespace CopyStart.Entities
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicio { get; set; }
 
-        public long SoportesId { get; set; }
+        public Guid SoportesId { get; set; }
        [ForeignKey("SoportesId")]
        public Soporte Soportes { get; set; }
 

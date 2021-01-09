@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CopyStart.Entities
 {
@@ -10,7 +8,7 @@ namespace CopyStart.Entities
     public class Activo
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public long Codigo { get; set; }
 
@@ -26,10 +24,10 @@ namespace CopyStart.Entities
 
         public DateTime FechaRegistro { get; set; }
 
-        public long UsuarioId { get; set; }
+        public long PersonaId { get; set; }
 
-       [ForeignKey("UsuarioId")]
-       public Usuario Usuario { get; set; }
+       [ForeignKey("PersonaId")]
+       public Persona Persona { get; set; }
     
     }
 }

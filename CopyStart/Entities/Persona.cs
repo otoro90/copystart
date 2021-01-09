@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    class Persona
+    [Table("Personas")]
+    public class Persona
     {
         [Key]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Nombres { get; set; }
 
