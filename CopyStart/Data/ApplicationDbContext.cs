@@ -23,22 +23,18 @@ namespace CopyStart.Data
 
 
         public virtual DbSet<Activo> Activo { get; set; }
-        public virtual DbSet<Certificacion> Certificacion { get; set; }
+        public virtual DbSet<Documento> Certificacion { get; set; }
         public virtual DbSet<Diagnostico> Diagnostico { get; set; }
-        public virtual DbSet<Factura> Factura { get; set; }
-       public virtual DbSet<Persona> Persona { get; set; }
-       public virtual DbSet<Procedimiento> Procedimiento { get; set; }
-       public virtual DbSet<ProcedimientoTipoServicio> ProcedimientoTipoServicio { get; set; }
-       public virtual DbSet<Recibo> Recibo { get; set; }
-       public virtual DbSet<Repuesto> Repuesto { get; set; }
-       public virtual DbSet<RepuestoProcedimiento> RepuestoProcedimiento { get; set; }
-       public virtual DbSet<Servicio> Servicio { get; set; }
-       public virtual DbSet<ServicioProcedimiento> ServicioProcedimiento { get; set; }
-       public virtual DbSet<Solicitud> Solicitud { get; set; }
-       public virtual DbSet<Soporte> Soporte { get; set; }
-       public virtual DbSet<TipoServicio> TipoServicio { get; set; }
-       public virtual DbSet<Usuario> Usuario { get; set; }
-
+        public virtual DbSet<Persona> Persona { get; set; }
+        public virtual DbSet<Procedimiento> Procedimiento { get; set; }
+        public virtual DbSet<ProcedimientoTipoServicio> ProcedimientoTipoServicio { get; set; }
+        public virtual DbSet<Repuesto> Repuesto { get; set; }
+        public virtual DbSet<RepuestoProcedimiento> RepuestoProcedimiento { get; set; }
+        public virtual DbSet<Servicio> Servicio { get; set; }
+        public virtual DbSet<ServicioProcedimiento> ServicioProcedimiento { get; set; }
+        public virtual DbSet<Solicitud> Solicitud { get; set; }
+        public virtual DbSet<Soporte> Soporte { get; set; }
+        public virtual DbSet<TipoServicio> TipoServicio { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

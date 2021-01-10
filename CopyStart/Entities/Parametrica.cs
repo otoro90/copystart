@@ -4,22 +4,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    [Table("Documentos")]
-    public class Documento
+    public class Parametrica
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string Nombre { get; set; }
 
-        //Ejemplo: pdf, jpg, itf ...
+        [MaxLength(1024)]
+        public string Descripcion { get; set; }
+
         [Required]
         [MaxLength(5)]
-        public string Tipo { get; set; }
+        public string Codigo { get; set; }
 
-        //Peso en Kbytes
-        public double? Peso { get; set; }
+        public bool Estado { get; set; }
     }
 }

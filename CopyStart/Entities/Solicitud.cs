@@ -24,11 +24,11 @@ namespace CopyStart.Entities
 
         public long TecnicoId { get; set; }
         [ForeignKey("UsuarioId")]
-        public Usuario Tecnico { get; set; }
+        public Persona Tecnico { get; set; }
        
         public long ClienteId { get; set; }
         [ForeignKey("UsuarioId")]
-        public Usuario Cliente { get; set; }
+        public Persona Cliente { get; set; }
 
         public long ActivoId { get; set; }
         [ForeignKey("ActivoId")]
