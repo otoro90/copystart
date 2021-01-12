@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    [Table("TiposServicio")]
-    public class TipoServicio : Parametrica
+    [Table("TiposActivo")]
+    public class TipoActivo : Parametrica
     {
     }
 }

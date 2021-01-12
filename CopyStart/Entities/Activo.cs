@@ -10,9 +10,12 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
-        public long Codigo { get; set; }
+        public string Serial { get; set; }
 
-        public string TipoActivo { get; set; }
+        public Guid TipoActivoId { get; set; }
+
+        [ForeignKey("TipoActivoId")]
+        public TipoActivo TipoActivo { get; set; }
 
         public string Descripcion { get; set; }
 

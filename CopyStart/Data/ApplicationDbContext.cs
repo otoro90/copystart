@@ -35,6 +35,7 @@ namespace CopyStart.Data
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<Soporte> Soporte { get; set; }
         public virtual DbSet<TipoServicio> TipoServicio { get; set; }
+        public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

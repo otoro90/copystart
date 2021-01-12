@@ -7,16 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CopyStart.Entities
 {
     [Table("Repuestos")]
-    public class Repuesto
+    public class Repuesto : Parametrica
     {
-        [Key]
-        public Guid Id { get; set; }
-
-        public long Codigo { get; set; }
-
-        public string Nombre { get; set; }
-        
-        public string Descripcion { get; set; }
         
         public string Marca { get; set; }
            

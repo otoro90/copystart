@@ -22,15 +22,15 @@ namespace CopyStart.Entities
 
         public string EstadoSolicitud { get; set; }
 
-        public long TecnicoId { get; set; }
+        public Guid TecnicoId { get; set; }
         [ForeignKey("UsuarioId")]
         public Persona Tecnico { get; set; }
        
-        public long ClienteId { get; set; }
+        public Guid ClienteId { get; set; }
         [ForeignKey("UsuarioId")]
         public Persona Cliente { get; set; }
 
-        public long ActivoId { get; set; }
+        public Guid ActivoId { get; set; }
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
 
