@@ -21,7 +21,7 @@ namespace CopyStart.Entities
         [ForeignKey ("DiagnosticoId")]
         public Diagnostico Diagnostico { get; set; }
         
-        public long ActivoId { get; set; }
+        public Guid ActivoId { get; set; }
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
 

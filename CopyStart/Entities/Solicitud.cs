@@ -29,11 +29,11 @@ namespace CopyStart.Entities
         public string EstadoSolicitud { get; set; }
 
         public Guid TecnicoId { get; set; }
-        [ForeignKey("UsuarioId")]
+        [ForeignKey("TecnicoId")]
         public Persona Tecnico { get; set; }
        
         public Guid ClienteId { get; set; }
-        [ForeignKey("UsuarioId")]
+        [ForeignKey("ClienteId")]
         public Persona Cliente { get; set; }
 
         public Guid ActivoId { get; set; }

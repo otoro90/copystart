@@ -35,7 +35,7 @@ namespace CopyStart.Entities
 
         public bool Estado { get; set; }
 
-        public Guid? UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }

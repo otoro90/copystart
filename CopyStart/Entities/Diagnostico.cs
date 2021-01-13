@@ -16,11 +16,6 @@ namespace CopyStart.Entities
         }
 
 
-
-
-
-
-
         [Key]
         public Guid Id { get; set; }
 
@@ -32,7 +27,7 @@ namespace CopyStart.Entities
         public DateTime FechaDiagnostico { get; set; }
 
 
-        public long TipoServicioId { get; set; }
+        public Guid TipoServicioId { get; set; }
 
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicio { get; set; }

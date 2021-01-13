@@ -35,7 +35,7 @@ namespace CopyStart.Entities
         [Required]
         public DateTime FechaRegistro { get; set; }
 
-        public long PersonaId { get; set; }
+        public Guid PersonaId { get; set; }
 
        [ForeignKey("PersonaId")]
        public Persona Persona { get; set; }
