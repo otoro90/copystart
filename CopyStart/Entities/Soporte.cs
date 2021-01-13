@@ -15,12 +15,16 @@ namespace CopyStart.Entities
         public Guid? DocumentoReciboId { get; set; }
         [ForeignKey("ReciboId")]
         public Documento DocumentoRecibo { get; set; }
-        
+
+        [Required]
         public Guid CopiaFacturaFirmadaId { get; set; }
+
         [ForeignKey("DocumentoFacturaId")]
         public Documento CopiaFacturaFirmada { get; set; }
 
-        public Guid DocumentoCertificacionId { get; set; } 
+        [Required]
+        public Guid DocumentoCertificacionId { get; set; }
+
         [ForeignKey("DocumentoCertificacionId")]
         public Documento DocumentoCertificacion { get; set; }
     }

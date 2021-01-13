@@ -11,15 +11,21 @@ namespace CopyStart.Entities
     {
         [Key]
         public Guid Id { get; set; }
-
+        
+        [Required]
+        [MaxLength(150)]
         public string Incidencia { get; set; }
 
+        [Required]
+        [MaxLength(1024)]
         public string Descripcion { get; set; }
 
         public string Ubicacion { get; set; }
-
+        
+        [Required]
         public DateTime FechaSolicitud { get; set; }
 
+        [Required]
         public string EstadoSolicitud { get; set; }
 
         public Guid TecnicoId { get; set; }

@@ -18,8 +18,8 @@ namespace CopyStart.Entities
         [MaxLength(200)]
         public string Apellidos { get; set; }
 
-        public long TipoDocumentoId { get; set; }
-
+        public Guid TipoDocumentoId { get; set; }
+        [ForeignKey("TipoDocumentoId")]
         public TipoDocumento TipoDocumento { get; set; }
 
         [MaxLength(20)]
@@ -29,7 +29,8 @@ namespace CopyStart.Entities
         public string Direccion { get; set; }
 
         public string Ciudad { get; set; }
-
+        
+        [MaxLength(10)]
         public int Telefono { get; set; }
 
         public bool Estado { get; set; }
