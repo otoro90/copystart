@@ -12,6 +12,7 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         public string Estado { get; set; } 
 
         public DateTime FechaRealizacion { get; set; }

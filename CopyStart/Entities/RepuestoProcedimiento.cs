@@ -12,14 +12,19 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         public Guid ProcedimientoId { get; set; }
+
         [ForeignKey("ProcedimientoId")]
         public Procedimiento Procedimientos { get; set; }
 
+        [Required]
         public Guid RepuestoId { get; set; }
+
         [ForeignKey("RepuestoId")]
         public Repuesto Repuesto { get; set; }
-       
+
+        [Required]
         public int Cantidad { get; set; }
 
     }

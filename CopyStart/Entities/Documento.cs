@@ -20,6 +20,7 @@ namespace CopyStart.Entities
         public string Tipo { get; set; }
 
         //Peso en Kbytes
+        [Required]
         public double? Peso { get; set; }
     }
 }
