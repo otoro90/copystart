@@ -130,5 +130,8 @@ namespace CopyStart.Data
             });
         }
 
+
+        public DbSet<CopyStart.Entities.TipoActivo> TipoActivo { get; set; }
+
     }
 }
