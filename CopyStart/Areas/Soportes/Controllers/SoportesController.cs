@@ -9,27 +9,27 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CopyStart.Areas.Activos.Controllers
+namespace CopyStart.Areas.Soportes.Controllers
 {
-    [Area("Activos")]
     [Authorize]
-    public class ActivosController : Controller
+    [Area("Soportes")]
+    public class SoportesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ActivosController(ApplicationDbContext context)
+        public SoportesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Activos/Activos
+        // GET: Soportes/Soportes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo);
+            var applicationDbContext = _context.Soporte.Include(s => s.DocumentoCertificacion);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Activos/Activos/Details/5
+        // GET: Soportes/Soportes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -37,46 +37,43 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var soporte = await _context.Soporte
+                .Include(s => s.DocumentoCertificacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (soporte == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(soporte);
         }
 
-        // GET: Activos/Activos/Create
+        // GET: Soportes/Soportes/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo");
+            ViewData["DocumentoCertificacionId"] = new SelectList(_context.Certificacion, "Id", "Nombre");
             return View();
         }
 
-        // POST: Activos/Activos/Create
+        // POST: Soportes/Soportes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Id,DocumentoReciboId,CopiaFacturaFirmadaId,DocumentoCertificacionId")] Soporte soporte)
         {
             if (ModelState.IsValid)
             {
-                activo.Id = Guid.NewGuid();
-                _context.Add(activo);
+                soporte.Id = Guid.NewGuid();
+                _context.Add(soporte);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            ViewData["DocumentoCertificacionId"] = new SelectList(_context.Certificacion, "Id", "Nombre", soporte.DocumentoCertificacionId);
+            return View(soporte);
         }
 
-        // GET: Activos/Activos/Edit/5
+        // GET: Soportes/Soportes/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -84,24 +81,23 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo.FindAsync(id);
-            if (activo == null)
+            var soporte = await _context.Soporte.FindAsync(id);
+            if (soporte == null)
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            ViewData["DocumentoCertificacionId"] = new SelectList(_context.Certificacion, "Id", "Nombre", soporte.DocumentoCertificacionId);
+            return View(soporte);
         }
 
-        // POST: Activos/Activos/Edit/5
+        // POST: Soportes/Soportes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,DocumentoReciboId,CopiaFacturaFirmadaId,DocumentoCertificacionId")] Soporte soporte)
         {
-            if (id != activo.Id)
+            if (id != soporte.Id)
             {
                 return NotFound();
             }
@@ -110,12 +106,12 @@ namespace CopyStart.Areas.Activos.Controllers
             {
                 try
                 {
-                    _context.Update(activo);
+                    _context.Update(soporte);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivoExists(activo.Id))
+                    if (!SoporteExists(soporte.Id))
                     {
                         return NotFound();
                     }
@@ -126,12 +122,11 @@ namespace CopyStart.Areas.Activos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            ViewData["DocumentoCertificacionId"] = new SelectList(_context.Certificacion, "Id", "Nombre", soporte.DocumentoCertificacionId);
+            return View(soporte);
         }
 
-        // GET: Activos/Activos/Delete/5
+        // GET: Soportes/Soportes/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -139,32 +134,31 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var soporte = await _context.Soporte
+                .Include(s => s.DocumentoCertificacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (soporte == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(soporte);
         }
 
-        // POST: Activos/Activos/Delete/5
+        // POST: Soportes/Soportes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var activo = await _context.Activo.FindAsync(id);
-            _context.Activo.Remove(activo);
+            var soporte = await _context.Soporte.FindAsync(id);
+            _context.Soporte.Remove(soporte);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivoExists(Guid id)
+        private bool SoporteExists(Guid id)
         {
-            return _context.Activo.Any(e => e.Id == id);
+            return _context.Soporte.Any(e => e.Id == id);
         }
     }
 }

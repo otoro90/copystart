@@ -23,8 +23,14 @@
   <ItemGroup>
     <Folder Include="Areas\Activos\Data\" />
     <Folder Include="Areas\Activos\Models\" />
+    <Folder Include="Areas\Administración\Data\" />
+    <Folder Include="Areas\Administración\Models\" />
+    <Folder Include="Areas\Inventario\Data\" />
+    <Folder Include="Areas\Inventario\Models\" />
     <Folder Include="Areas\Parametricas\Data\" />
     <Folder Include="Areas\Parametricas\Models\" />
+    <Folder Include="Areas\Soportes\Data\" />
+    <Folder Include="Areas\Soportes\Models\" />
     <Folder Include="Areas\Tecnica\Data\" />
     <Folder Include="Areas\Tecnica\Models\" />
   </ItemGroup>

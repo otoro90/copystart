@@ -9,27 +9,26 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CopyStart.Areas.Activos.Controllers
+namespace CopyStart.Areas.Inventario.Controllers
 {
-    [Area("Activos")]
+    [Area("Inventario")]
     [Authorize]
-    public class ActivosController : Controller
+    public class RepuestosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ActivosController(ApplicationDbContext context)
+        public RepuestosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Activos/Activos
+        // GET: Inventario/Repuestos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Repuesto.ToListAsync());
         }
 
-        // GET: Activos/Activos/Details/5
+        // GET: Inventario/Repuestos/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -37,46 +36,40 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var repuesto = await _context.Repuesto
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (repuesto == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(repuesto);
         }
 
-        // GET: Activos/Activos/Create
+        // GET: Inventario/Repuestos/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo");
             return View();
         }
 
-        // POST: Activos/Activos/Create
+        // POST: Inventario/Repuestos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Marca,Modelo,Id,Nombre,Descripcion,Codigo,Estado")] Repuesto repuesto)
         {
             if (ModelState.IsValid)
             {
-                activo.Id = Guid.NewGuid();
-                _context.Add(activo);
+                repuesto.Id = Guid.NewGuid();
+                _context.Add(repuesto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            return View(repuesto);
         }
 
-        // GET: Activos/Activos/Edit/5
+        // GET: Inventario/Repuestos/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -84,24 +77,22 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo.FindAsync(id);
-            if (activo == null)
+            var repuesto = await _context.Repuesto.FindAsync(id);
+            if (repuesto == null)
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            return View(repuesto);
         }
 
-        // POST: Activos/Activos/Edit/5
+        // POST: Inventario/Repuestos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Marca,Modelo,Id,Nombre,Descripcion,Codigo,Estado")] Repuesto repuesto)
         {
-            if (id != activo.Id)
+            if (id != repuesto.Id)
             {
                 return NotFound();
             }
@@ -110,12 +101,12 @@ namespace CopyStart.Areas.Activos.Controllers
             {
                 try
                 {
-                    _context.Update(activo);
+                    _context.Update(repuesto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivoExists(activo.Id))
+                    if (!RepuestoExists(repuesto.Id))
                     {
                         return NotFound();
                     }
@@ -126,12 +117,10 @@ namespace CopyStart.Areas.Activos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            return View(repuesto);
         }
 
-        // GET: Activos/Activos/Delete/5
+        // GET: Inventario/Repuestos/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -139,32 +128,30 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var repuesto = await _context.Repuesto
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (repuesto == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(repuesto);
         }
 
-        // POST: Activos/Activos/Delete/5
+        // POST: Inventario/Repuestos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var activo = await _context.Activo.FindAsync(id);
-            _context.Activo.Remove(activo);
+            var repuesto = await _context.Repuesto.FindAsync(id);
+            _context.Repuesto.Remove(repuesto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivoExists(Guid id)
+        private bool RepuestoExists(Guid id)
         {
-            return _context.Activo.Any(e => e.Id == id);
+            return _context.Repuesto.Any(e => e.Id == id);
         }
     }
 }

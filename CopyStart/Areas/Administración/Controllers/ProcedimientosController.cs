@@ -9,27 +9,26 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CopyStart.Areas.Activos.Controllers
+namespace CopyStart.Areas.Administración.Controllers
 {
-    [Area("Activos")]
+    [Area("Administración")]
     [Authorize]
-    public class ActivosController : Controller
+    public class ProcedimientosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ActivosController(ApplicationDbContext context)
+        public ProcedimientosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Activos/Activos
+        // GET: Administración/Procedimientos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Procedimiento.ToListAsync());
         }
 
-        // GET: Activos/Activos/Details/5
+        // GET: Administración/Procedimientos/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -37,46 +36,40 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var procedimiento = await _context.Procedimiento
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (procedimiento == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(procedimiento);
         }
 
-        // GET: Activos/Activos/Create
+        // GET: Administración/Procedimientos/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo");
             return View();
         }
 
-        // POST: Activos/Activos/Create
+        // POST: Administración/Procedimientos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado")] Procedimiento procedimiento)
         {
             if (ModelState.IsValid)
             {
-                activo.Id = Guid.NewGuid();
-                _context.Add(activo);
+                procedimiento.Id = Guid.NewGuid();
+                _context.Add(procedimiento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            return View(procedimiento);
         }
 
-        // GET: Activos/Activos/Edit/5
+        // GET: Administración/Procedimientos/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -84,24 +77,22 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo.FindAsync(id);
-            if (activo == null)
+            var procedimiento = await _context.Procedimiento.FindAsync(id);
+            if (procedimiento == null)
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            return View(procedimiento);
         }
 
-        // POST: Activos/Activos/Edit/5
+        // POST: Administración/Procedimientos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado")] Procedimiento procedimiento)
         {
-            if (id != activo.Id)
+            if (id != procedimiento.Id)
             {
                 return NotFound();
             }
@@ -110,12 +101,12 @@ namespace CopyStart.Areas.Activos.Controllers
             {
                 try
                 {
-                    _context.Update(activo);
+                    _context.Update(procedimiento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivoExists(activo.Id))
+                    if (!ProcedimientoExists(procedimiento.Id))
                     {
                         return NotFound();
                     }
@@ -126,12 +117,10 @@ namespace CopyStart.Areas.Activos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            return View(procedimiento);
         }
 
-        // GET: Activos/Activos/Delete/5
+        // GET: Administración/Procedimientos/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -139,32 +128,30 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var procedimiento = await _context.Procedimiento
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (procedimiento == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(procedimiento);
         }
 
-        // POST: Activos/Activos/Delete/5
+        // POST: Administración/Procedimientos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var activo = await _context.Activo.FindAsync(id);
-            _context.Activo.Remove(activo);
+            var procedimiento = await _context.Procedimiento.FindAsync(id);
+            _context.Procedimiento.Remove(procedimiento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivoExists(Guid id)
+        private bool ProcedimientoExists(Guid id)
         {
-            return _context.Activo.Any(e => e.Id == id);
+            return _context.Procedimiento.Any(e => e.Id == id);
         }
     }
 }

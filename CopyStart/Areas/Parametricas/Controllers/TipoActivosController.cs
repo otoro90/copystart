@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
+    [Authorize]
     [Area("Parametricas")]
     public class TipoActivosController : Controller
     {

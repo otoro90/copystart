@@ -9,27 +9,27 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CopyStart.Areas.Activos.Controllers
+namespace CopyStart.Areas.Tecnica.Controllers
 {
-    [Area("Activos")]
     [Authorize]
-    public class ActivosController : Controller
+    [Area("Tecnica")]
+    public class DiagnosticosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ActivosController(ApplicationDbContext context)
+        public DiagnosticosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Activos/Activos
+        // GET: Tecnica/Diagnosticoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo);
+            var applicationDbContext = _context.Diagnostico.Include(d => d.Soportes).Include(d => d.TipoServicio);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Activos/Activos/Details/5
+        // GET: Tecnica/Diagnosticoes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -37,46 +37,46 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var diagnostico = await _context.Diagnostico
+                .Include(d => d.Soportes)
+                .Include(d => d.TipoServicio)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (diagnostico == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(diagnostico);
         }
 
-        // GET: Activos/Activos/Create
+        // GET: Tecnica/Diagnosticoes/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo");
+            ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo");
             return View();
         }
 
-        // POST: Activos/Activos/Create
+        // POST: Tecnica/Diagnosticoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId")] Diagnostico diagnostico)
         {
             if (ModelState.IsValid)
             {
-                activo.Id = Guid.NewGuid();
-                _context.Add(activo);
+                diagnostico.Id = Guid.NewGuid();
+                _context.Add(diagnostico);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);
+            return View(diagnostico);
         }
 
-        // GET: Activos/Activos/Edit/5
+        // GET: Tecnica/Diagnosticoes/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -84,24 +84,24 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo.FindAsync(id);
-            if (activo == null)
+            var diagnostico = await _context.Diagnostico.FindAsync(id);
+            if (diagnostico == null)
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);
+            return View(diagnostico);
         }
 
-        // POST: Activos/Activos/Edit/5
+        // POST: Tecnica/Diagnosticoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId")] Diagnostico diagnostico)
         {
-            if (id != activo.Id)
+            if (id != diagnostico.Id)
             {
                 return NotFound();
             }
@@ -110,12 +110,12 @@ namespace CopyStart.Areas.Activos.Controllers
             {
                 try
                 {
-                    _context.Update(activo);
+                    _context.Update(diagnostico);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivoExists(activo.Id))
+                    if (!DiagnosticoExists(diagnostico.Id))
                     {
                         return NotFound();
                     }
@@ -126,12 +126,12 @@ namespace CopyStart.Areas.Activos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
-            return View(activo);
+            ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);
+            return View(diagnostico);
         }
 
-        // GET: Activos/Activos/Delete/5
+        // GET: Tecnica/Diagnosticoes/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -139,32 +139,32 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
+            var diagnostico = await _context.Diagnostico
+                .Include(d => d.Soportes)
+                .Include(d => d.TipoServicio)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activo == null)
+            if (diagnostico == null)
             {
                 return NotFound();
             }
 
-            return View(activo);
+            return View(diagnostico);
         }
 
-        // POST: Activos/Activos/Delete/5
+        // POST: Tecnica/Diagnosticoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var activo = await _context.Activo.FindAsync(id);
-            _context.Activo.Remove(activo);
+            var diagnostico = await _context.Diagnostico.FindAsync(id);
+            _context.Diagnostico.Remove(diagnostico);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivoExists(Guid id)
+        private bool DiagnosticoExists(Guid id)
         {
-            return _context.Activo.Any(e => e.Id == id);
+            return _context.Diagnostico.Any(e => e.Id == id);
         }
     }
 }
