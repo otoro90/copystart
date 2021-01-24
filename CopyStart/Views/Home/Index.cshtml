@@ -1,8 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Starter";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="content-header">
+    @await Html.PartialAsync("_Index.Header.cshtml")
+</div>
+<div class="content">
+    @await Html.PartialAsync("_Index.Content.cshtml")
 </div>

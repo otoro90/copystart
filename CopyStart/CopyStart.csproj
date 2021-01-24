@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-CopyStart-20022428-EF05-4347-8FB7-4A65CF363AF8</UserSecretsId>
+    <StartupObject>CopyStart.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
