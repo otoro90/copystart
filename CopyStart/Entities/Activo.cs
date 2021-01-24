@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,13 +7,22 @@ namespace CopyStart.Entities
 {
     [Table("Activos")]
     public class Activo
-    {
+    {   
+        public Activo()
+        {
+
+            FechaRegistro = DateTime.Now;
+
+        }
+        
         [Key]
         public Guid Id { get; set; }
+
         
         [Required]
         public string Serial { get; set; }
 
+        [Display(Name ="Tipo de Activo")]
         [Required]
         public Guid TipoActivoId { get; set; }
 
@@ -32,9 +42,11 @@ namespace CopyStart.Entities
 
         public string Ubicacion { get; set; }
 
+        [Display(Name = "Fecha de Registro")]
         [Required]
         public DateTime FechaRegistro { get; set; }
 
+        [Display(Name = "Cliente")]
         public Guid PersonaId { get; set; }
 
        [ForeignKey("PersonaId")]
