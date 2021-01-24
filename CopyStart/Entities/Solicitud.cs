@@ -9,6 +9,12 @@ namespace CopyStart.Entities
     [Table("Solicitudes")]
     public class Solicitud
     {
+        public Solicitud()
+        {
+
+            FechaSolicitud = DateTime.Now;
+
+        }
         [Key]
         public Guid Id { get; set; }
         
@@ -21,22 +27,30 @@ namespace CopyStart.Entities
         public string Descripcion { get; set; }
 
         public string Ubicacion { get; set; }
-        
+
+        [Display(Name = "Fecha")]
         [Required]
         public DateTime FechaSolicitud { get; set; }
 
+        [Display(Name = "Estado")]
         [Required]
         public string EstadoSolicitud { get; set; }
 
         public Guid TecnicoId { get; set; }
+        
+        [Display(Name = "Tecnico")]
         [ForeignKey("TecnicoId")]
         public Persona Tecnico { get; set; }
        
         public Guid ClienteId { get; set; }
+
+        [Display(Name = "Cliente")]
         [ForeignKey("ClienteId")]
         public Persona Cliente { get; set; }
 
         public Guid ActivoId { get; set; }
+
+        [Display(Name = "Activo")]
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
 

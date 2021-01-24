@@ -22,13 +22,13 @@ namespace CopyStart.Entities
         [Required]
         public string Serial { get; set; }
 
-        [Display(Name ="Tipo de Activo")]
+        
         [Required]
         public Guid TipoActivoId { get; set; }
 
+        [Display(Name = "Tipo de Activo")]
         [ForeignKey("TipoActivoId")]
         public TipoActivo TipoActivo { get; set; }
-
             
         [MaxLength(512)]
         public string Descripcion { get; set; }
@@ -46,10 +46,11 @@ namespace CopyStart.Entities
         [Required]
         public DateTime FechaRegistro { get; set; }
 
-        [Display(Name = "Cliente")]
+        
         public Guid PersonaId { get; set; }
 
-       [ForeignKey("PersonaId")]
+        [Display(Name = "Cliente")]
+        [ForeignKey("PersonaId")]
        public Persona Persona { get; set; }
     
     }

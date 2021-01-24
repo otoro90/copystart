@@ -13,23 +13,32 @@ namespace CopyStart.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public string Estado { get; set; } 
+        public string Estado { get; set; }
 
+        [Display(Name = "Fecha de Finalización")]
         public DateTime FechaRealizacion { get; set; }
 
         public Guid DiagnosticoId { get; set; }
+
+        [Display(Name = "Diagnostico")]
         [ForeignKey ("DiagnosticoId")]
         public Diagnostico Diagnostico { get; set; }
         
         public Guid ActivoId { get; set; }
+
+        [Display(Name = "Activo")]
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
 
         public Guid SolicitudId { get; set; }
+
+        [Display(Name = "Solicitud")]
         [ForeignKey("SolicitudId")]
         public Solicitud Solicitudes { get; set; }
 
         public Guid SoportesId { get; set; }
+
+        [Display(Name = "Soportes")]
         [ForeignKey("SoportesId")]
         public Soporte Soportes { get; set; }
     }
