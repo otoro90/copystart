@@ -2,14 +2,16 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Sign in to start your session";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="register-logo">
+    <a asp-page="/Home/Index"><b>Admin</b>LTE</a>
+</div>
 <div class="row">
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">@ViewData["Title"]</p>
             <section>
                 <form id="account" method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
