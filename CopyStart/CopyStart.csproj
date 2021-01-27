@@ -36,4 +36,6 @@
     <Folder Include="Areas\Tecnica\Models\" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties libman_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
