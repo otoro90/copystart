@@ -49,12 +49,11 @@ namespace CopyStart
             ContainerDependencies.ConfigureServices(services, connectionString);
 
 
-            services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
+                       .AllowAnyHeader();
             }));
 
             services.AddControllersWithViews()
@@ -88,11 +87,12 @@ namespace CopyStart
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "COPYSTART API V1");
             });
 
-            // Enable Call * Origins + any method + any header
+            // global cors policy
             app.UseCors(x => x
-                .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 
