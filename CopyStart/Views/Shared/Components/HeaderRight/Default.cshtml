@@ -1,12 +1,19 @@
 ﻿@using AdminLte.Mvc.Views.Shared.Components.HeaderMessagesMenu
 @using AdminLte.Mvc.Views.Shared.Components.HeaderNotificationsMenu
 
+
+
+
+
 <ul class="navbar-nav ml-auto">
-    @(await Component.InvokeAsync<HeaderMessagesMenuViewComponent>())
-    @(await Component.InvokeAsync<HeaderNotificationsMenuViewComponent>())
+    <div class="image">
+        <img src="~/lib/admin-lte/dist/img/user2-160x160.jpg" height="50px" width="50px" class="img-circle elevation-2" alt="User Image">
+    </div>
+
     <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-            <i class="fas fa-th-large"></i>
+            <i class="fas fa-sort-down"></i>
         </a>
     </li>
 </ul>
+
