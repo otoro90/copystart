@@ -48,6 +48,7 @@ namespace CopyStart.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Contraseña")]
             public string Password { get; set; }
 
             [Display(Name = "Remember me?")]
