@@ -1,14 +1,21 @@
 ﻿@page
 @model ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    ViewData["Title"] = "Reenviar email de confirmación";
 }
 
 <div class="login-logo">
-    <a asp-page="/Home/Index"><b>Admin</b>LTE</a>
+    <a asp-page="/Home/Index"><b>Importaciones Copy Start </b>SAS</a>
 </div>
 <!-- /.login-logo -->
 <div class="card">
+    <div class="container">
+        <style>
+            .container {
+                border: 2px solid #0057FF;
+            }
+        </style>
+
     <div class="card-body login-card-body">
         <p class="login-box-msg">@ViewData["Title"]</p>
 
@@ -25,7 +32,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-block">Resend</button>
+                    <button type="submit" class="btn btn-primary btn-block">Reenviar</button>
                 </div>
                 <!-- /.col -->
             </div>
@@ -35,10 +42,11 @@
             <a asp-page="./Login">Login</a>
         </p>
         <p class="mb-0">
-            <a class="text-center" asp-page="./Register">Register a new membership</a>
+            <a class="text-center" asp-page="./Register">Registrarse como nuevo usuario</a>
         </p>
     </div>
     <!-- /.login-card-body -->
+    </div>
 </div>
 
 
