@@ -1,32 +1,101 @@
 ﻿<aside class="control-sidebar control-sidebar-dark h-auto">
- 
-    <div class="p-3 pt-4">
 
-        <div>
-            <a href="#" class="nav-link">
+    <ul class="nav nav-pills nav-sidebar flex-column mt-3" data-widget="treeview" role="menu" data-accordion="false">
+
+
+        <li class="nav-item">
+            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal-lg">
+
                 <div class="float-left mr-2">
                     <i class="fas fa-user-circle"></i>
                 </div>
-                <p>Perfil personal</p>
-            </a>
-        </div>
-        
-        <div>
+                <div class="float-left">
+                    <p>Perfil personal</p>
+                </div>
+            </button>
+        </li>
+
+
+        <li class="nav-item">
             <a href="#" class="nav-link">
                 <div class="float-left mr-2">
                     <i class="fas fa-cog"></i>
                 </div>
-                <p>Ajustes</p>
+                <p>
+                    Ajustes
+
+                </p>
             </a>
-        </div>
-        <div>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+
+                        <p>Actualizar información</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Identity/Account/Manage/Email" class="nav-link">
+
+                        <p>Cambiar correo electronico</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Identity/Account/Manage/ChangePassword" class="nav-link">
+
+                        <p>Cambiar contraseña</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Identity/Account/Manage/DeletePersonalData" class="nav-link">
+
+                        <p>Suspender o eliminar cuenta</p>
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+        <li class="nav-item">
             <a href="/Identity/Account/Logout?returnUrl=%2F%3Fpage%3D%252F" class="nav-link">
                 <div class="float-left mr-2">
                     <i class="fas fa-sign-out-alt"></i>
                 </div>
                 <p>Cerrar sesión</p>
             </a>
-        </div>
-    </div>
-    
+        </li>
+
+    </ul>
+
+
+
 </aside>
+<div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Perfil</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Información Personal</h4>
+                <div>
+                    <h6>Nombres</h6>
+                    <h6>Apellido</h6>
+                    <h6>Documento de Identidad</h6>
+                    <h6>Tipo de documento</h6>
+                    <h6>Correo electronico</h6>
+                    <h6>Telefono celular</h6>
+                    <h6>Ciudad de residencia</h6>
+                    <h6>Direccion</h6>
+
+
+
+                </div>
+            </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

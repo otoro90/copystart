@@ -49,21 +49,25 @@
                             </div>
                         </div>
                         <div class="row">
-
                             <div class="col-6">
-                                <style>
-                                    #a1 {
-                                        color: white;
-                                    }
-                                </style>
+                                
+                                    <div>
+                                        <style>
+                                            #a1 {
+                                                color: white;
+                                            }
+                                        </style>
 
-                                <button class="btn btn-primary btn-block">
-                                    <a id="a1" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
-                                        Registrate
-                                    </a>
-                                </button>
+                                        <button class="btn btn-primary btn-block" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
 
+                                            Registrate
+
+                                        </button>
+                                    </div>
+                               
                             </div>
+
+                        
                             <!-- /.col -->
                             <div class="col-6">
                                 <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
