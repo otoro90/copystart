@@ -4,18 +4,13 @@
 
 
         <li class="nav-item">
-            <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#modal-lg">
-
+            <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-lg">
                 <div class="float-left mr-2">
-                    <i class="fas fa-user-circle"></i>
+                    <i class="fas fa-cog"></i>
                 </div>
-                <div class="float-left">
-                    <p>Perfil personal</p>
-                </div>
-            </button>
+                <p>Perfil personal</p>
+            </a>
         </li>
-
-
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <div class="float-left mr-2">
@@ -69,7 +64,7 @@
 
 </aside>
 <div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Perfil</h3>
@@ -77,12 +72,30 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <h4>Información Personal</h4>
-                <div>
-                    <h6>Nombres</h6>
-                    <h6>Apellido</h6>
-                    <h6>Documento de Identidad</h6>
+            <div class="modal-body p-4">
+
+                <div class="form-group my-4">
+
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            <label>Nombres</label>
+                        </div>
+                        <div class="col-md-8 text-center">
+                            <p>Oscar Miguel</p>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            <label>Apellido</label>
+                        </div>
+                        <div class="col-md-8 text-center">
+                            <p>Toro Torres</p>
+                        </div>
+                    </div>
+
+                    <label>Apellido</label>
+                    <label>Documento de Identidad</label>
                     <h6>Tipo de documento</h6>
                     <h6>Correo electronico</h6>
                     <h6>Telefono celular</h6>
@@ -93,7 +106,7 @@
 
                 </div>
             </div>
-            
+
         </div>
         <!-- /.modal-content -->
     </div>
