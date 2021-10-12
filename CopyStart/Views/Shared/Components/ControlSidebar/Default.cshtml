@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-lg">
                 <div class="float-left mr-2">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-user-circle"></i>
                 </div>
                 <p>Perfil personal</p>
             </a>
@@ -22,25 +22,25 @@
                 </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
+                <li class="nav-item ml-2">
                     <a href="#" class="nav-link">
 
                         <p>Actualizar información</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ml-2">
                     <a href="/Identity/Account/Manage/Email" class="nav-link">
 
                         <p>Cambiar correo electronico</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ml-2">
                     <a href="/Identity/Account/Manage/ChangePassword" class="nav-link">
 
                         <p>Cambiar contraseña</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ml-2">
                     <a href="/Identity/Account/Manage/DeletePersonalData" class="nav-link">
 
                         <p>Suspender o eliminar cuenta</p>
@@ -59,6 +59,7 @@
         </li>
 
     </ul>
+   
 
 
 
@@ -66,22 +67,22 @@
 <div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary">
                 <h3 class="modal-title">Perfil</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body p-4">
+            <div class="modal-body p-4 row">
 
-                <div class="form-group my-4">
+                <div class="form-group my-4 col-md-8">
 
                     <div class="row form-group">
                         <div class="col-md-4">
                             <label>Nombres</label>
                         </div>
                         <div class="col-md-8 text-center">
-                            <p>Oscar Miguel</p>
+                            <p>Haider Johan</p>
                         </div>
                     </div>
 
@@ -90,24 +91,93 @@
                             <label>Apellido</label>
                         </div>
                         <div class="col-md-8 text-center">
-                            <p>Toro Torres</p>
+                            <p>Arango Diaz</p>
                         </div>
                     </div>
+                    <div class="row form-group">
+                        <div class="col md-4">
+                            <label>
+                                Tipo de documento
 
-                    <label>Apellido</label>
-                    <label>Documento de Identidad</label>
-                    <h6>Tipo de documento</h6>
-                    <h6>Correo electronico</h6>
-                    <h6>Telefono celular</h6>
-                    <h6>Ciudad de residencia</h6>
-                    <h6>Direccion</h6>
+                            </label>
+                        </div>
+                        <div class=" col-md-8 text-center">
+                            <p>T.I</p>
+                        </div>
 
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col md-4">
+                            <label>
+                                Documento de Identidad
+                            </label>
+                        </div>
+                        <div class=" col-md-8 text-center">
+                            <p>1003649777</p>
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col md-4">
+                            <label>
+                                Correo electronico
+                            </label>
+                        </div>
+                        <div class=" col-md-8 text-center">
+                            <p>hjarangod@gmail.com</p>
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col md-4">
+                            <label>
+                                Telefono celular
+                            </label>
+                        </div>
+                        <div class=" col-md-8 text-center">
+                            <p>3003453674</p>
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col md-4">
+                            <label>
+                                Ciudad de residencia
+                            </label>
+                        </div>
+                        <div class=" col-md-8 text-center">
+                            <p>Villavicencio</p>
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col md-4">
+                            <label>
+                                Direccion
+                            </label>
+                        </div>
+                        <div class=" col-md-8 text-center">
+                            <p>Calle 24 Sur #42a-18</p>
+                        </div>
+
+                    </div>
 
 
                 </div>
+                <div class="form-group col-md-4">
+                    <div class="image">
+                        <img src="/lib/admin-lte/dist/img/user2-160x160.jpg" width="130px" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-primary">Editar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
             </div>
 
         </div>
+        
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
