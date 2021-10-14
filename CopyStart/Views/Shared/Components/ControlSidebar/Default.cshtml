@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item ml-2">
-                    <a href="/Identity/Account/Manage/Email" class="nav-link" data-toggle="modal" data-target="#modal-lg2">
+                    <a href="/Identity/Account/Manage/Email" class="nav-link">
 
                         <p>Cambiar correo electronico</p>
                     </a>
@@ -200,64 +200,6 @@
     <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-lg2" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h4 class="modal-title">Cambiar correo electronico</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body p-4 row">
-                <div class="form-group my-4 col-md-12">
-                    <div class="row form-group">
-                        <div class="col-md-4">
-                            <label>Email</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
 
-                                @if (Model.IsEmailConfirmed)
-                                {
-                                    <div class="input-group">
-                                        <input asp-for="Email" class="form-control" disabled />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text text-success font-weight-bold">✓</span>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <input asp-for="Email" class="form-control" disabled />
-                                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                                }
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="row form-group">
-                        <div class="col-md-4">
-                            <label>Nuevo Email</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input asp-for="Input.NewEmail" class="form-control" />
-                            <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button class="btn btn-primary" id="change-email-button" type="submit" asp-page-handler="ChangeEmail">Cambiar</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
 </div>
 
