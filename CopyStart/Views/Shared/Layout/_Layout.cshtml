@@ -27,7 +27,17 @@
         @(await Component.InvokeAsync<ControlSidebarViewComponent>())
         @(await Component.InvokeAsync<FooterViewComponent>())
     </div>
+
+    <div id="PlaceHolderHere"></div>
+
     @await Html.PartialAsync("_Scripts.cshtml")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script src="~/js/site.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        site.init();
+    });
+</script>
