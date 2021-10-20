@@ -8,29 +8,35 @@
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
 }
-
-<div>
-    <div class="float-left mr-5">
-        <a href="~/">
-        <i class="fas fa-angle-left fa-3x"></i>
-            </a>
-    </div>
-    <div class="mt-1">
-        <h2>Ajustes de cuenta</h2>
-    </div>
-</div>
-<div>
-    
-    <hr />
-    <div class="row ">
-        <div class="col-md-4">
-            <partial name="_ManageNav" />
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ajustes de cuenta</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <partial name="_ManageNav" />
+                    </div>
+                    <div class="col-md-8">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
-        <div class="col-md-8">
-            @RenderBody()
-        </div>
+        <!-- /.modal-content -->
     </div>
+    <!-- /.modal-dialog -->
 </div>
+<!-- /.modal -->
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
