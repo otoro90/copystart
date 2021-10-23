@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CopyStart.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,string,ApplicationUserClaim,ApplicationUserRole,ApplicationUserLogin,ApplicationRoleClaim,ApplicationUserToken>
     {
 
         public IConfiguration configuration { get; set; }
@@ -101,7 +101,6 @@ namespace CopyStart.Data
                     .WithOne(e => e.Persona)
                     .HasForeignKey(ul => ul.PersonaId);
             });
-
 
             modelBuilder.Entity<ApplicationUser>(b =>
             {

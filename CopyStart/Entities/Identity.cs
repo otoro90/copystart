@@ -11,10 +11,9 @@ namespace CopyStart.Entities
     
     public class ApplicationUser : IdentityUser
     {
-        public Guid PersonaId { get; set; }
+        public Guid? PersonaId { get; set; }
 
         [Display(Name = "Persona")]
-        [ForeignKey("PersonaId")]
         public Persona Persona { get; set; }
         public virtual ICollection<ApplicationUserClaim> Claims { get; set; }
         public virtual ICollection<ApplicationUserLogin> Logins { get; set; }
@@ -28,28 +27,28 @@ namespace CopyStart.Entities
         public virtual ICollection<ApplicationRoleClaim> RoleClaims { get; set; }
     }
 
-    public class ApplicationUserRole : IdentityUserRole<Guid>
+    public class ApplicationUserRole : IdentityUserRole<string>
     {
         public virtual ApplicationUser User { get; set; }
         public virtual ApplicationRole Role { get; set; }
     }
 
-    public class ApplicationUserClaim : IdentityUserClaim<Guid>
+    public class ApplicationUserClaim : IdentityUserClaim<string>
     {
         public virtual ApplicationUser User { get; set; }
     }
 
-    public class ApplicationUserLogin : IdentityUserLogin<Guid>
+    public class ApplicationUserLogin : IdentityUserLogin<string>
     {
         public virtual ApplicationUser User { get; set; }
     }
 
-    public class ApplicationRoleClaim : IdentityRoleClaim<Guid>
+    public class ApplicationRoleClaim : IdentityRoleClaim<string>
     {
         public virtual ApplicationRole Role { get; set; }
     }
 
-    public class ApplicationUserToken : IdentityUserToken<Guid>
+    public class ApplicationUserToken : IdentityUserToken<string>
     {
         public virtual ApplicationUser User { get; set; }
     }
