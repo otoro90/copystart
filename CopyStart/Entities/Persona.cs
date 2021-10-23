@@ -39,10 +39,6 @@ namespace CopyStart.Entities
 
         public bool Estado { get; set; }
 
-        public string UserId { get; set; }
-
-        [Display(Name = "ID de Usuario")]
-        [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

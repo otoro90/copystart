@@ -36,6 +36,14 @@ namespace CopyStart.Data
         public virtual DbSet<Soporte> Soporte { get; set; }
         public virtual DbSet<TipoServicio> TipoServicio { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
+        public virtual DbSet<TipoActivo> TipoActivo { get; set; }
+        public virtual DbSet<ApplicationUser> User { get; set; }
+        public virtual DbSet<ApplicationUserClaim> ApplicationUserClaim { get; set; }
+        public virtual DbSet<ApplicationUserLogin> ApplicationUserLogin { get; set; }
+        public virtual DbSet<ApplicationUserToken> ApplicationUserToken { get; set; }
+        public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
+        public virtual DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
+        public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -51,39 +59,47 @@ namespace CopyStart.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<IdentityUser>(b =>
+            modelBuilder.Entity<ApplicationUser>(b =>
             {
                 b.ToTable("Users");
             });
 
-            modelBuilder.Entity<IdentityUserClaim<string>>(b =>
+            modelBuilder.Entity<ApplicationUserClaim>(b =>
             {
                 b.ToTable("UserClaims");
             });
 
-            modelBuilder.Entity<IdentityUserLogin<string>>(b =>
+            modelBuilder.Entity<ApplicationUserLogin>(b =>
             {
                 b.ToTable("UserLogins");
             });
 
-            modelBuilder.Entity<IdentityUserToken<string>>(b =>
+            modelBuilder.Entity<ApplicationUserToken>(b =>
             {
                 b.ToTable("UserTokens");
             });
 
-            modelBuilder.Entity<IdentityRole>(b =>
+            modelBuilder.Entity<ApplicationRole>(b =>
             {
                 b.ToTable("Roles");
             });
 
-            modelBuilder.Entity<IdentityRoleClaim<string>>(b =>
+            modelBuilder.Entity<ApplicationRoleClaim>(b =>
             {
                 b.ToTable("RoleClaims");
             });
 
-            modelBuilder.Entity<IdentityUserRole<string>>(b =>
+            modelBuilder.Entity<ApplicationUserRole>(b =>
             {
                 b.ToTable("UserRoles");
+            });
+
+            modelBuilder.Entity<Persona>(b =>
+            {
+                // Each Persona can have many Users
+                b.HasMany(e => e.Users)
+                    .WithOne(e => e.Persona)
+                    .HasForeignKey(ul => ul.PersonaId);
             });
 
 
@@ -129,9 +145,6 @@ namespace CopyStart.Data
                     .IsRequired();
             });
         }
-
-
-        public DbSet<CopyStart.Entities.TipoActivo> TipoActivo { get; set; }
 
     }
 }
