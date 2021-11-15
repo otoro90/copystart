@@ -9,9 +9,9 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CopyStart.Areas.Administración.Controllers
+namespace CopyStart.Areas.Administracion.Controllers
 {
-    [Area("Administración")]
+    [Area("Administracion")]
     [Authorize]
     public class ProcedimientoTipoServiciosController : Controller
     {
@@ -22,14 +22,14 @@ namespace CopyStart.Areas.Administración.Controllers
             _context = context;
         }
 
-        // GET: Administración/ProcedimientoTipoServicios
+        // GET: Administracion/ProcedimientoTipoServicios
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.ProcedimientoTipoServicio.Include(p => p.Procedimientos).Include(p => p.TipoServicio);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Administración/ProcedimientoTipoServicios/Details/5
+        // GET: Administracion/ProcedimientoTipoServicios/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -49,7 +49,7 @@ namespace CopyStart.Areas.Administración.Controllers
             return View(procedimientoTipoServicio);
         }
 
-        // GET: Administración/ProcedimientoTipoServicios/Create
+        // GET: Administracion/ProcedimientoTipoServicios/Create
         public IActionResult Create()
         {
             ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo");
@@ -57,7 +57,7 @@ namespace CopyStart.Areas.Administración.Controllers
             return View();
         }
 
-        // POST: Administración/ProcedimientoTipoServicios/Create
+        // POST: Administracion/ProcedimientoTipoServicios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -76,7 +76,7 @@ namespace CopyStart.Areas.Administración.Controllers
             return View(procedimientoTipoServicio);
         }
 
-        // GET: Administración/ProcedimientoTipoServicios/Edit/5
+        // GET: Administracion/ProcedimientoTipoServicios/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -94,7 +94,7 @@ namespace CopyStart.Areas.Administración.Controllers
             return View(procedimientoTipoServicio);
         }
 
-        // POST: Administración/ProcedimientoTipoServicios/Edit/5
+        // POST: Administracion/ProcedimientoTipoServicios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -131,7 +131,7 @@ namespace CopyStart.Areas.Administración.Controllers
             return View(procedimientoTipoServicio);
         }
 
-        // GET: Administración/ProcedimientoTipoServicios/Delete/5
+        // GET: Administracion/ProcedimientoTipoServicios/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -151,7 +151,7 @@ namespace CopyStart.Areas.Administración.Controllers
             return View(procedimientoTipoServicio);
         }
 
-        // POST: Administración/ProcedimientoTipoServicios/Delete/5
+        // POST: Administracion/ProcedimientoTipoServicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

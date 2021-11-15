@@ -7,28 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
-using Microsoft.AspNetCore.Authorization;
 
-namespace CopyStart.Areas.Administración.Controllers
+namespace CopyStart.Areas.Administracion.Controllers
 {
-    [Area("Administración")]
-    [Authorize]
-    public class ProcedimientosController : Controller
+    [Area("Administracion")]
+    public class PersonasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProcedimientosController(ApplicationDbContext context)
+        public PersonasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Administración/Procedimientos
+        // GET: Administracion/Personas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Procedimiento.ToListAsync());
+            var applicationDbContext = _context.Persona.Include(p => p.TipoDocumento);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Administración/Procedimientos/Details/5
+        // GET: Administracion/Personas/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -36,40 +35,43 @@ namespace CopyStart.Areas.Administración.Controllers
                 return NotFound();
             }
 
-            var procedimiento = await _context.Procedimiento
+            var persona = await _context.Persona
+                .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (procedimiento == null)
+            if (persona == null)
             {
                 return NotFound();
             }
 
-            return View(procedimiento);
+            return View(persona);
         }
 
-        // GET: Administración/Procedimientos/Create
+        // GET: Administracion/Personas/Create
         public IActionResult Create()
         {
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
             return View();
         }
 
-        // POST: Administración/Procedimientos/Create
+        // POST: Administracion/Personas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado")] Procedimiento procedimiento)
+        public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
             {
-                procedimiento.Id = Guid.NewGuid();
-                _context.Add(procedimiento);
+                persona.Id = Guid.NewGuid();
+                _context.Add(persona);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(procedimiento);
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            return View(persona);
         }
 
-        // GET: Administración/Procedimientos/Edit/5
+        // GET: Administracion/Personas/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -77,22 +79,23 @@ namespace CopyStart.Areas.Administración.Controllers
                 return NotFound();
             }
 
-            var procedimiento = await _context.Procedimiento.FindAsync(id);
-            if (procedimiento == null)
+            var persona = await _context.Persona.FindAsync(id);
+            if (persona == null)
             {
                 return NotFound();
             }
-            return View(procedimiento);
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            return View(persona);
         }
 
-        // POST: Administración/Procedimientos/Edit/5
+        // POST: Administracion/Personas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado")] Procedimiento procedimiento)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
-            if (id != procedimiento.Id)
+            if (id != persona.Id)
             {
                 return NotFound();
             }
@@ -101,12 +104,12 @@ namespace CopyStart.Areas.Administración.Controllers
             {
                 try
                 {
-                    _context.Update(procedimiento);
+                    _context.Update(persona);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProcedimientoExists(procedimiento.Id))
+                    if (!PersonaExists(persona.Id))
                     {
                         return NotFound();
                     }
@@ -117,10 +120,11 @@ namespace CopyStart.Areas.Administración.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(procedimiento);
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            return View(persona);
         }
 
-        // GET: Administración/Procedimientos/Delete/5
+        // GET: Administracion/Personas/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -128,30 +132,31 @@ namespace CopyStart.Areas.Administración.Controllers
                 return NotFound();
             }
 
-            var procedimiento = await _context.Procedimiento
+            var persona = await _context.Persona
+                .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (procedimiento == null)
+            if (persona == null)
             {
                 return NotFound();
             }
 
-            return View(procedimiento);
+            return View(persona);
         }
 
-        // POST: Administración/Procedimientos/Delete/5
+        // POST: Administracion/Personas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var procedimiento = await _context.Procedimiento.FindAsync(id);
-            _context.Procedimiento.Remove(procedimiento);
+            var persona = await _context.Persona.FindAsync(id);
+            _context.Persona.Remove(persona);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProcedimientoExists(Guid id)
+        private bool PersonaExists(Guid id)
         {
-            return _context.Procedimiento.Any(e => e.Id == id);
+            return _context.Persona.Any(e => e.Id == id);
         }
     }
 }
