@@ -33,8 +33,7 @@ namespace CopyStart.Entities
         public string Direccion { get; set; }
 
         public string Ciudad { get; set; }
-        
-        [MaxLength(10)]
+                
         public int Telefono { get; set; }
 
         public bool Estado { get; set; }

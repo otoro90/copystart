@@ -64,7 +64,10 @@
                 @Html.DisplayFor(modelItem => item.FechaRegistro)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Persona.Id)
+                @{
+                    var fullName = item.Persona.Nombres + " " + item.Persona.Apellidos;
+                    @Html.DisplayFor(modelItem => fullName)
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
