@@ -36,7 +36,7 @@ namespace CopyStart.Entities
         [ForeignKey("SolicitudId")]
         public Solicitud Solicitudes { get; set; }
 
-        public Guid SoportesId { get; set; }
+        public Guid? SoportesId { get; set; }
 
         [Display(Name = "Soportes")]
         [ForeignKey("SoportesId")]

@@ -12,7 +12,7 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
-        public Guid? DocumentoReciboId { get; set; }
+        public Guid DocumentoReciboId { get; set; }
 
         [Display(Name = "Recibo")]
         [ForeignKey("ReciboId")]

@@ -10,15 +10,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211023052136_LoginAdjust2")]
-    partial class LoginAdjust2
+    [Migration("20220405193012_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.11")
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("CopyStart.Entities.Activo", b =>
@@ -282,7 +282,7 @@ namespace CopyStart.Migrations
                     b.Property<DateTime>("FechaDiagnostico")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("SoportesId")
+                    b.Property<Guid?>("SoportesId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TipoServicioId")
@@ -351,7 +351,6 @@ namespace CopyStart.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.Property<int>("Telefono")
-                        .HasMaxLength(10)
                         .HasColumnType("integer");
 
                     b.Property<Guid>("TipoDocumentoId")
@@ -493,7 +492,7 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("SolicitudId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SoportesId")
+                    b.Property<Guid?>("SoportesId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -595,7 +594,7 @@ namespace CopyStart.Migrations
                     b.Property<Guid?>("DocumentoFacturaId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("DocumentoReciboId")
+                    b.Property<Guid>("DocumentoReciboId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ReciboId")
@@ -791,9 +790,7 @@ namespace CopyStart.Migrations
                 {
                     b.HasOne("CopyStart.Entities.Soporte", "Soportes")
                         .WithMany()
-                        .HasForeignKey("SoportesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SoportesId");
 
                     b.HasOne("CopyStart.Entities.TipoServicio", "TipoServicio")
                         .WithMany()
@@ -877,9 +874,7 @@ namespace CopyStart.Migrations
 
                     b.HasOne("CopyStart.Entities.Soporte", "Soportes")
                         .WithMany()
-                        .HasForeignKey("SoportesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SoportesId");
 
                     b.Navigation("Activo");
 

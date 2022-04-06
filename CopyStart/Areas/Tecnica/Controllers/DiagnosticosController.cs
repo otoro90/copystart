@@ -22,14 +22,14 @@ namespace CopyStart.Areas.Tecnica.Controllers
             _context = context;
         }
 
-        // GET: Tecnica/Diagnosticoes
+        // GET: Tecnica/Diagnosticos
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Diagnostico.Include(d => d.Soportes).Include(d => d.TipoServicio);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Tecnica/Diagnosticoes/Details/5
+        // GET: Tecnica/Diagnosticos/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -49,7 +49,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(diagnostico);
         }
 
-        // GET: Tecnica/Diagnosticoes/Create
+        // GET: Tecnica/Diagnosticos/Create
         public IActionResult Create()
         {
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
@@ -57,7 +57,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View();
         }
 
-        // POST: Tecnica/Diagnosticoes/Create
+        // POST: Tecnica/Diagnosticos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -76,7 +76,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(diagnostico);
         }
 
-        // GET: Tecnica/Diagnosticoes/Edit/5
+        // GET: Tecnica/Diagnosticos/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -94,7 +94,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(diagnostico);
         }
 
-        // POST: Tecnica/Diagnosticoes/Edit/5
+        // POST: Tecnica/Diagnosticos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -131,7 +131,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(diagnostico);
         }
 
-        // GET: Tecnica/Diagnosticoes/Delete/5
+        // GET: Tecnica/Diagnosticos/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -151,7 +151,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(diagnostico);
         }
 
-        // POST: Tecnica/Diagnosticoes/Delete/5
+        // POST: Tecnica/Diagnosticos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
