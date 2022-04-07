@@ -4,77 +4,111 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Serial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoActivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Modelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ubicacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Persona)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Serial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoActivo.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marca)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ubicacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                @{
-                    var fullName = item.Persona.Nombres + " " + item.Persona.Apellidos;
-                    @Html.DisplayFor(modelItem => fullName)
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+   
+<div class="row ml-3 mb-2">
+    <button type="button" class="btn btn-default">
+        <a asp-action="Create"> 
+           <i class="fas fa-plus mr-3"></i>
+            </a>
+       </button>
+            
+            
+            
+            
+   </div>    
+
+
+
+<div class="row ">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Listado de activos</h2>
+
+            </div>
+
+            <div class="card-body table-responsive p-0">
+
+                <table class="table  table-hover text-nowrap">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Serial)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TipoActivo)
+                            </th>
+                           
+                            <th>
+                                @Html.DisplayNameFor(model => model.Marca)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Modelo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ubicacion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaRegistro)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Persona)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Serial)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoActivo.Codigo)
+                                </td>
+                      
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Marca)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Modelo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ubicacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                                </td>
+                                <td>
+                                    @{
+                                        var fullName = item.Persona.Nombres + " " + item.Persona.Apellidos;
+                                        @Html.DisplayFor(modelItem => fullName)
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default">
+                                    <a asp-action="Edit" asp-route-id="@item.Id">
+                                        
+                                        <i class="fas fa-pen"></i></a> 
+                                        </button>
+                                        <button type="button" class="btn btn-default">
+                                    <a asp-action="Details" asp-route-id="@item.Id"><i class="far fa-file"></i></a> 
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-delete">
+                                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+                                    </button>
+                                    
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

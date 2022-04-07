@@ -4,6 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
+<div class="row ml-3">
+        <a asp-action="Index"> 
+           <i class="fas fa-angle-left"></i>
+            
+            <p> Volver</p>
+            </a>
+   </div>   
+
 
 <div class="row">
     <div class="col-md-3 "></div>
@@ -26,7 +34,7 @@
                                 <span asp-validation-for="Serial" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="TipoActivoId" class="control-label"></label>
+                                <label asp-for="TipoActivoId" class="control-label">@Html.DisplayNameFor(model => model.TipoActivo)</label>
                                 <select asp-for="TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId"></select>
                             </div>
                             <div class="form-group">
@@ -55,7 +63,7 @@
                                 <span asp-validation-for="FechaRegistro" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="PersonaId" class="control-label"></label>
+                                <label asp-for="PersonaId" class="control-label">@Html.DisplayNameFor(model => model.Persona)</label>
                                 <select asp-for="PersonaId" class="form-control" asp-items="ViewBag.PersonaId"></select>
                             </div>
                             <div class="form-group">
@@ -70,9 +78,7 @@
     <div class="col-md-3 "></div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
