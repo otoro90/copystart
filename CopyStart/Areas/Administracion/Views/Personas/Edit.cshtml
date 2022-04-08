@@ -4,14 +4,34 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>Persona</h4>
-<hr />
+
+
+
+
+<div class="row ml-3">
+        <a asp-action="Index"> 
+            <button  type="button" class="btn btn-default bg-blue">
+           <i class="fas fa-angle-left"></i>
+            </button>
+          <p> Volver</p>
+       </a>
+   </div>  
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-3 "></div>
+    <div class="col-md-6">
+        <div class="mt-3">
+            <div class="ml-3">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>Editar Persona</b></h2>
+
+                    </div>
+
+                    <form asp-action="Edit">
+                        <div class="card-body">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Nombres" class="control-label"></label>
@@ -56,13 +76,15 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </form>
+            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="col-md-3 "></div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
