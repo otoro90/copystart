@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-md-8 text-center">
                             <p>Haider Johan</p>
-                            <input type="text" class="form-control d-none" placeholder="Nombre">
+                            <input type="text" class="form-control collapse multi-collapse" placeholder="Nombre" id="multiCollapse1">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-8 text-center">
                             <p>Arango Diaz</p>
-                            <input type="text" class="form-control d-none" placeholder="Apellidos">
+                            <input type="text" class="form-control collapse multi-collapse" placeholder="Apellidos" id="multiCollapse2">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -43,7 +43,7 @@
                         </div>
                         <div class=" col-md-8 text-center">
                             <p>TI</p>
-                            <select class="form-control d-none" disabled="">
+                            <select class="form-control collapse multi-collapse" disabled="" id="multiCollapse3">
                                 <option>TI</option>
                                 <option>CC</option>
                                 <option>CE</option>
@@ -61,7 +61,7 @@
                         </div>
                         <div class=" col-md-7 text-center">
                             <p>1003649777</p>
-                            <input type="text" class="form-control d-none" placeholder="1003649777" disabled="">
+                            <input type="text" class="form-control collapse multi-collapse" placeholder="1003649777" id="multiCollapse4" disabled="">
                         </div>
 
                     </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class=" col-md-8 text-center">
                             <label asp-for="Username"></label>
-                            <input type="email" asp-for="Username" class="form-control d-none" disabled />
+                            <input type="email" asp-for="Username" class="form-control collapse multi-collapse"id="multiCollapse5" disabled />
                         </div>
 
                     </div>
@@ -85,7 +85,7 @@
                         </div>
                         <div class=" col-md-8 text-center">
                             <label asp-for="Input.PhoneNumber"></label>
-                            <input type="number" asp-for="Input.PhoneNumber" class="form-control d-none" />
+                            <input type="number" asp-for="Input.PhoneNumber" class="form-control collapse multi-collapse" id="multiCollapse6"/>
                         </div>
 
                     </div>
@@ -97,7 +97,7 @@
                         </div>
                         <div class=" col-md-8 text-center">
                             <p>Villavicencio</p>
-                            <select class="form-control d-none">
+                            <select class="form-control collapse multi-collapse" id="multiCollapse7">
                                 <option>Villavicencio</option>
                             </select>
                         </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div class=" col-md-8 text-center">
                             <p>Calle 24 Sur #42a-18</p>
-                            <input type="text" class="form-control d-none" placeholder="Dirección">
+                            <input type="text" class="form-control collapse multi-collapse" id="multiCollapse8" placeholder="Dirección">
                         </div>
 
                     </div>
@@ -124,9 +124,19 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary">Editar</button>
-            <button class="btn btn-primary d-none">Cancelar</button>
-            <button id="update-profile-button" type="submit" class="btn btn-primary d-none">Guardar</button>
+            
+            
+            <div data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" 
+            aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8 multicolllapse 9 update-profile-button">
+            <button class="btn btn-primary collapse multi-collapse" type="button" id="multiCollapse9" >Cancelar</button>
+            <button class="btn btn-primary" type="button"  >Editar</button>
+            
+
+            </div>
+            
+
+           
+            <button  class="btn btn-primary collapse multi-collapse" id="update-profile-button" type="submit" class="btn btn-primary ">Guardar</button>
             
         </form>
 
@@ -134,8 +144,14 @@
     </div>
     
   
+ 
+
 
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+function ocultar("bot""){
+    var elemento = document.getElementById("bot"");
+    elemento.style.display = "none";
+}
 }

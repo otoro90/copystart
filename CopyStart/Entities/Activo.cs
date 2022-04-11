@@ -42,6 +42,8 @@ namespace CopyStart.Entities
 
         public string Ubicacion { get; set; }
 
+        public string Estado { get; set; }
+
         [Display(Name = "Fecha de Registro")]
         [Required]
         public DateTime FechaRegistro { get; set; }
