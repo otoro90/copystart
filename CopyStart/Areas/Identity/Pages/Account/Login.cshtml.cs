@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using CopyStart.Entities;
+using CopyStart.Data;
 
 namespace CopyStart.Areas.Identity.Pages.Account
 {
@@ -21,14 +22,17 @@ namespace CopyStart.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _context;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -89,8 +93,14 @@ namespace CopyStart.Areas.Identity.Pages.Account
                     var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
+                        if (_context.User.Any(x => x.Email == Input.Email && x.PersonaId == null))
+                            return RedirectToAction("CompleteData", "Personas", new { area = "Administracion" });
+                        
+
+                        else { 
                         _logger.LogInformation("User logged in.");
                         return LocalRedirect(returnUrl);
+                        }
                     }
                     if (result.RequiresTwoFactor)
                     {

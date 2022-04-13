@@ -158,5 +158,35 @@ namespace CopyStart.Areas.Administracion.Controllers
         {
             return _context.Persona.Any(e => e.Id == id);
         }
+
+
+        public IActionResult CompleteData()
+        {
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
+            return View();
+        }
+
+        // POST: Administracion/Personas/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
+        {
+            if (ModelState.IsValid)
+            {
+                persona.Id = Guid.NewGuid();
+                
+                _context.Add(persona);
+                var user = _context.User.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+                user.PersonaId = persona.Id;
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Activos", new { area = "Activos" });
+            }
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            return View(persona);
+        }
+
+
     }
 }

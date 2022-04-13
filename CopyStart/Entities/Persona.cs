@@ -34,7 +34,7 @@ namespace CopyStart.Entities
 
         public string Ciudad { get; set; }
                 
-        public int Telefono { get; set; }
+        public long Telefono { get; set; }
 
         public bool Estado { get; set; }
 

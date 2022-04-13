@@ -36,6 +36,8 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+
         }
 
         private async Task LoadAsync(ApplicationUser user)

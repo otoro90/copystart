@@ -21,17 +21,20 @@
     </div>
     <div class="col-md-6 card">
         <div class="card-header row">
-            <h4 class="col-md-8">Detalles del activo</h4>
-            
-                
-                <div class="col-md-2"> 
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
-                    </div>
-                    <div class="col-md-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
-                 </div>
-             
-             </div>
+            <h4 class="col-md-6">Detalles del activo</h4>
+
+
+            <div class="col-md-2 my-1">
+                <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
+            </div>
+            <div class="col-md-2 my-1" >
+                <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
+            </div>
+            <div class="col-md-2 my-1">
+                <button type="button" class="btn btn-block btn-default btn-sm">Solicitar</button>
+            </div>
+
+        </div>
          
     
     <div class="card-body">
