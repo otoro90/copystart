@@ -34,88 +34,90 @@
                 <table class="table  table-hover text-nowrap">
                     <thead class="bg-blue">
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Incidencia)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Descripcion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Ubicacion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FechaSolicitud)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.EstadoSolicitud)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Tecnico)
-                            </th>
+
                             <th>
                                 @Html.DisplayNameFor(model => model.Cliente)
                             </th>
+
                             <th>
-                                @Html.DisplayNameFor(model => model.Activo)
+                                @Html.DisplayNameFor(model => model.Activo.Marca)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Activo.Serial)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Incidencia)
+                            </th>
+
+
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.EstadoSolicitud)
+                            </th>
+
+
+
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Incidencia)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Descripcion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Ubicacion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FechaSolicitud)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EstadoSolicitud)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Tecnico.Id)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Cliente.Id)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Activo.Marca)
-                                </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue">
-                                            <i class="far fa-file"></i>
-                                        </button>
-                                    </a>
+                        <tr>
 
-                                    <a asp-action="Edit" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue">
+                            <td>
+                                @{
+                                    var fullName = item.Cliente.Nombres + " " + item.Cliente.Apellidos;
+                                    @Html.DisplayFor(modelItem => fullName)
+                                }
 
+                            </td>
 
-                                            <i class="fas fa-pen"></i>
-                                        </button>
-                                    </a>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Activo.Marca)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Activo.Serial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Incidencia)
+                            </td>
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EstadoSolicitud)
+                            </td>
+                            
+
+                            
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-default bg-blue">
+                                        <i class="far fa-file"></i>
+                                    </button>
+                                </a>
+
+                                <a asp-action="Edit" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-default bg-blue">
 
 
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </a>
 
 
-                                    <a asp-action="Delete" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </a>
 
 
-                                </td>
-                            </tr>
+                                <a asp-action="Delete" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-default bg-blue">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </a>
+
+
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

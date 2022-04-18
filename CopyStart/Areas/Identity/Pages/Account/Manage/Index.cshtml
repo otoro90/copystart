@@ -6,6 +6,9 @@
 }
 
 
+
+
+
 <div class="card card-primary">
     <div class="card-header">
         <h4>@ViewData["Title"]</h4>
@@ -34,8 +37,8 @@
                                         <label>Nombres</label>
                                     </div>
                                     <div class="col-md-8 text-center">
-                                        <p class="collapses">Haider Johan</p>
-                                        <input type="text" class="form-control collapse multi-collapse" placeholder="Haider Johan" id="multiCollapse1">
+                                        <span class="collapses">@Model.PersonaInput.Nombres</span>
+                                        
                                     </div>
 
                                 </div>
@@ -44,8 +47,8 @@
                                         <label>Apellidos</label>
                                     </div>
                                     <div class="col-md-8 text-center">
-                                        <p class="collapses">Arango Diaz</p>
-                                        <input type="text" class="form-control collapse multi-collapse" placeholder="Arango Diaz" id="multiCollapse2">
+                                        <span  class="collapses">@Model.PersonaInput.Apellidos</span>
+                                       
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -56,14 +59,8 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-8 text-center">
-                                        <p class="collapses">TI</p>
-                                        <select class="form-control collapse multi-collapse" disabled="" id="multiCollapse3">
-                                            <option>TI</option>
-                                            <option>CC</option>
-                                            <option>CE</option>
-                                            <option>Pasaporte</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <span class="collapses">@Model.PersonaInput.TipoDocumento.Codigo</span>
+                                        
                                     </div>
                                 </div>
 
@@ -74,8 +71,8 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-7 text-center">
-                                        <p class="collapses">1003649777</p>
-                                        <input type="text" class="form-control collapse multi-collapse" placeholder="1003649777" id="multiCollapse4" disabled="">
+                                        <span class="collapses">@Model.PersonaInput.NumeroDocumento</span>
+                                       
                                     </div>
 
                                 </div>
@@ -86,7 +83,7 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-8 text-center">
-                                        <p class="collapses">hjarangod@gmail.com</p>
+                                        <span class="collapses">@Model.Username</span>
                                         <input type="email" asp-for="Username" class="form-control collapse multi-collapse" id="multiCollapse5" disabled />
                                     </div>
 
@@ -98,8 +95,8 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-8 text-center">
-                                        <p class="collapses">3194275519</p>
-                                        <input type="number" asp-for="Input.PhoneNumber" class="form-control collapse multi-collapse" id="multiCollapse6" value="3194275519" />
+                                        <span class="collapses">@Model.PersonaInput.Telefono</span>
+                                        <input type="number" asp-for="PersonaInput.Telefono" class="form-control collapse multi-collapse" id="multiCollapse6"  />
                                     </div>
 
                                 </div>
@@ -110,9 +107,10 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-8 text-center">
-                                        <p class="collapses">Villavicencio</p>
-                                        <select class="form-control collapse multi-collapse" id="multiCollapse7">
+                                        <span class="collapses">@Model.PersonaInput.Ciudad</span>
+                                        <select class="form-control collapse multi-collapse" id="multiCollapse7" asp-for="PersonaInput.Ciudad">
                                             <option>Villavicencio</option>
+                                            <option>Bogotá</option>
                                         </select>
                                     </div>
 
@@ -124,15 +122,15 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-8 text-center">
-                                        <p class="collapses">Calle 24 sur n42a 18</p>
-                                        <input type="text" class="form-control collapse multi-collapse" id="multiCollapse8" placeholder="Calle 24 sur n42a 18">
+                                        <span class="collapses">@Model.PersonaInput.Direccion</span>
+                                        <input type="text" class="form-control collapse multi-collapse" id="multiCollapse8" placeholder="Calle 24 sur n42a 18" asp-for="PersonaInput.Direccion">
                                     </div>
 
                                 </div>
                                 <div>
 
                                     <button class="btn btn-primary " type="button" id="btntoggle" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
-                                            aria-controls="multiCollapse1 multiCollapse2 multiCollapse3 multiCollapse4 multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8  update-profile-button" onclick="alternarInput()">
+                                            aria-controls=" multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8  update-profile-button" onclick="alternarInput()">
                                         Editar
                                     </button>
 

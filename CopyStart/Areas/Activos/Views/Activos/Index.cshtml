@@ -58,13 +58,7 @@
                                 @Html.DisplayNameFor(model => model.Modelo)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Ubicacion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FechaRegistro)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Persona)
+                                @Html.DisplayNameFor(model => model.Estado)
                             </th>
                             <th></th>
                         </tr>
@@ -72,56 +66,54 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Serial)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoActivo.Codigo)
-                                </td>
-                      
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Marca)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Modelo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Ubicacion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FechaRegistro)
-                                </td>
-                                <td>
-                                    @{
-                                        var fullName = item.Persona.Nombres + " " + item.Persona.Apellidos;
-                                        @Html.DisplayFor(modelItem => fullName)
-                                    }
-                                </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue">
-                                            <i class="far fa-file"></i></button>
-                                            </a> 
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Serial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoActivo.Codigo)
+                            </td>
 
-                                    <a asp-action="Edit" asp-route-id="@item.Id">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Marca)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Modelo)
+                            </td>
+                            
+                           
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Estado)
+                            </td>
+
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id">
                                     <button type="button" class="btn btn-default bg-blue">
-                                    
-                                        
-                                        <i class="fas fa-pen"></i>                                       
-                                        </button>
-                                        </a> 
-                                        
-                                    
-                                    
-                                    
-                                    <a asp-action="Delete" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue" >
-                                        <i class="far fa-trash-alt"></i></button></a>
-                                    
-                                    
-                                </td>
-                            </tr>
+                                        <i class="far fa-file"></i>
+                                    </button>
+                                </a>
+
+                                <a asp-action="Edit" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-default bg-blue">
+
+
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </a>
+
+
+
+
+                                <a asp-action="Delete" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-default bg-blue">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </a>
+
+
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

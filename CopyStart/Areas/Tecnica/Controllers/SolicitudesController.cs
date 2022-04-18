@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -17,10 +18,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
     public class SolicitudesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SolicitudesController(ApplicationDbContext context)
+        public SolicitudesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Tecnica/Solicitudes
@@ -54,7 +57,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // GET: Tecnica/Solicitudes/Create
         public IActionResult Create()
         {
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca");
+            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id",  "Modelo");
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
             return View();
@@ -67,9 +70,17 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,Ubicacion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
+            var user = await _userManager.GetUserAsync(User);
+            solicitud.Id = Guid.NewGuid();
+            solicitud.ClienteId = (Guid)user.PersonaId;
+            solicitud.FechaSolicitud = DateTime.Now;
+            solicitud.EstadoSolicitud = "Sin tramitar";
+            
+            
+
             if (ModelState.IsValid)
             {
-                solicitud.Id = Guid.NewGuid();
+               
                 _context.Add(solicitud);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

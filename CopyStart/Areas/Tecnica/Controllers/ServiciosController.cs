@@ -25,7 +25,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // GET: Tecnica/Servicios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Diagnostico).Include(s => s.Solicitudes).Include(s => s.Soportes);
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Diagnostico.TipoServicio).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -39,7 +39,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             var servicio = await _context.Servicio
                 .Include(s => s.Activo)
-                .Include(s => s.Diagnostico)
+                //.Include(s => s.Diagnostico.TipoServicio)
+                .Include(s => s.Diagnostico).ThenInclude( x=> x.TipoServicio)
                 .Include(s => s.Solicitudes)
                 .Include(s => s.Soportes)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -71,6 +72,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (ModelState.IsValid)
             {
                 servicio.Id = Guid.NewGuid();
+
                 _context.Add(servicio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

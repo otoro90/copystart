@@ -45,26 +45,9 @@
                             <input asp-for="Ubicacion" class="form-control" />
                             <span asp-validation-for="Ubicacion" class="text-danger"></span>
                         </div>
+                        
                         <div class="form-group">
-                            <label asp-for="FechaSolicitud" class="control-label"></label>
-                            <input asp-for="FechaSolicitud" class="form-control" />
-                            <span asp-validation-for="FechaSolicitud" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EstadoSolicitud" class="control-label"></label>
-                            <input asp-for="EstadoSolicitud" class="form-control" />
-                            <span asp-validation-for="EstadoSolicitud" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TecnicoId" class="control-label"></label>
-                            <select asp-for="TecnicoId" class="form-control" asp-items="ViewBag.TecnicoId"></select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ClienteId" class="control-label"></label>
-                            <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ActivoId" class="control-label"></label>
+                            <label  class="control-label">Serial del Activo</label>
                             <select asp-for="ActivoId" class="form-control" asp-items="ViewBag.ActivoId"></select>
                         </div>
                         <div class="form-group">

@@ -180,6 +180,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 _context.Add(persona);
                 var user = _context.User.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
                 user.PersonaId = persona.Id;
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Activos", new { area = "Activos" });
             }

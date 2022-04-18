@@ -36,7 +36,7 @@ namespace CopyStart.Entities
                 
         public long Telefono { get; set; }
 
-        public bool Estado { get; set; }
+        public bool? Estado { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; }
     }

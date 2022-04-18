@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CopyStart.Areas.Activos.Controllers
 {
@@ -16,10 +17,12 @@ namespace CopyStart.Areas.Activos.Controllers
     public class ActivosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ActivosController(ApplicationDbContext context)
+        public ActivosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Activos/Activos
@@ -64,9 +67,13 @@ namespace CopyStart.Areas.Activos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
         {
+            var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
                 activo.Id = Guid.NewGuid();
+                activo.Estado = "Inactivo";
+                activo.FechaRegistro = DateTime.Now;
+                activo.PersonaId = (Guid)user.PersonaId;
                 _context.Add(activo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -166,5 +173,11 @@ namespace CopyStart.Areas.Activos.Controllers
         {
             return _context.Activo.Any(e => e.Id == id);
         }
+
+        
+
+
+
+
     }
 }

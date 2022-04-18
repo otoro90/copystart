@@ -9,34 +9,29 @@ namespace CopyStart.Entities
     [Table("Solicitudes")]
     public class Solicitud
     {
-        public Solicitud()
-        {
-
-            FechaSolicitud = DateTime.Now;
-
-        }
+        
         [Key]
         public Guid Id { get; set; }
         
-        [Required]
+       
         [MaxLength(150)]
         public string Incidencia { get; set; }
 
-        [Required]
+        
         [MaxLength(1024)]
         public string Descripcion { get; set; }
 
         public string Ubicacion { get; set; }
 
         [Display(Name = "Fecha")]
-        [Required]
+        
         public DateTime FechaSolicitud { get; set; }
 
         [Display(Name = "Estado")]
-        [Required]
+        
         public string EstadoSolicitud { get; set; }
 
-        public Guid TecnicoId { get; set; }
+        public Guid? TecnicoId { get; set; }
         
         [Display(Name = "Tecnico")]
         [ForeignKey("TecnicoId")]
