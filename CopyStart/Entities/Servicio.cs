@@ -18,7 +18,7 @@ namespace CopyStart.Entities
         [Display(Name = "Fecha de Finalización")]
         public DateTime FechaRealizacion { get; set; }
 
-        public Guid DiagnosticoId { get; set; }
+        public Guid? DiagnosticoId { get; set; }
 
         [Display(Name = "Diagnostico")]
         [ForeignKey ("DiagnosticoId")]

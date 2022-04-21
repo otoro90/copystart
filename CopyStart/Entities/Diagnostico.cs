@@ -8,12 +8,7 @@ namespace CopyStart.Entities
     [Table("Diagnosticos")]
     public class Diagnostico
     {
-        public Diagnostico()
-        {
-
-            FechaDiagnostico = DateTime.Now;
-
-        }
+       
 
 
         [Key]
@@ -27,8 +22,6 @@ namespace CopyStart.Entities
         [Required]
         public DateTime FechaDiagnostico { get; set; }
 
-
-        
         public Guid TipoServicioId { get; set; }
 
         [Display(Name = "Tipo de Servicio")]

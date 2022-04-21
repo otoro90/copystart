@@ -1,44 +1,52 @@
-﻿@model CopyStart.Entities.Diagnostico
+﻿@model CopyStart.Areas.Tecnica.Models.CreateDiagnosticosModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Diagnostico</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Descripción" class="control-label"></label>
-                <input asp-for="Descripción" class="form-control" />
-                <span asp-validation-for="Descripción" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaDiagnostico" class="control-label"></label>
-                <input asp-for="FechaDiagnostico" class="form-control" />
-                <span asp-validation-for="FechaDiagnostico" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TipoServicioId" class="control-label"></label>
-                <select asp-for="TipoServicioId" class ="form-control" asp-items="ViewBag.TipoServicioId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoportesId" class="control-label"></label>
-                <select asp-for="SoportesId" class ="form-control" asp-items="ViewBag.SoportesId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <div class="col-md-3 "></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="col-md-6">
+        <div class="mt-3">
+            <div class="ml-3">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>Diagnostico</b></h2>
+
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="TipoServicioId" class="control-label"></label>
+                                <select asp-for="TipoServicioId" class="form-control" asp-items="ViewBag.TipoServicioId"></select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="Descripción" class="control-label"></label>
+                                <input asp-for="Descripción" class="form-control" />
+                                <span asp-validation-for="Descripción" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                
+                                <input type="text" asp-for="SolicitudId" class="form-control" value="@ViewData["SolicitudId"]" hidden>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 "></div>
 </div>
 
 @section Scripts {

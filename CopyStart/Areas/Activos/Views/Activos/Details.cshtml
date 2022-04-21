@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var urlSolicitudes = "/Tecnica/Solicitudes/Create?idActivo="+Model.Id;
 }
 
 
@@ -31,7 +32,7 @@
                 <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
             </div>
             <div class="col-md-2 my-1">
-                <button type="button" class="btn btn-block btn-default btn-sm" ><a href="/Tecnica/Solicitudes/Create">Solicitar</a></button>
+                <button type="button" class="btn btn-block btn-default btn-sm" ><a href="@urlSolicitudes">Solicitar</a></button>
             </div>
 
         </div>
@@ -49,7 +50,7 @@
             @Html.DisplayNameFor(model => model.TipoActivo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoActivo.Codigo)
+            @Html.DisplayFor(model => model.TipoActivo.Nombre)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Descripcion)
@@ -84,8 +85,8 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Persona)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Persona.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Persona.Nombres) @Html.DisplayFor(model => model.Persona.Apellidos)
         </dd>
     </dl>
     </div>

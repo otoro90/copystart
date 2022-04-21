@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using CopyStart.Areas.Tecnica.Models;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -50,10 +51,11 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Diagnosticos/Create
-        public IActionResult Create()
+        public IActionResult Create(string idSolicitud)
         {
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
             ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo");
+            ViewData["SolicitudId"] = idSolicitud;
             return View();
         }
 
@@ -62,12 +64,27 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId")] Diagnostico diagnostico)
+        public async Task<IActionResult> Create([Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId,SolicitudId")] CreateDiagnosticosModel diagnostico)
         {
+            diagnostico.FechaDiagnostico = DateTime.Now;
             if (ModelState.IsValid)
             {
                 diagnostico.Id = Guid.NewGuid();
                 _context.Add(diagnostico);
+                var servicio = new Servicio();
+                
+               
+                servicio.Id= Guid.NewGuid();
+                servicio.SolicitudId = (Guid)diagnostico.SolicitudId;
+                var solicitud = await _context.Solicitud
+                 .Include(s => s.Activo)
+                 .Include(s => s.Cliente)
+                 .Include(s => s.Tecnico)
+                 .FirstOrDefaultAsync(m => m.Id == servicio.SolicitudId);
+                servicio.DiagnosticoId = diagnostico.Id;
+                servicio.ActivoId = solicitud.ActivoId;
+                servicio.Estado = "Por confirmar";
+                _context.Add(servicio);               
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

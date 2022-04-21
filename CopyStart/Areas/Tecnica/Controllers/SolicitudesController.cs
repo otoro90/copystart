@@ -9,6 +9,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using CopyStart.Areas.Tecnica.Models;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -30,7 +31,9 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Solicitud.Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico);
-            return View(await applicationDbContext.ToListAsync());
+            var solicitudes = await applicationDbContext.ToListAsync();
+
+            return View(solicitudes);
         }
 
         // GET: Tecnica/Solicitudes/Details/5
@@ -40,6 +43,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 return NotFound();
             }
+
+
 
             var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
@@ -55,12 +60,14 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Create
-        public IActionResult Create()
+        public IActionResult Create(string idActivo)
         {
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id",  "Modelo");
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Select(x => new { Id = x.Id, Texto = x.Marca + " - " + x.Modelo + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
+            
             return View();
+
         }
 
         // POST: Tecnica/Solicitudes/Create
@@ -75,12 +82,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
             solicitud.ClienteId = (Guid)user.PersonaId;
             solicitud.FechaSolicitud = DateTime.Now;
             solicitud.EstadoSolicitud = "Sin tramitar";
-            
-            
+
+
 
             if (ModelState.IsValid)
             {
-               
+
                 _context.Add(solicitud);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -184,5 +191,145 @@ namespace CopyStart.Areas.Tecnica.Controllers
         {
             return _context.Solicitud.Any(e => e.Id == id);
         }
+
+
+
+        public async Task<IActionResult> TramitarSolicitudAsync(Guid id)
+        {
+         
+
+            var solicitud = await _context.Solicitud
+                .Include(s => s.Activo)
+                .Include(s => s.Cliente)
+                .Include(s => s.Tecnico)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            return View(solicitud);
+
+        }
+
+
+
+        // GET: Tecnica/Solicitudes/AsignarTecnico
+        public async Task<IActionResult> AsignarTecnicoAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+          
+            var solicitud = await _context.Solicitud.FindAsync(id);
+          
+            
+            ViewData["TecnicoId"] = new SelectList(_context.Persona.Select(x=> new {Id = x.Id , Texto = x.Nombres+" "+x.Apellidos+" - "+ x.NumeroDocumento}), "Id", "Texto" );
+          
+
+
+
+
+            return View(solicitud);
+
+        }
+
+        
+        // POST: Administracion/Personas/AsignarTecnico
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AsignarTecnico(Guid? id,[Bind("TecnicoId")] AsignarTecnico tecnico)
+        {
+            var solicitud = await _context.Solicitud
+                .Include(s => s.Activo)
+                .Include(s => s.Cliente)
+                .Include(s => s.Tecnico)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (ModelState.IsValid)
+            {
+                solicitud.EstadoSolicitud = "Tramitada";
+                solicitud.TecnicoId = tecnico.TecnicoId;
+                await _context.SaveChangesAsync();
+            }
+
+
+           
+            return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });
+
+        }
+
+
+
+
+
+
+        public async Task<IActionResult> CancelarSolicitudAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var solicitud = await _context.Solicitud
+                .Include(s => s.Activo)
+                .Include(s => s.Cliente)
+                .Include(s => s.Tecnico)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewData["Descripcion"] = solicitud.Descripcion;
+            
+            return View(solicitud);
+
+        }
+
+
+        // POST: Administracion/Personas/AsignarTecnico
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelarSolicitud(Guid? id, [Bind("Descripcion")] EditarDesc desc)
+        {
+            var solicitud = await _context.Solicitud
+                .Include(s => s.Activo)
+                .Include(s => s.Cliente)
+                .Include(s => s.Tecnico)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (ModelState.IsValid)
+            {
+                solicitud.EstadoSolicitud = "Cancelada";
+                solicitud.Descripcion = desc.Descripcion;
+                await _context.SaveChangesAsync();
+            }
+
+
+
+            return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });
+
+        }
+
+        public async Task<IActionResult> VerServicioAsync(Guid? id)
+        {
+            
+
+            var servicio = await _context.Servicio
+                .Include(s => s.Activo)
+                .Include(s => s.Diagnostico)
+                .Include(s => s.Solicitudes)
+                .FirstOrDefaultAsync(m => m.SolicitudId == id);
+
+            
+
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+
+        }
+
+
+
     }
+
+
+
 }
+

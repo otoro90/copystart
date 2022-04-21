@@ -176,9 +176,18 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+
+
+
+
         private bool ServicioExists(Guid id)
         {
             return _context.Servicio.Any(e => e.Id == id);
         }
+
+
+     
+
     }
 }

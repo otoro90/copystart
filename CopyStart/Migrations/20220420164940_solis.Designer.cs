@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220420164940_solis")]
+    partial class solis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,6 +285,9 @@ namespace CopyStart.Migrations
                     b.Property<DateTime>("FechaDiagnostico")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<Guid?>("SolicitudId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid?>("SoportesId")
                         .HasColumnType("uuid");
 
@@ -290,6 +295,8 @@ namespace CopyStart.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SolicitudId");
 
                     b.HasIndex("SoportesId");
 
@@ -786,6 +793,10 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Diagnostico", b =>
                 {
+                    b.HasOne("CopyStart.Entities.Solicitud", "Solicitudes")
+                        .WithMany()
+                        .HasForeignKey("SolicitudId");
+
                     b.HasOne("CopyStart.Entities.Soporte", "Soportes")
                         .WithMany()
                         .HasForeignKey("SoportesId");
@@ -795,6 +806,8 @@ namespace CopyStart.Migrations
                         .HasForeignKey("TipoServicioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Solicitudes");
 
                     b.Navigation("Soportes");
 

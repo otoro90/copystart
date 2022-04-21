@@ -1,0 +1,44 @@
+﻿@model CopyStart.Entities.Solicitud
+
+
+
+    <div class="row">
+        <div class="col-md-3 "></div>
+
+        <div class="col-md-6">
+            <div class="mt-3">
+                <div class="ml-3">
+                    <div class="card card-secondary">
+                        <div class="card-header bg-gray">
+                            <h2 class="card-title"><b>Tramitar Solicitud</b></h2>
+                        </div>
+
+
+                        <div class="card-body row">
+                            <div class="mb-3 col-12">
+                                <button type="button" class="btn btn-block btn-default btn-lg"><a asp-action="AsignarTecnico" asp-route-id="@Model.Id">Asignar Tecnico </a> </button>
+                            </div>
+                            <div class="mb-3 col-12">
+                                <button type="button" class="btn btn-block btn-default btn-lg"><a asp-action="CancelarSolicitud" asp-route-id="@Model.Id">Cancelar solicutud </a> </button>
+                            </div>
+                            <div class="mb-3 col-12">
+                                <button type="button" class="btn btn-block btn-default btn-lg"><a asp-action="Details" asp-route-id="@Model.Id"> Volver </a> </button>
+                            </div>
+
+                            
+
+                        </div>
+
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 "></div>
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

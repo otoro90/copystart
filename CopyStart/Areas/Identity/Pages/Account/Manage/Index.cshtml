@@ -37,7 +37,7 @@
                                         <label>Nombres</label>
                                     </div>
                                     <div class="col-md-8 text-center">
-                                        <span class="collapses">@Model.PersonaInput.Nombres</span>
+                                        <span >@Model.PersonaInput.Nombres</span>
                                         
                                     </div>
 
@@ -47,7 +47,7 @@
                                         <label>Apellidos</label>
                                     </div>
                                     <div class="col-md-8 text-center">
-                                        <span  class="collapses">@Model.PersonaInput.Apellidos</span>
+                                        <span >@Model.PersonaInput.Apellidos</span>
                                        
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-8 text-center">
-                                        <span class="collapses">@Model.PersonaInput.TipoDocumento.Codigo</span>
+                                        <span >@Model.PersonaInput.TipoDocumento.Codigo</span>
                                         
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                         </label>
                                     </div>
                                     <div class=" col-md-7 text-center">
-                                        <span class="collapses">@Model.PersonaInput.NumeroDocumento</span>
+                                        <span >@Model.PersonaInput.NumeroDocumento</span>
                                        
                                     </div>
 
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class=" col-md-8 text-center">
                                         <span class="collapses">@Model.PersonaInput.Direccion</span>
-                                        <input type="text" class="form-control collapse multi-collapse" id="multiCollapse8" placeholder="Calle 24 sur n42a 18" asp-for="PersonaInput.Direccion">
+                                        <input type="text" class="form-control collapse multi-collapse" id="multiCollapse8"  asp-for="PersonaInput.Direccion">
                                     </div>
 
                                 </div>
@@ -156,26 +156,10 @@
 
 </div>
  
-<script>
-    const btn = document.getElementById('btntoggle');
 
-  
-    btn.addEventListener('click', function handleClick() {
-        const initialText = 'Editar';
-       
-        if (btn.textContent.toLowerCase().includes(initialText.toLowerCase())) {
-            btn.textContent = 'Cancelar';
-            btn.classList.toggle("btn-primary").toggle("btn btn-default bg-gray");
-        } else {
-            btn.textContent = initialText;
-            btn.classList.toggle("btn-primary").toggle("btn btn-default bg-gray");
-        }
-    });
-
-</script>
 <script >
     function alternarInput() {
-        document.querySelectorAll("p.collapses").forEach(x => x.classList.toggle("d-none"))
+        document.querySelectorAll("span.collapses").forEach(x => x.classList.toggle("d-none"))
 
     }
 

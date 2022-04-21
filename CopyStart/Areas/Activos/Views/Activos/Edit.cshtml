@@ -27,14 +27,15 @@
                         <div class="card-body">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
+                           
                             <div class="form-group">
                                 <label asp-for="Serial" class="control-label"></label>
-                                <input asp-for="Serial" class="form-control" disabled/>
+                                <input type="text" asp-for="Serial" class="form-control" readonly />
                                 <span asp-validation-for="Serial" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="TipoActivoId" class="control-label">@Html.DisplayNameFor(model => model.TipoActivo)</label>
-                                <select asp-for="TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId" disabled></select>
+                                <select asp-for="TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId" readonly></select>
                                 <span asp-validation-for="TipoActivoId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -58,14 +59,17 @@
                                 <span asp-validation-for="Ubicacion" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="FechaRegistro" class="control-label"></label>
-                                <input asp-for="FechaRegistro" class="form-control" />
-                                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+
+                                <input asp-for="FechaRegistro" class="form-control" hidden />
+
                             </div>
                             <div class="form-group">
-                                <label asp-for="PersonaId" class="control-label">@Html.DisplayNameFor(model => model.Persona)</label>
-                                <select asp-for="PersonaId" class="form-control" asp-items="ViewBag.PersonaId"></select>
-                                <span asp-validation-for="PersonaId" class="text-danger"></span>
+
+                                <select asp-for="PersonaId" class="form-control" asp-items="ViewBag.PersonaId" hidden></select>
+
+                            </div>
+                            <div class="form-group">
+                               <input class="form-control" asp-for="Estado" hidden/>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />

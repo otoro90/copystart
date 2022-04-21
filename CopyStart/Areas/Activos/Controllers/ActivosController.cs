@@ -56,7 +56,7 @@ namespace CopyStart.Areas.Activos.Controllers
         public IActionResult Create()
         {
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo");
+            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
             return View();
         }
 
@@ -98,6 +98,9 @@ namespace CopyStart.Areas.Activos.Controllers
             }
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
+            ViewData["Serial"] = activo.Serial;
+            ViewData["Estado"] = activo.Estado;
+
             return View(activo);
         }
 
@@ -106,13 +109,13 @@ namespace CopyStart.Areas.Activos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId,Estado")] Activo activo)
         {
             if (id != activo.Id)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
