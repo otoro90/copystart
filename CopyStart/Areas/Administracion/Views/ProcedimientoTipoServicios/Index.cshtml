@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    
 }
 
 <h1>Index</h1>
@@ -38,8 +39,8 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProcedimientoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProcedimientoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProcedimientoId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.TipoServicioId" asp-route-username="@item.ProcedimientoId">Details</a> |
+                <a asp-action="Delete" asp-route-id1="@item.TipoServicioId" asp-route-id2="@item.ProcedimientoId">Delete</a>
             </td>
         </tr>
 }

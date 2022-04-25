@@ -59,6 +59,9 @@ namespace CopyStart.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<ProcedimientoTipoServicio>()
+          .HasKey(c => new { c.TipoServicioId, c.ProcedimientoId });
+
             modelBuilder.Entity<ApplicationUser>(b =>
             {
                 b.ToTable("Users");

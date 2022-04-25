@@ -7,12 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
     [Area("Administracion")]
-    [Authorize]
     public class ProcedimientoTipoServiciosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -30,9 +28,9 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/ProcedimientoTipoServicios/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid? id, Guid? id2)
         {
-            if (id == null)
+            if ((id == null))
             {
                 return NotFound();
             }
@@ -40,7 +38,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio
                 .Include(p => p.Procedimientos)
                 .Include(p => p.TipoServicio)
-                .FirstOrDefaultAsync(m => m.ProcedimientoId == id);
+                .FirstOrDefaultAsync(m => m.TipoServicioId == id);
             if (procedimientoTipoServicio == null)
             {
                 return NotFound();
@@ -62,11 +60,11 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProcedimientoId,Numero,TipoServicioId")] ProcedimientoTipoServicio procedimientoTipoServicio)
+        public async Task<IActionResult> Create([Bind("Numero,ProcedimientoId,TipoServicioId")] ProcedimientoTipoServicio procedimientoTipoServicio)
         {
             if (ModelState.IsValid)
             {
-                procedimientoTipoServicio.ProcedimientoId = Guid.NewGuid();
+                
                 _context.Add(procedimientoTipoServicio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -99,9 +97,9 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ProcedimientoId,Numero,TipoServicioId")] ProcedimientoTipoServicio procedimientoTipoServicio)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Numero,ProcedimientoId,TipoServicioId")] ProcedimientoTipoServicio procedimientoTipoServicio)
         {
-            if (id != procedimientoTipoServicio.ProcedimientoId)
+            if (id != procedimientoTipoServicio.TipoServicioId)
             {
                 return NotFound();
             }
@@ -115,7 +113,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProcedimientoTipoServicioExists(procedimientoTipoServicio.ProcedimientoId))
+                    if (!ProcedimientoTipoServicioExists(procedimientoTipoServicio.TipoServicioId))
                     {
                         return NotFound();
                     }
@@ -132,9 +130,10 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/ProcedimientoTipoServicios/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        [Route("Delete/{id1}/{id2}")]
+        public async Task<IActionResult> Delete(Guid? id1, Guid? id2)
         {
-            if (id == null)
+            if (id1 == null)
             {
                 return NotFound();
             }
@@ -142,7 +141,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio
                 .Include(p => p.Procedimientos)
                 .Include(p => p.TipoServicio)
-                .FirstOrDefaultAsync(m => m.ProcedimientoId == id);
+                .FirstOrDefaultAsync(m => m.TipoServicioId == id1);
             if (procedimientoTipoServicio == null)
             {
                 return NotFound();
@@ -154,9 +153,9 @@ namespace CopyStart.Areas.Administracion.Controllers
         // POST: Administracion/ProcedimientoTipoServicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, Guid? id2)
         {
-            var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio.FindAsync(id);
+            var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio.FindAsync(id, id2);
             _context.ProcedimientoTipoServicio.Remove(procedimientoTipoServicio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -164,7 +163,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
         private bool ProcedimientoTipoServicioExists(Guid id)
         {
-            return _context.ProcedimientoTipoServicio.Any(e => e.ProcedimientoId == id);
+            return _context.ProcedimientoTipoServicio.Any(e => e.TipoServicioId == id);
         }
     }
 }

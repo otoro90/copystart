@@ -9,15 +9,19 @@ namespace CopyStart.Entities
     [Table("ProcedimientosTipoServicios")]
     public class ProcedimientoTipoServicio
     {
-        [Key]
-        public Guid ProcedimientoId { get; set; }
+       
+        
 
         [Required]
         public int Numero { get; set; }
 
+
+        public Guid ProcedimientoId { get; set; }
+
         [Display(Name = "Procedimientos")]
         [ForeignKey("ProcedimientoId")]
         public Procedimiento Procedimientos { get; set; }
+
 
         public Guid TipoServicioId { get; set; }
        

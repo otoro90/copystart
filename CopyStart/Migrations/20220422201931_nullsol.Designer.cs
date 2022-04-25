@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220422201931_nullsol")]
+    partial class nullsol
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,18 +396,18 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.ProcedimientoTipoServicio", b =>
                 {
-                    b.Property<Guid>("TipoServicioId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ProcedimientoId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Numero")
                         .HasColumnType("integer");
 
-                    b.HasKey("TipoServicioId", "ProcedimientoId");
+                    b.Property<Guid>("TipoServicioId")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("ProcedimientoId");
+                    b.HasKey("ProcedimientoId");
+
+                    b.HasIndex("TipoServicioId");
 
                     b.ToTable("ProcedimientosTipoServicios");
                 });
