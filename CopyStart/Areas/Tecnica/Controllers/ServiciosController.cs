@@ -25,7 +25,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // GET: Tecnica/Servicios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Diagnostico.TipoServicio).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes);
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s=>s.TipoServicios).Include(s => s.Diagnostico);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -38,11 +38,11 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
 
             var servicio = await _context.Servicio
-                .Include(s => s.Activo)
-                //.Include(s => s.Diagnostico.TipoServicio)
-                .Include(s => s.Diagnostico).ThenInclude( x=> x.TipoServicio)
+                .Include(s => s.Activo)                          
                 .Include(s => s.Solicitudes)
                 .Include(s => s.Soportes)
+                .Include(s => s.TipoServicios)
+                .Include(s => s.Diagnostico)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (servicio == null)
             {
@@ -156,6 +156,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 .Include(s => s.Diagnostico)
                 .Include(s => s.Solicitudes)
                 .Include(s => s.Soportes)
+                .Include(s => s.TipoServicios)
+                .Include(s => s.Diagnostico)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (servicio == null)
             {
@@ -187,7 +189,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
 
-     
+        
 
     }
 }

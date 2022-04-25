@@ -22,11 +22,7 @@ namespace CopyStart.Entities
         [Required]
         public DateTime FechaDiagnostico { get; set; }
 
-        public Guid TipoServicioId { get; set; }
-
-        [Display(Name = "Tipo de Servicio")]
-        [ForeignKey("TipoServicioId")]
-        public TipoServicio TipoServicio { get; set; }
+        
 
         
         public Guid? SoportesId { get; set; }

@@ -9,8 +9,8 @@ namespace CopyStart.Entities
     [Table("ProcedimientosTipoServicios")]
     public class ProcedimientoTipoServicio
     {
-       
-        
+       [Key]
+        public Guid Id { get; set; }
 
         [Required]
         public int Numero { get; set; }

@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220425175228_add-migration fia")]
+    partial class addmigrationfia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,9 +288,14 @@ namespace CopyStart.Migrations
                     b.Property<Guid?>("SoportesId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("TipoServicioId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SoportesId");
+
+                    b.HasIndex("TipoServicioId");
 
                     b.ToTable("Diagnosticos");
                 });
@@ -498,9 +505,6 @@ namespace CopyStart.Migrations
                     b.Property<Guid?>("SoportesId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("TipoServicioId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ActivoId");
@@ -510,8 +514,6 @@ namespace CopyStart.Migrations
                     b.HasIndex("SolicitudId");
 
                     b.HasIndex("SoportesId");
-
-                    b.HasIndex("TipoServicioId");
 
                     b.ToTable("Servicios");
                 });
@@ -797,7 +799,15 @@ namespace CopyStart.Migrations
                         .WithMany()
                         .HasForeignKey("SoportesId");
 
+                    b.HasOne("CopyStart.Entities.TipoServicio", "TipoServicio")
+                        .WithMany()
+                        .HasForeignKey("TipoServicioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Soportes");
+
+                    b.Navigation("TipoServicio");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Persona", b =>
@@ -871,10 +881,6 @@ namespace CopyStart.Migrations
                         .WithMany()
                         .HasForeignKey("SoportesId");
 
-                    b.HasOne("CopyStart.Entities.TipoServicio", "TipoServicios")
-                        .WithMany()
-                        .HasForeignKey("TipoServicioId");
-
                     b.Navigation("Activo");
 
                     b.Navigation("Diagnostico");
@@ -882,8 +888,6 @@ namespace CopyStart.Migrations
                     b.Navigation("Solicitudes");
 
                     b.Navigation("Soportes");
-
-                    b.Navigation("TipoServicios");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ServicioProcedimiento", b =>

@@ -153,5 +153,15 @@ namespace CopyStart.Areas.Parametricas.Controllers
         {
             return _context.TipoServicio.Any(e => e.Id == id);
         }
+
+
+        public async Task<IActionResult> VerProcedimientosAsync(Guid idTipoServicio)
+        {
+            var procedimientos = _context.ProcedimientoTipoServicio.Where(e => e.TipoServicioId == idTipoServicio).Include(s => s.Procedimientos).Include(s => s.TipoServicio);
+            return View(await procedimientos.ToListAsync());
+
+
+        }
+
     }
 }

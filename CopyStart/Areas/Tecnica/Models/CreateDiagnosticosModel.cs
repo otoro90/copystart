@@ -10,6 +10,8 @@ namespace CopyStart.Areas.Tecnica.Models
     public class CreateDiagnosticosModel : Diagnostico
     {
         public Guid? SolicitudId { get; set; }
+
+        public Guid? TipoServicioId { get; set; }
         
     }
 }

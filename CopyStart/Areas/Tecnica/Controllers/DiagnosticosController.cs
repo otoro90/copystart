@@ -26,7 +26,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // GET: Tecnica/Diagnosticos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Diagnostico.Include(d => d.Soportes).Include(d => d.TipoServicio);
+            var applicationDbContext = _context.Diagnostico.Include(d => d.Soportes);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -39,8 +39,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
 
             var diagnostico = await _context.Diagnostico
-                .Include(d => d.Soportes)
-                .Include(d => d.TipoServicio)
+                .Include(d => d.Soportes)               
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (diagnostico == null)
             {
@@ -76,6 +75,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                
                 servicio.Id= Guid.NewGuid();
                 servicio.SolicitudId = (Guid)diagnostico.SolicitudId;
+                servicio.TipoServicioId = diagnostico.TipoServicioId;
                 var solicitud = await _context.Solicitud
                  .Include(s => s.Activo)
                  .Include(s => s.Cliente)
@@ -84,6 +84,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 servicio.DiagnosticoId = diagnostico.Id;
                 servicio.ActivoId = solicitud.ActivoId;
                 servicio.Estado = "Por confirmar";
+                servicio.FechaRealizacion = DateTime.MinValue;
                 _context.Add(servicio);               
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -107,7 +108,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return NotFound();
             }
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
-            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);
+            
             return View(diagnostico);
         }
 
@@ -116,7 +117,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId")] Diagnostico diagnostico)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Descripción,FechaDiagnostico,SoportesId")] Diagnostico diagnostico)
         {
             if (id != diagnostico.Id)
             {
@@ -144,7 +145,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
-            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);
+            
             return View(diagnostico);
         }
 
@@ -157,8 +158,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
 
             var diagnostico = await _context.Diagnostico
-                .Include(d => d.Soportes)
-                .Include(d => d.TipoServicio)
+                .Include(d => d.Soportes)               
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (diagnostico == null)
             {

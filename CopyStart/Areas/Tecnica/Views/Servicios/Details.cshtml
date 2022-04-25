@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     var urlDiagnostico = "/Tecnica/Diagnosticos/Details/" + Model.DiagnosticoId;
+    var urlProcedimientos = "/Parametricas/TipoServicios/VerProcedimientos?idTipoServicio=" + Model.TipoServicioId;
 }
 
 
@@ -24,6 +25,10 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlDiagnostico">Ver Diagnostico </a> </button>
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="#">Confirmar Servicio </a> </button>
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlProcedimientos">Ver procedimientos </a> </button>
+
+
                 </div>
             </div>
         </div>

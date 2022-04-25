@@ -60,7 +60,8 @@ namespace CopyStart.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ProcedimientoTipoServicio>()
-          .HasKey(c => new { c.TipoServicioId, c.ProcedimientoId });
+          .HasIndex(p => new { p.TipoServicioId, p.ProcedimientoId })
+            .IsUnique(true);
 
             modelBuilder.Entity<ApplicationUser>(b =>
             {
