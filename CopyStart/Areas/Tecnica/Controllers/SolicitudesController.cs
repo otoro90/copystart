@@ -28,7 +28,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes
 
-        [Authorize(Policy = "VerListadoCompletoSolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Solicitud.Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico);
@@ -38,7 +38,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Details/5
-        [Authorize(Policy = "VerInformacionSolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -62,7 +62,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Create
-        [Authorize(Policy = "CrearSolicitudes")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public IActionResult Create(string idActivo)
         {
             ViewData["ActivoId"] = new SelectList(_context.Activo.Select(x => new { Id = x.Id, Texto = x.Marca + " - " + x.Modelo + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
@@ -78,7 +78,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "CrearSolicitudes")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,Ubicacion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -103,7 +103,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Edit/5
-        [Authorize(Policy = "EditarSolicitudes")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -127,7 +127,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "EditarSolicitudes")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Incidencia,Descripcion,Ubicacion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             if (id != solicitud.Id)
@@ -162,7 +162,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Delete/5
-        [Authorize(Policy = "EliminarSolicitudes")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -186,7 +186,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // POST: Tecnica/Solicitudes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize("EliminarSolicitudes")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var solicitud = await _context.Solicitud.FindAsync(id);
@@ -194,13 +194,14 @@ namespace CopyStart.Areas.Tecnica.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+       
+        [Authorize(Roles = "Administrador")]
         private bool SolicitudExists(Guid id)
         {
             return _context.Solicitud.Any(e => e.Id == id);
         }
 
-        [Authorize(Policy = "TramitarSolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> TramitarSolicitudAsync(Guid id)
         {
          
@@ -216,7 +217,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         }
 
-        [Authorize(Policy = "AsignarTecnicoASolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         // GET: Tecnica/Solicitudes/AsignarTecnico
         public async Task<IActionResult> AsignarTecnicoAsync(Guid? id)
         {
@@ -241,7 +242,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "AsignarTecnicoASolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> AsignarTecnico(Guid? id,[Bind("TecnicoId")] AsignarTecnico tecnico)
         {
             var solicitud = await _context.Solicitud
@@ -266,7 +267,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
 
-        [Authorize(Policy = "CancelarSolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> CancelarSolicitudAsync(Guid? id)
         {
             if (id == null)
@@ -292,7 +293,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "CancelarSolicitudes")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> CancelarSolicitud(Guid? id, [Bind("Descripcion")] EditarDesc desc)
         {
             var solicitud = await _context.Solicitud
@@ -312,7 +313,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });
 
         }
-        [Authorize(Policy = "VerServicioDeUnaSolicitud")]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> VerServicioAsync(Guid? id)
         {
             
@@ -331,7 +332,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
 
-        [Authorize(Policy = "VerListadoPropioDeSolicitudesRealizadas")]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> SolicitudesRealizadas()
         {
            
@@ -344,7 +345,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(solicitudes);
         }
 
-        [Authorize(Policy = "VerListadoPropioDeSolicitudesAsignadas")]
+        [Authorize(Roles = "Administrador, Tecnico")]
         public async Task<IActionResult> SolicitudesAsignadas()
         {
 
