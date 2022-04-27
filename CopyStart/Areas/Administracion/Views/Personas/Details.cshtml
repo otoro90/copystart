@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
+    var urlCliente= "/Activos/Activos/ActivosPorCliente?idCliente=" + Model.Id;
+   
 }
 
 
@@ -21,18 +23,21 @@
     </div>
     <div class="col-md-6 card">
         <div class="card-header row">
-            <h4 class="col-md-8">Detalles de persona</h4>
-            
-                
-                <div class="col-md-2"> 
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
-                    </div>
-                    <div class="col-md-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
-                 </div>
-             
-             </div>
-         
+            <h4 class="col-md-6">Detalles de persona</h4>
+
+            <div class="col-6">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> </button>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver</a> </button>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlCliente">Ver Activos</a> </button>
+                </div>
+
+            </div>
+        </div>
     
     <div class="card-body">
     <dl class="row">

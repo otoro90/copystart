@@ -195,6 +195,14 @@ namespace CopyStart.Areas.Activos.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> ActivosPorCliente(Guid? idCliente)
+        {
+           
+            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == idCliente);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
 
 
 
