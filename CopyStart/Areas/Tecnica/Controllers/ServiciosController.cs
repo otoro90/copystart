@@ -228,7 +228,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         }
 
-        [Authorize(Policy = "VerServiciosPorCliente")]
+        
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> ActualesCliente()
         {
@@ -240,7 +240,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        [Authorize(Policy = "VerServiciosPorTecnico")]
         [Authorize(Roles = "Administrador, Tecnico")]
         public async Task<IActionResult> ActualesTecnico()
         {
@@ -274,8 +273,13 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        public async Task<IActionResult> HistorialPorActivo(Guid? idActivo)
+        {
 
-
+            var servicios = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
+            return View(await servicios.ToListAsync());
+        }
 
 
     }

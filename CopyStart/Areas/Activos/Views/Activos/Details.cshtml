@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     var urlSolicitudes = "/Tecnica/Solicitudes/Create?idActivo="+Model.Id;
+    var urlServiciosActivo = "/Tecnica/Servicios/HistorialPorActivo?idActivo=" + Model.Id;
 }
 
 
@@ -24,16 +25,21 @@
         <div class="card-header row">
             <h4 class="col-md-6">Detalles del activo</h4>
 
+            <div class="col md-6">
+                <div class="col-md-12 my-1">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
+                </div>
+                <div class="col-md-12 my-1">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
+                </div>
+                <div class="col-md-12 my-1">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlSolicitudes">Solicitar</a></button>
+                </div>
+                <div class="col-md-12 my-1">
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlServiciosActivo">Historial </a></button>
+                </div>
+            </div>
 
-            <div class="col-md-2 my-1">
-                <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
-            </div>
-            <div class="col-md-2 my-1" >
-                <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
-            </div>
-            <div class="col-md-2 my-1">
-                <button type="button" class="btn btn-block btn-default btn-sm" ><a href="@urlSolicitudes">Solicitar</a></button>
-            </div>
 
         </div>
          

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace CopyStart.Areas.Administracion.Controllers
 {
     [Area("Administracion")]
-    [Authorize(Roles = "Administrador ")]
+    
     public class PersonasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,6 +24,8 @@ namespace CopyStart.Areas.Administracion.Controllers
 
         // GET: Administracion/Personas
 
+
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Persona.Include(p => p.TipoDocumento);
@@ -31,7 +33,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Personas/Details/5
-        [Authorize(Roles = "Coordinador")]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -51,6 +53,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Personas/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
@@ -62,6 +65,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
@@ -76,6 +80,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Personas/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -97,6 +102,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
             if (id != persona.Id)
@@ -128,6 +134,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             return View(persona);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Administracion/Personas/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -150,6 +157,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // POST: Administracion/Personas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var persona = await _context.Persona.FindAsync(id);
@@ -175,6 +183,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
@@ -192,12 +201,13 @@ namespace CopyStart.Areas.Administracion.Controllers
             return View(persona);
         }
 
-        [Authorize(Roles = "Coordinador")]
-        public async Task<IActionResult> ListadoPersonalTecnico()
+        [Authorize(Roles = "Administrador, Coordinador")]
+        public async Task<IActionResult> ListadoTecnicos()
         {
-            var applicationDbContext = _context.Persona.Include(p => p.TipoDocumento);
+            var applicationDbContext = _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a=>a.Persona);
             return View(await applicationDbContext.ToListAsync());
         }
+
     }
 
 }
