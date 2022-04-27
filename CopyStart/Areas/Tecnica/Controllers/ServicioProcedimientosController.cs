@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     [Area("Tecnica")]
     public class ServicioProcedimientosController : Controller
     {

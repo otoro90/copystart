@@ -163,7 +163,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             return _context.Persona.Any(e => e.Id == id);
         }
 
-
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
