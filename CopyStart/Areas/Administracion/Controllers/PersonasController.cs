@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
     [Area("Administracion")]
+    [Authorize(Roles = "Administrador ")]
     public class PersonasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +23,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Personas
+
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Persona.Include(p => p.TipoDocumento);
@@ -28,6 +31,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Personas/Details/5
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -188,6 +192,12 @@ namespace CopyStart.Areas.Administracion.Controllers
             return View(persona);
         }
 
-
+        [Authorize(Roles = "Coordinador")]
+        public async Task<IActionResult> ListadoPersonalTecnico()
+        {
+            var applicationDbContext = _context.Persona.Include(p => p.TipoDocumento);
+            return View(await applicationDbContext.ToListAsync());
+        }
     }
+
 }

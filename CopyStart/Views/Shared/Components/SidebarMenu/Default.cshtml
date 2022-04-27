@@ -3,6 +3,11 @@
         <!-- Add icons to the links using the .nav-icon class
     with font-awesome or any other icon font library -->
         <li class="nav-item">
+            @if (User.IsInRole("Admin"))
+            {
+
+
+            }
             <a href="#" class="nav-link">
 
                 <p>
@@ -14,7 +19,13 @@
                 <li class="nav-item">
                     <a href="/Activos/Activos" class="nav-link">
 
-                        <p>Listado</p>
+                        <p>Listado total</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Activos/Activos/ActivosPropios" class="nav-link">
+
+                        <p>Mis activos</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -25,7 +36,7 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item" >
+        <li class="nav-item">
             <a href="#" class="nav-link">
 
                 <p>
@@ -37,13 +48,27 @@
                 <li class="nav-item">
                     <a href="/Tecnica/Solicitudes" class="nav-link">
 
-                        <p>Listado</p>
+                        <p>Listado total</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/Tecnica/Solicitudes/Create" class="nav-link">
 
                         <p>Crear</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Tecnica/Solicitudes/SolicitudesRealizadas" class="nav-link">
+
+                        <p>Solicitudes Realizadas</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Tecnica/Solicitudes/SolicitudesAsignadas" class="nav-link">
+
+                        <p>Solicitudes Asignadas</p>
                     </a>
                 </li>
             </ul>
@@ -63,8 +88,188 @@
                         <p>Listado</p>
                     </a>
                 </li>
-                
+
+
+                <li class="nav-item">
+                    <a href="/Tecnica/Servicios/ActualesCliente" class="nav-link">
+
+                        <p>Servicios Activos Cliente</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="/Tecnica/Servicios/ActualesTecnico" class="nav-link">
+
+                        <p>Servicios Activos Tecnico</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Tecnica/Servicios/HistorialCliente" class="nav-link">
+
+                        <p>Historial Cliente</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Tecnica/Servicios/HistorialTecnico" class="nav-link">
+
+                        <p>Historial Tecnico</p>
+                    </a>
+                </li>
+
+
             </ul>
+
         </li>
-</ul>
+
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Diagnosticos
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Tecnica/Diagnosticos" class="nav-link">
+
+                        <p>Listado</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Usuarios
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Administracion/Personas" class="nav-link">
+
+                        <p>Personal Tecnico</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Tipos de servicio
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Parametricas/TipoServicios" class="nav-link">
+
+                        <p>Listado</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Tipos de activo
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Parametricas/TipoActivos" class="nav-link">
+
+                        <p>Personal Tecnico</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Tipos de documento
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Parametricas/TipoDocumentos" class="nav-link">
+
+                        <p>Personal Tecnico</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Procedimientos
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Administracion/Procedimientos" class="nav-link">
+
+                        <p>Personal Tecnico</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+
+                <p>
+                    Procedimientos -TS
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="/Administracion/ProcedimientoTipoServicios" class="nav-link">
+
+                        <p>Personal Tecnico</p>
+                    </a>
+                </li>
+
+            </ul>
+
+        </li>
+
+
+    </ul>
 </nav>

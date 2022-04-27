@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
     [Area("Administracion")]
+    [Authorize(Roles = "Administrador")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;

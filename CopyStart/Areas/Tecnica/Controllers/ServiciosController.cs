@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -16,13 +17,16 @@ namespace CopyStart.Areas.Tecnica.Controllers
     public class ServiciosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ServiciosController(ApplicationDbContext context)
+        public ServiciosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Tecnica/Servicios
+        [Authorize(Policy = "VerListadoCompletoDeServicios")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s=>s.TipoServicios).Include(s => s.Diagnostico);
@@ -30,6 +34,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Servicios/Details/5
+        [Authorize(Policy = "VerInformacionDeServicios")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -53,6 +58,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Servicios/Create
+        [Authorize(Policy = "CrearServicios")]
         public IActionResult Create()
         {
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca");
@@ -67,6 +73,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "CrearServicios")]
         public async Task<IActionResult> Create([Bind("Id,Estado,FechaRealizacion,DiagnosticoId,ActivoId,SolicitudId,SoportesId")] Servicio servicio)
         {
             if (ModelState.IsValid)
@@ -85,6 +92,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Servicios/Edit/5
+        [Authorize(Policy = "EditarServicios")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -109,6 +117,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "EditarServicios")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Estado,FechaRealizacion,DiagnosticoId,ActivoId,SolicitudId,SoportesId")] Servicio servicio)
         {
             if (id != servicio.Id)
@@ -144,6 +153,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Servicios/Delete/5
+        [Authorize(Policy = "BorrarServicios")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -170,6 +180,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // POST: Tecnica/Servicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "BorrarServicios")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var servicio = await _context.Servicio.FindAsync(id);
@@ -182,14 +193,88 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
 
-
+        [Authorize(Policy = "VerExistenciaDeUnServicio")]
         private bool ServicioExists(Guid id)
         {
             return _context.Servicio.Any(e => e.Id == id);
         }
 
 
-        
+        [Authorize(Policy = "ConfirmarServicios")]
+        public async Task<IActionResult> ConfirmarServicioAsync(Guid? id)
+        {
+            var servicio = await _context.Servicio.FindAsync(id);
+            servicio.Estado = "En ejecucion";
+            _context.Update(servicio);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+
+
+        }
+
+        [Authorize(Policy = "TerminarUnServicio")]
+
+        public async Task<IActionResult> FinalizarServicioAsync(Guid? id)
+        {
+            var servicio = await _context.Servicio.FindAsync(id);
+            servicio.Estado = "Finalizado";
+            servicio.FechaRealizacion = DateTime.Now;
+            _context.Update(servicio);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+
+
+        }
+
+        [Authorize(Policy = "VerServiciosPorCliente")]
+        public async Task<IActionResult> ActualesCliente()
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+            
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado != "Finalizado");
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize(Policy = "VerServiciosPorTecnico")]
+        public async Task<IActionResult> ActualesTecnico()
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+            
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado != "Finalizado");
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize(Policy = "VerHistorialServiciosPorCliente")]
+        public async Task<IActionResult> HistorialCliente()
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado");
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize(Policy = "VerHistorialServiciosPorTecnico")]
+        public async Task<IActionResult> HistorialTecnico()
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado");
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+
+
+
 
     }
 }

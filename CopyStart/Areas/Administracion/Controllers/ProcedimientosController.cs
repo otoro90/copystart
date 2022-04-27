@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace CopyStart.Areas.Administracion.Controllers
 {
     [Area("Administracion")]
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class ProcedimientosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,6 +29,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Procedimientos/Details/5
+        [Authorize(Roles = "Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)

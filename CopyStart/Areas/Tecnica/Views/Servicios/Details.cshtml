@@ -25,7 +25,8 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlDiagnostico">Ver Diagnostico </a> </button>
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="#">Confirmar Servicio </a> </button>
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="ConfirmarServicio" asp-route-id="@Model.Id">Confirmar Servicio </a> </button>
+                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="FinalizarServicio" asp-route-id="@Model.Id">Finalizar Servicio </a> </button>
                     <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlProcedimientos">Ver procedimientos </a> </button>
 
 

@@ -24,6 +24,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Diagnosticos
+        [Authorize(Policy = "VerListadoCompletoDiagnosticos")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Diagnostico.Include(d => d.Soportes);
@@ -31,6 +32,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Diagnosticos/Details/5
+        [Authorize(Policy = "VerDetallesDeDiagnostico")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -50,6 +52,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Diagnosticos/Create
+        [Authorize(Policy = "CrearDiagnostico")]
         public IActionResult Create(string idSolicitud)
         {
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
@@ -63,6 +66,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "CrearDiagnostico")]
         public async Task<IActionResult> Create([Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId,SolicitudId")] CreateDiagnosticosModel diagnostico)
         {
             diagnostico.FechaDiagnostico = DateTime.Now;
@@ -95,6 +99,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Diagnosticos/Edit/5
+        [Authorize(Policy = "EditarDiagnostico")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -117,6 +122,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "EditarDiagnostico")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Descripción,FechaDiagnostico,SoportesId")] Diagnostico diagnostico)
         {
             if (id != diagnostico.Id)
@@ -150,6 +156,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Diagnosticos/Delete/5
+        [Authorize(Policy = "BorrarDiagnostico")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -171,6 +178,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // POST: Tecnica/Diagnosticos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "BorrarDiagnostico")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var diagnostico = await _context.Diagnostico.FindAsync(id);

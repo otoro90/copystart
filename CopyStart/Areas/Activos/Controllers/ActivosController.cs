@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Identity;
 namespace CopyStart.Areas.Activos.Controllers
 {
     [Area("Activos")]
-    [Authorize]
+    
+    [Authorize(Roles = "Administrador")]
     public class ActivosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,6 +27,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos
+        [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo);
@@ -33,6 +35,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos/Details/5
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -53,6 +56,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos/Create
+        [Authorize(Roles = "Administrador, Cliente")]
         public IActionResult Create()
         {
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
@@ -65,6 +69,7 @@ namespace CopyStart.Areas.Activos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -76,7 +81,7 @@ namespace CopyStart.Areas.Activos.Controllers
                 activo.PersonaId = (Guid)user.PersonaId;
                 _context.Add(activo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Activos", new { area = "Activos", id = activo.Id });
             }
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
@@ -84,6 +89,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos/Edit/5
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -109,6 +115,7 @@ namespace CopyStart.Areas.Activos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId,Estado")] Activo activo)
         {
             if (id != activo.Id)
@@ -142,6 +149,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos/Delete/5
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -164,6 +172,7 @@ namespace CopyStart.Areas.Activos.Controllers
         // POST: Activos/Activos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var activo = await _context.Activo.FindAsync(id);
@@ -177,7 +186,14 @@ namespace CopyStart.Areas.Activos.Controllers
             return _context.Activo.Any(e => e.Id == id);
         }
 
-        
+
+        [Authorize(Roles = "Administrador, Cliente")]
+        public async Task<IActionResult> ActivosPropios()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x=>x.PersonaId==user.PersonaId);
+            return View(await applicationDbContext.ToListAsync());
+        }
 
 
 
