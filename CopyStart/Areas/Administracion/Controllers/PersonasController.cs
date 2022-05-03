@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -16,10 +17,13 @@ namespace CopyStart.Areas.Administracion.Controllers
     public class PersonasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PersonasController(ApplicationDbContext context)
+        public PersonasController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
 
         // GET: Administracion/Personas
@@ -171,7 +175,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             return _context.Persona.Any(e => e.Id == id);
         }
 
-        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [Authorize]
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
@@ -183,7 +187,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [Authorize]
         public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
@@ -208,6 +212,58 @@ namespace CopyStart.Areas.Administracion.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> AsignarRol(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var persona = await _context.Persona.FindAsync(id);
+            var usuario = await _context.Users
+               .Include(s => s.Persona)
+               .FirstOrDefaultAsync(m => m.PersonaId == id);
+
+            
+
+            if (persona == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["UserId"] = new SelectList(_context.Persona.Select(x => new { Id = x.Id, Texto = x.Nombres + " " + x.Apellidos + " - " + x.NumeroDocumento }), "Id", "Texto", id);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> AsignarRol(Guid? id, [Bind("RoleId")] ApplicationUserRole rol)
+        {
+            var usuario = await _context.User
+                .Include(s => s.Persona)               
+                .FirstOrDefaultAsync(m => m.PersonaId == id);
+
+            var input = new ApplicationUserRole();
+            input.UserId = usuario.Id;
+
+            if (ModelState.IsValid)
+            {
+                input.RoleId = rol.RoleId;
+                _context.Add(input);
+                
+                await _context.SaveChangesAsync();
+            }
+
+
+
+            return RedirectToAction("Index", "Personas", new { area = "Administracion" });
+
+        }
     }
+
 
 }
