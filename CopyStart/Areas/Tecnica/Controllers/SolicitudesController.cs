@@ -65,7 +65,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public IActionResult Create(string idActivo)
         {
-            ViewData["ActivoId"] = new SelectList(_context.Activo.Select(x => new { Id = x.Id, Texto = x.Marca + " - " + x.Modelo + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s=>s.MarcaActivo).Include(s=>s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
             

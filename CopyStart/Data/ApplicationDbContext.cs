@@ -37,13 +37,17 @@ namespace CopyStart.Data
         public virtual DbSet<TipoServicio> TipoServicio { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoActivo> TipoActivo { get; set; }
+        public virtual DbSet<Ubicacion> Ubicacion{ get; set; }
+        public virtual DbSet<MarcaActivo> MarcaActvo { get; set; }
+        public virtual DbSet<ModeloActivo> ModeloActivo { get; set; }
         public virtual DbSet<ApplicationUser> User { get; set; }
         public virtual DbSet<ApplicationUserClaim> ApplicationUserClaim { get; set; }
         public virtual DbSet<ApplicationUserLogin> ApplicationUserLogin { get; set; }
         public virtual DbSet<ApplicationUserToken> ApplicationUserToken { get; set; }
         public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
         public virtual DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
-        public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }        
+        public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }      
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

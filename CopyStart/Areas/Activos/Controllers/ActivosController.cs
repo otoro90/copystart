@@ -46,6 +46,8 @@ namespace CopyStart.Areas.Activos.Controllers
             var activo = await _context.Activo
                 .Include(a => a.Persona)
                 .Include(a => a.TipoActivo)
+                .Include(a => a.MarcaActivo)
+                .Include(a => a.ModeloActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (activo == null)
             {
@@ -61,6 +63,8 @@ namespace CopyStart.Areas.Activos.Controllers
         {
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
+            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
+            ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
             return View();
         }
 
@@ -70,7 +74,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,FechaRegistro,PersonaId")] Activo activo)
         {
             var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
@@ -83,8 +87,11 @@ namespace CopyStart.Areas.Activos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Activos", new { area = "Activos", id = activo.Id });
             }
+
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
+            ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
             return View(activo);
         }
 
@@ -104,6 +111,8 @@ namespace CopyStart.Areas.Activos.Controllers
             }
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
+            ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
             ViewData["Serial"] = activo.Serial;
             ViewData["Estado"] = activo.Estado;
 
@@ -116,7 +125,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,Marca,Modelo,Ubicacion,FechaRegistro,PersonaId,Estado")] Activo activo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,FechaRegistro,PersonaId,Estado")] Activo activo)
         {
             if (id != activo.Id)
             {
@@ -145,6 +154,8 @@ namespace CopyStart.Areas.Activos.Controllers
             }
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", activo.PersonaId);
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
+            ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
             return View(activo);
         }
 
@@ -158,8 +169,6 @@ namespace CopyStart.Areas.Activos.Controllers
             }
 
             var activo = await _context.Activo
-                .Include(a => a.Persona)
-                .Include(a => a.TipoActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (activo == null)
             {

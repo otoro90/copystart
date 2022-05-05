@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220504153808_newentities")]
+    partial class newentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,11 +37,14 @@ namespace CopyStart.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("MarcaActivoId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Marca")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<Guid>("ModeloActivoId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Modelo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<Guid>("PersonaId")
                         .HasColumnType("uuid");
@@ -51,11 +56,10 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("TipoActivoId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Ubicacion")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("MarcaActivoId");
-
-                    b.HasIndex("ModeloActivoId");
 
                     b.HasIndex("PersonaId");
 
@@ -392,6 +396,9 @@ namespace CopyStart.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("Ciudad")
+                        .HasColumnType("text");
+
                     b.Property<string>("Direccion")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -413,14 +420,9 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("TipoDocumentoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UbicacionId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TipoDocumentoId");
-
-                    b.HasIndex("UbicacionId");
 
                     b.ToTable("Personas");
                 });
@@ -636,8 +638,8 @@ namespace CopyStart.Migrations
                     b.Property<Guid?>("TecnicoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UbicacionId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Ubicacion")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -646,8 +648,6 @@ namespace CopyStart.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("TecnicoId");
-
-                    b.HasIndex("UbicacionId");
 
                     b.ToTable("Solicitudes");
                 });
@@ -785,18 +785,6 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Activo", b =>
                 {
-                    b.HasOne("CopyStart.Entities.MarcaActivo", "MarcaActivo")
-                        .WithMany()
-                        .HasForeignKey("MarcaActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CopyStart.Entities.ModeloActivo", "ModeloActivo")
-                        .WithMany()
-                        .HasForeignKey("ModeloActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CopyStart.Entities.Persona", "Persona")
                         .WithMany()
                         .HasForeignKey("PersonaId")
@@ -808,10 +796,6 @@ namespace CopyStart.Migrations
                         .HasForeignKey("TipoActivoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("MarcaActivo");
-
-                    b.Navigation("ModeloActivo");
 
                     b.Navigation("Persona");
 
@@ -929,15 +913,7 @@ namespace CopyStart.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("TipoDocumento");
-
-                    b.Navigation("Ubicacion");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ProcedimientoTipoServicio", b =>
@@ -1052,19 +1028,11 @@ namespace CopyStart.Migrations
                         .WithMany()
                         .HasForeignKey("TecnicoId");
 
-                    b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Activo");
 
                     b.Navigation("Cliente");
 
                     b.Navigation("Tecnico");
-
-                    b.Navigation("Ubicacion");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Soporte", b =>

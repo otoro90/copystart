@@ -191,6 +191,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             return View();
         }
 
@@ -200,7 +201,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
+        public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,UbicacionId,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
             {
@@ -285,7 +286,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
         [Authorize(Roles = "Administrador")]
       
-        public async Task<IActionResult> BorrarRol(string? id, Guid? persona)
+        public async Task<IActionResult> BorrarRol(string id, Guid? persona)
         {
             
             

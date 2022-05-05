@@ -66,7 +66,11 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
             [MaxLength(500)]
             public string Direccion { get; set; }
 
-            public string Ciudad { get; set; }
+            public int UbicacionId { get; set; }
+
+            
+            [ForeignKey("UbicacionId")]
+            public Ubicacion Ubicacion { get; set; }
 
             public long Telefono { get; set; }
 
@@ -79,7 +83,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
                 {
             var userName = await _userManager.GetUserNameAsync(user);
 
-            var persona = await _context.Persona.Include(x => x.TipoDocumento).Where(x => x.Id == user.PersonaId).FirstOrDefaultAsync();
+            var persona = await _context.Persona.Include(x => x.TipoDocumento).Include(x => x.Ubicacion).Where(x => x.Id == user.PersonaId).FirstOrDefaultAsync();
 
 
             Username = userName;
@@ -93,7 +97,8 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
                 NumeroDocumento = persona.NumeroDocumento,
 
                 Direccion = persona.Direccion,
-                Ciudad = persona.Ciudad,
+                UbicacionId = persona.UbicacionId,
+                Ubicacion = persona.Ubicacion,
                 Telefono = persona.Telefono
             };
         }
@@ -105,8 +110,9 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             await LoadAsync(user);
+
             return Page();
         }
 
@@ -121,7 +127,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
             
             persona.Telefono = PersonaInput.Telefono;
             persona.Direccion = PersonaInput.Direccion;
-            persona.Ciudad = PersonaInput.Ciudad;
+            persona.UbicacionId = PersonaInput.UbicacionId;
          
             await _context.SaveChangesAsync();
             await _signInManager.RefreshSignInAsync(user);

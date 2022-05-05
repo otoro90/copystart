@@ -34,13 +34,16 @@ namespace CopyStart.Entities
         public string Descripcion { get; set; }
 
         [Required]
-        public string Marca { get; set; }
-      
-        [Required]
-        [MaxLength(100)]
-        public string Modelo { get; set; }
+        public Guid MarcaActivoId { get; set; }
 
-        public string Ubicacion { get; set; }
+        [ForeignKey("MarcaActivoId")]
+        public MarcaActivo MarcaActivo { get; set; }
+       
+        [Required]
+        public Guid ModeloActivoId { get; set; }
+
+        [ForeignKey("ModeloActivoId")]
+        public ModeloActivo ModeloActivo { get; set; }       
 
         public string Estado { get; set; }
 
