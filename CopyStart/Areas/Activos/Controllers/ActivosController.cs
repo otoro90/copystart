@@ -80,7 +80,7 @@ namespace CopyStart.Areas.Activos.Controllers
             if (ModelState.IsValid)
             {
                 activo.Id = Guid.NewGuid();
-                activo.Estado = "Inactivo";
+               
                 activo.FechaRegistro = DateTime.Now;
                 activo.PersonaId = (Guid)user.PersonaId;
                 _context.Add(activo);

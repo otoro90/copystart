@@ -87,7 +87,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                  .FirstOrDefaultAsync(m => m.Id == servicio.SolicitudId);
                 servicio.DiagnosticoId = diagnostico.Id;
                 servicio.ActivoId = solicitud.ActivoId;
-                servicio.Estado = "Por confirmar";
+               
                 servicio.FechaRealizacion = DateTime.MinValue;
                 _context.Add(servicio);               
                 await _context.SaveChangesAsync();

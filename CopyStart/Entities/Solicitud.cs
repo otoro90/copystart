@@ -33,7 +33,7 @@ namespace CopyStart.Entities
 
         [Display(Name = "Estado")]
         
-        public string EstadoSolicitud { get; set; }
+        public EstadosSolicitud Estado { get; set; }
 
         public Guid? TecnicoId { get; set; }
         
@@ -52,6 +52,12 @@ namespace CopyStart.Entities
         [Display(Name = "Activo")]
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
+
+    }
+
+    public enum EstadosSolicitud
+    {
+
 
     }
 }

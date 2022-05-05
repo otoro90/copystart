@@ -85,7 +85,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             solicitud.Id = Guid.NewGuid();
             solicitud.ClienteId = (Guid)user.PersonaId;
             solicitud.FechaSolicitud = DateTime.Now;
-            solicitud.EstadoSolicitud = "Sin tramitar";
+           
 
 
 
@@ -252,7 +252,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ModelState.IsValid)
             {
-                solicitud.EstadoSolicitud = "Tramitada";
+                
                 solicitud.TecnicoId = tecnico.TecnicoId;
                 await _context.SaveChangesAsync();
             }
@@ -303,7 +303,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ModelState.IsValid)
             {
-                solicitud.EstadoSolicitud = "Cancelada";
+               
                 solicitud.Descripcion = desc.Descripcion;
                 await _context.SaveChangesAsync();
             }

@@ -45,7 +45,7 @@ namespace CopyStart.Entities
         [ForeignKey("ModeloActivoId")]
         public ModeloActivo ModeloActivo { get; set; }       
 
-        public string Estado { get; set; }
+        public EstadosActivo Estado { get; set; }
 
         [Display(Name = "Fecha de Registro")]
         [Required]
@@ -58,5 +58,10 @@ namespace CopyStart.Entities
         [ForeignKey("PersonaId")]
        public Persona Persona { get; set; }
     
+    }
+
+    public enum EstadosActivo
+    {
+       
     }
 }
