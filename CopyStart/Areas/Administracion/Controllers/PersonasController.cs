@@ -9,6 +9,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using CopyStart.Areas.Administracion.Models;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -48,12 +49,23 @@ namespace CopyStart.Areas.Administracion.Controllers
             var persona = await _context.Persona
                 .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
+             
+
+
             if (persona == null)
             {
                 return NotFound();
             }
+            var usuario = await _context.Users.Include(m => m.Persona).FirstOrDefaultAsync(m => m.PersonaId == id);
+            var applicationUserRoles = await _context.ApplicationUserRole.Include(m=>m.Role).Where(m => m.UserId == usuario.Id).ToListAsync();
 
-            return View(persona);
+            var detallePersonaVm = new DetallePersonaVM
+            {
+                Persona = persona,
+                RolesUsuario = applicationUserRoles
+            };
+
+            return View(detallePersonaVm);
         }
 
         // GET: Administracion/Personas/Create
@@ -179,6 +191,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             return View();
         }
 
@@ -188,7 +201,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
+        public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,UbicacionId,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
             {
@@ -199,7 +212,8 @@ namespace CopyStart.Areas.Administracion.Controllers
                 user.PersonaId = persona.Id;
                 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Activos", new { area = "Activos" });
+               return RedirectToAction("Manage", "Account", new { area = "Identity" });
+
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
             return View(persona);
@@ -244,25 +258,48 @@ namespace CopyStart.Areas.Administracion.Controllers
         public async Task<IActionResult> AsignarRol(Guid? id, [Bind("RoleId")] ApplicationUserRole rol)
         {
             var usuario = await _context.User
-                .Include(s => s.Persona)               
                 .FirstOrDefaultAsync(m => m.PersonaId == id);
 
-            var input = new ApplicationUserRole();
-            input.UserId = usuario.Id;
+            var applicationUserRole = await _context.ApplicationUserRole
+                .FirstOrDefaultAsync(m => m.UserId == usuario.Id && m.RoleId == rol.RoleId);
 
-            if (ModelState.IsValid)
+          
+
+            if (ModelState.IsValid )
             {
+                if (applicationUserRole != null)
+                {
+                    throw new ArgumentException("El usuario ya tiene este rol");
+                }
+
+                var input = new ApplicationUserRole();
                 input.RoleId = rol.RoleId;
+                input.UserId = usuario.Id;
                 _context.Add(input);
-                
-                await _context.SaveChangesAsync();
             }
 
 
-
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Personas", new { area = "Administracion" });
 
         }
+
+
+        [Authorize(Roles = "Administrador")]
+      
+        public async Task<IActionResult> BorrarRol(string id, Guid? persona)
+        {
+            
+            
+
+            var applicationUserRole = await _context.ApplicationUserRole
+                .FirstOrDefaultAsync(m => m.RoleId == id);
+            _context.ApplicationUserRole.Remove(applicationUserRole);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Personas", new { area = "Administracion", id = persona });
+        }
+
+        
     }
 
 

@@ -1,7 +1,7 @@
 ﻿<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="list" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+        with font-awesome or any other icon font library -->
         <li class="nav-item">
             @if (User.IsInRole("Admin"))
             {
@@ -108,14 +108,14 @@
                 <li class="nav-item">
                     <a href="/Tecnica/Servicios/HistorialCliente" class="nav-link">
 
-                        <p>Historial cliente</p>
+                        <p>Historial Cliente</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="/Tecnica/Servicios/HistorialTecnico" class="nav-link">
 
-                        <p>Historial tecnico</p>
+                        <p>Historial Tecnico</p>
                     </a>
                 </li>
 
@@ -126,22 +126,14 @@
 
 
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/Tecnica/Diagnosticos" class="nav-link">
 
                 <p>
                     Diagnosticos
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                    <a href="/Tecnica/Diagnosticos" class="nav-link">
-
-                        <p>Listado</p>
-                    </a>
-                </li>
-
-            </ul>
+            
 
         </li>
 
@@ -163,123 +155,90 @@
                     </a>
                 </li>
 
-            </ul>
-            <ul class="nav nav-treeview" style="display: none;">
+            
+           
                 <li class="nav-item">
                     <a href="/Administracion/Personas/ListadoTecnicos" class="nav-link">
 
-                        <p>Listado tecnico</p>
+                        <p>Listado Tecnico</p>
                     </a>
                 </li>
 
-            </ul>
+           </ul>
 
 
         </li>
-
-
 
         <li class="nav-item">
             <a href="#" class="nav-link">
 
                 <p>
-                    Tipos de servicio
+                    Parametricas
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                    <a href="/Parametricas/TipoServicios" class="nav-link">
-
-                        <p>Listado</p>
-                    </a>
-                </li>
-
-            </ul>
-
-        </li>
-
-
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Tipos de activo
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
+               
                 <li class="nav-item">
                     <a href="/Parametricas/TipoActivos" class="nav-link">
 
-                        <p>Personal Tecnico</p>
+                        <p>Tipos de activo</p>
                     </a>
                 </li>
-
-            </ul>
-
-        </li>
-
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Tipos de documento
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
                     <a href="/Parametricas/TipoDocumentos" class="nav-link">
 
-                        <p>Personal Tecnico</p>
+                        <p>Tipos de documento</p>
                     </a>
                 </li>
-
-            </ul>
-
-        </li>
-
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Procedimientos
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
-                    <a href="/Administracion/Procedimientos" class="nav-link">
+                    <a href="/Parametricas/MarcaActivos" class="nav-link">
 
-                        <p>Personal Tecnico</p>
+                        <p>Marcas de activos</p>
                     </a>
                 </li>
-
-            </ul>
-
-        </li>
-
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Procedimientos -TS
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
-                    <a href="/Administracion/ProcedimientoTipoServicios" class="nav-link">
+                    <a href="/Parametricas/ModeloActivos" class="nav-link">
 
-                        <p>Personal Tecnico</p>
+                        <p>Modelos de activos</p>
                     </a>
                 </li>
-
             </ul>
 
         </li>
+       
+         <li class="nav-item">
+                    <a href="#" class="nav-link">
 
+                        <p>
+                            Tipos de servicio
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="/Parametricas/TipoServicios" class="nav-link">
+
+                                <p>Listado</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Administracion/Procedimientos" class="nav-link">
+
+                                <p>Procedimientos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Administracion/ProcedimientoTipoServicios" class="nav-link">
+
+                                <p>Agregar procedimientos</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
 
     </ul>
 </nav>
+
+

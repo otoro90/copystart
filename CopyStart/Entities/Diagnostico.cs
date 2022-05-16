@@ -22,9 +22,6 @@ namespace CopyStart.Entities
         [Required]
         public DateTime FechaDiagnostico { get; set; }
 
-        
-
-        
         public Guid? SoportesId { get; set; }
         
         [Display(Name = "Soportes")]

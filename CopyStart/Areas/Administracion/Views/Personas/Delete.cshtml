@@ -4,16 +4,7 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="row ml-3">
-        <a asp-action="Index"> 
-            <button  type="button" class="btn btn-default bg-blue">
-           <i class="fas fa-angle-left"></i>
-            
-            
-            </button>
-            <p> Volver</p>
-            </a>
-   </div>   
+ 
 
 
 <div class="row">
@@ -24,7 +15,7 @@
                   <div class="ml-3">
                       <div class="card card-primary">
                            <div class="card-header bg-red">
-                                <h2 class="card-title"><b>¿Quieres borrar este activo?</b></h2>
+                                <h2 class="card-title"><b>¿Quieres borrar esta persona?</b></h2>
                       </div>
 
                    
@@ -61,10 +52,10 @@
             @Html.DisplayFor(model => model.Direccion)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ciudad)
+            @Html.DisplayNameFor(model => model.Ubicacion.Lugar)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ciudad)
+            @Html.DisplayFor(model => model.Ubicacion.Lugar)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Telefono)
@@ -93,6 +84,7 @@
             </div>
     <div class="col-md-3 "></div>
 </div>
+
 
 
 

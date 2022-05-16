@@ -29,7 +29,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Procedimientos/Details/5
-        [Authorize(Roles = "Coordinador, Tecnico, Cliente")]
+        [Authorize(Roles = "Administrador,Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)

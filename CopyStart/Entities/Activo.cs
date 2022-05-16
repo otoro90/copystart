@@ -34,15 +34,18 @@ namespace CopyStart.Entities
         public string Descripcion { get; set; }
 
         [Required]
-        public string Marca { get; set; }
-      
+        public Guid MarcaActivoId { get; set; }
+
+        [ForeignKey("MarcaActivoId")]
+        public MarcaActivo MarcaActivo { get; set; }
+       
         [Required]
-        [MaxLength(100)]
-        public string Modelo { get; set; }
+        public Guid ModeloActivoId { get; set; }
 
-        public string Ubicacion { get; set; }
+        [ForeignKey("ModeloActivoId")]
+        public ModeloActivo ModeloActivo { get; set; }       
 
-        public string Estado { get; set; }
+        public string? Estado { get; set; }
 
         [Display(Name = "Fecha de Registro")]
         [Required]
@@ -56,4 +59,6 @@ namespace CopyStart.Entities
        public Persona Persona { get; set; }
     
     }
+
+    
 }

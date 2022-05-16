@@ -12,8 +12,8 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
-        public string Estado { get; set; }
+       
+        public string? Estado { get; set; }
 
         [Display(Name = "Fecha de Finalización")]
         public DateTime FechaRealizacion { get; set; }
@@ -21,9 +21,9 @@ namespace CopyStart.Entities
         public Guid? DiagnosticoId { get; set; }
 
         [Display(Name = "Diagnostico")]
-        [ForeignKey ("DiagnosticoId")]
+        [ForeignKey("DiagnosticoId")]
         public Diagnostico Diagnostico { get; set; }
-        
+
         public Guid ActivoId { get; set; }
 
         [Display(Name = "Activo")]
@@ -49,4 +49,6 @@ namespace CopyStart.Entities
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicios { get; set; }
     }
+
+    
 }

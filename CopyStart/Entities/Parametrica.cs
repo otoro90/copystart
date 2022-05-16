@@ -14,7 +14,7 @@ namespace CopyStart.Entities
         public string Nombre { get; set; }
 
         [MaxLength(1024)]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
         [Required]
         [MaxLength(5)]
