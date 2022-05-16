@@ -29,7 +29,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s=>s.TipoServicios).Include(s => s.Diagnostico);
+            var applicationDbContext = _context.Servicio.Include(s => s.Activo).ThenInclude(a=>a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s=>s.TipoServicios).Include(s => s.Diagnostico);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -105,7 +105,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 return NotFound();
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "MarcaActivo", servicio.ActivoId);
             ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripción", servicio.DiagnosticoId);
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);

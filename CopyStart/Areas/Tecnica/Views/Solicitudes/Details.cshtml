@@ -6,7 +6,6 @@
 }
 
 <div class="row my-3">
-    
 </div>
 
 
@@ -16,30 +15,29 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-6 card">
-        <div class="card-header row">
-            <h4 class="col-md-8">Detalles de la solicitud</h4>
 
-            <div class="col-md-4">
-                <div class="mb-3">
+        <div class="card-header">
+            <h4 class="col-md-12">Detalles de la solicitud</h4>
+
+            <div class="row">
+
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
                 </div>
-                <div class="mb-3">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Ir a lista </a> </button>
                 </div>
-
-                <div class="mb-3">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="TramitarSolicitud" asp-route-id="@Model.Id"> Tramitar</a></button>
-
                 </div>
-
-                <div class="mb-3">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlDiagnostico">Realizar diagnostico </a> </button>
                 </div>
-
-                <div class="mb-3">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="VerServicio" asp-route-id="@Model.Id">Ver servicio </a> </button>
                 </div>
             </div>
+
         </div>
 
 
@@ -70,10 +68,10 @@
                     @Html.DisplayFor(model => model.FechaSolicitud)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Estado)
+                    @Html.DisplayNameFor(model => model.EstadoSolicitud)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Estado)
+                    @Html.DisplayFor(model => model.EstadoSolicitud)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Tecnico)
@@ -98,6 +96,5 @@
     </div>
     <div class="col-md-3"></div>
 </div>
-
 
 

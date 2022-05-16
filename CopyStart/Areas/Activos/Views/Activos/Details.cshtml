@@ -7,39 +7,30 @@
 }
 
 
-   <div class="row ml-3">
-        <a asp-action="Index"> 
-            <button  type="button" class="btn btn-default bg-blue">
-           <i class="fas fa-angle-left"></i>
-            
-            
-            </button>
-            <p> Volver</p>
-            </a>
-   </div>  
 
 <div class="row">
     <div class="col-md-3">
     </div>
     <div class="col-md-6 card">
-        <div class="card-header row">
-            <h4 class="col-md-6">Detalles del activo</h4>
+        <div class="card-header">
+            <h4 class="col-md-12">Detalles del activo</h4>
 
-            <div class="col md-6">
-                <div class="col-md-12 my-1">
+            <div class="row">
+            
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
                 </div>
-                <div class="col-md-12 my-1">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver </a> </button>
                 </div>
-                <div class="col-md-12 my-1">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlSolicitudes">Solicitar</a></button>
                 </div>
-                <div class="col-md-12 my-1">
+                <div class="col-md-3 my-2">
                     <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlServiciosActivo">Historial </a></button>
                 </div>
+            
             </div>
-
 
         </div>
          

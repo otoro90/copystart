@@ -33,7 +33,7 @@ namespace CopyStart.Entities
 
         [Display(Name = "Estado")]
         
-        public EstadosSolicitud Estado { get; set; }
+        public string? EstadoSolicitud { get; set; }
 
         public Guid? TecnicoId { get; set; }
         
@@ -55,9 +55,4 @@ namespace CopyStart.Entities
 
     }
 
-    public enum EstadosSolicitud
-    {
-
-
-    }
 }

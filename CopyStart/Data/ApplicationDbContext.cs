@@ -67,26 +67,6 @@ namespace CopyStart.Data
 
 
            
-            modelBuilder
-                .Entity<Activo>()
-                .Property(e => e.Estado)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (EstadosActivo)Enum.Parse(typeof(EstadosActivo), v));
-
-            modelBuilder
-                .Entity<Solicitud>()
-                .Property(e => e.Estado)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (EstadosSolicitud)Enum.Parse(typeof(EstadosSolicitud), v));
-
-            modelBuilder
-                .Entity<Servicio>()
-                .Property(e => e.Estado)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (EstadosServicio)Enum.Parse(typeof(EstadosServicio), v));
 
 
             modelBuilder.Entity<ProcedimientoTipoServicio>()

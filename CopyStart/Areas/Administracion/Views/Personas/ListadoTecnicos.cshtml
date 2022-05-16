@@ -4,22 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 
 
 <div class="row ml-3 mb-2">
-    <a asp-action="Create"> 
+    <a asp-action="Create">
         <button type="button" class="btn btn-default bg-blue">
-           <i class="fas fa-plus mr-3"></i> 
-       </button>
-    </a>         
-   </div> 
-   
+            <i class="fas fa-plus mr-3"></i>
+        </button>
+    </a>
+</div>
+
 <div class="row ">
     <div class="col-12">
         <div class="card">
-          
+
 
             <div class="card-body table-responsive p-0">
 
@@ -34,16 +32,12 @@
                                 @Html.DisplayNameFor(model => model.User.Persona.Apellidos)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.TipoDocumento.Codigo)
+                                Tipo de documento
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Role.Name)
-                            </th>
-                            
-                            
+
                             <th></th>
 
                         </tr>
@@ -51,41 +45,42 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-           <tr>
-             <td>
-                @Html.DisplayFor(modelItem => item.User.Persona.Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Persona.Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Persona.TipoDocumento.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Persona.NumeroDocumento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.Name)
-            </td>
-            
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.Nombres)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.Apellidos)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.TipoDocumento.Codigo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.NumeroDocumento)
+                                </td>
+                                
+
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.User.PersonaId">
-                                        <button type="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></button></a> 
+                                        <button type="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></button>
+                                    </a>
 
-                                    <a asp-action="Edit" asp-route-id="@item.User.PersonaId.">
-                                    <button type="button" class="btn btn-default bg-blue">
-                                    
-                                        
-                                        <i class="fas fa-pen"></i>                                       
+                                    <a asp-action="Edit" asp-route-id="@item.User.PersonaId">
+                                        <button type="button" class="btn btn-default bg-blue">
+
+
+                                            <i class="fas fa-pen"></i>
                                         </button>
-                                        </a> 
-                                        
-                                    
+                                    </a>
+
+
                                     <a asp-action="Delete" asp-route-id="@item.User.PersonaId">
-                                        <button type="button" class="btn btn-default bg-blue" >
-                                        <i class="far fa-trash-alt"></i></button></a>
-                                    
-                                    
+                                        <button type="button" class="btn btn-default bg-blue">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </a>
+
+
                                 </td>
                             </tr>
                         }

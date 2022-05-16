@@ -212,7 +212,8 @@ namespace CopyStart.Areas.Administracion.Controllers
                 user.PersonaId = persona.Id;
                 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Activos", new { area = "Activos" });
+               return RedirectToAction("Manage", "Account", new { area = "Identity" });
+
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
             return View(persona);

@@ -9,17 +9,17 @@
 
 
 <div class="row ml-3 mb-2">
-    <a asp-action="Create"> 
+    <a asp-action="Create">
         <button type="button" class="btn btn-default bg-blue">
-           <i class="fas fa-plus mr-3"></i> 
-       </button>
-    </a>         
-   </div> 
-   
+            <i class="fas fa-plus mr-3"></i>
+        </button>
+    </a>
+</div>
+
 <div class="row ">
     <div class="col-12">
         <div class="card">
-          
+
 
             <div class="card-body table-responsive p-0">
 
@@ -34,24 +34,12 @@
                                 @Html.DisplayNameFor(model => model.Apellidos)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.TipoDocumento)
+                                @Html.DisplayNameFor(model => model.TipoDocumento.Codigo)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.NumeroDocumento)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Direccion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Ubicacion.Lugar)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Telefono)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Estado)
-                            </th>
-                            
+
                             <th></th>
 
                         </tr>
@@ -59,49 +47,41 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-           <tr>
-             <td>
-                @Html.DisplayFor(modelItem => item.Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoDocumento.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroDocumento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ubicacion.Lugar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoDocumento.Codigo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumeroDocumento)
+                                </td>
+                                <td>
+                                </td>
+
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></button></a> 
+                                        <button type="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></button>
+                                    </a>
 
                                     <a asp-action="Edit" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
-                                    
-                                        
-                                        <i class="fas fa-pen"></i>                                       
+                                        <button type="button" class="btn btn-default bg-blue">
+                                            <i class="fas fa-pen"></i>
                                         </button>
-                                        </a> 
-                                        
-                                    
+                                    </a>
+
+
                                     <a asp-action="Delete" asp-route-id="@item.Id">
-                                        <button type="button" class="btn btn-default bg-blue" >
-                                        <i class="far fa-trash-alt"></i></button></a>
-                                    
-                                    
+                                        <button type="button" class="btn btn-default bg-blue">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </a>
+
+
                                 </td>
                             </tr>
                         }
@@ -111,6 +91,14 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
 
 
 

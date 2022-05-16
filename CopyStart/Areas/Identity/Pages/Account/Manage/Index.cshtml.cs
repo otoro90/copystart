@@ -85,7 +85,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
 
             var persona = await _context.Persona.Include(x => x.TipoDocumento).Include(x => x.Ubicacion).Where(x => x.Id == user.PersonaId).FirstOrDefaultAsync();
 
-
+           
             Username = userName;
 
             PersonaInput = new ModelInput
@@ -110,9 +110,14 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+            if (user.PersonaId == null)
+            {
+                return RedirectToAction("CompleteData", "Personas", new { area = "Administracion" });
+
+            }
             ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             await LoadAsync(user);
-
+            
             return Page();
         }
 

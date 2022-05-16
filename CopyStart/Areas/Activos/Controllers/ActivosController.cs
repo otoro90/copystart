@@ -14,7 +14,7 @@ namespace CopyStart.Areas.Activos.Controllers
 {
     [Area("Activos")]
     
-    [Authorize(Roles = "Administrador")]
+  
     public class ActivosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -30,7 +30,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo);
+            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).Include(a => a.ModeloActivo);
             return View(await applicationDbContext.ToListAsync());
         }
 

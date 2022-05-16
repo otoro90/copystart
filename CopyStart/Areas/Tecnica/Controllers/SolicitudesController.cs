@@ -31,7 +31,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Solicitud.Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico);
+            var applicationDbContext = _context.Solicitud.Include(s => s.Activo).ThenInclude(s=>s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico);
             var solicitudes = await applicationDbContext.ToListAsync();
 
             return View(solicitudes);
@@ -68,7 +68,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s=>s.MarcaActivo).Include(s=>s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
-            
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+
             return View();
 
         }
@@ -79,7 +80,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,Ubicacion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
+        public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,UbicacionId,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             var user = await _userManager.GetUserAsync(User);
             solicitud.Id = Guid.NewGuid();
@@ -96,7 +97,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", solicitud.ActivoId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto");
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
             return View(solicitud);
@@ -116,7 +117,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 return NotFound();
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", solicitud.ActivoId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", solicitud.ActivoId);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
             return View(solicitud);
@@ -128,7 +129,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Incidencia,Descripcion,Ubicacion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Incidencia,Descripcion,UbicacionId,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             if (id != solicitud.Id)
             {
@@ -155,7 +156,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", solicitud.ActivoId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", solicitud.ActivoId);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
             return View(solicitud);

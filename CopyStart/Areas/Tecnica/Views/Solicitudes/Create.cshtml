@@ -5,15 +5,6 @@
 }
 
 
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-
-
-
-
 <section class="row">
     <div class="col-md-3 "></div>
 
@@ -38,17 +29,19 @@
                                 <input asp-for="Descripcion" class="form-control" />
                                 <span asp-validation-for="Descripcion" class="text-danger"></span>
                             </div>
+
                             <div class="form-group">
                                 <label asp-for="UbicacionId" class="control-label"></label>
-                                <input asp-for="UbicacionId" class="form-control" />
-                                <span asp-validation-for="UbicacionId" class="text-danger"></span>
-
+                                <select asp-for="UbicacionId" class="form-control" asp-items="ViewBag.UbicacionId"></select>
+                               
                             </div>
+                        
 
-                            <div class="form-group">
-                                <label class="control-label">Serial del Activo</label>
-                                <select asp-for="ActivoId" class="form-control" asp-items="ViewBag.ActivoId"></select>
-                            </div>
+                             <div class="form-group">
+                                 <label asp-for="ActivoId" class="control-label"></label>
+                                 <select asp-for="ActivoId" class ="form-control" asp-items="ViewBag.ActivoId"></select>
+                              </div>
+
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
 

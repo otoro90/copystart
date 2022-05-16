@@ -26,7 +26,6 @@
     </div>
 
 </div>
-
 <div class="row ">
     <div class="col-12">
         <div class="card">
@@ -35,17 +34,17 @@
                     <thead class="bg-blue">
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Id)
+                                 Cliente
                             </th>
                             <th>
-                                Tipo de servicio
+                               Tipo de servicio
                             </th>
 
                             <th>
-                                @Html.DisplayNameFor(model => model.Activo.Serial)
+                              Activo
                             </th>
                             <th>
-                                Cliente
+                               Estado del servicio
                             </th>
 
                             <th></th>
@@ -58,19 +57,22 @@
                         <tr>
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.Id)
+
+                                @{
+                                    var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
+                                    @Html.DisplayFor(modelItem => fullName)
+                                }
+                               
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Activo.Serial)
+                                  @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial) 
                             </td>
                             <td>
-                                @{
-                                    var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
-                                    @Html.DisplayFor(modelItem => fullName)
-                                }
+                                  @Html.DisplayFor(modelItem => item.Estado) 
+
                             </td>
 
                             <td>
