@@ -1,244 +1,263 @@
 ﻿<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="list" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
-        with font-awesome or any other icon font library -->
-        <li class="nav-item">
-            @if (User.IsInRole("Admin"))
-            {
+    with font-awesome or any other icon font library -->
 
-
-            }
-            <a href="#" class="nav-link">
-
-                <p>
-                    Activos
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                    <a href="/Activos/Activos" class="nav-link">
-
-                        <p>Listado total</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Activos/Activos/ActivosPropios" class="nav-link">
-
-                        <p>Mis activos</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Activos/Activos/Create" class="nav-link">
-
-                        <p>Registrar</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Solicitudes
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                    <a href="/Tecnica/Solicitudes" class="nav-link">
-
-                        <p>Listado total</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Tecnica/Solicitudes/Create" class="nav-link">
-
-                        <p>Crear</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/Tecnica/Solicitudes/SolicitudesRealizadas" class="nav-link">
-
-                        <p>Solicitudes realizadas</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/Tecnica/Solicitudes/SolicitudesAsignadas" class="nav-link">
-
-                        <p>Solicitudes asignadas</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Servicios
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                    <a href="/Tecnica/Servicios" class="nav-link">
-
-                        <p>Listado</p>
-                    </a>
-                </li>
-
-
-                <li class="nav-item">
-                    <a href="/Tecnica/Servicios/ActualesCliente" class="nav-link">
-
-                        <p>Servicios activos Cliente</p>
-                    </a>
-                </li>
-
-
-                <li class="nav-item">
-                    <a href="/Tecnica/Servicios/ActualesTecnico" class="nav-link">
-
-                        <p>Servicios activos Tecnico</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/Tecnica/Servicios/HistorialCliente" class="nav-link">
-
-                        <p>Historial Cliente</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/Tecnica/Servicios/HistorialTecnico" class="nav-link">
-
-                        <p>Historial Tecnico</p>
-                    </a>
-                </li>
-
-
-            </ul>
-
-        </li>
-
-
-        <li class="nav-item">
-            <a href="/Tecnica/Diagnosticos" class="nav-link">
-
-                <p>
-                    Diagnosticos
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            
-
-        </li>
-
-
-
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Usuarios
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                    <a href="/Administracion/Personas" class="nav-link">
-
-                        <p>Listado total</p>
-                    </a>
-                </li>
-
-            
-           
-                <li class="nav-item">
-                    <a href="/Administracion/Personas/ListadoTecnicos" class="nav-link">
-
-                        <p>Listado Tecnico</p>
-                    </a>
-                </li>
-
-           </ul>
-
-
-        </li>
-
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-
-                <p>
-                    Parametricas
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-               
-                <li class="nav-item">
-                    <a href="/Parametricas/TipoActivos" class="nav-link">
-
-                        <p>Tipos de activo</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Parametricas/TipoDocumentos" class="nav-link">
-
-                        <p>Tipos de documento</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Parametricas/MarcaActivos" class="nav-link">
-
-                        <p>Marcas de activos</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Parametricas/ModeloActivos" class="nav-link">
-
-                        <p>Modelos de activos</p>
-                    </a>
-                </li>
-            </ul>
-
-        </li>
-       
-         <li class="nav-item">
-                    <a href="#" class="nav-link">
-
-                        <p>
-                            Tipos de servicio
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview" style="display: none;">
+        @if (User.IsInRole("Administrador") || User.IsInRole("Cliente"))
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <p>
+                        Activos
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                    @if (User.IsInRole("Administrador"))
+                    {
                         <li class="nav-item">
-                            <a href="/Parametricas/TipoServicios" class="nav-link">
+                            <a href="/Activos/Activos" class="nav-link">
+
+                                <p>Listado total</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Activos/Activos/ActivosPropios" class="nav-link">
+
+                                <p>Mis activos</p>
+                            </a>
+                        </li>
+
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Activos/Activos/Create" class="nav-link">
+
+                                <p>Registrar</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+
+        @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador") || User.IsInRole("Tecnico") || User.IsInRole("Cliente"))
+        {
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+
+                    <p>
+                        Solicitudes
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Solicitudes" class="nav-link">
+
+                                <p>Listado total</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Solicitudes/Create" class="nav-link">
+
+                                <p>Crear</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Solicitudes/SolicitudesRealizadas" class="nav-link">
+
+                                <p>Solicitudes realizadas</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Tecnico"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Solicitudes/SolicitudesAsignadas" class="nav-link">
+
+                                <p>Solicitudes asignadas</p>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador") || User.IsInRole("Tecnico") || User.IsInRole("Cliente"))
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+
+                    <p>
+                        Servicios
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Servicios" class="nav-link">
 
                                 <p>Listado</p>
                             </a>
                         </li>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
                         <li class="nav-item">
-                            <a href="/Administracion/Procedimientos" class="nav-link">
+                            <a href="/Tecnica/Servicios/ActualesCliente" class="nav-link">
 
-                                <p>Procedimientos</p>
+                                <p>Servicios activos Cliente</p>
                             </a>
                         </li>
+                    }
+                    @if (User.IsInRole("Tecnico"))
+                    {
                         <li class="nav-item">
-                            <a href="/Administracion/ProcedimientoTipoServicios" class="nav-link">
+                            <a href="/Tecnica/Servicios/ActualesTecnico" class="nav-link">
 
-                                <p>Agregar procedimientos</p>
+                                <p>Servicios activos Tecnico</p>
                             </a>
                         </li>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Servicios/HistorialCliente" class="nav-link">
 
-                    </ul>
-                </li>
+                                <p>Historial Cliente</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Tecnico"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Tecnica/Servicios/HistorialTecnico" class="nav-link">
 
-    </ul>
+                                <p>Historial Tecnico</p>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+
+            </li>
+        }
+        @if (User.IsInRole("Administrador"))
+        {
+            <li class="nav-item">
+                <a href="/Tecnica/Diagnosticos" class="nav-link">
+
+                    <p>
+                        Diagnosticos
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+
+
+            </li>
+        }
+        @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+
+                    <p>
+                        Usuarios
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+
+                <ul class="nav nav-treeview" style="display: none;">
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Administracion/Personas" class="nav-link">
+
+                                <p>Listado total</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                    {
+                        <li class="nav-item">
+                            <a href="/Administracion/Personas/ListadoTecnicos" class="nav-link">
+
+                                <p>Listado Tecnico</p>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+
+
+            </li>
+        }
+        @if (User.IsInRole("Administrador"))
+        {
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+
+                    <p>
+                        Parametricas
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+
+                    <li class="nav-item">
+                        <a href="/Parametricas/TipoActivos" class="nav-link">
+
+                            <p>Tipos de activo</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Parametricas/TipoDocumentos" class="nav-link">
+
+                            <p>Tipos de documento</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Parametricas/MarcaActivos" class="nav-link">
+
+                            <p>Marcas de activos</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Parametricas/ModeloActivos" class="nav-link">
+
+                            <p>Modelos de activos</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Parametricas/TipoServicios" class="nav-link">
+
+                            <p>
+                                Tipos de servicio
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                    </li>
+                </ul>
+            </li>
+        }
+        </ul>
 </nav>
 
 

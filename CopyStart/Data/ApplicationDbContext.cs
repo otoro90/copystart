@@ -73,9 +73,103 @@ namespace CopyStart.Data
           .HasIndex(p => new { p.TipoServicioId, p.ProcedimientoId })
             .IsUnique(true);
 
+            modelBuilder.Entity<TipoDocumento>(b =>
+            {
+                b.HasData(new Entities.TipoDocumento()
+                {
+                    Id = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
+                    Nombre = "Cedula de Ciudadania",
+                    Codigo = "CC",
+                    Descripcion = "CC",
+                    Estado = true,
+                    
+
+
+                }) ;
+            }
+
+            );
+
+            modelBuilder.Entity<Ubicacion>(b =>
+            {
+                b.HasData(new Entities.Ubicacion()
+                {
+                    CodigoLugar = 50001,
+                    Lugar = "Villavicencio"
+
+                }) ;
+
+            }
+            );
+
+
+            
+
+
+            modelBuilder.Entity<Persona>(b =>
+            {
+                // Each Persona can have many Users
+                b.HasMany(e => e.Users)
+                    .WithOne(e => e.Persona)
+                    .HasForeignKey(ul => ul.PersonaId);
+                b.HasData(new Persona()
+                {
+                    Id = new Guid("510c6b6e-a475-488c-9bd9-84a6215da1cb"),
+                    Nombres = "Administrador",
+                    Apellidos = "Por defecto",
+                    TipoDocumentoId = Guid.Parse("324df0a1 - 337d - 45c4 - bf79 - eb3a01e14273"),
+                    NumeroDocumento = "1234567890",
+                    Direccion = "Calle 40, #33-18",
+                    Telefono = 3188743948,
+                    UbicacionId = 50001
+
+                }, new Persona()
+                {
+                    Id = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
+                    Nombres = "Coordinador",
+                    Apellidos = "Por defecto",
+                    TipoDocumentoId = Guid.Parse("324df0a1 - 337d - 45c4 - bf79 - eb3a01e14273"),
+                    NumeroDocumento = "1234567890",
+                    Direccion = "Calle 40, #33-18",
+                    Telefono = 3188743948,
+                    UbicacionId = 50001
+
+                }, new Persona()
+                {
+                    Id = new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"),
+                    Nombres = "Tecnico",
+                    Apellidos = "Por defecto",
+                    TipoDocumentoId = Guid.Parse("324df0a1 - 337d - 45c4 - bf79 - eb3a01e14273"),
+                    NumeroDocumento = "1234567890",
+                    Direccion = "Calle 40, #33-18",
+                    Telefono = 3188743948,
+                    UbicacionId = 50001
+
+                }
+                , new Persona()
+                {
+                    Id = new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"),
+                    Nombres = "Cliente",
+                    Apellidos = "Por defecto",
+                    TipoDocumentoId = Guid.Parse("324df0a1 - 337d - 45c4 - bf79 - eb3a01e14273"),
+                    NumeroDocumento = "1234567890",
+                    Direccion = "Calle 40, #33-18",
+                    Telefono = 3188743948,
+                    UbicacionId = 50001
+
+                }
+
+
+
+                );
+
+                });
+            
+
             modelBuilder.Entity<ApplicationUser>(b =>
             {
                 b.ToTable("Users");
+                b.HasData(new ApplicationUser());
             });
 
             modelBuilder.Entity<ApplicationUserClaim>(b =>
@@ -106,14 +200,6 @@ namespace CopyStart.Data
             modelBuilder.Entity<ApplicationUserRole>(b =>
             {
                 b.ToTable("UserRoles");
-            });
-
-            modelBuilder.Entity<Persona>(b =>
-            {
-                // Each Persona can have many Users
-                b.HasMany(e => e.Users)
-                    .WithOne(e => e.Persona)
-                    .HasForeignKey(ul => ul.PersonaId);
             });
 
             modelBuilder.Entity<ApplicationUser>(b =>
