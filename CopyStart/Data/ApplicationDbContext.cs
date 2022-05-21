@@ -63,14 +63,8 @@ namespace CopyStart.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
-
-
-
-
-
             modelBuilder.Entity<ProcedimientoTipoServicio>()
-          .HasIndex(p => new { p.TipoServicioId, p.ProcedimientoId })
+            .HasIndex(p => new { p.TipoServicioId, p.ProcedimientoId })
             .IsUnique(true);
 
             modelBuilder.Entity<TipoDocumento>(b =>
@@ -81,14 +75,9 @@ namespace CopyStart.Data
                     Nombre = "Cedula de Ciudadania",
                     Codigo = "CC",
                     Descripcion = "CC",
-                    Estado = true,
-
-
-
+                    Estado = true
                 });
-            }
-
-            );
+            });
 
             modelBuilder.Entity<Ubicacion>(b =>
             {
@@ -96,15 +85,8 @@ namespace CopyStart.Data
                 {
                     CodigoLugar = 50001,
                     Lugar = "Villavicencio"
-
                 });
-
-            }
-            );
-
-
-
-
+            });
 
             modelBuilder.Entity<Persona>(b =>
             {
@@ -157,16 +139,8 @@ namespace CopyStart.Data
                     Telefono = 3188743948,
                     UbicacionId = 50001
 
-                }
-
-
-
-                );
-
+                });
             });
-
-
-
 
             modelBuilder.Entity<ApplicationUserClaim>(b =>
             {
@@ -191,31 +165,22 @@ namespace CopyStart.Data
                     Id = "ADMIN",
                     Name = "Administrador",
                     NormalizedName = "Administrador"
-
                 }, new ApplicationRole()
                 {
                     Id = "COORD",
                     Name = "Coordinador",
                     NormalizedName = "Coordinador"
-
                 }, new ApplicationRole()
                 {
                     Id = "TEC",
                     Name = "Tecnico",
                     NormalizedName = "Tecnico"
-
                 }, new ApplicationRole()
                 {
                     Id = "CLN",
                     Name = "Cliente",
                     NormalizedName = "Cliente"
-
-                }
-
-
-
-
-                    );
+                });
             });
 
             modelBuilder.Entity<ApplicationRoleClaim>(b =>
@@ -243,9 +208,7 @@ namespace CopyStart.Data
                     {
                         RoleId = "CLN",
                         UserId = "cacd6063-c77d-437e-8cad-2e97ba1a0a6a"
-                    }
-
-                    );
+                    });
             });
 
             modelBuilder.Entity<ApplicationUser>(b =>
