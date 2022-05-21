@@ -254,9 +254,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> HistorialCliente()
         {
-
             var user = await _userManager.GetUserAsync(User);
-
 
             var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado");
             return View(await applicationDbContext.ToListAsync());
