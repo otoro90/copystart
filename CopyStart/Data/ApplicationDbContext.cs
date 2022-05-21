@@ -67,6 +67,10 @@ namespace CopyStart.Data
             .HasIndex(p => new { p.TipoServicioId, p.ProcedimientoId })
             .IsUnique(true);
 
+            modelBuilder.Entity<ProcedimientoTipoServicio>()
+            .HasIndex(p => new { p.TipoServicioId, p.Numero })
+            .IsUnique(true);
+
             modelBuilder.Entity<TipoDocumento>(b =>
             {
                 b.HasData(new TipoDocumento()

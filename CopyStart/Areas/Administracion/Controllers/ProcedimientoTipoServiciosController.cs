@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using CopyStart.Areas.Administracion.Models;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -23,10 +24,21 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/ProcedimientoTipoServicios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? tipoServicioId)
         {
-            var applicationDbContext = _context.ProcedimientoTipoServicio.Include(p => p.Procedimientos).Include(p => p.TipoServicio);
-            return View(await applicationDbContext.ToListAsync());
+            List<ProcedimientoTipoServicio> listaProcedimientoTipoServicio;
+            if (tipoServicioId != null)
+            {
+                listaProcedimientoTipoServicio = await _context.ProcedimientoTipoServicio.Include(p => p.Procedimientos).Include(p => p.TipoServicio).Where(e => e.TipoServicioId == tipoServicioId).ToListAsync();
+            }
+            else
+            {
+                listaProcedimientoTipoServicio = await _context.ProcedimientoTipoServicio.Include(p => p.Procedimientos).Include(p => p.TipoServicio).ToListAsync();
+            }
+
+            var tipoServicio = await _context.TipoServicio.FindAsync(tipoServicioId);
+            ViewData["TipoServicioId"] = tipoServicioId;
+            return View(listaProcedimientoTipoServicio);
         }
 
         // GET: Administracion/ProcedimientoTipoServicios/Details/5
@@ -50,10 +62,18 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/ProcedimientoTipoServicios/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync(Guid? tipoServicioId)
         {
-            ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo");
-            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo");
+            var tipoServicio = await _context.TipoServicio.FindAsync(tipoServicioId);
+            if (tipoServicioId != null)
+            {
+                ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", tipoServicio.Id);
+            }
+            else
+            {
+                ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo");
+            }
+            ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo");           
             return View();
         }
 
@@ -62,19 +82,46 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Numero,ProcedimientoId,TipoServicioId")] ProcedimientoTipoServicio procedimientoTipoServicio)
+        public async Task<IActionResult> Create([Bind("Numero,TipoServicioId,Id,Nombre,Descripcion,Codigo,Estado")] ProcedimientoCrear procedimientoCrear)
         {
             if (ModelState.IsValid)
             {
-                procedimientoTipoServicio.Id = Guid.NewGuid();
+
+                var procedimiento = new Procedimiento
+                {
+                    Id = Guid.NewGuid(),
+                    Nombre = procedimientoCrear.Nombre,
+                    Codigo = procedimientoCrear.Codigo,
+                    Descripcion = procedimientoCrear.Descripcion,
+                    Estado = procedimientoCrear.Estado
+                };
+
+                var procedimientoTipoServicio = new ProcedimientoTipoServicio
+                {
+                    Id = Guid.NewGuid(),
+                    TipoServicioId = procedimientoCrear.TipoServicioId,
+                    ProcedimientoId = procedimiento.Id,
+                    Numero=procedimientoCrear.Numero
+
+                };
+                _context.Add(procedimiento);
                 _context.Add(procedimientoTipoServicio);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
-            ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo", procedimientoTipoServicio.ProcedimientoId);
-            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", procedimientoTipoServicio.TipoServicioId);
-            return View(procedimientoTipoServicio);
+
+            
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", procedimientoCrear.TipoServicioId);
+            return View(procedimientoCrear);
+
+
+
+
         }
+            
+        
 
         // GET: Administracion/ProcedimientoTipoServicios/Edit/5
         public async Task<IActionResult> Edit(Guid? id)

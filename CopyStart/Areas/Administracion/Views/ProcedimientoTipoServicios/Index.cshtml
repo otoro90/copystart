@@ -2,16 +2,15 @@
 
 @{
     ViewData["Title"] = "Index";
+    var urlTipoServicios = "/Administracion/ProcedimientoTipoServicios/?tipoServicioId=" + ViewData["TipoServicioId"];
 }
 
 
 
 
 <div class="row ml-3 mb-2">
-    <a asp-action="Create">
-        <button type="button" class="btn btn-default bg-blue">
-            <i class="fas fa-plus mr-3"></i>
-        </button>
+    <a asp-action="Create" asp-route-tipoServicioId="@ViewData["TipoServicioId"]" class="btn btn-default bg-blue" role="button">
+        <i class="fas fa-plus mr-3"></i>
     </a>
 </div>
 
@@ -27,17 +26,20 @@
                 <table class="table  table-hover text-nowrap">
 
                     <thead class="bg-blue">
+
+
+
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Numero)
                             </th>
-                             <th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.TipoServicio)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Procedimientos)
                             </th>
-                           
+
                             <th></th>
                         </tr>
                     </thead>
@@ -54,7 +56,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Procedimientos.Codigo)
                                 </td>
-                                
+
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">
                                         <button type="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></button>

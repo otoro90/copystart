@@ -1,4 +1,4 @@
-﻿@model CopyStart.Entities.ProcedimientoTipoServicio
+﻿@model CopyStart.Areas.Administracion.Models.ProcedimientoCrear
 
 @{
     ViewData["Title"] = "Create";
@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-8 my-2 text-center">
-                                <h2 class="card-title"><b>Crear Persona</b></h2>
+                                <h2 class="card-title"><b>Crear procedimiento</b></h2>
                             </div>
                             <div class="col-md-4 my-2">
                                 <button type="button" class="btn btn-block btn-sm bg-gradient-navy"><a asp-action="Index">Volver </a> </button>
@@ -31,14 +31,33 @@
                                 <input asp-for="Numero" class="form-control" />
                                 <span asp-validation-for="Numero" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="ProcedimientoId" class="control-label"></label>
-                                <select asp-for="ProcedimientoId" class="form-control" asp-items="ViewBag.ProcedimientoId"></select>
-                            </div>
+                            
                             <div class="form-group">
                                 <label asp-for="TipoServicioId" class="control-label"></label>
                                 <select asp-for="TipoServicioId" class="form-control" asp-items="ViewBag.TipoServicioId"></select>
                             </div>
+                            <div class="form-group">
+                                <label asp-for="Nombre" class="control-label"></label>
+                                <input asp-for="Nombre" class="form-control" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Descripcion" class="control-label"></label>
+                                <input asp-for="Descripcion" class="form-control" />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Codigo" class="control-label"></label>
+                                <input asp-for="Codigo" class="form-control" />
+                                <span asp-validation-for="Codigo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                                </label>
+                            </div>
+
+
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
