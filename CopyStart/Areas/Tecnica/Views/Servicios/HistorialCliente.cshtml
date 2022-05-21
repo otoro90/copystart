@@ -35,17 +35,17 @@
                     <thead class="bg-blue">
                         <tr>
                             <th>
-                                 Cliente
+                                Cliente
                             </th>
                             <th>
-                               Tipo de servicio
+                                Tipo de servicio
                             </th>
 
                             <th>
-                              Activo
+                                Activo
                             </th>
                             <th>
-                               Estado del servicio
+                                Estado del servicio
                             </th>
 
                             <th></th>
@@ -55,54 +55,54 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
+                            <tr>
 
-                            <td>
+                                <td>
 
-                                @{
-                                    var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
-                                    @Html.DisplayFor(modelItem => fullName)
-                                }
-                               
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial) 
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.Estado) 
+                                    @{
+                                        var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
+                                        @Html.DisplayFor(modelItem => fullName)
+                                    }
 
-                            </td>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
 
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
-                                        <i class="far fa-file"></i>
-                                    </button>
-                                </a>
+                                </td>
 
-                                <a asp-action="Edit" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">
+                                        <button type="button" class="btn btn-default bg-blue">
+                                            <i class="far fa-file"></i>
+                                        </button>
+                                    </a>
 
-
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-                                </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">
+                                        <button type="button" class="btn btn-default bg-blue">
 
 
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                    </a>
 
 
-                                <a asp-action="Delete" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
-                                        <i class="far fa-trash-alt"></i>
-                                    </button>
-                                </a>
 
 
-                            </td>
-                        </tr>
+                                    <a asp-action="Delete" asp-route-id="@item.Id">
+                                        <button type="button" class="btn btn-default bg-blue">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </a>
+
+
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

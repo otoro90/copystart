@@ -69,7 +69,7 @@ namespace CopyStart.Data
 
             modelBuilder.Entity<TipoDocumento>(b =>
             {
-                b.HasData(new Entities.TipoDocumento()
+                b.HasData(new TipoDocumento()
                 {
                     Id = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                     Nombre = "Cedula de Ciudadania",
@@ -81,7 +81,7 @@ namespace CopyStart.Data
 
             modelBuilder.Entity<Ubicacion>(b =>
             {
-                b.HasData(new Entities.Ubicacion()
+                b.HasData(new Ubicacion()
                 {
                     CodigoLugar = 50001,
                     Lugar = "Villavicencio"
@@ -104,7 +104,6 @@ namespace CopyStart.Data
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001
-
                 }, new Persona()
                 {
                     Id = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
@@ -115,7 +114,6 @@ namespace CopyStart.Data
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001
-
                 }, new Persona()
                 {
                     Id = new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"),
@@ -126,7 +124,6 @@ namespace CopyStart.Data
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001
-
                 }
                 , new Persona()
                 {
@@ -138,7 +135,6 @@ namespace CopyStart.Data
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001
-
                 });
             });
 
@@ -241,10 +237,10 @@ namespace CopyStart.Data
                 {
                     Id = "1cf68c49-edd7-4d24-ab0c-b14c6aef0ebe",
                     PersonaId = Guid.Parse("510c6b6e-a475-488c-9bd9-84a6215da1cb"),
-                    UserName = "user1@gmail.com",
-                    NormalizedUserName = "USER1@GMAIL.COM",
-                    Email = "user1@gmail.com",
-                    NormalizedEmail = "USER1@GMAIL.COM",
+                    UserName = "cpadmin@yopmail.com",
+                    NormalizedUserName = "CPADMIN@YOPMAIL.COM",
+                    Email = "cpadmin@gmail.com",
+                    NormalizedEmail = "CPADMIN@YOPMAIL.COM",
                     EmailConfirmed = true,
                     PasswordHash = "AQAAAAEAACcQAAAAEBIHivGCDTDdkfSc8TsymI3VtOklfVojN8214LrcTyQWK3lqIRWJ7AHFQMne9rXm0g==",
                     SecurityStamp = "SVKHSIPWR4JE76RDYMGA7MQGFIIBR3TX",
@@ -255,15 +251,14 @@ namespace CopyStart.Data
                     LockoutEnd = null,
                     LockoutEnabled = true,
                     AccessFailedCount = 0
-
                 }, new ApplicationUser()
                 {
                     Id = "5c141fdd-ab2f-49be-8a31-43aec63f918f",
                     PersonaId = Guid.Parse("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
-                    UserName = "user2@gmail.com",
-                    NormalizedUserName = "USER2@GMAIL.COM",
-                    Email = "user2@gmail.com",
-                    NormalizedEmail = "USER2@GMAIL.COM",
+                    UserName = "cpcoordinador@yopmail.com",
+                    NormalizedUserName = "CPCOORDINADOR@YOPMAIL.COM",
+                    Email = "CPCOORDINADOR@yopmail.com",
+                    NormalizedEmail = "CPCOORDINADOR@YOPMAIL.COM",
                     EmailConfirmed = true,
                     PasswordHash = "AQAAAAEAACcQAAAAEDv98UwloGC1tI3Elt0TgyWk9DxWPi475t9/P2SOAO/TgHilR1/Tnp0kQpnctazOJw==",
                     SecurityStamp = "RZABU4JPNDQVJF4LWR5ZS755BS7H6HDR",
