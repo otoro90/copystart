@@ -10,11 +10,9 @@
    
 <div class="row p-3">
     <div class="col-4">
-    <a asp-action="Create">
-        <button type="button" class="btn btn-default bg-blue">
-           <i class="fas fa-plus mr-3"></i>
-       </button>
-    </a>
+     <a asp-action="Create" class="btn btn-default bg-blue" role="button">
+            <i class="fas fa-plus"></i>
+        </a>
    </div>
 
     <div class="col-7">
@@ -89,31 +87,12 @@
                             </td>
 
                             <td>
-                                <a asp-action="Details" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
-                                        <i class="far fa-file"></i>
-                                    </button>
-                                </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
 
-                                <a asp-action="Edit" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
+                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
-
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-                                </a>
-
-
-
-
-                                <a asp-action="Delete" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-default bg-blue">
-                                        <i class="far fa-trash-alt"></i>
-                                    </button>
-                                </a>
-
-
-                            </td>
+                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                </td>
                         </tr>
                         }
                     </tbody>

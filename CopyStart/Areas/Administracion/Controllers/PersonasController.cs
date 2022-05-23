@@ -287,16 +287,17 @@ namespace CopyStart.Areas.Administracion.Controllers
 
         [Authorize(Roles = "Administrador")]
       
-        public async Task<IActionResult> BorrarRol(string id, Guid? persona)
+        public async Task<IActionResult> BorrarRol(string id, Guid? user)
         {
-            
-            
+
+            var usuario = await _context.Users
+                .FirstOrDefaultAsync(m=>m.PersonaId == user);
 
             var applicationUserRole = await _context.ApplicationUserRole
-                .FirstOrDefaultAsync(m => m.RoleId == id);
+                .FirstOrDefaultAsync(m => m.RoleId == id && m.UserId == usuario.Id);
             _context.ApplicationUserRole.Remove(applicationUserRole);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Personas", new { area = "Administracion", id = persona });
+            return RedirectToAction("Details", "Personas", new { area = "Administracion", id = user });
         }
 
         

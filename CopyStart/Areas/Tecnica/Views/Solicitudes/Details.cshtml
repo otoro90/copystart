@@ -22,19 +22,36 @@
             <div class="row">
 
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Id">Editar </a> </button>
+              <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar </a>
+                </div>
+                 @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                 {
+                <div class="col-md-3 my-2">
+                   <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver </a> 
+                    </div>
+                } @if (User.IsInRole("Cliente") )
+                {
+                  <div class="col-md-3 my-2">
+                   <a asp-action="SolicitudesRealizadas" role="button" class="btn btn-block btn-default btn-sm">Volver </a> 
+                    </div>  
+
+                }
+                @if (User.IsInRole("Tecnico") )
+                {
+                  <div class="col-md-3 my-2">
+                   <a asp-action="SolicitudesAsignadas" role="button" class="btn btn-block btn-default btn-sm">Volver </a> 
+                    </div>  
+
+                }
+
+                <div class="col-md-3 my-2">
+                   <a asp-action="TramitarSolicitud" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm"> Tramitar</a>
                 </div>
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Ir a lista </a> </button>
+                   <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Realizar diagnostico </a>
                 </div>
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="TramitarSolicitud" asp-route-id="@Model.Id"> Tramitar</a></button>
-                </div>
-                <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlDiagnostico">Realizar diagnostico </a> </button>
-                </div>
-                <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="VerServicio" asp-route-id="@Model.Id">Ver servicio </a> </button>
+                   <a asp-action="VerServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicio </a> 
                 </div>
             </div>
 

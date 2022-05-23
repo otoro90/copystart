@@ -83,6 +83,7 @@ namespace CopyStart.Areas.Activos.Controllers
                
                 activo.FechaRegistro = DateTime.Now;
                 activo.PersonaId = (Guid)user.PersonaId;
+                activo.Estado = "Inactivo";
                 _context.Add(activo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Activos", new { area = "Activos", id = activo.Id });
