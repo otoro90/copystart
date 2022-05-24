@@ -8,6 +8,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -250,25 +251,9 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> HistorialCliente()
-        {
-            var user = await _userManager.GetUserAsync(User);
+       
 
-            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado");
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        [Authorize(Roles = "Administrador, Tecnico")]
-        public async Task<IActionResult> HistorialTecnico()
-        {
-
-            var user = await _userManager.GetUserAsync(User);
-
-
-            var applicationDbContext = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado");
-            return View(await applicationDbContext.ToListAsync());
-        }
+       
 
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> HistorialPorActivo(Guid? idActivo)
@@ -276,6 +261,31 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             var servicios = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
             return View(await servicios.ToListAsync());
+        }
+
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        public async Task<IActionResult> Historial()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            List<Servicio> listaServicios = null;
+            if (User.IsInRole("Cliente"))
+            {
+                listaServicios= await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
+
+
+            }
+            if (User.IsInRole("Tecnico"))
+            {
+               listaServicios =await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
+
+            }
+            else
+            {
+                listaServicios = await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Estado == "Finalizado").ToListAsync();
+
+            }
+
+            return View(listaServicios);
         }
 
 

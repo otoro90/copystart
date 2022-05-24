@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    
     [Area("Parametricas")]
     public class TipoServiciosController : Controller
     {
@@ -19,7 +19,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Administrador")]
         // GET: Parametricas/TipoServicios
         public async Task<IActionResult> Index()
         {
@@ -27,6 +27,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/TipoServicios/Details/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -45,6 +46,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/TipoServicios/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
@@ -55,6 +57,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado")] TipoServicio tipoServicio)
         {
             if (ModelState.IsValid)
@@ -68,6 +71,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/TipoServicios/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -88,6 +92,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado")] TipoServicio tipoServicio)
         {
             if (id != tipoServicio.Id)
@@ -119,6 +124,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/TipoServicios/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -139,6 +145,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // POST: Parametricas/TipoServicios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var tipoServicio = await _context.TipoServicio.FindAsync(id);
@@ -147,12 +154,13 @@ namespace CopyStart.Areas.Parametricas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Administrador")]
         private bool TipoServicioExists(Guid id)
         {
             return _context.TipoServicio.Any(e => e.Id == id);
         }
 
-
+        [Authorize(Roles = "Tecnico, Administrador")]
         public async Task<IActionResult> VerProcedimientosAsync(Guid idTipoServicio)
         {
             var procedimientos = _context.ProcedimientoTipoServicio.Where(e => e.TipoServicioId == idTipoServicio).Include(s => s.Procedimientos).Include(s => s.TipoServicio);

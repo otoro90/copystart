@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CopyStart.Entities.Solicitud>
+﻿@model IEnumerable<CopyStart.Entities.Servicio>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,7 @@
 
 <div class="row p-3">
     <div class="col-4">
-                
+        
     </div>
     <div class="col-7">
         <form class="form-inline ml-0 ml-md-3">
@@ -30,31 +30,22 @@
                 <table class="table  table-hover text-nowrap">
                     <thead class="bg-blue">
                         <tr>
-
                             <th>
-                                @Html.DisplayNameFor(model => model.Cliente)
+                                 Cliente
+                            </th>
+                            <th>
+                               Tipo de servicio
                             </th>
 
                             <th>
-                                @Html.DisplayNameFor(model => model.Activo.MarcaActivo.Nombre)
+                              Activo
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Activo.Serial)
+                               Estado del servicio
                             </th>
-
-                            <th>
-                                @Html.DisplayNameFor(model => model.Incidencia)
-                            </th>
-
-
-
-                            <th>
-                                @Html.DisplayNameFor(model => model.EstadoSolicitud)
-                            </th>
-
-
 
                             <th></th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -63,36 +54,31 @@
                         <tr>
 
                             <td>
+
                                 @{
-                                    var fullName = item.Cliente.Nombres + " " + item.Cliente.Apellidos;
+                                    var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
                                     @Html.DisplayFor(modelItem => fullName)
                                 }
+                               
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
+                            </td>
+                            <td>
+                                  @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial) 
+                            </td>
+                            <td>
+                                  @Html.DisplayFor(modelItem => item.Estado) 
 
                             </td>
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.Activo.MarcaActivo.Nombre)
-
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activo.Serial)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Incidencia)
-                            </td>
-                            
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EstadoSolicitud)
-                            </td>
-                            
-
-                            
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
+                               <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
 
                                 <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
                                 <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+
 
                             </td>
                         </tr>

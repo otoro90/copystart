@@ -28,6 +28,7 @@ namespace CopyStart.Areas.Activos.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).Include(a => a.ModeloActivo);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -39,7 +40,7 @@ namespace CopyStart.Areas.Activos.Controllers
             {
                 return NotFound();
             }
-
+            var solicitudes = _context.Solicitud.Include(s => s.Activo).ThenInclude(s => s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico).Where(s => s.ActivoId == id);
             var activo = await _context.Activo
                 .Include(a => a.Persona)
                 .Include(a => a.TipoActivo)
@@ -50,6 +51,11 @@ namespace CopyStart.Areas.Activos.Controllers
             {
                 return NotFound();
             }
+            if (solicitudes == null)
+            {
+
+            }
+            
 
             return View(activo);
         }
