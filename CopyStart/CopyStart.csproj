@@ -33,7 +33,6 @@
     <Folder Include="Areas\Tecnica\Data\" />
     <Folder Include="Data\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Scripts\" />
     <Folder Include="wwwroot\js\Areas\" />
   </ItemGroup>
 

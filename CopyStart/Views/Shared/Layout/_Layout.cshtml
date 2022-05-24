@@ -2,6 +2,7 @@
 @using AdminLte.Mvc.Views.Shared.Components.Sidebar
 @using AdminLte.Mvc.Views.Shared.Components.ControlSidebar
 @using AdminLte.Mvc.Views.Shared.Components.Footer
+@using CopyStart.Models;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +23,26 @@
         @(await Component.InvokeAsync<HeaderViewComponent>())
         @(await Component.InvokeAsync<SidebarViewComponent>())
         <div class="content-wrapper">
-            @RenderBody()
-        </div>
+            @if (ViewBag.Breadcrumbs != null)
+            {
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white justify-content-center justify-content-md-start justify-content-lg-start justify-content-xl-start">
+                        @foreach (var breadcrumb in ViewBag.Breadcrumbs as List<Breadcrumb>)
+                        {
+                            if (breadcrumb.Active)
+                            {
+                                <li class="breadcrumb-item active"><a asp-action="@breadcrumb.Action" asp-controller="@breadcrumb.Controller" asp-area="@breadcrumb.Area">@breadcrumb.Text</a></li>
+                            }
+                            else
+                            {
+                                <li class="breadcrumb-item" aria-current="page">@breadcrumb.Text</li>
+                            }
+                        }
+                    </ol>
+                </nav>
+            }
+                @RenderBody()
+            </div>
         @(await Component.InvokeAsync<ControlSidebarViewComponent>())
         @(await Component.InvokeAsync<FooterViewComponent>())
     </div>
