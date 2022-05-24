@@ -17,16 +17,17 @@
 
             <div class="row">
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Edit" asp-route-id="@Model.Persona.Id">Editar</a> </button>
+                   <a  asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
                 </div>
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver</a> </button>
+                    <a  asp-action="Edit" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
+                </div>
+                
+                <div class="col-md-3 my-2">
+                  <a  href="@urlCliente" role="button" class="btn btn-block btn-default btn-sm">Ver activos</a>  
                 </div>
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlCliente">Ver Activos</a> </button>
-                </div>
-                <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="AsignarRol" asp-route-id="@Model.Persona.Id">Asignar Rol</a> </button>
+                    <a  asp-action="AsignarRol" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Asignar rol</a>
                 </div>
 
             </div>
@@ -98,9 +99,8 @@
                                     @Html.DisplayFor(modelItem => item.Role.Name)
                                 </td>
                                 <td class="float-right">
-                                    <a asp-action="BorrarRol" asp-route-id="@item.Role.Id" asp-route-persona="@item.User.Persona.Id" >
-                                        <button type="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></button>
-                                    </a>
+                                   
+                                    <a  asp-action="BorrarRol" asp-route-id="@item.Role.Id" asp-route-user="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
                                 </td>
 
 

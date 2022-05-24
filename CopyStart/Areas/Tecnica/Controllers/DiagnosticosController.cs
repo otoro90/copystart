@@ -89,7 +89,14 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 servicio.ActivoId = solicitud.ActivoId;
                
                 servicio.FechaRealizacion = DateTime.MinValue;
-                _context.Add(servicio);               
+                _context.Add(servicio);
+
+                var activo = await _context.Activo               
+                .FirstOrDefaultAsync(m => m.Id == servicio.ActivoId);
+
+                activo.Estado = "En servicio";
+                _context.Update(activo);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

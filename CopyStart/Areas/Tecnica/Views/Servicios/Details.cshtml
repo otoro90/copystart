@@ -23,13 +23,20 @@
             <div class="row">
 
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlDiagnostico">Ver Diagnostico </a> </button>
+                    
+                     <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Ver Diagnostico</a>
                 </div>
-                <div class="col-md-3 my-2"><button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="ConfirmarServicio" asp-route-id="@Model.Id">Confirmar Servicio </a> </button>
+                <div class="col-md-3 my-2">
+                     <a asp-action="ConfirmarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Confirmar servicio</a>
+                    
                     </div>
-                <div class="col-md-3 my-2"><button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="FinalizarServicio" asp-route-id="@Model.Id">Finalizar Servicio </a> </button>
+                <div class="col-md-3 my-2">
+                    <a asp-action="FinalizarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Finalizar Servicio </a> 
+                    
                     </div>
-                <div class="col-md-3 my-2"><button type="button" class="btn btn-block btn-default btn-sm"><a href="@urlProcedimientos">Ver procedimientos </a> </button>
+                <div class="col-md-3 my-2">                  
+                        <a href="@urlProcedimientos" role="button" class="btn btn-block btn-default btn-sm">Ver procedimientos </a> 
+  
                     </div>
                 
 
