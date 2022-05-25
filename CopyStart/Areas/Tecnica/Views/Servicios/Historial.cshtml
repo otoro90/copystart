@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CopyStart.Entities.Servicio>
+﻿@model IEnumerable<CopyStart.Entities.Activo>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,7 @@
 
 <div class="row p-3">
     <div class="col-4">
-        
+
     </div>
     <div class="col-7">
         <form class="form-inline ml-0 ml-md-3">
@@ -20,7 +20,6 @@
             </div>
         </form>
     </div>
-
 </div>
 
 <div class="row ">
@@ -31,57 +30,52 @@
                     <thead class="bg-blue">
                         <tr>
                             <th>
-                                 Cliente
+                                @Html.DisplayNameFor(model => model.Serial)
                             </th>
                             <th>
-                               Tipo de servicio
+                                @Html.DisplayNameFor(model => model.TipoActivo)
                             </th>
 
                             <th>
-                              Activo
+                                Marca
                             </th>
                             <th>
-                               Estado del servicio
+                                Modelo
                             </th>
-
+                            <th>
+                                @Html.DisplayNameFor(model => model.Estado)
+                            </th>
                             <th></th>
-
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Serial)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoActivo.Nombre)
+                                </td>
 
-                            <td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MarcaActivo.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModeloActivo.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
 
-                                @{
-                                    var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
-                                    @Html.DisplayFor(modelItem => fullName)
-                                }
-                               
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial) 
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.Estado) 
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
-                            </td>
-
-                            <td>
-                               <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
-
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
-
-                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
-
-
-                            </td>
-                        </tr>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

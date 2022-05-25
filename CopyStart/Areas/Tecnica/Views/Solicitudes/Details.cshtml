@@ -22,37 +22,31 @@
             <div class="row">
 
                 <div class="col-md-3 my-2">
-              <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar </a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar </a>
                 </div>
-                 @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
-                 {
+
                 <div class="col-md-3 my-2">
-                   <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver </a> 
+                    <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver </a>
+                </div>
+                @if (User.IsInRole("Coordinador") && Model.EstadoSolicitud == "Por tramitar")
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="TramitarSolicitud" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm"> Tramitar</a>
                     </div>
-                } @if (User.IsInRole("Cliente") )
-                {
-                  <div class="col-md-3 my-2">
-                   <a asp-action="SolicitudesRealizadas" role="button" class="btn btn-block btn-default btn-sm">Volver </a> 
-                    </div>  
-
                 }
-                @if (User.IsInRole("Tecnico") )
+                @if (User.IsInRole("Tecnico") && Model.EstadoSolicitud == "Por diagnosticar")
                 {
-                  <div class="col-md-3 my-2">
-                   <a asp-action="SolicitudesAsignadas" role="button" class="btn btn-block btn-default btn-sm">Volver </a> 
-                    </div>  
-
+                    <div class="col-md-3 my-2">
+                        <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Realizar diagnostico </a>
+                    </div>
                 }
 
+                @if  (Model.EstadoSolicitud == "Diagnosticada") 
+                {
                 <div class="col-md-3 my-2">
-                   <a asp-action="TramitarSolicitud" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm"> Tramitar</a>
+                    <a asp-action="VerServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicio </a>
                 </div>
-                <div class="col-md-3 my-2">
-                   <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Realizar diagnostico </a>
-                </div>
-                <div class="col-md-3 my-2">
-                   <a asp-action="VerServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicio </a> 
-                </div>
+                }
             </div>
 
         </div>

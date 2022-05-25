@@ -57,12 +57,12 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
-                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador") || User.IsInRole("Tecnico") || User.IsInRole("Cliente"))
                     {
                         <li class="nav-item">
                             <a href="/Tecnica/Solicitudes" class="nav-link">
 
-                                <p>Listado total</p>
+                                <p>Listado</p>
                             </a>
                         </li>
                     }
@@ -75,24 +75,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Cliente"))
-                    {
-                        <li class="nav-item">
-                            <a href="/Tecnica/Solicitudes" class="nav-link">
-
-                                <p>Solicitudes realizadas</p>
-                            </a>
-                        </li>
-                    }
-                    @if (User.IsInRole("Tecnico"))
-                    {
-                        <li class="nav-item">
-                            <a href="/Tecnica/Solicitudes" class="nav-link">
-
-                                <p>Solicitudes asignadas</p>
-                            </a>
-                        </li>
-                    }
+                   
 
                 </ul>
             </li>
@@ -108,7 +91,7 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
-                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador") || User.IsInRole("Tecnico") || User.IsInRole("Cliente"))
                     {
                         <li class="nav-item">
                             <a href="/Tecnica/Servicios" class="nav-link">
@@ -117,39 +100,13 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Cliente"))
+                   
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador") || User.IsInRole("Tecnico") || User.IsInRole("Cliente"))
                     {
                         <li class="nav-item">
-                            <a href="/Tecnica/Servicios/ActualesCliente" class="nav-link">
+                            <a href="/Tecnica/Servicios/Historial" class="nav-link">
 
-                                <p>Servicios activos Cliente</p>
-                            </a>
-                        </li>
-                    }
-                    @if (User.IsInRole("Tecnico"))
-                    {
-                        <li class="nav-item">
-                            <a href="/Tecnica/Servicios/ActualesTecnico" class="nav-link">
-
-                                <p>Servicios activos Tecnico</p>
-                            </a>
-                        </li>
-                    }
-                    @if (User.IsInRole("Cliente"))
-                    {
-                        <li class="nav-item">
-                            <a href="/Tecnica/Servicios/HistorialCliente" class="nav-link">
-
-                                <p>Historial Cliente</p>
-                            </a>
-                        </li>
-                    }
-                    @if (User.IsInRole("Tecnico"))
-                    {
-                        <li class="nav-item">
-                            <a href="/Tecnica/Servicios/HistorialTecnico" class="nav-link">
-
-                                <p>Historial Tecnico</p>
+                                <p>Historial</p>
                             </a>
                         </li>
                     }

@@ -23,9 +23,12 @@
                 <div class="col-md-3 my-2">
                     <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
                 </div>
+                @if (User.IsInRole("Cliente"))
+                {
                 <div class="col-md-3 my-2">
                     <a asp-area="Tecnica" asp-controller="Solicitudes" asp-action="Create" asp-route-idActivo="@Model.Id" type="button" class="btn btn-block btn-default btn-sm">Solicitar</a>
                 </div>
+                }
                 <div class="col-md-3 my-2">
                     <a asp-area="Tecnica" asp-controller="Servicios" asp-action="HistorialPorActivo" asp-route-idActivo="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Historial</a>
                 </div>

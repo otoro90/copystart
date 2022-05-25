@@ -23,22 +23,28 @@
             <div class="row">
 
                 <div class="col-md-3 my-2">
-                    
-                     <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Ver Diagnostico</a>
+
+                    <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Ver Diagnostico</a>
                 </div>
+                @if (User.IsInRole("Cliente") && Model.Estado == "Por confirmar")
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="ConfirmarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Confirmar servicio</a>
+
+                    </div>
+                }
+                @if (User.IsInRole("Tecnico") && Model.Estado == "En ejecucion")
+                {
                 <div class="col-md-3 my-2">
-                     <a asp-action="ConfirmarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Confirmar servicio</a>
-                    
-                    </div>
+                    <a asp-action="FinalizarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Finalizar Servicio </a>
+
+                </div>
+                }
                 <div class="col-md-3 my-2">
-                    <a asp-action="FinalizarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Finalizar Servicio </a> 
-                    
-                    </div>
-                <div class="col-md-3 my-2">                  
-                        <a href="@urlProcedimientos" role="button" class="btn btn-block btn-default btn-sm">Ver procedimientos </a> 
-  
-                    </div>
-                
+                    <a href="@urlProcedimientos" role="button" class="btn btn-block btn-default btn-sm">Ver procedimientos </a>
+
+                </div>
+
 
             </div>
         </div>
