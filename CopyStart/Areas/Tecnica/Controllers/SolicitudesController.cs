@@ -28,7 +28,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes
 
-        [Authorize(Roles = "Administrador, Coordinador")]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -44,12 +44,37 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Active = true
             });
+            var user = await _userManager.GetUserAsync(User);
+            List<Solicitud> listaSolicitudes=null;
+            if (User.IsInRole("Cliente"))
+            {
 
-            var applicationDbContext = _context.Solicitud.Include(s => s.Activo).ThenInclude(s=>s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico);
-            var solicitudes = await applicationDbContext.ToListAsync();
+                listaSolicitudes = await _context.Solicitud.Where(e => e.ClienteId == user.PersonaId).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
+            }
+            if (User.IsInRole("Tecnico"))
+            {
 
-            return View(solicitudes);
+               listaSolicitudes =await _context.Solicitud.Where(e => e.TecnicoId == user.PersonaId).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
+            }
+
+
+
+            if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+            {
+                listaSolicitudes =await _context.Solicitud.Include(s => s.Activo).ThenInclude(s => s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
+                
+            }
+
+            return View(listaSolicitudes);
         }
+
+
+
+        
+
+
+
+
 
         // GET: Tecnica/Solicitudes/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
@@ -61,19 +86,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Detalle "+id.ToString(),
-                Active = true
+                Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
@@ -141,7 +166,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             solicitud.Id = Guid.NewGuid();
             solicitud.ClienteId = (Guid)user.PersonaId;
             solicitud.FechaSolicitud = DateTime.Now;
-           
+            solicitud.EstadoSolicitud = "Por tramitar";
 
 
 
@@ -393,6 +418,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 
                 solicitud.TecnicoId = tecnico.TecnicoId;
+                solicitud.EstadoSolicitud = "Por diagnosticar";
                 await _context.SaveChangesAsync();
             }           
             return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });
@@ -441,6 +467,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                
                 solicitud.Descripcion = desc.Descripcion;
+                solicitud.EstadoSolicitud = "Cancelada";
                 await _context.SaveChangesAsync();
             }
 
@@ -465,53 +492,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
 
         }
-
-
-
-        [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> SolicitudesRealizadas()
-        {
-            var breadcrumbList = new List<Breadcrumb>();
-            breadcrumbList.Add(new Breadcrumb
-            {
-                Text = "Inicio",
-                Action = "Index",
-                Controller = "Home",
-                Active = false
-            });
-            breadcrumbList.Add(new Breadcrumb
-            {
-                Text = "Solicitudes",
-                Active = true
-            });
-            ViewBag.Breadcrumbs = breadcrumbList;
-
-            var user = await _userManager.GetUserAsync(User);
-
-            var persona = await _context.Persona.Include(x => x.TipoDocumento).Where(x => x.Id == user.PersonaId).FirstOrDefaultAsync();
-            var applicationDbContext = _context.Solicitud.Where(e => e.ClienteId == persona.Id).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico);
-            var solicitudes = await applicationDbContext.ToListAsync();
-
-            return View(solicitudes);
-        }
-
-        [Authorize(Roles = "Administrador, Tecnico")]
-        public async Task<IActionResult> SolicitudesAsignadas()
-        {
-
-            var user = await _userManager.GetUserAsync(User);
-
-            var persona = await _context.Persona.Include(x => x.TipoDocumento).Where(x => x.Id == user.PersonaId).FirstOrDefaultAsync();
-            var applicationDbContext = _context.Solicitud.Where(e => e.TecnicoId == persona.Id).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico);
-            var solicitudes = await applicationDbContext.ToListAsync();
-
-            return View(solicitudes);
-        }
-
-
-
-
-
 
 
     }

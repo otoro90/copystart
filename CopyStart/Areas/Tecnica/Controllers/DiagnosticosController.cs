@@ -72,33 +72,34 @@ namespace CopyStart.Areas.Tecnica.Controllers
             diagnostico.FechaDiagnostico = DateTime.Now;
             if (ModelState.IsValid)
             {
+
+
                 diagnostico.Id = Guid.NewGuid();
                 _context.Add(diagnostico);
                 var servicio = new Servicio();
+                servicio.Id= Guid.NewGuid();
+
+                servicio.SolicitudId = (Guid)diagnostico.SolicitudId;
+
+                var solicitud = await _context.Solicitud
+                .Include(s => s.Activo)
+                .Include(s => s.Cliente)
+                .Include(s => s.Tecnico)
+                .FirstOrDefaultAsync(m => m.Id == servicio.SolicitudId);
+
+                servicio.TipoServicioId = diagnostico.TipoServicioId;               
+                servicio.DiagnosticoId = diagnostico.Id;
+                servicio.ActivoId = solicitud.ActivoId;              
+                servicio.FechaRealizacion = DateTime.MinValue;
+                servicio.Estado = "Por confirmar";
+                solicitud.EstadoSolicitud="Diagnosticada";
+                _context.Add(servicio);
+                _context.Update(solicitud);
                 
                
-                servicio.Id= Guid.NewGuid();
-                servicio.SolicitudId = (Guid)diagnostico.SolicitudId;
-                servicio.TipoServicioId = diagnostico.TipoServicioId;
-                var solicitud = await _context.Solicitud
-                 .Include(s => s.Activo)
-                 .Include(s => s.Cliente)
-                 .Include(s => s.Tecnico)
-                 .FirstOrDefaultAsync(m => m.Id == servicio.SolicitudId);
-                servicio.DiagnosticoId = diagnostico.Id;
-                servicio.ActivoId = solicitud.ActivoId;
-               
-                servicio.FechaRealizacion = DateTime.MinValue;
-                _context.Add(servicio);
-
-                var activo = await _context.Activo               
-                .FirstOrDefaultAsync(m => m.Id == servicio.ActivoId);
-
-                activo.Estado = "En servicio";
-                _context.Update(activo);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Diagnosticos", new { area = "Tecnica", id = diagnostico.Id });
             }
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
             ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);

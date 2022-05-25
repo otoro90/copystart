@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CopyStart.Entities.ProcedimientoTipoServicio>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procedimientos.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procedimientos.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procedimientos.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Procedimientos.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Procedimientos.Descripcion)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.Procedimientos.Estado)
+
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>
