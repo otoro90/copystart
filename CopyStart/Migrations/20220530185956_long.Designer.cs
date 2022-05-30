@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220520154024_database")]
-    partial class database
+    [Migration("20220530185956_long")]
+    partial class @long
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,9 +23,10 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Activo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(512)
@@ -95,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "a36eccaf-27d3-4abd-8fd3-97f56f8e8197",
+                            ConcurrencyStamp = "5ef82162-6e2a-4a82-9608-3543422eacf9",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "ee16a932-128b-472a-9e51-6e6b8656f947",
+                            ConcurrencyStamp = "de1cbb74-55e9-4fe7-8b9e-ba30587d526f",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "1c9588b7-d2a4-45bb-9d9a-6ea0a44ab32d",
+                            ConcurrencyStamp = "faae5ef3-87a0-4c7f-9e25-07fb0ba659d7",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "ebb2aff4-60ca-45d3-9b8b-a6c3fafde092",
+                            ConcurrencyStamp = "89441f11-3ff7-4e49-9487-f3733cbb2f0e",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -220,34 +221,34 @@ namespace CopyStart.Migrations
                             Id = "1cf68c49-edd7-4d24-ab0c-b14c6aef0ebe",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "ce435a30-8d16-4770-a7fb-118fab13767b",
-                            Email = "user1@gmail.com",
+                            Email = "cpadmin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
-                            NormalizedEmail = "USER1@GMAIL.COM",
-                            NormalizedUserName = "USER1@GMAIL.COM",
+                            NormalizedEmail = "CPADMIN@YOPMAIL.COM",
+                            NormalizedUserName = "CPADMIN@YOPMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEBIHivGCDTDdkfSc8TsymI3VtOklfVojN8214LrcTyQWK3lqIRWJ7AHFQMne9rXm0g==",
                             PersonaId = new Guid("510c6b6e-a475-488c-9bd9-84a6215da1cb"),
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "SVKHSIPWR4JE76RDYMGA7MQGFIIBR3TX",
                             TwoFactorEnabled = false,
-                            UserName = "user1@gmail.com"
+                            UserName = "cpadmin@yopmail.com"
                         },
                         new
                         {
                             Id = "5c141fdd-ab2f-49be-8a31-43aec63f918f",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "776e1d1a-0c3c-41b0-bb44-bcb151add354",
-                            Email = "user2@gmail.com",
+                            Email = "CPCOORDINADOR@yopmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
-                            NormalizedEmail = "USER2@GMAIL.COM",
-                            NormalizedUserName = "USER2@GMAIL.COM",
+                            NormalizedEmail = "CPCOORDINADOR@YOPMAIL.COM",
+                            NormalizedUserName = "CPCOORDINADOR@YOPMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEDv98UwloGC1tI3Elt0TgyWk9DxWPi475t9/P2SOAO/TgHilR1/Tnp0kQpnctazOJw==",
                             PersonaId = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "RZABU4JPNDQVJF4LWR5ZS755BS7H6HDR",
                             TwoFactorEnabled = false,
-                            UserName = "user2@gmail.com"
+                            UserName = "cpcoordinador@yopmail.com"
                         },
                         new
                         {
@@ -393,9 +394,10 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Diagnostico", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Descripción")
                         .IsRequired()
@@ -642,6 +644,9 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("ProcedimientoId");
 
+                    b.HasIndex("TipoServicioId", "Numero")
+                        .IsUnique();
+
                     b.HasIndex("TipoServicioId", "ProcedimientoId")
                         .IsUnique();
 
@@ -711,15 +716,16 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Servicio", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ActivoId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ActivoId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid?>("DiagnosticoId")
-                        .HasColumnType("uuid");
+                    b.Property<long?>("DiagnosticoId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Estado")
                         .HasColumnType("text");
@@ -727,8 +733,8 @@ namespace CopyStart.Migrations
                     b.Property<DateTime>("FechaRealizacion")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("SolicitudId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("SolicitudId")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("SoportesId")
                         .HasColumnType("uuid");
@@ -764,8 +770,8 @@ namespace CopyStart.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ServicioId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ServicioId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -778,12 +784,13 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Solicitud", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ActivoId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ActivoId")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("ClienteId")
                         .HasColumnType("uuid");
@@ -974,25 +981,25 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.MarcaActivo", "MarcaActivo")
                         .WithMany()
                         .HasForeignKey("MarcaActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.ModeloActivo", "ModeloActivo")
                         .WithMany()
                         .HasForeignKey("ModeloActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Persona", "Persona")
                         .WithMany()
                         .HasForeignKey("PersonaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
                         .WithMany()
                         .HasForeignKey("TipoActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("MarcaActivo");
@@ -1009,7 +1016,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.ApplicationRole", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -1029,7 +1036,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.ApplicationUser", "User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1040,7 +1047,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.ApplicationUser", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1051,13 +1058,13 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.ApplicationRole", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.ApplicationUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -1070,7 +1077,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.ApplicationUser", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1090,7 +1097,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
                         .WithMany()
                         .HasForeignKey("TipoActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TipoActivo");
@@ -1101,7 +1108,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.MarcaActivo", "MarcaActivo")
                         .WithMany()
                         .HasForeignKey("MarcaActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("MarcaActivo");
@@ -1112,13 +1119,13 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.TipoDocumento", "TipoDocumento")
                         .WithMany()
                         .HasForeignKey("TipoDocumentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
                         .WithMany()
                         .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TipoDocumento");
@@ -1131,13 +1138,13 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Procedimiento", "Procedimientos")
                         .WithMany()
                         .HasForeignKey("ProcedimientoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.TipoServicio", "TipoServicio")
                         .WithMany()
                         .HasForeignKey("TipoServicioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Procedimientos");
@@ -1150,13 +1157,13 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Procedimiento", "Procedimientos")
                         .WithMany()
                         .HasForeignKey("ProcedimientoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Repuesto", "Repuesto")
                         .WithMany()
                         .HasForeignKey("RepuestoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Procedimientos");
@@ -1169,7 +1176,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Activo", "Activo")
                         .WithMany()
                         .HasForeignKey("ActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Diagnostico", "Diagnostico")
@@ -1179,7 +1186,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Solicitud", "Solicitudes")
                         .WithMany()
                         .HasForeignKey("SolicitudId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Soporte", "Soportes")
@@ -1206,13 +1213,13 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Procedimiento", "Procedimiento")
                         .WithMany()
                         .HasForeignKey("ProcedimientoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Servicio", "Servicio")
                         .WithMany()
                         .HasForeignKey("ServicioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Procedimiento");
@@ -1225,13 +1232,13 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Activo", "Activo")
                         .WithMany()
                         .HasForeignKey("ActivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Persona", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Persona", "Tecnico")
@@ -1241,7 +1248,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
                         .WithMany()
                         .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Activo");
@@ -1258,7 +1265,7 @@ namespace CopyStart.Migrations
                     b.HasOne("CopyStart.Entities.Documento", "DocumentoCertificacion")
                         .WithMany()
                         .HasForeignKey("DocumentoCertificacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CopyStart.Entities.Documento", "CopiaFacturaFirmada")

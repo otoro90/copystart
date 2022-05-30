@@ -32,7 +32,6 @@
     <Folder Include="Areas\Soportes\Models\" />
     <Folder Include="Areas\Tecnica\Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\js\Areas\" />
   </ItemGroup>
 

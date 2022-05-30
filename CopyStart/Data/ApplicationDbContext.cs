@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CopyStart.Entities;
 using CopyStart.Helpers;
@@ -57,7 +58,11 @@ namespace CopyStart.Data
                 optionsBuilder.UseNpgsql(configuration.GetConnectionString("DBConnection"));
             }
         }
+        
+            // ...
 
+            
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,6 +75,34 @@ namespace CopyStart.Data
             modelBuilder.Entity<ProcedimientoTipoServicio>()
             .HasIndex(p => new { p.TipoServicioId, p.Numero })
             .IsUnique(true);
+
+
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetForeignKeys())
+                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFKs)
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<Activo>()
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Solicitud>()
+            .Property(f => f.Id)
+            .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Servicio>()
+            .Property(f => f.Id)
+            .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Diagnostico>()
+            .Property(f => f.Id)
+            .ValueGeneratedOnAdd();
+
 
             modelBuilder.Entity<TipoDocumento>(b =>
             {

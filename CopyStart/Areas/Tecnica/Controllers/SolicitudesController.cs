@@ -44,6 +44,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Active = true
             });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             var user = await _userManager.GetUserAsync(User);
             List<Solicitud> listaSolicitudes=null;
             if (User.IsInRole("Cliente"))
@@ -78,7 +80,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -163,10 +165,11 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,UbicacionId,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             var user = await _userManager.GetUserAsync(User);
-            solicitud.Id = Guid.NewGuid();
+           
             solicitud.ClienteId = (Guid)user.PersonaId;
             solicitud.FechaSolicitud = DateTime.Now;
             solicitud.EstadoSolicitud = "Por tramitar";
+            
 
 
 
@@ -230,7 +233,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Incidencia,Descripcion,UbicacionId,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Incidencia,Descripcion,UbicacionId,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             if (id != solicitud.Id)
             {
@@ -265,7 +268,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes/Delete/5
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -320,13 +323,13 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
        
         [Authorize(Roles = "Administrador")]
-        private bool SolicitudExists(Guid id)
+        private bool SolicitudExists(long id)
         {
             return _context.Solicitud.Any(e => e.Id == id);
         }
 
         [Authorize(Roles = "Administrador, Coordinador")]
-        public async Task<IActionResult> TramitarSolicitudAsync(Guid id)
+        public async Task<IActionResult> TramitarSolicitudAsync(long id)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -407,7 +410,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Coordinador")]
-        public async Task<IActionResult> AsignarTecnico(Guid? id,[Bind("TecnicoId")] AsignarTecnico tecnico)
+        public async Task<IActionResult> AsignarTecnico(long? id,[Bind("TecnicoId")] AsignarTecnico tecnico)
         {
             var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
@@ -430,7 +433,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador")]
-        public async Task<IActionResult> CancelarSolicitudAsync(Guid? id)
+        public async Task<IActionResult> CancelarSolicitudAsync(long? id)
         {
             if (id == null)
             {
@@ -456,7 +459,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Coordinador")]
-        public async Task<IActionResult> CancelarSolicitud(Guid? id, [Bind("Descripcion")] EditarDesc desc)
+        public async Task<IActionResult> CancelarSolicitud(long? id, [Bind("Descripcion")] EditarDesc desc)
         {
             var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
@@ -477,7 +480,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         }
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> VerServicioAsync(Guid? id)
+        public async Task<IActionResult> VerServicioAsync(long? id)
         {
             
 

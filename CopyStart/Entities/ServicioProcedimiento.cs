@@ -12,7 +12,7 @@ namespace CopyStart.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public Guid ServicioId { get; set; }
+        public long ServicioId { get; set; }
 
         [Display(Name = "Servicio")]
         [ForeignKey("ServicioId")]

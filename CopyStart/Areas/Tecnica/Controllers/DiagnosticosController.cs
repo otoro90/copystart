@@ -33,7 +33,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -74,12 +74,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
 
 
-                diagnostico.Id = Guid.NewGuid();
+               
                 _context.Add(diagnostico);
                 var servicio = new Servicio();
-                servicio.Id= Guid.NewGuid();
+               
 
-                servicio.SolicitudId = (Guid)diagnostico.SolicitudId;
+                servicio.SolicitudId = (long)diagnostico.SolicitudId;
 
                 var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
@@ -131,7 +131,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Descripción,FechaDiagnostico,SoportesId")] Diagnostico diagnostico)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Descripción,FechaDiagnostico,SoportesId")] Diagnostico diagnostico)
         {
             if (id != diagnostico.Id)
             {
@@ -165,7 +165,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos/Delete/5
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -195,7 +195,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiagnosticoExists(Guid id)
+        private bool DiagnosticoExists(long id)
         {
             return _context.Diagnostico.Any(e => e.Id == id);
         }
