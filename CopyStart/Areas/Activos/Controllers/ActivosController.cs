@@ -117,7 +117,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
         // GET: Activos/Activos/Edit/5
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -202,7 +202,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var activo = await _context.Activo.FindAsync(id);
             _context.Activo.Remove(activo);

@@ -76,6 +76,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
                
                 _context.Add(diagnostico);
+                await _context.SaveChangesAsync();
                 var servicio = new Servicio();
                
 
@@ -95,8 +96,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 solicitud.EstadoSolicitud="Diagnosticada";
                 _context.Add(servicio);
                 _context.Update(solicitud);
-                
-               
+                await _context.SaveChangesAsync();
+
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Diagnosticos", new { area = "Tecnica", id = diagnostico.Id });
@@ -108,7 +109,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos/Edit/5
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -187,7 +188,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var diagnostico = await _context.Diagnostico.FindAsync(id);
             _context.Diagnostico.Remove(diagnostico);

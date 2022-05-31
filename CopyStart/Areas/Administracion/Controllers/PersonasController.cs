@@ -33,8 +33,19 @@ namespace CopyStart.Areas.Administracion.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Persona.Include(p => p.TipoDocumento);
-            return View(await applicationDbContext.ToListAsync());
+
+            List<ApplicationUserRole> listadoPersonas = null;
+            if (User.IsInRole("Administrador"))
+            {
+                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+
+            }
+            else if (User.IsInRole("Coordinador"))
+            {
+                listadoPersonas = await _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+            }
+
+                return View(listadoPersonas);
         }
 
         // GET: Administracion/Personas/Details/5
@@ -273,9 +284,17 @@ namespace CopyStart.Areas.Administracion.Controllers
                 }
 
                 var input = new ApplicationUserRole();
+                
                 input.RoleId = rol.RoleId;
                 input.UserId = usuario.Id;
                 _context.Add(input);
+
+                if (input.RoleId == "TEC")
+                {
+                    usuario.Persona.Estado = "Disponible";
+
+                }
+                _context.Update(usuario);
             }
 
 

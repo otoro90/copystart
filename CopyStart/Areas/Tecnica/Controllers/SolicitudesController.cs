@@ -37,12 +37,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
-                Active = true
+                Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
@@ -99,7 +99,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             });
             breadcrumbList.Add(new Breadcrumb
             {
-                Text = "Detalle "+id.ToString(),
+                Text = "Detalles "+id.ToString(),
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
@@ -131,19 +131,20 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Crear",
-                Active = true
+                Action="Create",
+                Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
@@ -188,7 +189,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes/Edit/5
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -196,19 +197,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
-            });
+                Active = true            });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-                Active = false
+                Active = true
             });
+          
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Editar",
-                Active = true
+                Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
             if (id == null)
@@ -276,19 +277,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Eliminar",
-                Active = true
+                Active = false
             });
 
             ViewBag.Breadcrumbs = breadcrumbList;
@@ -314,7 +315,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var solicitud = await _context.Solicitud.FindAsync(id);
             _context.Solicitud.Remove(solicitud);
@@ -337,19 +338,20 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Tramitar",
-                Active = true
+              
+                Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
@@ -367,7 +369,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         [Authorize(Roles = "Administrador, Coordinador")]
         // GET: Tecnica/Solicitudes/AsignarTecnico
-        public async Task<IActionResult> AsignarTecnicoAsync(Guid? id)
+        public async Task<IActionResult> AsignarTecnicoAsync(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -375,19 +377,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-                Active = false
+                Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Asignar técnico",
-                Active = true
+                Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
@@ -395,10 +397,11 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 return NotFound();
             }          
-            var solicitud = await _context.Solicitud.FindAsync(id);         
-            
-            ViewData["TecnicoId"] = new SelectList(_context.Persona.Select(x=> new {Id = x.Id , Texto = x.Nombres+" "+x.Apellidos+" - "+ x.NumeroDocumento}), "Id", "Texto" );
-          
+            var solicitud = await _context.Solicitud.FindAsync(id);
+
+            ViewData["TecnicoId"] = new SelectList(_context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).Select(x => new { Id = x.User.Persona.Id, Texto = x.User.Persona.Nombres + " " + x.User.Persona.Apellidos + " - " + x.User.Persona.NumeroDocumento }), "Id", "Texto");
+            _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona);
+
             return View(solicitud);
 
         }
@@ -412,6 +415,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> AsignarTecnico(long? id,[Bind("TecnicoId")] AsignarTecnico tecnico)
         {
+            
             var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
                 .Include(s => s.Cliente)
@@ -435,6 +439,31 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> CancelarSolicitudAsync(long? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitudes",
+                Action = "Index",
+                Controller = "Solicitudes",
+               
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Cancelar solicitud",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             if (id == null)
             {
                 return NotFound();

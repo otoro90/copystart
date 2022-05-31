@@ -19,14 +19,14 @@
             <div class="row">
 
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm">  <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a>  </button>
+                      <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
                 </div>
                   <div class="col-md-3 my-2">
 
                     <a href="@urlServicio" role="button" class="btn btn-block btn-default btn-sm">Ver Servicio</a>
                 </div>
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver</a> </button>
+                    <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Index">Volver</a> 
                 </div>
 
             </div>
