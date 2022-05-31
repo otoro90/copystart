@@ -11,7 +11,7 @@ namespace CopyStart.Entities
     {
         
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         
        
         [MaxLength(150)]
@@ -33,7 +33,7 @@ namespace CopyStart.Entities
 
         [Display(Name = "Estado")]
         
-        public string? EstadoSolicitud { get; set; }
+        public string EstadoSolicitud { get; set; }
 
         public Guid? TecnicoId { get; set; }
         
@@ -47,7 +47,7 @@ namespace CopyStart.Entities
         [ForeignKey("ClienteId")]
         public Persona Cliente { get; set; }
 
-        public Guid ActivoId { get; set; }
+        public long ActivoId { get; set; }
 
         [Display(Name = "Activo")]
         [ForeignKey("ActivoId")]

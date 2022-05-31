@@ -57,20 +57,35 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Servicios/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id, long? idDiagnostico)
         {
-            if (id == null)
+           
+            Servicio servicio;
+
+            if (idDiagnostico != null)
             {
-                return NotFound();
+              servicio = await _context.Servicio
+                                .Include(s => s.Activo)
+                                .Include(s => s.Solicitudes)
+                                .Include(s => s.Soportes)
+                                .Include(s => s.TipoServicios)
+                                .Include(s => s.Diagnostico)
+                                .FirstOrDefaultAsync(m => m.DiagnosticoId == idDiagnostico);
+            }
+            else
+            {
+                servicio = await _context.Servicio
+                                .Include(s => s.Activo)
+                                .Include(s => s.Solicitudes)
+                                .Include(s => s.Soportes)
+                                .Include(s => s.TipoServicios)
+                                .Include(s => s.Diagnostico)
+                                .FirstOrDefaultAsync(m => m.Id == id);
+
             }
 
-            var servicio = await _context.Servicio
-                .Include(s => s.Activo)                          
-                .Include(s => s.Solicitudes)
-                .Include(s => s.Soportes)
-                .Include(s => s.TipoServicios)
-                .Include(s => s.Diagnostico)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            
+
             if (servicio == null)
             {
                 return NotFound();
@@ -100,7 +115,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         {
             if (ModelState.IsValid)
             {
-                servicio.Id = Guid.NewGuid();
+                
 
                 _context.Add(servicio);
                 await _context.SaveChangesAsync();
@@ -115,7 +130,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Servicios/Edit/5
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -140,7 +155,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Estado,FechaRealizacion,DiagnosticoId,ActivoId,SolicitudId,SoportesId")] Servicio servicio)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Estado,FechaRealizacion,DiagnosticoId,ActivoId,SolicitudId,SoportesId")] Servicio servicio)
         {
             if (id != servicio.Id)
             {
@@ -176,7 +191,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Servicios/Delete/5
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -203,7 +218,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var servicio = await _context.Servicio.FindAsync(id);
             _context.Servicio.Remove(servicio);
@@ -216,18 +231,24 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador")]
-        private bool ServicioExists(Guid id)
+        private bool ServicioExists(long id)
         {
             return _context.Servicio.Any(e => e.Id == id);
         }
 
 
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> ConfirmarServicioAsync(Guid? id)
-        {
-            var servicio = await _context.Servicio.FindAsync(id);
+        public async Task<IActionResult> ConfirmarServicioAsync(long? id)
+        {          
+            var servicio = await _context.Servicio
+               .Include(s => s.Activo)
+               .Include(s => s.Solicitudes)
+               .FirstOrDefaultAsync(m => m.Id == id);
+            var tecnico = await _context.Persona.FindAsync(servicio.Solicitudes.TecnicoId);
+            tecnico.Estado = "En servicio";
             servicio.Estado = "En ejecucion";
             _context.Update(servicio);
+            _context.Update(tecnico);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
@@ -237,12 +258,21 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Tecnico")]
-        public async Task<IActionResult> FinalizarServicioAsync(Guid? id)
+        public async Task<IActionResult> FinalizarServicioAsync(long? id)
         {
-            var servicio = await _context.Servicio.FindAsync(id);
+            var servicio = await _context.Servicio
+                .Include(s => s.Activo)              
+                .Include(s => s.Solicitudes)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            var tecnico = await _context.Persona.FindAsync(servicio.Solicitudes.TecnicoId);
+            tecnico.Estado = "Disponible";
+           
             servicio.Estado = "Finalizado";
             servicio.FechaRealizacion = DateTime.Now;
+            
+            
             _context.Update(servicio);
+            _context.Update(tecnico);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
@@ -253,7 +283,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
        
 
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> HistorialPorActivo(Guid? idActivo)
+        public async Task<IActionResult> HistorialPorActivo(long? idActivo)
         {
 
             var servicios = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
@@ -265,9 +295,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public async Task<IActionResult> Historial()
         {
             var user = await _userManager.GetUserAsync(User);
-            List<Servicio> listaServicios = null;
-            List<Activo> listaActivos = null;
-            if (User.IsInRole("Cliente"))
+            List<Servicio> listaServicios = null;        
+           if (User.IsInRole("Cliente"))
             {
                 listaServicios= await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
                
@@ -285,16 +314,9 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             }
 
-            foreach (var i in listaServicios)
-                {
-                    Activo aux;
-                    aux = await _context.Activo.FindAsync(i.ActivoId);
-                listaActivos.Add(aux);
+            
 
-
-                }
-
-            return View(listaActivos);
+            return View(listaServicios);
         }
 
 

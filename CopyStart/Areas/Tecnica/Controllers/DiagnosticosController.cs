@@ -33,7 +33,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -74,12 +74,13 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
 
 
-                diagnostico.Id = Guid.NewGuid();
+               
                 _context.Add(diagnostico);
+                await _context.SaveChangesAsync();
                 var servicio = new Servicio();
-                servicio.Id= Guid.NewGuid();
+               
 
-                servicio.SolicitudId = (Guid)diagnostico.SolicitudId;
+                servicio.SolicitudId = (long)diagnostico.SolicitudId;
 
                 var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
@@ -95,8 +96,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 solicitud.EstadoSolicitud="Diagnosticada";
                 _context.Add(servicio);
                 _context.Update(solicitud);
-                
-               
+                await _context.SaveChangesAsync();
+
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Diagnosticos", new { area = "Tecnica", id = diagnostico.Id });
@@ -108,7 +109,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos/Edit/5
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -131,7 +132,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Descripción,FechaDiagnostico,SoportesId")] Diagnostico diagnostico)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Descripción,FechaDiagnostico,SoportesId")] Diagnostico diagnostico)
         {
             if (id != diagnostico.Id)
             {
@@ -165,7 +166,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos/Delete/5
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -187,7 +188,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var diagnostico = await _context.Diagnostico.FindAsync(id);
             _context.Diagnostico.Remove(diagnostico);
@@ -195,7 +196,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiagnosticoExists(Guid id)
+        private bool DiagnosticoExists(long id)
         {
             return _context.Diagnostico.Any(e => e.Id == id);
         }

@@ -8,15 +8,10 @@ namespace CopyStart.Entities
     [Table("Activos")]
     public class Activo
     {   
-        public Activo()
-        {
-
-            FechaRegistro = DateTime.Now;
-
-        }
+       
         
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
         
         [Required]

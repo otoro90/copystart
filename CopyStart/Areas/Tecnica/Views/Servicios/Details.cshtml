@@ -4,6 +4,8 @@
     ViewData["Title"] = "Details";
     var urlDiagnostico = "/Tecnica/Diagnosticos/Details/" + Model.DiagnosticoId;
     var urlProcedimientos = "/Parametricas/TipoServicios/VerProcedimientos?idTipoServicio=" + Model.TipoServicioId;
+    var urlSolicitud = "/Tecnica/Solicitudes/Details/" + Model.SolicitudId;
+
 }
 
 
@@ -25,6 +27,10 @@
                 <div class="col-md-3 my-2">
 
                     <a href="@urlDiagnostico" role="button" class="btn btn-block btn-default btn-sm">Ver Diagnostico</a>
+                </div>
+                  <div class="col-md-3 my-2">
+
+                    <a href="@urlSolicitud" role="button" class="btn btn-block btn-default btn-sm">Ver Solicitud</a>
                 </div>
                 @if (User.IsInRole("Cliente") && Model.Estado == "Por confirmar")
                 {

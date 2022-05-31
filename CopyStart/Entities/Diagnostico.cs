@@ -12,7 +12,7 @@ namespace CopyStart.Entities
 
 
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [MaxLength(4096)]

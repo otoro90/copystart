@@ -5,7 +5,6 @@
 }
 
 
-
 <div class="row ml-3 mb-2">
      <a asp-action="Create" class="btn btn-default bg-blue" role="button">
             <i class="fas fa-plus"></i>
@@ -35,7 +34,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)
                             </th>
-
+                            <th></th>
                             <th></th>
 
                         </tr>
@@ -56,13 +55,23 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.User.Persona.NumeroDocumento)
                                 </td>
+                                  <td>
+                                @if (item.RoleId == "TEC")
+                                {
+                                
+                                    @Html.DisplayFor(modelItem => item.User.Persona.Estado)
+                                  
+
+                                }
+                                 </td> 
+
                                 
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
 
                                 <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
-                                <a asp-action="Delete" asp-route-id="@@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
                                 </td>
                                 
                             </tr>
@@ -73,6 +82,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 

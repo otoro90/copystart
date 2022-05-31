@@ -8,6 +8,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace CopyStart.Areas.Activos.Controllers
 {
@@ -24,17 +25,32 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos
-        [Authorize(Roles = "Administrador, Coordinador")]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).Include(a => a.ModeloActivo);
+            List<Activo> listaActivos = null;
+            
+            
+                if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+                {
 
-            return View(await applicationDbContext.ToListAsync());
+                    listaActivos = await _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).Include(a => a.ModeloActivo).ToListAsync();
+
+
+                }
+                if (User.IsInRole("Cliente"))
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    listaActivos = await _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == user.PersonaId).ToListAsync();
+
+                }
+
+            return View(listaActivos);
         }
 
         // GET: Activos/Activos/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -82,7 +98,7 @@ namespace CopyStart.Areas.Activos.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
-                activo.Id = Guid.NewGuid();
+                
                
                 activo.FechaRegistro = DateTime.Now;
                 activo.PersonaId = (Guid)user.PersonaId;
@@ -101,7 +117,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
         // GET: Activos/Activos/Edit/5
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -129,7 +145,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,FechaRegistro,PersonaId,Estado")] Activo activo)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,FechaRegistro,PersonaId,Estado")] Activo activo)
         {
             if (id != activo.Id)
             {
@@ -165,7 +181,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
         // GET: Activos/Activos/Delete/5
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -186,7 +202,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var activo = await _context.Activo.FindAsync(id);
             _context.Activo.Remove(activo);
@@ -194,7 +210,7 @@ namespace CopyStart.Areas.Activos.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivoExists(Guid id)
+        private bool ActivoExists(long id)
         {
             return _context.Activo.Any(e => e.Id == id);
         }

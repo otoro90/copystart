@@ -2,7 +2,7 @@
 
 namespace CopyStart.Migrations
 {
-    public partial class pts : Migration
+    public partial class idk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,69 +11,59 @@ namespace CopyStart.Migrations
                 keyColumn: "Id",
                 keyValue: "ADMIN",
                 column: "ConcurrencyStamp",
-                value: "8ad38c8e-4566-47fa-aa2d-2dda999900a8");
+                value: "13d3e0cf-bf89-47d7-bf78-5c1942d313f0");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "CLN",
                 column: "ConcurrencyStamp",
-                value: "97e9d4e7-cfc0-49de-92f2-e313269b655d");
+                value: "d74f81d9-4e27-4fb4-ba78-62605c35a022");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "COORD",
                 column: "ConcurrencyStamp",
-                value: "2bf47368-718f-4646-a099-a49db3f05cf6");
+                value: "ff27d186-2aa0-44a5-9379-fcd5f8d22d94");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "TEC",
                 column: "ConcurrencyStamp",
-                value: "8e55e798-a18b-4f48-a42b-0d73da4d57cf");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProcedimientosTipoServicios_TipoServicioId_Numero",
-                table: "ProcedimientosTipoServicios",
-                columns: new[] { "TipoServicioId", "Numero" },
-                unique: true);
+                value: "35003873-9970-43ed-90f0-cf9db36d1c8d");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_ProcedimientosTipoServicios_TipoServicioId_Numero",
-                table: "ProcedimientosTipoServicios");
-
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "ADMIN",
                 column: "ConcurrencyStamp",
-                value: "a36eccaf-27d3-4abd-8fd3-97f56f8e8197");
+                value: "5ef82162-6e2a-4a82-9608-3543422eacf9");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "CLN",
                 column: "ConcurrencyStamp",
-                value: "ebb2aff4-60ca-45d3-9b8b-a6c3fafde092");
+                value: "89441f11-3ff7-4e49-9487-f3733cbb2f0e");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "COORD",
                 column: "ConcurrencyStamp",
-                value: "ee16a932-128b-472a-9e51-6e6b8656f947");
+                value: "de1cbb74-55e9-4fe7-8b9e-ba30587d526f");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "TEC",
                 column: "ConcurrencyStamp",
-                value: "1c9588b7-d2a4-45bb-9d9a-6ea0a44ab32d");
+                value: "faae5ef3-87a0-4c7f-9e25-07fb0ba659d7");
         }
     }
 }

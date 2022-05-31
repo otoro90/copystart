@@ -10,27 +10,27 @@ namespace CopyStart.Entities
     public class Servicio
     {
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
        
-        public string? Estado { get; set; }
+        public string Estado { get; set; }
 
         [Display(Name = "Fecha de Finalización")]
         public DateTime FechaRealizacion { get; set; }
 
-        public Guid? DiagnosticoId { get; set; }
+        public long? DiagnosticoId { get; set; }
 
         [Display(Name = "Diagnostico")]
         [ForeignKey("DiagnosticoId")]
         public Diagnostico Diagnostico { get; set; }
 
-        public Guid ActivoId { get; set; }
+        public long ActivoId { get; set; }
 
         [Display(Name = "Activo")]
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
 
-        public Guid SolicitudId { get; set; }
+        public long SolicitudId { get; set; }
 
         [Display(Name = "Solicitud")]
         [ForeignKey("SolicitudId")]
