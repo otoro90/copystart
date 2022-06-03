@@ -36,9 +36,6 @@
                             </th>
 
                             <th>
-                                @Html.DisplayNameFor(model => model.Activo.MarcaActivo.Nombre)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.Activo.Serial)
                             </th>
 
@@ -70,10 +67,7 @@
 
                             </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activo.MarcaActivo.Nombre)
-
-                            </td>
+                            
                             <td>
                                 @Html.DisplayFor(modelItem => item.Activo.Serial)
                             </td>
@@ -88,11 +82,17 @@
 
                             
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
+                                    
+                                   
 
                                 <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
-                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                @if(item.EstadoSolicitud=="Por tramitar" || item.EstadoSolicitud=="Cancelada")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a> 
+                                         <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                    }
+                               
 
                             </td>
                         </tr>

@@ -39,18 +39,20 @@
 
                     </div>
                 }
-                @if (User.IsInRole("Tecnico") && Model.Estado == "En ejecucion")
+                @if ((User.IsInRole("Tecnico") && Model.Estado == "En ejecucion")||(User.IsInRole("Cliente") && Model.Estado == "Por confirmar"))
                 {
                 <div class="col-md-3 my-2">
                     <a asp-action="FinalizarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Finalizar Servicio </a>
 
                 </div>
                 }
+                @if (User.IsInRole("Administrador")||User.IsInRole("Coordinador")|| User.IsInRole("Tecnico"))
+                {
                 <div class="col-md-3 my-2">
                     <a href="@urlProcedimientos" role="button" class="btn btn-block btn-default btn-sm">Ver procedimientos </a>
 
                 </div>
-
+                }
 
             </div>
         </div>

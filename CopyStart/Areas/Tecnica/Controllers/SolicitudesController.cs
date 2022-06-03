@@ -95,23 +95,26 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
+                Area = "Tecnica",
                 Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
-                Text = "Detalles "+id.ToString(),
+                Text = "Solicitud "+id.ToString(),
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
             if (id == null)
             {
-                return NotFound();
+               return NotFound();
             }
             var solicitud = await _context.Solicitud
-                .Include(s => s.Activo)
+                .Include(s => s.Activo).ThenInclude(s => s.MarcaActivo)
+                .Include(s => s.Activo).ThenInclude(s => s.ModeloActivo)          
                 .Include(s => s.Cliente)
-                .Include(s => s.Tecnico)
+                .Include(s => s.Tecnico).
+                Include(s=>s.Ubicacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (solicitud == null)
             {
@@ -138,6 +141,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
+                Area = "Tecnica",
                 Active = true
             });
             breadcrumbList.Add(new Breadcrumb
@@ -197,15 +201,17 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Inicio",
                 Action = "Index",
                 Controller = "Home",
-                Active = true            });
+                Active = true });
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
+                Area = "Tecnica",
                 Active = true
             });
-          
+
+
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Editar",
@@ -222,9 +228,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 return NotFound();
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", solicitud.ActivoId);
-            ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
-            ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
+            ViewData["EstadoSolicitud"] = solicitud.EstadoSolicitud;
+            ViewData["FechaSolicitud"] = solicitud.FechaSolicitud;
+            ViewData["ActivoId"] = solicitud.ActivoId;
+            ViewData["ClienteId"] = solicitud.ClienteId;
+            ViewData["TecnicoId"] = solicitud.TecnicoId;
+            ViewData["Ubicacion"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar", solicitud.UbicacionId);
             return View(solicitud);
         }
 
@@ -284,6 +293,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
+                Area = "Tecnica",
                 Active = true
             });
             breadcrumbList.Add(new Breadcrumb
@@ -345,7 +355,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
+                Area = "Tecnica",
                 Active = true
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitud " + id.ToString(),
+                Action = "Details",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
             });
             breadcrumbList.Add(new Breadcrumb
             {
@@ -384,11 +406,37 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
+                Area = "Tecnica",
                 Active = true
             });
             breadcrumbList.Add(new Breadcrumb
             {
-                Text = "Asignar técnico",
+                Text = "Solicitud " + id.ToString(),
+                Action = "Details",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tramitar",
+                Action = "TramitarSolicitud",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Asignar tecnico",
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
@@ -452,8 +500,32 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Text = "Solicitudes",
                 Action = "Index",
                 Controller = "Solicitudes",
-               
+                Area = "Tecnica",
                 Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitud " + id.ToString(),
+                Action = "Details",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tramitar",
+                Action = "TramitarSolicitud",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
             });
             breadcrumbList.Add(new Breadcrumb
             {

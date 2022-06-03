@@ -40,7 +40,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (User.IsInRole("Tecnico"))
             {
 
-                listaServicios = await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes).ThenInclude(s => s.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes).ThenInclude(s => s.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
             }
 
 
@@ -286,7 +286,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public async Task<IActionResult> HistorialPorActivo(long? idActivo)
         {
 
-            var servicios = _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
+            var servicios = _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
             return View(await servicios.ToListAsync());
         }
 
@@ -298,18 +298,18 @@ namespace CopyStart.Areas.Tecnica.Controllers
             List<Servicio> listaServicios = null;        
            if (User.IsInRole("Cliente"))
             {
-                listaServicios= await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
+                listaServicios= await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
                
 
             }
             if (User.IsInRole("Tecnico"))
             {
-               listaServicios =await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
+               listaServicios =await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
                
             }
             else
             {
-                listaServicios = await _context.Servicio.Include(s => s.Activo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Estado == "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Estado == "Finalizado").ToListAsync();
                 
 
             }

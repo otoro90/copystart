@@ -34,14 +34,16 @@ namespace CopyStart.Areas.Activos.Controllers
                 if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
                 {
 
-                    listaActivos = await _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).Include(a => a.ModeloActivo).ToListAsync();
+                    listaActivos = await _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).
+                    Include(a => a.ModeloActivo).Where(x => x.Estado != "Eliminado").ToListAsync();
 
 
                 }
                 if (User.IsInRole("Cliente"))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    listaActivos = await _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == user.PersonaId).ToListAsync();
+                    listaActivos = await _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a => a.MarcaActivo).
+                    Include(a => a.ModeloActivo).Where(x => x.PersonaId == user.PersonaId && x.Estado != "Eliminado").ToListAsync();
 
                 }
 
@@ -215,23 +217,45 @@ namespace CopyStart.Areas.Activos.Controllers
             return _context.Activo.Any(e => e.Id == id);
         }
 
-
-        [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> ActivosPropios()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x=>x.PersonaId==user.PersonaId);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> ActivosPorCliente(Guid? idCliente)
         {
            
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == idCliente);
+            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == idCliente && x.Estado!="Eliminado");
             return View(await applicationDbContext.ToListAsync());
         }
 
+
+        [Authorize(Roles = "Administrador, Cliente")]
+        public async Task<IActionResult> Eliminar(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var activo = await _context.Activo
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (activo == null)
+            {
+                return NotFound();
+            }
+
+            return View(activo);
+        }
+
+        // POST: Activos/Activos/Delete/5
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Cliente")]
+        public async Task<IActionResult> EliminarConfirmado(long id)
+        {
+            var activo = await _context.Activo.FindAsync(id);
+            activo.Estado = "Eliminado";
+            _context.Update(activo);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
 
 

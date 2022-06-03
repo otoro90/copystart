@@ -32,34 +32,34 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="UbicacionId" class="control-label"></label>
-                            <input asp-for="UbicacionId" class="form-control" />
+                            <select asp-for="UbicacionId" class="form-control"asp-items="ViewBag.UbicacionId"></select>
                             <span asp-validation-for="UbicacionId" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="FechaSolicitud" class="control-label"></label>
-                            <input asp-for="FechaSolicitud" class="form-control" />
-                            <span asp-validation-for="FechaSolicitud" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EstadoSolicitud" class="control-label"></label>
-                            <input asp-for="EstadoSolicitud" class="form-control" />
-                            <span asp-validation-for="EstadoSolicitud" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TecnicoId" class="control-label"></label>
-                            <select asp-for="TecnicoId" class="form-control" asp-items="ViewBag.TecnicoId"></select>
-                            <span asp-validation-for="TecnicoId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ClienteId" class="control-label"></label>
-                            <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
-                            <span asp-validation-for="ClienteId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ActivoId" class="control-label"></label>
-                            <select asp-for="ActivoId" class="form-control" asp-items="ViewBag.ActivoId"></select>
-                            <span asp-validation-for="ActivoId" class="text-danger"></span>
-                        </div>
+                        
+                            
+                            <input type="hidden" asp-for="FechaSolicitud" class="form-control" />
+                            
+                        
+                       
+                            
+                            <input asp-for="EstadoSolicitud" type="hidden" class="form-control" />
+                           
+                        
+                        
+                            
+                            <input asp-for="TecnicoId" class="form-control" type="hidden" class="form-control">
+                            
+                       
+                        
+                           
+                            <input asp-for="ClienteId" class="form-control" type="hidden">
+                           
+                       
+                       
+                            
+                            <input asp-for="ActivoId" class="form-control" type="hidden">
+                            
+                        
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
                         </div>

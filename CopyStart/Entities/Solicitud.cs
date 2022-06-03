@@ -15,6 +15,7 @@ namespace CopyStart.Entities
         
        
         [MaxLength(150)]
+        [Required]
         public string Incidencia { get; set; }
 
         
