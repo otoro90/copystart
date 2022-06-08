@@ -32,7 +32,6 @@
     <Folder Include="Areas\Soportes\Models\" />
     <Folder Include="Areas\Tecnica\Data\" />
     <Folder Include="Data\" />
-    <Folder Include="wwwroot\js\Areas\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" libman_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
