@@ -16,13 +16,13 @@
 
                         <div class="card-body row">
                             <div class="mb-3 col-12">
-                                <button type="button" class="btn btn-block btn-default btn-lg"><a asp-action="AsignarTecnico" asp-route-id="@Model.Id">Asignar Tecnico </a> </button>
+                                <a asp-action="AsignarTecnico" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-lg">Asignar Tecnico </a> 
                             </div>
                             <div class="mb-3 col-12">
-                                <button type="button" class="btn btn-block btn-default btn-lg"><a asp-action="CancelarSolicitud" asp-route-id="@Model.Id">Cancelar solicutud </a> </button>
+                               <a asp-action="CancelarSolicitud" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-lg">Cancelar solicutud </a> 
                             </div>
                             <div class="mb-3 col-12">
-                                <button type="button" class="btn btn-block btn-default btn-lg"><a asp-action="Details" asp-route-id="@Model.Id"> Volver </a> </button>
+                                <a asp-action="Details" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-lg"> Volver </a> 
                             </div>
 
                             

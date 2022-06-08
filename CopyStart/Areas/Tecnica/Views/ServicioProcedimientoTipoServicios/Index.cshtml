@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CopyStart.Entities.ServicioProcedimiento>
+﻿@model IEnumerable<CopyStart.Entities.ServicioProcedimientoTipoServicio>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,10 +16,13 @@
                 @Html.DisplayNameFor(model => model.Servicio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Procedimiento)
+                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProcedimientosRealizados)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observaciones)
             </th>
             <th></th>
         </tr>
@@ -28,13 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Servicio.Estado)
+                @Html.DisplayFor(modelItem => item.Servicio.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Procedimiento.Codigo)
+                @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProcedimientosRealizados)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observaciones)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

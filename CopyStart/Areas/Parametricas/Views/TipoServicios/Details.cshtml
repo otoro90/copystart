@@ -16,10 +16,10 @@
             <div class="row">
                 
                 <div class="col-md-3 my-2">
-                    <button type="button" class="btn btn-block btn-default btn-sm"><a asp-action="Index">Volver</a> </button>
+                    <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a> 
                 </div>
                  <div class="col-md-3 my-2">
-                     <button type="button" class="btn btn-block btn-default btn-sm"> <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a></button>
+                  <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
                      
                 </div>
                 <div class="col-md-3 my-2">

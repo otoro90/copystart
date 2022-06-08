@@ -8,18 +8,7 @@
     <div class="col-4">
         
     </div>
-    <div class="col-7">
-        <form class="form-inline ml-0 ml-md-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+    
 
 </div>
 
@@ -35,9 +24,6 @@
                                 @Html.DisplayNameFor(model => model.Cliente)
                             </th>
 
-                            <th>
-                                @Html.DisplayNameFor(model => model.Activo.MarcaActivo.Nombre)
-                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Activo.Serial)
                             </th>
@@ -65,15 +51,12 @@
                             <td>
                                 @{
                                     var fullName = item.Cliente.Nombres + " " + item.Cliente.Apellidos;
-                                    @Html.DisplayFor(modelItem => fullName)
+                                        @Html.DisplayFor(modelItem => fullName)
                                 }
 
                             </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activo.MarcaActivo.Nombre)
-
-                            </td>
+                            
                             <td>
                                 @Html.DisplayFor(modelItem => item.Activo.Serial)
                             </td>
@@ -88,11 +71,17 @@
 
                             
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
+                                    
+                                   
 
                                 <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
-
-                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                               
+                                @if(item.EstadoSolicitud=="Por tramitar" || item.EstadoSolicitud=="Cancelada")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a> 
+                                         <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                    }
+                               
 
                             </td>
                         </tr>

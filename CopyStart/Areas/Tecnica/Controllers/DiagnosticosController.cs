@@ -9,6 +9,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Areas.Tecnica.Models;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -27,6 +28,28 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Diagnosticos",
+                Action = "Index",
+                Controller = "Diagnosticos",
+                Area = "Tecnica",
+                Active = false
+            }); 
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
             var applicationDbContext = _context.Diagnostico.Include(d => d.Soportes);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -35,19 +58,46 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(long? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
             var diagnostico = await _context.Diagnostico
-                .Include(d => d.Soportes)               
+                .Include(d => d.Soportes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (diagnostico == null)
             {
                 return NotFound();
             }
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Diagnosticos",
+                Action = "Index",
+                Controller = "Diagnosticos",
+                Area = "Tecnica",
+                Active = true
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = diagnostico.Descripción,
+                Action = "Details",
+                Controller = "Diagosticos",
+                Area = "Tecnica",
+                Active = false,
+            });
 
+           
+            ViewBag.Breadcrumbs = breadcrumbList;
+           
             return View(diagnostico);
         }
 
@@ -55,6 +105,44 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Tecnico")]
         public IActionResult Create(string idSolicitud)
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitudes",
+                Action = "Index",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitud " + idSolicitud.ToString(),
+                Action = "Details",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", idSolicitud.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Realizar diagnostico",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
             ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo");
             ViewData["SolicitudId"] = idSolicitud;
@@ -91,7 +179,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 servicio.TipoServicioId = diagnostico.TipoServicioId;               
                 servicio.DiagnosticoId = diagnostico.Id;
                 servicio.ActivoId = solicitud.ActivoId;              
-                servicio.FechaRealizacion = DateTime.MinValue;
+                servicio.FechaRealizacion = DateTime.Now;
                 servicio.Estado = "Por confirmar";
                 solicitud.EstadoSolicitud="Diagnosticada";
                 _context.Add(servicio);
@@ -103,7 +191,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return RedirectToAction("Details", "Diagnosticos", new { area = "Tecnica", id = diagnostico.Id });
             }
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", diagnostico.SoportesId);
-            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", diagnostico.TipoServicioId);
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio.Where(x=>x.TipoActivoId==diagnostico.Solicitudes.Activo.TipoActivoId), "Id", "Codigo", diagnostico.TipoServicioId);
             return View(diagnostico);
         }
 
@@ -111,6 +199,29 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(long? id)
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Diagnosticos",
+                Action = "Index",
+                Controller = "Diagnosticos",
+                Area = "Tecnica",
+                Active = true
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",             
+                Active = false,
+            }); ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (id == null)
             {
                 return NotFound();

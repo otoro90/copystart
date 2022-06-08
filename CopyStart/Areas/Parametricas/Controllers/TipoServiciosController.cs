@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using CopyStart.Models;
+using System.Collections.Generic;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -23,6 +26,25 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/TipoServicios
         public async Task<IActionResult> Index()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = false
+            });
+           
+
+            ViewBag.Breadcrumbs = breadcrumbList;
             return View(await _context.TipoServicio.ToListAsync());
         }
 
@@ -37,6 +59,39 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var tipoServicio = await _context.TipoServicio
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoServicio.Nombre,
+                Action = "Details",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (tipoServicio == null)
             {
                 return NotFound();
@@ -49,6 +104,34 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+                
+                Active = false,
+               
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
             return View();
         }
 
@@ -74,6 +157,33 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Guid? id)
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",              
+                Active = false,
+                
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (id == null)
             {
                 return NotFound();
@@ -127,6 +237,32 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(Guid? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",             
+                Active = false
+                
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (id == null)
             {
                 return NotFound();
@@ -154,7 +290,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Administrador")]
+       
         private bool TipoServicioExists(Guid id)
         {
             return _context.TipoServicio.Any(e => e.Id == id);

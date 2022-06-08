@@ -8,6 +8,6 @@ namespace CopyStart.Areas.Tecnica.Models
     public class EditarDesc
     {
 
-        public string Descripcion { get; set; }
+        public string Motivo { get; set; }
     }
 }

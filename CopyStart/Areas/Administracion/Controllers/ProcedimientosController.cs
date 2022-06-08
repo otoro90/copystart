@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -25,6 +26,24 @@ namespace CopyStart.Areas.Administracion.Controllers
         // GET: Administracion/Procedimientos
         public async Task<IActionResult> Index()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "Procedimientos",
+                Area = "Administracion",
+                Active = false
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
             return View(await _context.Procedimiento.ToListAsync());
         }
 
@@ -32,6 +51,31 @@ namespace CopyStart.Areas.Administracion.Controllers
         [Authorize(Roles = "Administrador,Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(Guid? id)
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "Procedimientos",
+                Area = "Administracion",
+                Active = true
+            });
+
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Detalles",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             if (id == null)
             {
                 return NotFound();
@@ -50,6 +94,29 @@ namespace CopyStart.Areas.Administracion.Controllers
         // GET: Administracion/Procedimientos/Create
         public IActionResult Create()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "Procedimientos",
+                Area = "Administracion",
+                Active = true
+            });
+
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
             return View();
         }
 
@@ -73,6 +140,30 @@ namespace CopyStart.Areas.Administracion.Controllers
         // GET: Administracion/Procedimientos/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "Procedimientos",
+                Area = "Administracion",
+                Active = true
+            });
+
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             if (id == null)
             {
                 return NotFound();
@@ -124,6 +215,30 @@ namespace CopyStart.Areas.Administracion.Controllers
         // GET: Administracion/Procedimientos/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "Procedimientos",
+                Area = "Administracion",
+                Active = true
+            });
+
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Borrar",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             if (id == null)
             {
                 return NotFound();

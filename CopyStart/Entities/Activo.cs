@@ -31,6 +31,7 @@ namespace CopyStart.Entities
         [Required]
         public Guid MarcaActivoId { get; set; }
 
+        [Display(Name = "Marca de activo")]
         [ForeignKey("MarcaActivoId")]
         public MarcaActivo MarcaActivo { get; set; }
        
@@ -38,6 +39,7 @@ namespace CopyStart.Entities
         public Guid ModeloActivoId { get; set; }
 
         [ForeignKey("ModeloActivoId")]
+        [Display(Name = "Modelo de activo")]
         public ModeloActivo ModeloActivo { get; set; }       
 
         public string? Estado { get; set; }
