@@ -116,6 +116,103 @@ namespace CopyStart.Data
                 });
             });
 
+            modelBuilder.Entity<TipoServicio>(b =>
+            {
+                b.HasData(new TipoServicio()
+                {
+                    Id = new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d"),
+                    Nombre = "Mantenimiento de impresora",
+                    Codigo = "PCMAN",
+                    Descripcion = "",
+                    Estado = true,
+                    TipoActivoId= Guid.Parse("f443468f-26a6-4e4c-a9c5-77de2953f802")
+
+                });
+            });
+
+
+            modelBuilder.Entity<TipoActivo>(b =>
+            {
+                b.HasData(new TipoActivo()
+                {
+                    Id = new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802"),
+                    Nombre = "Impresora",
+                    Codigo = "IMP",
+                    Descripcion = "",
+                    Estado = true
+                });
+            });
+
+            modelBuilder.Entity<MarcaActivo>(b =>
+            {
+                b.HasData(new MarcaActivo()
+                {
+                    Id = new Guid("0b5de1c4-7bd1-444f-8f22-cab2cc0dcfdd"),
+                    TipoActivoId = Guid.Parse("f443468f-26a6-4e4c-a9c5-77de2953f802"),
+                    Nombre = "Ricoh",
+                    Codigo = "RICOH",
+                    Descripcion = "",
+                    Estado = true
+                });
+            });
+
+
+            modelBuilder.Entity<ModeloActivo>(b =>
+            {
+                b.HasData(new ModeloActivo()
+                {
+                    Id = new Guid("6ca30cec-d049-4144-8cf1-6ec4e90f4b57"),
+                    MarcaActivoId = Guid.Parse("0b5de1c4-7bd1-444f-8f22-cab2cc0dcfdd"),
+                    Nombre = "Aficio 2345",
+                    Codigo = "A2345",
+                    Descripcion = "",
+                    Estado = true
+                });
+            });
+
+            modelBuilder.Entity<Procedimiento>(b =>
+            {
+                b.HasData(
+                    new Procedimiento() {
+                    Id = new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),                   
+                    Nombre = "Abrir maquina",
+                    Codigo = "AMAQ",
+                    Descripcion = "",
+                    Estado = true
+                }, new Procedimiento()
+                {
+                    Id = new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                    Nombre = "Revisar componentes",
+                    Codigo = "RCOMP",
+                    Descripcion = "",
+                    Estado = true
+                }
+                    );
+            });
+
+            modelBuilder.Entity<ProcedimientoTipoServicio>(b =>
+            {
+                b.HasData(
+                    new ProcedimientoTipoServicio()
+                    {
+                        Id = new Guid("2f3a8930-b64a-4cd8-beec-0c539551ea6a"),
+                        Numero = 1,
+                        ProcedimientoId = Guid.Parse("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),
+                        TipoServicioId= Guid.Parse("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
+
+                    }, new ProcedimientoTipoServicio()
+                    {
+                        Id = new Guid("a35d9139-39dd-4fa2-b1a4-9dc64358c27a"),
+                        Numero= 2,
+                       ProcedimientoId = Guid.Parse("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                        TipoServicioId = Guid.Parse("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
+                    }
+                    );
+            });
+
+
+
+
             modelBuilder.Entity<Ubicacion>(b =>
             {
                 b.HasData(new Ubicacion()

@@ -49,7 +49,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/MarcaActivos/Create
         public IActionResult Create()
         {
-            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Codigo");
+            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
             return View();
         }
 

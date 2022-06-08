@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220608180211_newsoli")]
+    partial class newsoli
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "0a548c78-1294-4042-9d0d-903e1aaedc50",
+                            ConcurrencyStamp = "abf3b387-2c6c-49de-871c-2781b1e6f0fb",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "3d77805d-a3b3-4e70-a32b-e178aabf2d86",
+                            ConcurrencyStamp = "9af88b48-61a5-4825-889b-d59e112b011e",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
+                            ConcurrencyStamp = "431122f9-218b-48a4-ab34-6ba2b43579d0",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
+                            ConcurrencyStamp = "a221ac07-a340-4777-83ef-e89a7455da28",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -835,7 +837,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("ServicioId");
 
-                    b.ToTable("ServiciosProcedimientosTipoServicios");
+                    b.ToTable("ServiciosProcedimientoSTipoServicios");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Solicitud", b =>

@@ -5,21 +5,8 @@
 }
 
 <div class="row p-3">
-    <div class="col-4">
-
-    </div>
-    <div class="col-7">
-        <form class="form-inline ml-0 ml-md-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+    
+   
 </div>
 
 <div class="row ">
@@ -73,7 +60,10 @@
 
                                 <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
-                                <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                      <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+
+                                   
+
                                 </td>
                             </tr>
                         }

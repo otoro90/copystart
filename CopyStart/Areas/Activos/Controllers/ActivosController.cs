@@ -105,13 +105,6 @@ namespace CopyStart.Areas.Activos.Controllers
            
             ViewBag.Breadcrumbs = breadcrumbList;
 
-
-
-
-
-
-
-
             if (id == null)
             {
                 return NotFound();
@@ -228,7 +221,7 @@ namespace CopyStart.Areas.Activos.Controllers
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Editar activo " + id.ToString(),              
-                Active = true,
+                Active = false
                 
             });
            
@@ -299,6 +292,30 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Delete(long? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Borrado de sistema a activo" + id.ToString(),
+                Active = false
+
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
             if (id == null)
             {
                 return NotFound();
@@ -334,7 +351,45 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> ActivosPorCliente(Guid? idCliente)
         {
-           
+            var breadcrumbList = new List<Breadcrumb>();
+            var persona = await _context.Persona
+               .FirstOrDefaultAsync(m => m.Id == idCliente);
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Personas",
+                Action = "Index",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = persona.Nombres +" "+ persona.Apellidos,
+                Action = "Details",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", idCliente.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",               
+                Active = false
+               
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == idCliente && x.Estado!="Eliminado");
             return View(await applicationDbContext.ToListAsync());
         }

@@ -22,6 +22,11 @@ namespace CopyStart.Entities
         [MaxLength(1024)]
         public string Descripcion { get; set; }
 
+        [MaxLength(1024)]
+        public string Motivo { get; set; }
+
+
+
         public int UbicacionId { get; set; }
 
         [ForeignKey("UbicacionId")]

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
-    public partial class serproc : Migration
+    public partial class newsoli : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,21 +96,6 @@ namespace CopyStart.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiposDocumento", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TiposServicio",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
-                    Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
-                    Estado = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TiposServicio", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,27 +215,23 @@ namespace CopyStart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProcedimientosTipoServicios",
+                name: "TiposServicio",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Numero = table.Column<int>(type: "integer", nullable: false),
-                    ProcedimientoId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TipoServicioId = table.Column<Guid>(type: "uuid", nullable: false)
+                    TipoActivoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
+                    Estado = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProcedimientosTipoServicios", x => x.Id);
+                    table.PrimaryKey("PK_TiposServicio", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProcedimientosTipoServicios_Procedimientos_ProcedimientoId",
-                        column: x => x.ProcedimientoId,
-                        principalTable: "Procedimientos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ProcedimientosTipoServicios_TiposServicio_TipoServicioId",
-                        column: x => x.TipoServicioId,
-                        principalTable: "TiposServicio",
+                        name: "FK_TiposServicio_TiposActivo_TipoActivoId",
+                        column: x => x.TipoActivoId,
+                        principalTable: "TiposActivo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -325,6 +306,32 @@ namespace CopyStart.Migrations
                         name: "FK_ModeloActivos_MarcaActivos_MarcaActivoId",
                         column: x => x.MarcaActivoId,
                         principalTable: "MarcaActivos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProcedimientosTipoServicios",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Numero = table.Column<int>(type: "integer", nullable: false),
+                    ProcedimientoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TipoServicioId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProcedimientosTipoServicios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProcedimientosTipoServicios_Procedimientos_ProcedimientoId",
+                        column: x => x.ProcedimientoId,
+                        principalTable: "Procedimientos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProcedimientosTipoServicios_TiposServicio_TipoServicioId",
+                        column: x => x.TipoServicioId,
+                        principalTable: "TiposServicio",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -498,6 +505,7 @@ namespace CopyStart.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Incidencia = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    Motivo = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     UbicacionId = table.Column<int>(type: "integer", nullable: false),
                     FechaSolicitud = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EstadoSolicitud = table.Column<string>(type: "text", nullable: true),
@@ -611,15 +619,29 @@ namespace CopyStart.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Procedimientos",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "Nombre" },
+                values: new object[,]
+                {
+                    { new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"), "AMAQ", "", true, "Abrir maquina" },
+                    { new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"), "RCOMP", "", true, "Revisar componentes" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "d10df3b0-2ff3-478d-8a32-5f238ce006de", "Administrador", "Administrador" },
-                    { "COORD", "9d417239-6783-4419-aa84-b0f991bb64b3", "Coordinador", "Coordinador" },
-                    { "TEC", "98f725fb-5190-4726-a5f7-6d99d1322a50", "Tecnico", "Tecnico" },
-                    { "CLN", "50abae91-37a3-4ec4-9ac4-e39769d673c1", "Cliente", "Cliente" }
+                    { "ADMIN", "abf3b387-2c6c-49de-871c-2781b1e6f0fb", "Administrador", "Administrador" },
+                    { "COORD", "9af88b48-61a5-4825-889b-d59e112b011e", "Coordinador", "Coordinador" },
+                    { "TEC", "431122f9-218b-48a4-ab34-6ba2b43579d0", "Tecnico", "Tecnico" },
+                    { "CLN", "a221ac07-a340-4777-83ef-e89a7455da28", "Cliente", "Cliente" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "TiposActivo",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "Nombre" },
+                values: new object[] { new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802"), "IMP", "", true, "Impresora" });
 
             migrationBuilder.InsertData(
                 table: "TiposDocumento",
@@ -630,6 +652,11 @@ namespace CopyStart.Migrations
                 table: "Ubicaciones",
                 columns: new[] { "CodigoLugar", "Lugar" },
                 values: new object[] { 50001, "Villavicencio" });
+
+            migrationBuilder.InsertData(
+                table: "MarcaActivos",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "Nombre", "TipoActivoId" },
+                values: new object[] { new Guid("0b5de1c4-7bd1-444f-8f22-cab2cc0dcfdd"), "RICOH", "", true, "Ricoh", new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802") });
 
             migrationBuilder.InsertData(
                 table: "Personas",
@@ -643,6 +670,11 @@ namespace CopyStart.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "TiposServicio",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "Nombre", "TipoActivoId" },
+                values: new object[] { new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d"), "PCMAN", "", true, "Mantenimiento de impresora", new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802") });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PersonaId", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
@@ -651,6 +683,20 @@ namespace CopyStart.Migrations
                     { "5c141fdd-ab2f-49be-8a31-43aec63f918f", 0, "776e1d1a-0c3c-41b0-bb44-bcb151add354", "CPCOORDINADOR@yopmail.com", true, true, null, "CPCOORDINADOR@YOPMAIL.COM", "CPCOORDINADOR@YOPMAIL.COM", "AQAAAAEAACcQAAAAEDv98UwloGC1tI3Elt0TgyWk9DxWPi475t9/P2SOAO/TgHilR1/Tnp0kQpnctazOJw==", new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"), null, false, "RZABU4JPNDQVJF4LWR5ZS755BS7H6HDR", false, "cpcoordinador@yopmail.com" },
                     { "3cbfb0a7-d323-4f84-9d14-daeef363f947", 0, "aa35d6da-54e6-476b-8810-4a182b8b07de", "user3@gmail.com", true, true, null, "USER3@GMAIL.COM", "USER3@GMAIL.COM", "AQAAAAEAACcQAAAAEHRn5OJw1NKAwjB4w6dEsVjB2qi/bOR+8/WbmTjTa8lQCvTy6Xg4WqMtm6A/yYYxDw==", new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"), null, false, "4LNTJIEMTON6KDXWASKMDXTFM2BCUCH6", false, "user3@gmail.com" },
                     { "cacd6063-c77d-437e-8cad-2e97ba1a0a6a", 0, "e3330e49-ac28-4952-a50a-a30e8222aed7", "user4@gmail.com", true, true, null, "USER4@GMAIL.COM", "USER4@GMAIL.COM", "AQAAAAEAACcQAAAAEGAsB2jMI6Q3cJTunTexm1lX3qqiVzHMV9sDws+mh3JcqAGY2og313y5uNjZ+32OAg==", new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"), null, false, "WJR7XMGC332UT234BG7O35M6MIIGKQ2Q", false, "user4@gmail.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ModeloActivos",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "MarcaActivoId", "Nombre" },
+                values: new object[] { new Guid("6ca30cec-d049-4144-8cf1-6ec4e90f4b57"), "A2345", "", true, new Guid("0b5de1c4-7bd1-444f-8f22-cab2cc0dcfdd"), "Aficio 2345" });
+
+            migrationBuilder.InsertData(
+                table: "ProcedimientosTipoServicios",
+                columns: new[] { "Id", "Numero", "ProcedimientoId", "TipoServicioId" },
+                values: new object[,]
+                {
+                    { new Guid("2f3a8930-b64a-4cd8-beec-0c539551ea6a"), 1, new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"), new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d") },
+                    { new Guid("a35d9139-39dd-4fa2-b1a4-9dc64358c27a"), 2, new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"), new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d") }
                 });
 
             migrationBuilder.InsertData(
@@ -832,6 +878,11 @@ namespace CopyStart.Migrations
                 name: "IX_Soportes_ReciboId",
                 table: "Soportes",
                 column: "ReciboId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TiposServicio_TipoActivoId",
+                table: "TiposServicio",
+                column: "TipoActivoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",

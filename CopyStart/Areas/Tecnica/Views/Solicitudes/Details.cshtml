@@ -103,6 +103,16 @@
                 <dd class="col-sm-8">
                    @Html.DisplayFor(model => model.Activo.MarcaActivo.Nombre) @Html.DisplayFor(model => model.Activo.ModeloActivo.Nombre)   S/N: @Html.DisplayFor(model => model.Activo.Serial)
                 </dd>
+
+            @if(Model.EstadoSolicitud=="Cancelada"){
+                <dt class="col-sm-4">
+                    Motivo de cancelacion
+                </dt>
+                <dd class="col-sm-8">
+                   @Html.DisplayFor(model => model.Motivo)
+                </dd>
+
+            }
             </dl>
         </div>
     </div>

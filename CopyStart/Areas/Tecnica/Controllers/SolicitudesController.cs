@@ -188,6 +188,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto");
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar", solicitud.UbicacionId);
+
             return View(solicitud);
         }
 
@@ -195,28 +197,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(long? id)
         {
-            var breadcrumbList = new List<Breadcrumb>();
-            breadcrumbList.Add(new Breadcrumb
-            {
-                Text = "Inicio",
-                Action = "Index",
-                Controller = "Home",
-                Active = true });
-            breadcrumbList.Add(new Breadcrumb
-            {
-                Text = "Solicitudes",
-                Action = "Index",
-                Controller = "Solicitudes",
-                Area = "Tecnica",
-                Active = true
-            });
-
-            breadcrumbList.Add(new Breadcrumb
-            {
-                Text = "Editar",
-                Active = false
-            });
-            ViewBag.Breadcrumbs = breadcrumbList;
+           
             if (id == null)
             {
                 return NotFound();
@@ -568,8 +549,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ModelState.IsValid)
             {
-               
-                solicitud.Descripcion = desc.Descripcion;
+
+                solicitud.Motivo = desc.Motivo;           
                 solicitud.EstadoSolicitud = "Cancelada";
                 await _context.SaveChangesAsync();
             }

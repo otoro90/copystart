@@ -30,6 +30,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Index()
         {
+
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
             {
@@ -47,6 +48,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
+
             var user = await _userManager.GetUserAsync(User);
             List<Servicio> listaServicios = null;
             if (User.IsInRole("Cliente"))
@@ -101,6 +103,30 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             }
 
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicios",
+                Action = "Index",
+                Controller = "Servicios",
+                Area = "Tecnica",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicio " + servicio.Id,             
+                Active = false,
+                
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
 
 
             if (servicio == null)
@@ -115,10 +141,43 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicios",
+                Action = "Index",
+                Controller = "Servicios",
+                Area = "Tecnica",
+                Active = true
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",      
+                Active = false,
+                
+            });
+            
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca");
             ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripción");
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion");
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
+
+
+
+
+
             return View();
         }
 
@@ -302,8 +361,46 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> HistorialPorActivo(long? idActivo)
         {
-
+            
             var servicios = _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activo " + idActivo.ToString(),
+                Action = "Details",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", idActivo.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Historial ",               
+                Active = false,
+                
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             return View(await servicios.ToListAsync());
         }
 
@@ -311,6 +408,35 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Historial()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicios",
+                Action = "Index",
+                Controller = "Servicios",
+                Area = "Tecnica",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Historial",              
+                Active = false,
+               
+            }); 
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
             var user = await _userManager.GetUserAsync(User);
             List<Servicio> listaServicios = null;
             if (User.IsInRole("Cliente"))
@@ -340,6 +466,44 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Tecnico, Administrador, Coordinador")]
         public IActionResult EjecucionProcedimientos(long idServicio)
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicios",
+                Action = "Index",
+                Controller = "Servicios",
+                Area = "Tecnica",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicio " + idServicio,
+                Active = true,
+                Action="Details",
+                Controller ="Servicios",
+                Area="Tecnica",
+                Params= new Dictionary<string, string>
+                {
+                    { "id", idServicio.ToString() }
+                }
+
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Active = false
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             try
             {
                 var procedimientoTipoServicio = _context.ProcedimientoTipoServicio.Include(x=> x.Procedimientos).Join(

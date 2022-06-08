@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220604032524_serproc")]
-    partial class serproc
+    [Migration("20220608221115_actualizacion")]
+    partial class actualizacion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "d10df3b0-2ff3-478d-8a32-5f238ce006de",
+                            ConcurrencyStamp = "0a548c78-1294-4042-9d0d-903e1aaedc50",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "9d417239-6783-4419-aa84-b0f991bb64b3",
+                            ConcurrencyStamp = "3d77805d-a3b3-4e70-a32b-e178aabf2d86",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "98f725fb-5190-4726-a5f7-6d99d1322a50",
+                            ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "50abae91-37a3-4ec4-9ac4-e39769d673c1",
+                            ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -473,6 +473,17 @@ namespace CopyStart.Migrations
                     b.HasIndex("TipoActivoId");
 
                     b.ToTable("MarcaActivos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0b5de1c4-7bd1-444f-8f22-cab2cc0dcfdd"),
+                            Codigo = "RICOH",
+                            Descripcion = "",
+                            Estado = true,
+                            Nombre = "Ricoh",
+                            TipoActivoId = new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802")
+                        });
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ModeloActivo", b =>
@@ -506,6 +517,17 @@ namespace CopyStart.Migrations
                     b.HasIndex("MarcaActivoId");
 
                     b.ToTable("ModeloActivos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6ca30cec-d049-4144-8cf1-6ec4e90f4b57"),
+                            Codigo = "A2345",
+                            Descripcion = "",
+                            Estado = true,
+                            MarcaActivoId = new Guid("0b5de1c4-7bd1-444f-8f22-cab2cc0dcfdd"),
+                            Nombre = "Aficio 2345"
+                        });
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Persona", b =>
@@ -623,6 +645,24 @@ namespace CopyStart.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Procedimientos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),
+                            Codigo = "AMAQ",
+                            Descripcion = "",
+                            Estado = true,
+                            Nombre = "Abrir maquina"
+                        },
+                        new
+                        {
+                            Id = new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                            Codigo = "RCOMP",
+                            Descripcion = "",
+                            Estado = true,
+                            Nombre = "Revisar componentes"
+                        });
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ProcedimientoTipoServicio", b =>
@@ -651,6 +691,22 @@ namespace CopyStart.Migrations
                         .IsUnique();
 
                     b.ToTable("ProcedimientosTipoServicios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2f3a8930-b64a-4cd8-beec-0c539551ea6a"),
+                            Numero = 1,
+                            ProcedimientoId = new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),
+                            TipoServicioId = new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
+                        },
+                        new
+                        {
+                            Id = new Guid("a35d9139-39dd-4fa2-b1a4-9dc64358c27a"),
+                            Numero = 2,
+                            ProcedimientoId = new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                            TipoServicioId = new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
+                        });
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Repuesto", b =>
@@ -781,7 +837,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("ServicioId");
 
-                    b.ToTable("ServiciosProcedimientoSTipoServicios");
+                    b.ToTable("ServiciosProcedimientosTipoServicios");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Solicitud", b =>
@@ -811,6 +867,10 @@ namespace CopyStart.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Motivo")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
 
                     b.Property<Guid?>("TecnicoId")
                         .HasColumnType("uuid");
@@ -889,6 +949,16 @@ namespace CopyStart.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TiposActivo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802"),
+                            Codigo = "IMP",
+                            Descripcion = "",
+                            Estado = true,
+                            Nombre = "Impresora"
+                        });
                 });
 
             modelBuilder.Entity("CopyStart.Entities.TipoDocumento", b =>
@@ -952,9 +1022,26 @@ namespace CopyStart.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<Guid?>("TipoActivoId")
+                        .IsRequired()
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("TipoActivoId");
+
                     b.ToTable("TiposServicio");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("64b5a31e-0d62-42d4-82d2-2eef76330d9d"),
+                            Codigo = "PCMAN",
+                            Descripcion = "",
+                            Estado = true,
+                            Nombre = "Mantenimiento de impresora",
+                            TipoActivoId = new Guid("f443468f-26a6-4e4c-a9c5-77de2953f802")
+                        });
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Ubicacion", b =>
@@ -1284,6 +1371,17 @@ namespace CopyStart.Migrations
                     b.Navigation("DocumentoCertificacion");
 
                     b.Navigation("DocumentoRecibo");
+                });
+
+            modelBuilder.Entity("CopyStart.Entities.TipoServicio", b =>
+                {
+                    b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
+                        .WithMany()
+                        .HasForeignKey("TipoActivoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TipoActivo");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationRole", b =>

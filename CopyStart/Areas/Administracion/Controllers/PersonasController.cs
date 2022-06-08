@@ -10,6 +10,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CopyStart.Areas.Administracion.Models;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -33,6 +34,24 @@ namespace CopyStart.Areas.Administracion.Controllers
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> Index()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Usuarios",
+                Action = "Index",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = false
+            });
+           
+            ViewBag.Breadcrumbs = breadcrumbList;
 
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
@@ -58,10 +77,39 @@ namespace CopyStart.Areas.Administracion.Controllers
             }
 
             var persona = await _context.Persona
-                .Include(p => p.TipoDocumento)
+                .Include(p => p.TipoDocumento).Include(p=>p.Ubicacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-             
+           
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Usuarios",
+                Action = "Index",
+                Controller = "Personas",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = persona.Nombres+" "+persona.Apellidos,
+                Action = "Details",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
 
+            ViewBag.Breadcrumbs = breadcrumbList;
 
             if (persona == null)
             {
@@ -116,11 +164,53 @@ namespace CopyStart.Areas.Administracion.Controllers
             }
 
             var persona = await _context.Persona.FindAsync(id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Usuarios",
+                Action = "Index",
+                Controller = "Personas",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = persona.Nombres + " " + persona.Apellidos,
+                Action = "Details",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+                
+                Active = false,
+               
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             if (persona == null)
             {
                 return NotFound();
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+
             return View(persona);
         }
 
@@ -173,6 +263,43 @@ namespace CopyStart.Areas.Administracion.Controllers
             var persona = await _context.Persona
                 .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Usuarios",
+                Action = "Index",
+                Controller = "Personas",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = persona.Nombres + " " + persona.Apellidos,
+                Action = "Details",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",
+
+                Active = false,
+
+            }); ViewBag.Breadcrumbs = breadcrumbList;
+
             if (persona == null)
             {
                 return NotFound();
@@ -227,12 +354,32 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             return View(persona);
         }
 
         [Authorize(Roles = "Administrador, Coordinador")]
         public async Task<IActionResult> ListadoTecnicos()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Listado tecnico",               
+                Active = false
+            });
+          
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             var applicationDbContext = _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a=>a.Persona);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -251,7 +398,47 @@ namespace CopyStart.Areas.Administracion.Controllers
                .Include(s => s.Persona)
                .FirstOrDefaultAsync(m => m.PersonaId == id);
 
-            
+
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Usuarios",
+                Action = "Index",
+                Controller = "Personas",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = persona.Nombres + " " + persona.Apellidos,
+                Action = "Details",
+                Controller = "Personas",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Asignar rol",
+
+                Active = false,
+
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
 
             if (persona == null)
             {

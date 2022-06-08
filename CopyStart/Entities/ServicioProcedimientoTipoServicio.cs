@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    [Table("ServiciosProcedimientoSTipoServicios")]
+    [Table("ServiciosProcedimientosTipoServicios")]
     public class ServicioProcedimientoTipoServicio
     {
         public Guid Id { get; set; }
