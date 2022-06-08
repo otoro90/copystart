@@ -31,8 +31,8 @@ namespace CopyStart.Data
         public virtual DbSet<ProcedimientoTipoServicio> ProcedimientoTipoServicio { get; set; }
         public virtual DbSet<Repuesto> Repuesto { get; set; }
         public virtual DbSet<RepuestoProcedimiento> RepuestoProcedimiento { get; set; }
-        public virtual DbSet<Servicio> Servicio { get; set; }
-        public virtual DbSet<ServicioProcedimiento> ServicioProcedimiento { get; set; }
+        public virtual DbSet<Servicio> Servicio { get; set; }      
+        public virtual DbSet<ServicioProcedimientoTipoServicio> ServicioProcedimientoTipoServicio { get; set; }
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<Soporte> Soporte { get; set; }
         public virtual DbSet<TipoServicio> TipoServicio { get; set; }

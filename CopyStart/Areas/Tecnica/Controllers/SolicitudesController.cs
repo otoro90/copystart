@@ -211,7 +211,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Active = true
             });
 
-
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Editar",

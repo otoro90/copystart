@@ -10,15 +10,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220530221228_idk")]
-    partial class idk
+    [Migration("20220604032524_serproc")]
+    partial class serproc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.16")
+                .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("CopyStart.Entities.Activo", b =>
@@ -96,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "13d3e0cf-bf89-47d7-bf78-5c1942d313f0",
+                            ConcurrencyStamp = "d10df3b0-2ff3-478d-8a32-5f238ce006de",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "ff27d186-2aa0-44a5-9379-fcd5f8d22d94",
+                            ConcurrencyStamp = "9d417239-6783-4419-aa84-b0f991bb64b3",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "35003873-9970-43ed-90f0-cf9db36d1c8d",
+                            ConcurrencyStamp = "98f725fb-5190-4726-a5f7-6d99d1322a50",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "d74f81d9-4e27-4fb4-ba78-62605c35a022",
+                            ConcurrencyStamp = "50abae91-37a3-4ec4-9ac4-e39769d673c1",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -757,29 +757,31 @@ namespace CopyStart.Migrations
                     b.ToTable("Servicios");
                 });
 
-            modelBuilder.Entity("CopyStart.Entities.ServicioProcedimiento", b =>
+            modelBuilder.Entity("CopyStart.Entities.ServicioProcedimientoTipoServicio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ProcedimientoId")
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProcedimientoTipoServicioId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ProcedimientosRealizados")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<bool>("ProcedimientosRealizados")
+                        .HasColumnType("boolean");
 
                     b.Property<long>("ServicioId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProcedimientoId");
+                    b.HasIndex("ProcedimientoTipoServicioId");
 
                     b.HasIndex("ServicioId");
 
-                    b.ToTable("ServiciosProcedimientos");
+                    b.ToTable("ServiciosProcedimientoSTipoServicios");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Solicitud", b =>
@@ -806,6 +808,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Incidencia")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
@@ -1208,11 +1211,11 @@ namespace CopyStart.Migrations
                     b.Navigation("TipoServicios");
                 });
 
-            modelBuilder.Entity("CopyStart.Entities.ServicioProcedimiento", b =>
+            modelBuilder.Entity("CopyStart.Entities.ServicioProcedimientoTipoServicio", b =>
                 {
-                    b.HasOne("CopyStart.Entities.Procedimiento", "Procedimiento")
+                    b.HasOne("CopyStart.Entities.ProcedimientoTipoServicio", "ProcedimientoTipoServicio")
                         .WithMany()
-                        .HasForeignKey("ProcedimientoId")
+                        .HasForeignKey("ProcedimientoTipoServicioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1222,7 +1225,7 @@ namespace CopyStart.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Procedimiento");
+                    b.Navigation("ProcedimientoTipoServicio");
 
                     b.Navigation("Servicio");
                 });

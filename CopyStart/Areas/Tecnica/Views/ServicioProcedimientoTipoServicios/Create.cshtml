@@ -1,4 +1,4 @@
-﻿@model CopyStart.Entities.ServicioProcedimiento
+﻿@model CopyStart.Entities.ServicioProcedimientoTipoServicio
 
 @{
     ViewData["Title"] = "Create";
@@ -6,7 +6,7 @@
 
 <h1>Create</h1>
 
-<h4>ServicioProcedimiento</h4>
+<h4>ServicioProcedimientoTipoServicio</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,13 +17,18 @@
                 <select asp-for="ServicioId" class ="form-control" asp-items="ViewBag.ServicioId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ProcedimientoId" class="control-label"></label>
-                <select asp-for="ProcedimientoId" class ="form-control" asp-items="ViewBag.ProcedimientoId"></select>
+                <label asp-for="ProcedimientoTipoServicioId" class="control-label"></label>
+                <select asp-for="ProcedimientoTipoServicioId" class ="form-control" asp-items="ViewBag.ProcedimientoTipoServicioId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ProcedimientosRealizados" /> @Html.DisplayNameFor(model => model.ProcedimientosRealizados)
+                </label>
             </div>
             <div class="form-group">
-                <label asp-for="ProcedimientosRealizados" class="control-label"></label>
-                <input asp-for="ProcedimientosRealizados" class="form-control" />
-                <span asp-validation-for="ProcedimientosRealizados" class="text-danger"></span>
+                <label asp-for="Observaciones" class="control-label"></label>
+                <input asp-for="Observaciones" class="form-control" />
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

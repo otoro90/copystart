@@ -9,6 +9,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Activos.Controllers
 {
@@ -27,7 +28,26 @@ namespace CopyStart.Areas.Activos.Controllers
         // GET: Activos/Activos
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Index()
+
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Tecnica",
+                Active = false
+            });
+        ViewBag.Breadcrumbs = breadcrumbList;
+
             List<Activo> listaActivos = null;
             
             
@@ -54,6 +74,44 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(long? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activo " + id.ToString(),
+                Action = "Details",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+           
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
+
+
+
+
             if (id == null)
             {
                 return NotFound();
@@ -82,6 +140,36 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public IActionResult Create()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear ",             
+                Active = false,
+               
+            });
+           
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
+
+
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
@@ -121,6 +209,32 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(long? id)
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar activo " + id.ToString(),              
+                Active = true,
+                
+            });
+           
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (id == null)
             {
                 return NotFound();
@@ -229,12 +343,39 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Eliminar(long? id)
         {
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar activo " + id.ToString(),            
+                Active= false
+                
+            });
+            
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var activo = await _context.Activo
+            var activo = await _context.Activo.Include(m => m.TipoActivo).Include(m => m.MarcaActivo).Include(m => m.ModeloActivo).Include(m => m.Persona)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (activo == null)
             {
