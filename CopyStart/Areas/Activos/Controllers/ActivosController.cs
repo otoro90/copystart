@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Activos.Controllers
 {
@@ -27,6 +28,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
         // GET: Activos/Activos
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
 
         {

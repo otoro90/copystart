@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -406,6 +407,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Historial()
         {
 
