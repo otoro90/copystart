@@ -22,10 +22,12 @@
                 <div class="col-md-3 my-2">
                     <a  asp-action="Edit" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
                 </div>
-                
-                <div class="col-md-3 my-2">
-                  <a  href="@urlCliente" role="button" class="btn btn-block btn-default btn-sm">Ver activos</a>  
-                </div>
+                @if (Model.RolesUsuario.Where(x => x.Role.Id == "CLN").Count()>0)
+                {
+                    <div class="col-md-3 my-2">
+                        <a  href="@urlCliente" role="button" class="btn btn-block btn-default btn-sm">Ver activos</a>  
+                    </div>
+                }
                 <div class="col-md-3 my-2">
                     <a  asp-action="AsignarRol" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Asignar rol</a>
                 </div>

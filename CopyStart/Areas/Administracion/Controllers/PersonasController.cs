@@ -56,7 +56,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
             {
-                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).where(x=>x.)ToListAsync();
 
             }
             else if (User.IsInRole("Coordinador"))
