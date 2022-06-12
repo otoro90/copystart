@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CopyStart.Areas.Administracion.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -32,6 +33,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -56,12 +58,19 @@ namespace CopyStart.Areas.Administracion.Controllers
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
             {
-                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+                listadoPersonas = await _context.UserRoles.Include(a => a.User)
+                                                        .ThenInclude(a => a.Persona)
+                                                        .ThenInclude(x => x.TipoDocumento)
+                                                        .ToListAsync();
 
             }
             else if (User.IsInRole("Coordinador"))
             {
-                listadoPersonas = await _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+                listadoPersonas = await _context.UserRoles.Include(a => a.User)
+                                                        .ThenInclude(a => a.Persona)
+                                                        .ThenInclude(x => x.TipoDocumento)
+                                                        .Where(x => x.RoleId == "TEC")
+                                                        .ToListAsync();
             }
 
                 return View(listadoPersonas);
@@ -264,6 +273,10 @@ namespace CopyStart.Areas.Administracion.Controllers
                 .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            if (persona == null)
+            {
+                return NotFound();
+            }
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -298,12 +311,9 @@ namespace CopyStart.Areas.Administracion.Controllers
 
                 Active = false,
 
-            }); ViewBag.Breadcrumbs = breadcrumbList;
-
-            if (persona == null)
-            {
-                return NotFound();
-            }
+            }); 
+            
+            ViewBag.Breadcrumbs = breadcrumbList;
 
             return View(persona);
         }
