@@ -1,48 +1,36 @@
 ﻿@model IEnumerable<CopyStart.Entities.ApplicationUserRole>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de personas";
 }
 
-
-
-<div class="row ml-3 mb-2">
-     <a asp-action="Create" class="btn btn-default bg-blue" role="button">
-            <i class="fas fa-plus"></i>
+<div class="row">
+    <div class="col-12 form-group">
+        <a asp-action="Create" class="btn btn-default bg-primary" role="button">
+            Registrar
         </a>
-</div>
+    </div>
 
-<div class="row ">
-    <div class="col-12">
+    <div class="col-12 form-group">
         <div class="card">
-
-
-            <div class="card-body table-responsive p-0">
-
-                <table class="table  table-hover text-nowrap">
-
-                    <thead class="bg-blue">
+            <div class="card-header">
+                <h3 class="card-title">Listado de personas</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover text-center" id="table-personas">
+                    <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.Nombres)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.Apellidos)
-                            </th>
-                            <th>
-                                Tipo de documento
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)
-                            </th>
-                            <th></th>
-                            <th></th>
-
+                            <th>@Html.DisplayNameFor(model => model.User.Persona.Nombres)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.Persona.Apellidos)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            var documento = $"{item.User.Persona.TipoDocumento.Codigo} {item.User.Persona.NumeroDocumento}";
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.User.Persona.Nombres)
@@ -51,30 +39,23 @@
                                     @Html.DisplayFor(modelItem => item.User.Persona.Apellidos)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.User.Persona.TipoDocumento.Codigo)
+                                    @Html.DisplayFor(modelItem => documento)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.User.Persona.NumeroDocumento)
+                                    @if (item.RoleId == "TEC")
+                                    {
+                                        @Html.DisplayFor(modelItem => item.User.Persona.Estado) // Colocar el estado del tecnico
+                                    }
+                                    else
+                                    {
+                                        @*@Html.DisplayFor(modelItem => item.User.Estado) //Colocar el estado del usuario --> Activo e Inactivo --> Se debe agregar un campo estado al usuario*@
+                                    }
                                 </td>
-                                  <td>
-                                @if (item.RoleId == "TEC")
-                                {
-                                
-                                    @Html.DisplayFor(modelItem => item.User.Persona.Estado)
-                                  
-
-                                }
-                                 </td> 
-
-                                
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
-
-                                <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
-
-                                <a asp-action="Delete" asp-route-id="@@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                    <a asp-action="Edit" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
                                 </td>
-                                
                             </tr>
                         }
                     </tbody>
