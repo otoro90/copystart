@@ -56,7 +56,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
             {
-                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).where(x=>x.)ToListAsync();
+                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
 
             }
             else if (User.IsInRole("Coordinador"))
@@ -506,7 +506,17 @@ namespace CopyStart.Areas.Administracion.Controllers
             return RedirectToAction("Details", "Personas", new { area = "Administracion", id = user });
         }
 
-        
+
+
+        public async Task<IActionResult> VerServicio(Guid? id)
+        {
+
+            var servicio = await _context.Servicio.Include(s=>s.Solicitudes)
+                .FirstOrDefaultAsync(s => (s.Solicitudes.TecnicoId == id)&&(s.Estado=="En ejecucion"));
+
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+        }
+
     }
 
 
