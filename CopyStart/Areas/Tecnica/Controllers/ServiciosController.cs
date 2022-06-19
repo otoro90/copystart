@@ -29,6 +29,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Servicios
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
 
@@ -360,6 +361,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> HistorialPorActivo(long? idActivo)
         {
             

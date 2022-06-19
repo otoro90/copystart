@@ -10,6 +10,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Areas.Administracion.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -25,7 +26,9 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/ProcedimientoTipoServicios
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index(Guid? tipoServicioId)
+
         {
 
 

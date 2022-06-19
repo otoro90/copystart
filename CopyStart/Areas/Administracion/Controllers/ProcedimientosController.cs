@@ -9,6 +9,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -24,6 +25,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Procedimientos
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();

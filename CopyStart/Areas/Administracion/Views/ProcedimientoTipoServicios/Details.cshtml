@@ -1,23 +1,22 @@
 ﻿@model CopyStart.Entities.ProcedimientoTipoServicio
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de procedimiento";
 }
 
 
 
-        <div class="row">
+<div class="row">
     <div class="col-md-3">
     </div>
     <div class="col-md-6 card">
         <div class="card-header">
-            <h4 class="col-md-12">Detalles de procedimiento</h4>
 
             
         </div>
 
         <div class="card-body">
-            <h2>Datos de persona</h2>
+          
             <dl class="row my-4">
                 <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Numero)
@@ -25,18 +24,19 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Numero)
         </dd>
+         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoServicio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TipoServicio.Nombre)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Procedimientos)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Procedimientos.Codigo)
+            @Html.DisplayFor(model => model.Procedimientos.Nombre)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoServicio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoServicio.Codigo)
-        </dd>
+       
             </dl>
         
 

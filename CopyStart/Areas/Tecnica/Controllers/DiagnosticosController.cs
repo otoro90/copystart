@@ -10,6 +10,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Areas.Tecnica.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -26,6 +27,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos
         [Authorize(Roles = "Administrador, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
 

@@ -1,15 +1,11 @@
 ﻿@model IEnumerable<CopyStart.Entities.ApplicationRole>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de roles";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table  class="table table-bordered table-hover" id="table-roles">
     <thead>
         <tr>
             <th>

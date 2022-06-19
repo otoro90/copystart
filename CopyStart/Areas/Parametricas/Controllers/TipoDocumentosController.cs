@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -23,6 +24,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/TipoDocumentos
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             return View(await _context.TipoDocumento.ToListAsync());

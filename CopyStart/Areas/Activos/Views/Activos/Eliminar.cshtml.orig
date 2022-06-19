@@ -1,0 +1,78 @@
+﻿@model CopyStart.Entities.Activo
+
+@{
+<<<<<<< Updated upstream
+    ViewData["Title"] = "Eliminar activo";
+=======
+    ViewData["Title"] = "Borrar activo";
+>>>>>>> Stashed changes
+}
+
+
+
+<div class="row">
+    <div class="col-md-3 "></div>
+
+         <div class="col-md-6">
+             <div class="mt-3">
+                  <div class="ml-3">
+                      <div class="card card-primary">
+                           <div class="card-header bg-red">
+                                <h2 class="card-title"><b>¿Quieres borrar este activo?</b></h2>
+                      </div>
+
+                   
+                      <div class="card-body">
+                            <dl class="row">
+                                <dt class = "col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Serial)
+                                </dt>
+                                <dd class = "col-sm-8">
+                                    @Html.DisplayFor(model => model.Serial)
+                                </dd>
+                                <dt class = "col-sm-4">
+                                    @Html.DisplayNameFor(model => model.TipoActivo)
+                                </dt>
+                                <dd class = "col-sm-8">
+                                    @Html.DisplayFor(model => model.TipoActivo.Codigo)
+                                </dd class>
+
+                                <dt class = "col-sm-4">
+                                    Marca de activo
+                                </dt>
+                                <dd class = "col-sm-8">
+                                    @Html.DisplayFor(model => model.MarcaActivo.Nombre)
+                                </dd>
+                                <dt class = "col-sm-4">
+                                    Modelo de activo
+                                </dt>
+                                <dd class = "col-sm-8">
+                                    @Html.DisplayFor(model => model.ModeloActivo.Nombre)
+                                </dd>                                                          
+                                <dt class = "col-sm-4">
+                                    @Html.DisplayNameFor(model => model.FechaRegistro)
+                                </dt>
+                                <dd class = "col-sm-8">
+                                    @Html.DisplayFor(model => model.FechaRegistro)
+                                </dd>
+                                <dt class = "col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Persona)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Persona.Nombres) @Html.DisplayFor(model => model.Persona.Apellidos)
+                                </dd>
+                             </dl> 
+                        </div>
+                        <div class="card-footer">
+                            <form asp-action="Eliminar">
+                                <input type="hidden" asp-for="Id" />
+                                 <input type="submit" value="Borrar" class="btn btn-danger" />
+                                 <button type="button" class="btn btn-default"> <a asp-action="Index">Volver</a></button>
+                            </form></div>
+                    
+                         </div>
+                     </div>
+                 </div>
+            </div>
+    <div class="col-md-3 "></div>
+</div>

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CopyStart.Areas.Administracion.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -32,6 +33,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador")]
+[UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -56,7 +58,15 @@ namespace CopyStart.Areas.Administracion.Controllers
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
             {
-                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+listadoPersonas = _context.UserRoles.Include(a => a.User)
+                                                        .ThenInclude(a => a.Persona)
+                                                        .ThenInclude(x => x.TipoDocumento)
+                                                      .ToList();
+                
+
+
+listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).ToList();
+<Merge Conflict>
 
             }
             else if (User.IsInRole("Coordinador"))
@@ -359,6 +369,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         [Authorize(Roles = "Administrador, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> ListadoTecnicos()
         {
 

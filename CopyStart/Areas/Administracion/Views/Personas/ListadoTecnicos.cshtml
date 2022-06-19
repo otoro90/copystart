@@ -1,19 +1,20 @@
 ﻿@model IEnumerable<CopyStart.Entities.ApplicationUserRole>
 
 @{
-    ViewData["Title"] = "Listado de tecnicos";
+ ViewData["Title"] = "Listado tecnico";
 }
 
-<div class="row ">
-    <div class="col-12">
+    <div class="col-12 form-group">
         <div class="card">
+            <div class="card-header">
+               
+            </div>
 
+            <div class="card-body">
 
-            <div class="card-body table-responsive p-0">
+                <table class="table table-bordered table-hover text-center" id="table-tecnicos">
 
-                <table class="table  table-hover text-nowrap">
-
-                    <thead class="bg-blue">
+                    <thead >
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.User.Persona.Nombres)
@@ -74,7 +75,6 @@
             </div>
         </div>
     </div>
-</div>
 
 
 

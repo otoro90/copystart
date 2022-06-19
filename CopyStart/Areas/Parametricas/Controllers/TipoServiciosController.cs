@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CopyStart.Models;
 using System.Collections.Generic;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -22,6 +23,8 @@ namespace CopyStart.Areas.Parametricas.Controllers
         {
             _context = context;
         }
+
+        [UrlScriptActionFilter]
         [Authorize(Roles = "Administrador")]
         // GET: Parametricas/TipoServicios
         public async Task<IActionResult> Index()

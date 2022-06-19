@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CopyStart.Areas.Tecnica.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -29,6 +30,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // GET: Tecnica/Solicitudes
 
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();

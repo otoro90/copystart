@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -21,6 +22,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/ModeloActivos
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.ModeloActivo.Include(m => m.MarcaActivo);

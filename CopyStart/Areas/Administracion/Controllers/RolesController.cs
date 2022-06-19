@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -23,6 +24,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/Roles
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             return View(await _context.ApplicationRole.ToListAsync());
