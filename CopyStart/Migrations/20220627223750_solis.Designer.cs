@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220627223750_solis")]
+    partial class solis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,29 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-ConcurrencyStamp = "0a548c78-1294-4042-9d0d-903e1aaedc50",
+                            ConcurrencyStamp = "90e138b8-7ee5-486f-bb75-0960b768a9de",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp= "3d77805d-a3b3-4e70-a32b-e178aabf2d86",
+                            ConcurrencyStamp = "b77c9af4-b4b7-4c77-a85a-ceb0ce16ab94",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
+                            ConcurrencyStamp = "1d795c9e-aac8-4178-a442-c13a966a476e",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
-                            Name = "Cliente",
+                            ConcurrencyStamp = "98002ede-4bb4-4bcd-84e2-578fb9ef0802",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });

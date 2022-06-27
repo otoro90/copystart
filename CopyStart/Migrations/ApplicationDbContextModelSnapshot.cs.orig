@@ -94,29 +94,44 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-ConcurrencyStamp = "0a548c78-1294-4042-9d0d-903e1aaedc50",
+<<<<<<< Updated upstream
+                            ConcurrencyStamp = "6319c81a-4bd1-4a30-8aa9-c92db88b2bb4",
+=======
+                            ConcurrencyStamp = "90e138b8-7ee5-486f-bb75-0960b768a9de",
+>>>>>>> Stashed changes
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp= "3d77805d-a3b3-4e70-a32b-e178aabf2d86",
+<<<<<<< Updated upstream
+                            ConcurrencyStamp = "c743d212-884f-4048-bef1-3261b6a5d101",
+=======
+                            ConcurrencyStamp = "b77c9af4-b4b7-4c77-a85a-ceb0ce16ab94",
+>>>>>>> Stashed changes
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
+<<<<<<< Updated upstream
+                            ConcurrencyStamp = "8f28aeea-5681-47c2-bfac-ffca0baaf1bd",
+=======
+                            ConcurrencyStamp = "1d795c9e-aac8-4178-a442-c13a966a476e",
+>>>>>>> Stashed changes
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
-                            Name = "Cliente",
+<<<<<<< Updated upstream
+                            ConcurrencyStamp = "34b71670-6fe6-4cdb-911c-ff0bc895ac80",
+=======
+                            ConcurrencyStamp = "98002ede-4bb4-4bcd-84e2-578fb9ef0802",
+>>>>>>> Stashed changes
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });

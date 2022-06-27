@@ -346,7 +346,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             tecnico.Estado = "Disponible";
 
             servicio.Estado = "Finalizado";
-            servicio.FechaRealizacion = DateTime.Now;
+            servicio.FechaFinalizacion = DateTime.Now;
 
 
             _context.Update(servicio);
@@ -541,7 +541,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }

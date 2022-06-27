@@ -456,6 +456,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 
                 solicitud.TecnicoId = tecnico.TecnicoId;
                 solicitud.EstadoSolicitud = "Por diagnosticar";
+                solicitud.FechaAsignacion=DateTime.Now;
                 await _context.SaveChangesAsync();
             }           
             return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });

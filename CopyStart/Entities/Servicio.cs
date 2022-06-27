@@ -15,8 +15,11 @@ namespace CopyStart.Entities
        
         public string Estado { get; set; }
 
-        [Display(Name = "Fecha de Finalización")]
-        public DateTime FechaRealizacion { get; set; }
+        [Display(Name = "Fecha de inicio")]
+        public DateTime FechaInicio { get; set; }
+
+        [Display(Name = "Fecha de finalización")]
+        public DateTime FechaFinalizacion{ get; set; }
 
         public long? DiagnosticoId { get; set; }
 

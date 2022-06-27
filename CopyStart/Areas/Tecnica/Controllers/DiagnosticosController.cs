@@ -181,7 +181,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 servicio.TipoServicioId = diagnostico.TipoServicioId;               
                 servicio.DiagnosticoId = diagnostico.Id;
                 servicio.ActivoId = solicitud.ActivoId;              
-                servicio.FechaRealizacion = DateTime.Now;
+                servicio.FechaInicio = DateTime.Now;
                 servicio.Estado = "Por confirmar";
                 solicitud.EstadoSolicitud="Diagnosticada";
                 _context.Add(servicio);

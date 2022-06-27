@@ -14,7 +14,7 @@
                   <div class="ml-3">
                       <div class="card card-primary">
                            <div class="card-header bg-red">
-                                <h2 class="card-title"><b>¿Quieres borrar este diagnostico?</b></h2>
+                                <h2 class="card-title"><b>¿Quieres borrar este servicio?</b></h2>
                       </div>
 
                    
@@ -27,10 +27,16 @@
             @Html.DisplayFor(model => model.Estado)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaRealizacion)
+            @Html.DisplayNameFor(model => model.FechaInicio)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaRealizacion)
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaFinalizacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaFinalizacion)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Diagnostico)
