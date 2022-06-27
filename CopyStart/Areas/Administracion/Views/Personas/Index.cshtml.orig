@@ -1,62 +1,57 @@
 ﻿@model IEnumerable<CopyStart.Entities.ApplicationUserRole>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de personas";
 }
 
-<<<<<<< Updated upstream
+<<<<<<< HEAD
 
 
-<div class="row ml-3 mb-2">
-     <a asp-action="Create" class="btn btn-default bg-blue" role="button">
-            <i class="fas fa-plus"></i>
-        </a>
-</div>
-=======
+
+
+
 <div class="row">
-   
->>>>>>> Stashed changes
-
-<div class="row ">
     <div class="col-12">
         <div class="card">
-<<<<<<< Updated upstream
 
 
-            <div class="card-body table-responsive p-0">
+            <div class="table table-bordered table-hover text-center" id="table-personas">
 
                 <table class="table  table-hover text-nowrap">
 
-                    <thead class="bg-blue">
 =======
+<div class="row">
+    <div class="col-12 form-group">
+        <a asp-action="Create" class="btn btn-default bg-primary" role="button">
+            Registrar
+        </a>
+    </div>
+
+    <div class="col-12 form-group">
+        <div class="card">
             <div class="card-header">
-                
+                <h3 class="card-title">Listado de personas</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover text-center" id="table-personas">
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
                     <thead>
->>>>>>> Stashed changes
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.Nombres)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.Apellidos)
-                            </th>
-                            <th>
-                                Tipo de documento
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)
-                            </th>
-                            <th></th>
-                            <th></th>
-
+                            <th>@Html.DisplayNameFor(model => model.User.Persona.Nombres)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.Persona.Apellidos)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
+<<<<<<< HEAD
+var documento = $"{item.User.Persona.TipoDocumento.Codigo} {item.User.Persona.NumeroDocumento}";
+=======
+                            var documento = $"{item.User.Persona.TipoDocumento.Codigo} {item.User.Persona.NumeroDocumento}";
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.User.Persona.Nombres)
@@ -65,18 +60,29 @@
                                     @Html.DisplayFor(modelItem => item.User.Persona.Apellidos)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.User.Persona.TipoDocumento.Codigo)
+                                    @Html.DisplayFor(modelItem => documento)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.User.Persona.NumeroDocumento)
+                                    @if (item.RoleId == "TEC")
+                                    {
+                                        @Html.DisplayFor(modelItem => item.User.Persona.Estado) // Colocar el estado del tecnico
+                                    }
+                                    else
+                                    {
+                                        @*@Html.DisplayFor(modelItem => item.User.Estado) //Colocar el estado del usuario --> Activo e Inactivo --> Se debe agregar un campo estado al usuario*@
+                                    }
                                 </td>
+<<<<<<< HEAD
                                   <td>
                                 @if (item.RoleId == "TEC")
                                 {
                                 
-                                    @Html.DisplayFor(modelItem => item.User.Persona.Estado)
-                                  
-
+                                     
+@Html.DisplayFor(modelItem => item.User.Persona.Estado) // Colocar el estado del tecnico
+                                    }
+                                    else
+                                    {
+                                        @*@Html.DisplayFor(modelItem => item.User.Estado) //Colocar el estado del usuario --> Activo e Inactivo --> Se debe agregar un campo estado al usuario*@
                                 }
                                  </td> 
 
@@ -87,8 +93,13 @@
                                 <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
 
                                 <a asp-action="Delete" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+=======
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
                                 </td>
-                                
                             </tr>
                         }
                     </tbody>

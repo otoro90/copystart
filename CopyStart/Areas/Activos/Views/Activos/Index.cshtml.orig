@@ -1,47 +1,34 @@
 ﻿@model IEnumerable<CopyStart.Entities.Activo>
 
 @{
-    ViewData["Title"] = "Index";
+<<<<<<< HEAD
+ViewData["Title"] = "Index";
+=======
+    ViewData["Title"] = "Listado de activos";
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
 }
-
-<div class="row p-3">
-    
-   
-</div>
 
 <div class="row ">
     <div class="col-12">
         <div class="card">
-<<<<<<< Updated upstream
-            <div class="card-body table-responsive p-0">
-                <table class="table  table-hover text-nowrap" id="table-activos">
-                    <thead class="bg-blue">
+<<<<<<< HEAD
+            <div class="card-body">
+<table class="table table-bordered table-hover" id="table-activos">
 =======
             <div class="card-header">
-              
+                <h3 class="card-title">Listado de activos</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover" id="table-activos">
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
                     <thead>
->>>>>>> Stashed changes
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Serial)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.TipoActivo)
-                            </th>
-
-                            <th>
-                                Marca
-                            </th>
-                            <th>
-                                Modelo
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Estado)
-                            </th>
-                            <th></th>
+                            <th>@Html.DisplayNameFor(model => model.Serial)</th>
+                            <th>@Html.DisplayNameFor(model => model.TipoActivo)</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,14 +52,9 @@
                                     @Html.DisplayFor(modelItem => item.Estado)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
-
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
-
-                                      <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
-
-                                   
-
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         }

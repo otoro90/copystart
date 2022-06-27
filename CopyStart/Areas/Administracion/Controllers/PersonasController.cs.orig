@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CopyStart.Areas.Administracion.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -32,6 +33,11 @@ namespace CopyStart.Areas.Administracion.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador")]
+<<<<<<< HEAD
+[UrlScriptActionFilter]
+=======
+        [UrlScriptActionFilter]
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -56,20 +62,31 @@ namespace CopyStart.Areas.Administracion.Controllers
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
             {
-<<<<<<< Updated upstream
-                listadoPersonas = await _context.UserRoles.Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
-=======
-                listadoPersonas = _context.UserRoles.Include(a => a.User)
+<<<<<<< HEAD
+listadoPersonas = _context.UserRoles.Include(a => a.User)
                                                         .ThenInclude(a => a.Persona)
                                                         .ThenInclude(x => x.TipoDocumento)
                                                       .ToList();
-                listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).ToList();
->>>>>>> Stashed changes
+                
+
+
+listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).ToList();
+<Merge Conflict>
+=======
+                listadoPersonas = await _context.UserRoles.Include(a => a.User)
+                                                        .ThenInclude(a => a.Persona)
+                                                        .ThenInclude(x => x.TipoDocumento)
+                                                        .ToListAsync();
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
 
             }
             else if (User.IsInRole("Coordinador"))
             {
-                listadoPersonas = await _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+                listadoPersonas = await _context.UserRoles.Include(a => a.User)
+                                                        .ThenInclude(a => a.Persona)
+                                                        .ThenInclude(x => x.TipoDocumento)
+                                                        .Where(x => x.RoleId == "TEC")
+                                                        .ToListAsync();
             }
 
                 return View(listadoPersonas);
@@ -272,6 +289,10 @@ namespace CopyStart.Areas.Administracion.Controllers
                 .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            if (persona == null)
+            {
+                return NotFound();
+            }
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -306,12 +327,9 @@ namespace CopyStart.Areas.Administracion.Controllers
 
                 Active = false,
 
-            }); ViewBag.Breadcrumbs = breadcrumbList;
-
-            if (persona == null)
-            {
-                return NotFound();
-            }
+            }); 
+            
+            ViewBag.Breadcrumbs = breadcrumbList;
 
             return View(persona);
         }
