@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -21,6 +22,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/ServicioProcedimientoTipoServicios
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.ServicioProcedimientoTipoServicio.Include(s => s.ProcedimientoTipoServicio).Include(s => s.Servicio);

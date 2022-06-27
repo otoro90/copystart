@@ -94,28 +94,29 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "0a548c78-1294-4042-9d0d-903e1aaedc50",
+ConcurrencyStamp = "0a548c78-1294-4042-9d0d-903e1aaedc50",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "3d77805d-a3b3-4e70-a32b-e178aabf2d86",
+                            ConcurrencyStamp= "3d77805d-a3b3-4e70-a32b-e178aabf2d86",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
+ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
+ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
+                            Name = "Cliente",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -784,7 +785,10 @@ namespace CopyStart.Migrations
                     b.Property<string>("Estado")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("FechaRealizacion")
+                    b.Property<DateTime>("FechaFinalizacion")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("FechaInicio")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("SolicitudId")
@@ -857,6 +861,9 @@ namespace CopyStart.Migrations
 
                     b.Property<string>("EstadoSolicitud")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("FechaAsignacion")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("timestamp without time zone");

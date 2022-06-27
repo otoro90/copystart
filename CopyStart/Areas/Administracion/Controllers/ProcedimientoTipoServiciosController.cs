@@ -9,6 +9,8 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Areas.Administracion.Models;
+using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Administracion.Controllers
 {
@@ -24,8 +26,12 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         // GET: Administracion/ProcedimientoTipoServicios
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index(Guid? tipoServicioId)
+
         {
+
+
             List<ProcedimientoTipoServicio> listaProcedimientoTipoServicio;
             if (tipoServicioId != null)
             {
@@ -36,7 +42,51 @@ namespace CopyStart.Areas.Administracion.Controllers
                 listaProcedimientoTipoServicio = await _context.ProcedimientoTipoServicio.Include(p => p.Procedimientos).Include(p => p.TipoServicio).ToListAsync();
             }
 
-            var tipoServicio = await _context.TipoServicio.FindAsync(tipoServicioId);
+            var tipoServicio = await _context.TipoServicio.FirstOrDefaultAsync(m => m.Id == tipoServicioId);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoServicio.Nombre,
+                Action = "Details",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", tipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "ProcedimientoTipoServicios",
+                Area = "Administracion",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "tipoServicioId", tipoServicioId.ToString() }
+                }
+            });
+
+
+            ViewBag.Breadcrumbs = breadcrumbList;
             ViewData["TipoServicioId"] = tipoServicioId;
             return View(listaProcedimientoTipoServicio);
         }
@@ -58,13 +108,118 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
 
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = procedimientoTipoServicio.TipoServicio.Nombre,
+                Action = "Details",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", procedimientoTipoServicio.TipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "ProcedimientoTipoServicios",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "tipoServicioId", procedimientoTipoServicio.TipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Detalles",
+              
+                Active = false
+                
+            });
+
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             return View(procedimientoTipoServicio);
         }
 
         // GET: Administracion/ProcedimientoTipoServicios/Create
-        public async Task<IActionResult> CreateAsync(Guid? tipoServicioId)
+        public async Task<IActionResult> Create(Guid? tipoServicioId)
         {
             var tipoServicio = await _context.TipoServicio.FindAsync(tipoServicioId);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoServicio.Nombre,
+                Action = "Details",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", tipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "ProcedimientoTipoServicios",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "tipoServicioId", tipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+
+                Active = false
+
+            });
+
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (tipoServicioId != null)
             {
                 ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", tipoServicio.Id);
@@ -131,7 +286,64 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
 
-            var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio.FindAsync(id);
+            var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio
+                .Include(p => p.Procedimientos)
+                .Include(p => p.TipoServicio)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = procedimientoTipoServicio.TipoServicio.Nombre,
+                Action = "Details",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", procedimientoTipoServicio.TipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "ProcedimientoTipoServicios",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "tipoServicioId", procedimientoTipoServicio.TipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+
+                Active = false
+
+            });
+
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (procedimientoTipoServicio == null)
             {
                 return NotFound();
@@ -190,6 +402,60 @@ namespace CopyStart.Areas.Administracion.Controllers
                 .Include(p => p.Procedimientos)
                 .Include(p => p.TipoServicio)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de servicio",
+                Action = "Index",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = procedimientoTipoServicio.TipoServicio.Nombre,
+                Action = "Details",
+                Controller = "TipoServicios",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", procedimientoTipoServicio.TipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Procedimientos",
+                Action = "Index",
+                Controller = "ProcedimientoTipoServicios",
+                Area = "Administracion",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "tipoServicioId", procedimientoTipoServicio.TipoServicioId.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",
+
+                Active = false
+
+            });
+
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (procedimientoTipoServicio == null)
             {
                 return NotFound();

@@ -5,20 +5,14 @@
 }
 
 <div class="row">
-    <div class="col-12 form-group">
-        <a asp-action="Create" class="btn btn-default bg-primary" role="button">
-            Registrar
-        </a>
-    </div>
+<div class="col-12">
 
-    <div class="col-12 form-group">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Listado de personas</h3>
-            </div>
+              
+</div>
             <div class="card-body">
-                <table class="table table-bordered table-hover text-center" id="table-personas">
-                    <thead>
+                <table class="table table-bordered table-hover text-center" id="table-personas">                    <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.User.Persona.Nombres)</th>
                             <th>@Html.DisplayNameFor(model => model.User.Persona.Apellidos)</th>
@@ -30,7 +24,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            var documento = $"{item.User.Persona.TipoDocumento.Codigo} {item.User.Persona.NumeroDocumento}";
+ var documento = $"{item.User.Persona.TipoDocumento.Codigo} {item.User.Persona.NumeroDocumento}";
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.User.Persona.Nombres)
@@ -45,6 +39,7 @@
                                     @if (item.RoleId == "TEC")
                                     {
                                         @Html.DisplayFor(modelItem => item.User.Persona.Estado) // Colocar el estado del tecnico
+@Html.DisplayFor(modelItem => item.User.Estado)
                                     }
                                     else
                                     {
@@ -55,6 +50,7 @@
                                     <a asp-action="Edit" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
                                     <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
                                     <a asp-action="Delete" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+
                                 </td>
                             </tr>
                         }

@@ -10,6 +10,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Areas.Tecnica.Models;
 using CopyStart.Models;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -26,6 +27,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Diagnosticos
         [Authorize(Roles = "Administrador, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
 
@@ -179,7 +181,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 servicio.TipoServicioId = diagnostico.TipoServicioId;               
                 servicio.DiagnosticoId = diagnostico.Id;
                 servicio.ActivoId = solicitud.ActivoId;              
-                servicio.FechaRealizacion = DateTime.Now;
+                servicio.FechaInicio = DateTime.Now;
                 servicio.Estado = "Por confirmar";
                 solicitud.EstadoSolicitud="Diagnosticada";
                 _context.Add(servicio);

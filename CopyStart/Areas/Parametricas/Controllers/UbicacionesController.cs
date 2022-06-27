@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
+using CopyStart.Filters;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -21,6 +22,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/Ubicaciones
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Ubicacion.ToListAsync());

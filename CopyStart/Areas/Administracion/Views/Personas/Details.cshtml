@@ -1,7 +1,7 @@
 ﻿@model CopyStart.Areas.Administracion.Models.DetallePersonaVM
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de persona";
     var urlCliente= "/Activos/Activos/ActivosPorCliente?idCliente=" + Model.Persona.Id;
    
 }
@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-6 card">
         <div class="card-header">
-            <h4 class="col-md-12">Detalles de persona</h4>
+           
 
             <div class="row">
                 <div class="col-md-3 my-2">
@@ -22,14 +22,26 @@
                 <div class="col-md-3 my-2">
                     <a  asp-action="Edit" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
                 </div>
-                
-                <div class="col-md-3 my-2">
-                  <a  href="@urlCliente" role="button" class="btn btn-block btn-default btn-sm">Ver activos</a>  
-                </div>
-                <div class="col-md-3 my-2">
-                    <a  asp-action="AsignarRol" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Asignar rol</a>
-                </div>
+                @if (Model.RolesUsuario.Where(x => x.Role.Id == "CLN").Count()>0)
+                {
+                    <div class="col-md-3 my-2">
+                        <a  href="@urlCliente" role="button" class="btn btn-block btn-default btn-sm">Ver activos</a>  
+                    </div>
+                }
 
+                @if (User.IsInRole("Administrador"))
+                {
+                    <div class="col-md-3 my-2">
+                        <a  asp-action="AsignarRol" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Asignar rol</a>
+                    </div>
+                }
+
+                @if ((Model.RolesUsuario.Where(x => x.Role.Id == "TEC").Count() > 0) && (Model.Persona.Estado == "En servicio"))
+                {
+                    <div class="col-md-3 my-2">
+                        <a  asp-action="VerServicio" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicio</a>
+                    </div>
+                }
             </div>
         </div>
 
@@ -86,31 +98,33 @@
                 </dd>
             </dl>
 
-            <h2>Roles de persona</h2>
+             @if (User.IsInRole("Administrador"))
+            {
+                <h2>Roles de persona</h2>
 
-            <div class="row my-4">
-                <table class="col-6">
-                    
-                    <tbody>
-                        @foreach (var item in Model.RolesUsuario)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Role.Name)
-                                </td>
-                                <td class="float-right">
-                                   
-                                    <a  asp-action="BorrarRol" asp-route-id="@item.Role.Id" asp-route-user="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
-                                </td>
+                <div class="row my-4">
+                    <table class="col-6">
+
+                        <tbody>
+                            @foreach (var item in Model.RolesUsuario)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Role.Name)
+                                    </td>
+                                    <td class="float-right">
+
+                                        <a  asp-action="BorrarRol" asp-route-id="@item.Role.Id" asp-route-user="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                    </td>
 
 
-                            </tr>
-                        }
-                    </tbody>
+                                </tr>
+                            }
+                        </tbody>
                 </table>
 
             </div>
-
+            }
         </div>
     </div>
     <div class="col-md-3"></div>

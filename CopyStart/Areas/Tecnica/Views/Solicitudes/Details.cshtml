@@ -1,7 +1,7 @@
 ﻿@model CopyStart.Entities.Solicitud
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de solicitud";
     var urlDiagnostico = "/Tecnica/Diagnosticos/Create?idSolicitud=" + Model.Id;
 }
 
@@ -17,7 +17,7 @@
     <div class="col-md-6 card">
 
         <div class="card-header">
-            <h4 class="col-md-12">Detalles de la solicitud</h4>
+           
 
             <div class="row">
                  @if (User.IsInRole("Cliente"))

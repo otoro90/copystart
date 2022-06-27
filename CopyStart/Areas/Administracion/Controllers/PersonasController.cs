@@ -33,7 +33,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador")]
-        [UrlScriptActionFilter]
+[UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -58,10 +58,15 @@ namespace CopyStart.Areas.Administracion.Controllers
             List<ApplicationUserRole> listadoPersonas = null;
             if (User.IsInRole("Administrador"))
             {
-                listadoPersonas = await _context.UserRoles.Include(a => a.User)
+listadoPersonas = _context.UserRoles.Include(a => a.User)
                                                         .ThenInclude(a => a.Persona)
                                                         .ThenInclude(x => x.TipoDocumento)
-                                                        .ToListAsync();
+.ToList();
+                
+
+
+listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).ToList();
+<Merge Conflict>
 
             }
             else if (User.IsInRole("Coordinador"))
@@ -369,6 +374,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         [Authorize(Roles = "Administrador, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> ListadoTecnicos()
         {
 
@@ -516,7 +522,17 @@ namespace CopyStart.Areas.Administracion.Controllers
             return RedirectToAction("Details", "Personas", new { area = "Administracion", id = user });
         }
 
-        
+
+
+        public async Task<IActionResult> VerServicio(Guid? id)
+        {
+
+            var servicio = await _context.Servicio.Include(s=>s.Solicitudes)
+                .FirstOrDefaultAsync(s => (s.Solicitudes.TecnicoId == id)&&(s.Estado=="En ejecucion"));
+
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+        }
+
     }
 
 

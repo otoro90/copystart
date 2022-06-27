@@ -6,9 +6,7 @@
 
 <div class="row ml-3 mb-2">
     <div class="col-md-3">
-    <a asp-action="Create" role="button" class="btn btn-default bg-blue">
-        <i class="fas fa-plus mr-3"></i>
-    </a>
+    
     </div>
 </div>
 
@@ -17,12 +15,17 @@
         <div class="card">
 
 
-            <div class="card-body table-responsive p-0">
+            <div class="card-body ">
+                
 
-                <table class="table  table-hover text-nowrap">
-
-                    <thead class="bg-blue">
+                <table class="table table-bordered table-hover" id="table-tiposervicios">
+                   
+                    <thead >
+                        
                         <tr>
+                             <a asp-action="Create" role="button" class="btn btn-default bg-blue">
+                         <i class="fas fa-plus mr-3"></i>
+                     </a>
                             <th>
                                 @Html.DisplayNameFor(model => model.Nombre)
                             </th>

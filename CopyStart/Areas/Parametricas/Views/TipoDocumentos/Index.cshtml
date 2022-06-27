@@ -4,12 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+
+ <div class="row">
+    <div class="col-12 form-group">
+        <div class="card">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+             <table  class="table table-bordered table-hover" id="table-tipodocumentos">
     <thead>
         <tr>
             <th>
@@ -51,3 +57,9 @@
 }
     </tbody>
 </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,6 +29,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Servicios
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
 
@@ -345,7 +346,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             tecnico.Estado = "Disponible";
 
             servicio.Estado = "Finalizado";
-            servicio.FechaRealizacion = DateTime.Now;
+            servicio.FechaFinalizacion = DateTime.Now;
 
 
             _context.Update(servicio);
@@ -360,6 +361,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> HistorialPorActivo(long? idActivo)
         {
             
@@ -539,7 +541,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }

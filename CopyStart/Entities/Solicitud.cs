@@ -33,9 +33,14 @@ namespace CopyStart.Entities
         public Ubicacion Ubicacion { get; set; }
 
 
-        [Display(Name = "Fecha")]
+        [Display(Name = "Fecha de creacion")]
         
         public DateTime FechaSolicitud { get; set; }
+
+
+        [Display(Name = "Fecha de asignacion")]
+
+        public DateTime FechaAsignacion { get; set; }
 
         [Display(Name = "Estado")]
         

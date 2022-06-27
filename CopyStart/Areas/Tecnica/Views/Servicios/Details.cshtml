@@ -67,11 +67,23 @@
                     @Html.DisplayFor(model => model.Estado)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.FechaRealizacion)
+                    @Html.DisplayNameFor(model => model.FechaInicio)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.FechaRealizacion)
+                    @Html.DisplayFor(model => model.FechaInicio)
                 </dd>
+
+                @if(Model.Estado=="Finalizado"){
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FechaFinalizacion)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FechaFinalizacion)
+                </dd>
+
+
+                }
+
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Diagnostico)
                 </dt>
@@ -88,7 +100,7 @@
                     @Html.DisplayNameFor(model => model.Solicitudes)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Solicitudes.Descripcion)
+                    @Html.DisplayFor(model => model.Solicitudes.Incidencia)
                 </dd>
                 
             </dl>

@@ -351,6 +351,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         [Authorize(Roles = "Administrador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> ActivosPorCliente(Guid? idCliente)
         {
             var breadcrumbList = new List<Breadcrumb>();
