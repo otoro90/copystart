@@ -61,7 +61,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 listadoPersonas = _context.UserRoles.Include(a => a.User)
                                                         .ThenInclude(a => a.Persona)
                                                         .ThenInclude(x => x.TipoDocumento)
-                                                      .ToList();
+.ToList();
                 
 
 
@@ -71,7 +71,11 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
             }
             else if (User.IsInRole("Coordinador"))
             {
-                listadoPersonas = await _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).ToListAsync();
+                listadoPersonas = await _context.UserRoles.Include(a => a.User)
+                                                        .ThenInclude(a => a.Persona)
+                                                        .ThenInclude(x => x.TipoDocumento)
+                                                        .Where(x => x.RoleId == "TEC")
+                                                        .ToListAsync();
             }
 
                 return View(listadoPersonas);
@@ -274,6 +278,10 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
                 .Include(p => p.TipoDocumento)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            if (persona == null)
+            {
+                return NotFound();
+            }
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -308,12 +316,9 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
 
                 Active = false,
 
-            }); ViewBag.Breadcrumbs = breadcrumbList;
-
-            if (persona == null)
-            {
-                return NotFound();
-            }
+            }); 
+            
+            ViewBag.Breadcrumbs = breadcrumbList;
 
             return View(persona);
         }

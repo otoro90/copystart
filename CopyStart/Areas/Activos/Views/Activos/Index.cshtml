@@ -1,19 +1,14 @@
 ﻿@model IEnumerable<CopyStart.Entities.Activo>
 
 @{
-ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de activos";
 }
-
-<div class="row p-3">
-    
-   
-</div>
 
 <div class="row ">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-<table class="table table-bordered table-hover" id="table-activos">
+                <table class="table table-bordered table-hover" id="table-activos">
                     <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Serial)</th>
@@ -45,14 +40,10 @@ ViewData["Title"] = "Index";
                                     @Html.DisplayFor(modelItem => item.Estado)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
-
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
-
-                                      <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
-
-                                   
-
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }
