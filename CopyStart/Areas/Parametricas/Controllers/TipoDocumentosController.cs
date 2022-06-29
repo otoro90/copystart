@@ -9,6 +9,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Filters;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -27,6 +28,25 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de documento",
+                Action = "Index",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             return View(await _context.TipoDocumento.ToListAsync());
         }
 
@@ -40,6 +60,38 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var tipoDocumento = await _context.TipoDocumento
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de documento",
+                Action = "Index",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoDocumento.Nombre,
+                Action = "Details",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (tipoDocumento == null)
             {
                 return NotFound();
@@ -51,6 +103,31 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/TipoDocumentos/Create
         public IActionResult Create()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de documento",
+                Action = "Index",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",              
+                Active = false,
+                
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             return View();
         }
 
@@ -80,6 +157,44 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var tipoDocumento = await _context.TipoDocumento.FindAsync(id);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de documento",
+                Action = "Index",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoDocumento.Nombre,
+                Action = "Details",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+                Active = false
+
+            }); ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (tipoDocumento == null)
             {
                 return NotFound();
@@ -132,6 +247,42 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var tipoDocumento = await _context.TipoDocumento
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de documento",
+                Action = "Index",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoDocumento.Nombre,
+                Action = "Details",
+                Controller = "TipoDocumentos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",
+                Active = false
+
+            }); ViewBag.Breadcrumbs = breadcrumbList;
+
             if (tipoDocumento == null)
             {
                 return NotFound();

@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<CopyStart.Entities.ServicioProcedimientoTipoServicio>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de procedimientos";
 }
 
 
 
-
-<table class="table">
+<div class="card">
+   <div class="card-body table-responsive">
+<table class="table table-bordered table-hover" id="table-proser">
     <thead>
         <tr>
             <th>
@@ -25,7 +26,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProcedimientosRealizados)
             </th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
@@ -54,3 +55,5 @@
         }
     </tbody>
 </table>
+</div>
+</div>

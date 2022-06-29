@@ -79,6 +79,18 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.FechaSolicitud)
                 </dd>
+
+                @if(Model.EstadoSolicitud=="Por diagnosticar"){
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaAsignacion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FechaAsignacion)
+                </dd>
+
+
+                }
+
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.EstadoSolicitud)
                 </dt>

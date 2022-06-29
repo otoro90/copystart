@@ -468,6 +468,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Tecnico, Administrador, Coordinador")]
+        [UrlScriptActionFilter]
         public IActionResult EjecucionProcedimientos(long idServicio)
         {
 

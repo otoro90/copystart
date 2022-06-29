@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using CopyStart.Filters;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -25,6 +26,26 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Ubicaciones",
+                Action = "Index",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             return View(await _context.Ubicacion.ToListAsync());
         }
 
@@ -38,6 +59,39 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var ubicacion = await _context.Ubicacion
                 .FirstOrDefaultAsync(m => m.CodigoLugar == id);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Ubicaciones",
+                Action = "Index",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = ubicacion.Lugar,
+                Action = "Details",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (ubicacion == null)
             {
                 return NotFound();
@@ -49,6 +103,32 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/Ubicaciones/Create
         public IActionResult Create()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Ubicaciones",
+                Action = "Index",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true
+            });
+           
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+                Active = false
+
+            }); ViewBag.Breadcrumbs = breadcrumbList;
+
+
             return View();
         }
 
@@ -77,6 +157,44 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var ubicacion = await _context.Ubicacion.FindAsync(id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Ubicaciones",
+                Action = "Index",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = ubicacion.Lugar,
+                Action = "Details",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+                
+                Active = false,
+               
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             if (ubicacion == null)
             {
                 return NotFound();
@@ -129,6 +247,44 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var ubicacion = await _context.Ubicacion
                 .FirstOrDefaultAsync(m => m.CodigoLugar == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Ubicaciones",
+                Action = "Index",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = ubicacion.Lugar,
+                Action = "Details",
+                Controller = "Ubicaciones",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",
+
+                Active = false,
+
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             if (ubicacion == null)
             {
                 return NotFound();

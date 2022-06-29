@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using CopyStart.Filters;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -25,6 +26,27 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Modelos de activo",
+                Action = "Index",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = false
+            });
+           
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             var applicationDbContext = _context.ModeloActivo.Include(m => m.MarcaActivo);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -40,6 +62,40 @@ namespace CopyStart.Areas.Parametricas.Controllers
             var modeloActivo = await _context.ModeloActivo
                 .Include(m => m.MarcaActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Modelo de activo",
+                Action = "Index",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = modeloActivo.Nombre,
+                Action = "Details",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             if (modeloActivo == null)
             {
                 return NotFound();
@@ -51,6 +107,37 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/ModeloActivos/Create
         public IActionResult Create()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Modelos de activo",
+                Action = "Index",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+                
+                Active = false
+               
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
+
             ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Codigo");
             return View();
         }
@@ -82,6 +169,45 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var modeloActivo = await _context.ModeloActivo.FindAsync(id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Modelo de activo",
+                Action = "Index",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = modeloActivo.Nombre,
+                Action = "Details",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+                
+                Active = false,
+              
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (modeloActivo == null)
             {
                 return NotFound();
@@ -137,6 +263,42 @@ namespace CopyStart.Areas.Parametricas.Controllers
             var modeloActivo = await _context.ModeloActivo
                 .Include(m => m.MarcaActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Modelo de activo",
+                Action = "Index",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = modeloActivo.Nombre,
+                Action = "Details",
+                Controller = "ModeloActivos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",
+
+                Active = false,
+
+            });
+
             if (modeloActivo == null)
             {
                 return NotFound();
