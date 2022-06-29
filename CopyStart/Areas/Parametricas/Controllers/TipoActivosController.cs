@@ -9,6 +9,7 @@ using CopyStart.Data;
 using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Filters;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -27,6 +28,24 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de activo",
+                Action = "Index",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             return View(await _context.TipoActivo.ToListAsync());
         }
 
@@ -40,6 +59,36 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var tipoActivo = await _context.TipoActivo
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de activo",
+                Action = "Index",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoActivo.Nombre,
+                Action = "Details",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); ViewBag.Breadcrumbs = breadcrumbList;
+
             if (tipoActivo == null)
             {
                 return NotFound();
@@ -51,6 +100,31 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/TipoActivos/Create
         public IActionResult Create()
         {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de activo",
+                Action = "Index",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+                
+                Active = false,
+                
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
             return View();
         }
 
@@ -80,6 +154,42 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var tipoActivo = await _context.TipoActivo.FindAsync(id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipo de activo",
+                Action = "Index",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoActivo.Nombre,
+                Action = "Details",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Editar",
+
+                Active = false,
+
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
             if (tipoActivo == null)
             {
                 return NotFound();
@@ -132,6 +242,42 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             var tipoActivo = await _context.TipoActivo
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Tipos de activo",
+                Action = "Index",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = tipoActivo.Nombre,
+                Action = "Details",
+                Controller = "TipoActivos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Borrar",
+
+                Active = false,
+
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
             if (tipoActivo == null)
             {
                 return NotFound();

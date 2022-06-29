@@ -15,10 +15,18 @@
 <div class="row ">
     <div class="col-12">
         <div class="card">
-            <div class="card-body" >
+            <div class="card-body table-responsive" >
                 <table  class="table table-bordered table-hover" id="table-solicitudes">
                     <thead >
                         <tr>
+                             @if (User.IsInRole("Cliente")){
+                             <div class="col-12 mb-2">
+                                <a asp-action="Create" class="btn btn-default bg-primary" role="button">
+                                    Registrar
+                                </a>
+                            </div>
+                             }
+
 
                             <th>
                                 @Html.DisplayNameFor(model => model.Cliente)
@@ -31,15 +39,12 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Incidencia)
                             </th>
-
-
-
                             <th>
                                 @Html.DisplayNameFor(model => model.EstadoSolicitud)
                             </th>
-
-
-
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaSolicitud)
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -67,19 +72,21 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.EstadoSolicitud)
                             </td>
-                            
+                               <td>
+                                @Html.DisplayFor(modelItem => item.FechaSolicitud)
+                            </td>
 
                             
                             <td>
                                     
                                    
 
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
                                
                                 @if(item.EstadoSolicitud=="Por tramitar" || item.EstadoSolicitud=="Cancelada")
                                     {
-                                        <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a> 
-                                         <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a> 
+                                         <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
                                     }
                                
 

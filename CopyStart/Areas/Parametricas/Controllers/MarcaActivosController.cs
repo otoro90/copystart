@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopyStart.Data;
 using CopyStart.Entities;
 using CopyStart.Filters;
+using CopyStart.Models;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -25,6 +26,27 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Marcas de activo",
+                Action = "Index",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = false
+            });        
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             var applicationDbContext = _context.MarcaActvo.Include(m => m.TipoActivo);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -40,6 +62,41 @@ namespace CopyStart.Areas.Parametricas.Controllers
             var marcaActivo = await _context.MarcaActvo
                 .Include(m => m.TipoActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Marcas de activo",
+                Action = "Index",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = marcaActivo.Nombre,
+                Action = "Details",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = false,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             if (marcaActivo == null)
             {
                 return NotFound();
@@ -51,6 +108,35 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/MarcaActivos/Create
         public IActionResult Create()
         {
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Marcas de activo",
+                Action = "Index",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Crear",
+              
+                Active = false,
+              
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
             ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
             return View();
         }
@@ -82,6 +168,39 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var marcaActivo = await _context.MarcaActvo.FindAsync(id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Marcas de activo",
+                Action = "Index",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = marcaActivo.Nombre,
+                Action = "Details",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
             if (marcaActivo == null)
             {
                 return NotFound();
@@ -137,6 +256,48 @@ namespace CopyStart.Areas.Parametricas.Controllers
             var marcaActivo = await _context.MarcaActvo
                 .Include(m => m.TipoActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Marcas de activo",
+                Action = "Index",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = marcaActivo.Nombre,
+                Action = "Details",
+                Controller = "MarcaActivos",
+                Area = "Parametricas",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", id.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Eliminar",
+               
+                Active = false,
+               
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+
+
+
             if (marcaActivo == null)
             {
                 return NotFound();

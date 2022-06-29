@@ -257,7 +257,9 @@ namespace CopyStart.Data
                     NumeroDocumento = "1234567890",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = 50001
+                    UbicacionId = 50001,
+                   
+                   
                 }
                 , new Persona()
                 {

@@ -117,7 +117,7 @@ ConcurrencyStamp = "9545e303-0a6c-46b6-895c-7291bdac470b",
                             Id = "CLN",
 ConcurrencyStamp = "4af7a042-9601-4f4f-aafe-b451a21e41c5",
                             Name = "Cliente",
-                            Name = "Cliente",
+                           
                             NormalizedName = "Cliente"
                         });
                 });

@@ -15,7 +15,7 @@
 <div class="row ">
     <div class="col-12">
         <div class="card">
-            <div class="card-body"">
+            <div class="card-body table-responsive">
                 <table  class="table table-bordered table-hover" id="table-historialporactivo">
                     <thead >
                         <tr>
@@ -25,9 +25,14 @@
                             <th>
                                Tipo de servicio
                             </th>
-
                             <th>
                               Activo
+                            </th>
+                            <th>
+                              Fecha inicio
+                            </th>
+                            <th>
+                                Fecha finalizacion
                             </th>
                             <th>
                                Estado del servicio
@@ -46,7 +51,7 @@
 
                                 @{
                                     var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
-                                    @Html.DisplayFor(modelItem => fullName)
+                                        @Html.DisplayFor(modelItem => fullName)
                                 }
                                
                             </td>
@@ -62,11 +67,11 @@
                             </td>
 
                             <td>
-                                 <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="fas fa-pen"></i></a>
+                                 <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
 
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-file"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
 
-                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
 
                             </td>
                         </tr>

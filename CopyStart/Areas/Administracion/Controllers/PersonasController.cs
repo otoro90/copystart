@@ -16,7 +16,7 @@ using CopyStart.Filters;
 namespace CopyStart.Areas.Administracion.Controllers
 {
     [Area("Administracion")]
-    
+
     public class PersonasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -33,7 +33,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
 
         [Authorize(Roles = "Administrador, Coordinador")]
-[UrlScriptActionFilter]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Index()
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -52,33 +52,20 @@ namespace CopyStart.Areas.Administracion.Controllers
                 Area = "Administracion",
                 Active = false
             });
-           
+
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            List<ApplicationUserRole> listadoPersonas = null;
-            if (User.IsInRole("Administrador"))
+            var listadoPersonas = _context.User.Include(a => a.Persona)
+                                           .ThenInclude(p => p.TipoDocumento)
+                                           .Include(a => a.UserRoles)
+                                           .ThenInclude(r => r.Role);
+
+            if (User.IsInRole("Coordinador"))
             {
-listadoPersonas = _context.UserRoles.Include(a => a.User)
-                                                        .ThenInclude(a => a.Persona)
-                                                        .ThenInclude(x => x.TipoDocumento)
-.ToList();
-                
-
-
-listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).ToList();
-<Merge Conflict>
-
-            }
-            else if (User.IsInRole("Coordinador"))
-            {
-                listadoPersonas = await _context.UserRoles.Include(a => a.User)
-                                                        .ThenInclude(a => a.Persona)
-                                                        .ThenInclude(x => x.TipoDocumento)
-                                                        .Where(x => x.RoleId == "TEC")
-                                                        .ToListAsync();
+                listadoPersonas.Where(x => x.UserRoles.Any( x=> x.Role.Id == "TEC"));
             }
 
-                return View(listadoPersonas);
+            return View(await listadoPersonas.ToListAsync());
         }
 
         // GET: Administracion/Personas/Details/5
@@ -91,9 +78,9 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
             }
 
             var persona = await _context.Persona
-                .Include(p => p.TipoDocumento).Include(p=>p.Ubicacion)
+                .Include(p => p.TipoDocumento).Include(p => p.Ubicacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
-           
+
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
             {
@@ -112,7 +99,7 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
             });
             breadcrumbList.Add(new Breadcrumb
             {
-                Text = persona.Nombres+" "+persona.Apellidos,
+                Text = persona.Nombres + " " + persona.Apellidos,
                 Action = "Details",
                 Controller = "Personas",
                 Area = "Administracion",
@@ -130,7 +117,7 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
                 return NotFound();
             }
             var usuario = await _context.Users.Include(m => m.Persona).FirstOrDefaultAsync(m => m.PersonaId == id);
-            var applicationUserRoles = await _context.ApplicationUserRole.Include(m=>m.Role).Where(m => m.UserId == usuario.Id).ToListAsync();
+            var applicationUserRoles = await _context.ApplicationUserRole.Include(m => m.Role).Where(m => m.UserId == usuario.Id).ToListAsync();
 
             var detallePersonaVm = new DetallePersonaVM
             {
@@ -209,9 +196,9 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
             }); breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Editar",
-                
+
                 Active = false,
-               
+
             });
 
             ViewBag.Breadcrumbs = breadcrumbList;
@@ -316,8 +303,8 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
 
                 Active = false,
 
-            }); 
-            
+            });
+
             ViewBag.Breadcrumbs = breadcrumbList;
 
             return View(persona);
@@ -359,13 +346,13 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
             if (ModelState.IsValid)
             {
                 persona.Id = Guid.NewGuid();
-                
+                persona.Estado = "Activo";
                 _context.Add(persona);
                 var user = _context.User.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
                 user.PersonaId = persona.Id;
-                
+
                 await _context.SaveChangesAsync();
-               return RedirectToAction("Manage", "Account", new { area = "Identity" });
+                return RedirectToAction("Manage", "Account", new { area = "Identity" });
 
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
@@ -388,15 +375,15 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
             });
             breadcrumbList.Add(new Breadcrumb
             {
-                Text = "Listado tecnico",               
+                Text = "Listado tecnico",
                 Active = false
             });
-          
+
             ViewBag.Breadcrumbs = breadcrumbList;
 
 
 
-            var applicationDbContext = _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a=>a.Persona);
+            var applicationDbContext = _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).ThenInclude(x => x.TipoDocumento);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -471,15 +458,15 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> AsignarRol(Guid? id, [Bind("RoleId")] ApplicationUserRole rol)
         {
-            var usuario = await _context.User
+            var usuario = await _context.User.Include(x => x.Persona)
                 .FirstOrDefaultAsync(m => m.PersonaId == id);
 
             var applicationUserRole = await _context.ApplicationUserRole
                 .FirstOrDefaultAsync(m => m.UserId == usuario.Id && m.RoleId == rol.RoleId);
 
-          
 
-            if (ModelState.IsValid )
+
+            if (ModelState.IsValid)
             {
                 if (applicationUserRole != null)
                 {
@@ -487,7 +474,7 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
                 }
 
                 var input = new ApplicationUserRole();
-                
+
                 input.RoleId = rol.RoleId;
                 input.UserId = usuario.Id;
                 _context.Add(input);
@@ -508,12 +495,12 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
 
 
         [Authorize(Roles = "Administrador")]
-      
+
         public async Task<IActionResult> BorrarRol(string id, Guid? user)
         {
 
             var usuario = await _context.Users
-                .FirstOrDefaultAsync(m=>m.PersonaId == user);
+                .FirstOrDefaultAsync(m => m.PersonaId == user);
 
             var applicationUserRole = await _context.ApplicationUserRole
                 .FirstOrDefaultAsync(m => m.RoleId == id && m.UserId == usuario.Id);
@@ -527,8 +514,8 @@ listadoPersonas = listadoPersonas.GroupBy(x => x.UserId).Select(x => x.First()).
         public async Task<IActionResult> VerServicio(Guid? id)
         {
 
-            var servicio = await _context.Servicio.Include(s=>s.Solicitudes)
-                .FirstOrDefaultAsync(s => (s.Solicitudes.TecnicoId == id)&&(s.Estado=="En ejecucion"));
+            var servicio = await _context.Servicio.Include(s => s.Solicitudes)
+                .FirstOrDefaultAsync(s => (s.Solicitudes.TecnicoId == id) && (s.Estado == "En ejecucion"));
 
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
         }
