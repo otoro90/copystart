@@ -44,6 +44,11 @@
                                 <input asp-for="Codigo" class="form-control" />
                                 <span asp-validation-for="Codigo" class="text-danger"></span>
                             </div>
+                             <div class="form-group">
+                                <label asp-for="TiempoEjecucion" class="control-label"></label>
+                                <input asp-for="TiempoEjecucion" class="form-control" />
+                                <span asp-validation-for="TiempoEjecucion" class="text-danger"></span>
+                            </div>
                             <div class="form-group form-check">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
