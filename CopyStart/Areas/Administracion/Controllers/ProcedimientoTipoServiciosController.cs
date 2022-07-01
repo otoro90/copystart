@@ -222,11 +222,11 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             if (tipoServicioId != null)
             {
-                ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", tipoServicio.Id);
+                ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Nombre", tipoServicio.Id);
             }
             else
             {
-                ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo");
+                ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Nombre");
             }
             ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo");           
             return View();
@@ -237,7 +237,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Numero,TipoServicioId,Id,Nombre,Descripcion,Codigo,Estado")] ProcedimientoCrear procedimientoCrear)
+        public async Task<IActionResult> Create([Bind("Numero,TipoServicioId,Id,Nombre,Descripcion,Codigo,Estado,TiempoEjecucion")] ProcedimientoCrear procedimientoCrear)
         {
             if (ModelState.IsValid)
             {
@@ -248,7 +248,8 @@ namespace CopyStart.Areas.Administracion.Controllers
                     Nombre = procedimientoCrear.Nombre,
                     Codigo = procedimientoCrear.Codigo,
                     Descripcion = procedimientoCrear.Descripcion,
-                    Estado = procedimientoCrear.Estado
+                    Estado = procedimientoCrear.Estado,
+                    TiempoEjecucion = procedimientoCrear.TiempoEjecucion
                 };
 
                 var procedimientoTipoServicio = new ProcedimientoTipoServicio
@@ -263,7 +264,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 _context.Add(procedimientoTipoServicio);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "ProcedimientoTipoServicios", new { area = "Administracion", tipoServicioId = procedimientoTipoServicio.TipoServicioId });
 
             }
 
@@ -348,9 +349,25 @@ namespace CopyStart.Areas.Administracion.Controllers
             {
                 return NotFound();
             }
+            
+            var procedimientoEdit = new ProcedimientoCrear
+            {
+                Id = (Guid)id,
+               
+                TipoServicioId = procedimientoTipoServicio.TipoServicioId,
+                ProcedimientoId = procedimientoTipoServicio.ProcedimientoId,
+                Numero = procedimientoTipoServicio.Numero,
+                Nombre = procedimientoTipoServicio.Procedimientos.Nombre,
+                Codigo = procedimientoTipoServicio.Procedimientos.Codigo,
+                Descripcion = procedimientoTipoServicio.Procedimientos.Descripcion,
+                Estado = procedimientoTipoServicio.Procedimientos.Estado,
+                TiempoEjecucion = procedimientoTipoServicio.Procedimientos.TiempoEjecucion
+                
+            };
+
             ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo", procedimientoTipoServicio.ProcedimientoId);
             ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", procedimientoTipoServicio.TipoServicioId);
-            return View(procedimientoTipoServicio);
+            return View(procedimientoEdit);
         }
 
         // POST: Administracion/ProcedimientoTipoServicios/Edit/5
@@ -358,18 +375,37 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Numero,ProcedimientoId,TipoServicioId")] ProcedimientoTipoServicio procedimientoTipoServicio)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Numero,TipoServicioId,Id,Nombre,Descripcion,Codigo,Estado,TiempoEjecucion,ProcedimientoId")] ProcedimientoCrear ProcedimientoEditar)
         {
-            if (id != procedimientoTipoServicio.Id)
+            if (id != ProcedimientoEditar.Id)
             {
                 return NotFound();
             }
 
+            var procedimiento = new Procedimiento
+            {
+                Id = ProcedimientoEditar.ProcedimientoId,
+                Nombre = ProcedimientoEditar.Nombre,
+                Codigo = ProcedimientoEditar.Codigo,
+                Descripcion = ProcedimientoEditar.Descripcion,
+                Estado = ProcedimientoEditar.Estado,
+                TiempoEjecucion = ProcedimientoEditar.TiempoEjecucion
+            };
+            var procedimientoTipoServicio = new ProcedimientoTipoServicio
+            {
+                Id = ProcedimientoEditar.Id,
+                TipoServicioId = ProcedimientoEditar.TipoServicioId,
+                ProcedimientoId = ProcedimientoEditar.ProcedimientoId,
+                Numero = ProcedimientoEditar.Numero
+
+            };
             if (ModelState.IsValid)
             {
+         
                 try
                 {
                     _context.Update(procedimientoTipoServicio);
+                    _context.Update(procedimiento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -383,9 +419,9 @@ namespace CopyStart.Areas.Administracion.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "ProcedimientoTipoServicios", new { area = "Administracion", tipoServicioId = procedimientoTipoServicio.TipoServicioId });
             }
-            ViewData["ProcedimientoId"] = new SelectList(_context.Procedimiento, "Id", "Codigo", procedimientoTipoServicio.ProcedimientoId);
+        
             ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio, "Id", "Codigo", procedimientoTipoServicio.TipoServicioId);
             return View(procedimientoTipoServicio);
         }
@@ -472,7 +508,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             var procedimientoTipoServicio = await _context.ProcedimientoTipoServicio.FindAsync(id);
             _context.ProcedimientoTipoServicio.Remove(procedimientoTipoServicio);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "ProcedimientoTipoServicios", new { area = "Administracion", tipoServicioId = procedimientoTipoServicio.TipoServicioId });
         }
 
         private bool ProcedimientoTipoServicioExists(Guid id)

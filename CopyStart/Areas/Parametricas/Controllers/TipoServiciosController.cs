@@ -192,11 +192,12 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var tipoServicio = await _context.TipoServicio.FindAsync(id);
+            var tipoServicio = await _context.TipoServicio.Include(x=>x.TipoActivo).FirstOrDefaultAsync(m => m.Id == id);
             if (tipoServicio == null)
             {
                 return NotFound();
             }
+            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Codigo", tipoServicio.TipoActivoId);
             return View(tipoServicio);
         }
 
@@ -206,7 +207,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado")] TipoServicio tipoServicio)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado, TipoActivoId")] TipoServicio tipoServicio)
         {
             if (id != tipoServicio.Id)
             {
