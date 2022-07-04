@@ -14,7 +14,7 @@ namespace CopyStart.Areas.Administracion.Models
 
         public int Numero { get; set; }
 
-        [Display(Name = "Tiempo de ejecucion")]
-        public string TiempoEjecucion { get; set; }
+        [Display(Name = "Tiempo de ejecución (minutos)")]
+        public int TiempoEjecucion { get; set; }
     }
 }

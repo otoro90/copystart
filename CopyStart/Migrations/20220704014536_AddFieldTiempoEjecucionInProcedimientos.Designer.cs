@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220701143124_procedi1")]
-    partial class procedi1
+    [Migration("20220704014536_AddFieldTiempoEjecucionInProcedimientos")]
+    partial class AddFieldTiempoEjecucionInProcedimientos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "a9e9173d-caad-4d98-ba2f-11e0e2053750",
+                            ConcurrencyStamp = "117f86aa-60d5-458c-b004-e297caee8119",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "c3688e40-212c-4738-aa4e-521238d672d8",
+                            ConcurrencyStamp = "f411b036-53e6-424f-b5a0-536c39118729",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "c3a6c0c3-38a5-48b8-af4f-a9cfa6dc32b8",
+                            ConcurrencyStamp = "d680c320-42ef-4c8f-bd23-9f9b00624327",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "8841ada6-92a8-4de5-a20d-d0ba1bab7278",
+                            ConcurrencyStamp = "eb1b4a84-171e-4092-87ee-3a02ba233c29",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -642,8 +642,8 @@ namespace CopyStart.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("TiempoEjecucion")
-                        .HasColumnType("text");
+                    b.Property<int>("TiempoEjecucion")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -656,7 +656,8 @@ namespace CopyStart.Migrations
                             Codigo = "AMAQ",
                             Descripcion = "",
                             Estado = true,
-                            Nombre = "Abrir maquina"
+                            Nombre = "Abrir maquina",
+                            TiempoEjecucion = 10
                         },
                         new
                         {
@@ -664,7 +665,8 @@ namespace CopyStart.Migrations
                             Codigo = "RCOMP",
                             Descripcion = "",
                             Estado = true,
-                            Nombre = "Revisar componentes"
+                            Nombre = "Revisar componentes",
+                            TiempoEjecucion = 20
                         });
                 });
 

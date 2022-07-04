@@ -1,44 +1,60 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CopyStart.Migrations
 {
-    public partial class procedi1 : Migration
+    public partial class AddFieldTiempoEjecucionInProcedimientos : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AddColumn<int>(
                 name: "TiempoEjecucion",
                 table: "Procedimientos",
-                type: "text",
-                nullable: true);
+                type: "integer",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.UpdateData(
+                table: "Procedimientos",
+                keyColumn: "Id",
+                keyValue: new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),
+                column: "TiempoEjecucion",
+                value: 10);
+
+            migrationBuilder.UpdateData(
+                table: "Procedimientos",
+                keyColumn: "Id",
+                keyValue: new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                column: "TiempoEjecucion",
+                value: 20);
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "ADMIN",
                 column: "ConcurrencyStamp",
-                value: "a9e9173d-caad-4d98-ba2f-11e0e2053750");
+                value: "117f86aa-60d5-458c-b004-e297caee8119");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "CLN",
                 column: "ConcurrencyStamp",
-                value: "8841ada6-92a8-4de5-a20d-d0ba1bab7278");
+                value: "eb1b4a84-171e-4092-87ee-3a02ba233c29");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "COORD",
                 column: "ConcurrencyStamp",
-                value: "c3688e40-212c-4738-aa4e-521238d672d8");
+                value: "f411b036-53e6-424f-b5a0-536c39118729");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "TEC",
                 column: "ConcurrencyStamp",
-                value: "c3a6c0c3-38a5-48b8-af4f-a9cfa6dc32b8");
+                value: "d680c320-42ef-4c8f-bd23-9f9b00624327");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -52,28 +68,28 @@ namespace CopyStart.Migrations
                 keyColumn: "Id",
                 keyValue: "ADMIN",
                 column: "ConcurrencyStamp",
-                value: "0a548c78-1294-4042-9d0d-903e1aaedc50");
+                value: "90e138b8-7ee5-486f-bb75-0960b768a9de");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "CLN",
                 column: "ConcurrencyStamp",
-                value: "4af7a042-9601-4f4f-aafe-b451a21e41c5");
+                value: "98002ede-4bb4-4bcd-84e2-578fb9ef0802");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "COORD",
                 column: "ConcurrencyStamp",
-                value: "3d77805d-a3b3-4e70-a32b-e178aabf2d86");
+                value: "b77c9af4-b4b7-4c77-a85a-ceb0ce16ab94");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: "TEC",
                 column: "ConcurrencyStamp",
-                value: "9545e303-0a6c-46b6-895c-7291bdac470b");
+                value: "1d795c9e-aac8-4178-a442-c13a966a476e");
         }
     }
 }

@@ -9,9 +9,7 @@ namespace CopyStart.Entities
     [Table("Procedimientos")]
     public class Procedimiento : Parametrica
     {
-        [Display(Name = "Tiempo de ejecucion")]
-        public string TiempoEjecucion { get; set; }
-
-
+        [Display(Name = "Tiempo de ejecución (minutos)")]
+        public int TiempoEjecucion { get; set; }
     }
 }
