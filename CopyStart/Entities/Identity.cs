@@ -2,15 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CopyStart.Entities
 {
-    
+
     public class ApplicationUser : IdentityUser
     {
+        [Display(Name = "Persona")]
         public Guid? PersonaId { get; set; }
 
         [Display(Name = "Persona")]

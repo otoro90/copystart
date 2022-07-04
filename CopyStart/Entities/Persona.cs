@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,7 +17,7 @@ namespace CopyStart.Entities
         [MaxLength(200)]
         public string Apellidos { get; set; }
 
-
+        [Display(Name = "Tipo de Documento")]
         public Guid TipoDocumentoId { get; set; }
 
         [Display(Name = "Tipo de Documento")]
@@ -30,14 +29,17 @@ namespace CopyStart.Entities
         public string NumeroDocumento { get; set; }
 
         [MaxLength(500)]
+        [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
+        [Display(Name = "Ubicación")]
         public int UbicacionId { get; set; }
-
         
         [ForeignKey("UbicacionId")]
+        [Display(Name = "Ubicación")]
         public Ubicacion Ubicacion { get; set; }
 
+        [Display(Name = "Teléfono")]
         public long Telefono { get; set; }
 
         public string Estado { get; set; }

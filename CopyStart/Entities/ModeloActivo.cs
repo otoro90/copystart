@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CopyStart.Entities
 {
@@ -17,6 +14,7 @@ namespace CopyStart.Entities
 
 
         [ForeignKey("MarcaActivoId")]
+        [Display(Name = "Marca de activo")]
         public MarcaActivo MarcaActivo { get; set; }
     }
 }

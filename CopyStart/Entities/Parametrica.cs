@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
@@ -14,7 +13,8 @@ namespace CopyStart.Entities
         public string Nombre { get; set; }
 
         [MaxLength(1024)]
-        public string? Descripcion { get; set; }
+        [Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
 
         [Required]
         [MaxLength(5)]

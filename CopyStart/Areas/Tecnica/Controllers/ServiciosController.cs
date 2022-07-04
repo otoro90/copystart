@@ -172,7 +172,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca");
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripción");
+            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion");
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion");
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
 
@@ -200,7 +200,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripción", servicio.DiagnosticoId);
+            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion", servicio.DiagnosticoId);
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);
             return View(servicio);
@@ -221,7 +221,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return NotFound();
             }
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "MarcaActivo", servicio.ActivoId);
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripción", servicio.DiagnosticoId);
+            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion", servicio.DiagnosticoId);
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);
             return View(servicio);
@@ -261,7 +261,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripción", servicio.DiagnosticoId);
+            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion", servicio.DiagnosticoId);
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);
             return View(servicio);

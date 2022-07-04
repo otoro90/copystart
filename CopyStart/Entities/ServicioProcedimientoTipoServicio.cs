@@ -10,6 +10,7 @@ namespace CopyStart.Entities
         public Guid Id { get; set; }
 
         [Required]
+        [Display(Name = "Servicio")]
         public long ServicioId { get; set; }
 
         [Display(Name = "Servicio")]
@@ -23,18 +24,9 @@ namespace CopyStart.Entities
         [ForeignKey("ProcedimientoTipoServicioId")]
         public ProcedimientoTipoServicio ProcedimientoTipoServicio { get; set; }
 
-
-
-
         [Display(Name = "Procedimientos Realizados")]
         [Required]
         public bool ProcedimientosRealizados { get; set; }
-
-
-        
-
         public string Observaciones { get; set; }
-
-
     }
 }

@@ -13,13 +13,13 @@ ViewData["Title"] = "Index";
         <div class="card">
 <<<<<<< HEAD
             <div class="card-body">
-<table class="table table-bordered table-hover" id="table-activos">
+<table class="table table-bordered table-hover text-center" id="table-activos">
 =======
             <div class="card-header">
                 <h3 class="card-title">Listado de activos</h3>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-hover" id="table-activos">
+                <table class="table table-bordered table-hover text-center" id="table-activos">
 >>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
                     <thead>
                         <tr>
