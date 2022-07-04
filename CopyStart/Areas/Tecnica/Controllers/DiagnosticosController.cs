@@ -90,7 +90,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Active = true
             }); breadcrumbList.Add(new Breadcrumb
             {
-                Text = diagnostico.Descripción,
+                Text = diagnostico.Descripcion,
                 Action = "Details",
                 Controller = "Diagosticos",
                 Area = "Tecnica",

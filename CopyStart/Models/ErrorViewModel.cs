@@ -1,5 +1,3 @@
-using System;
-
 namespace CopyStart.Models
 {
     public class ErrorViewModel

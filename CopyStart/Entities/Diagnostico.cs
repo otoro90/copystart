@@ -8,25 +8,23 @@ namespace CopyStart.Entities
     [Table("Diagnosticos")]
     public class Diagnostico
     {
-       
-
-
         [Key]
         public long Id { get; set; }
 
         [Required]
         [MaxLength(4096)]
-        public string Descripción { get; set; }
+        [Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
 
         [Display(Name = "Fecha de Diagnostico")]
         [Required]
         public DateTime FechaDiagnostico { get; set; }
 
+        [Display(Name = "Soporte")]
         public Guid? SoportesId { get; set; }
         
-        [Display(Name = "Soportes")]
+        [Display(Name = "Soporte")]
         [ForeignKey("SoportesId")]
         public Soporte Soportes { get; set; }
-
     }
 }
