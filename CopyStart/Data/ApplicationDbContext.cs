@@ -31,7 +31,7 @@ namespace CopyStart.Data
         public virtual DbSet<ProcedimientoTipoServicio> ProcedimientoTipoServicio { get; set; }
         public virtual DbSet<Repuesto> Repuesto { get; set; }
         public virtual DbSet<RepuestoProcedimiento> RepuestoProcedimiento { get; set; }
-        public virtual DbSet<Servicio> Servicio { get; set; }      
+        public virtual DbSet<Servicio> Servicio { get; set; }
         public virtual DbSet<ServicioProcedimientoTipoServicio> ServicioProcedimientoTipoServicio { get; set; }
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<Soporte> Soporte { get; set; }
@@ -58,11 +58,11 @@ namespace CopyStart.Data
                 optionsBuilder.UseNpgsql(configuration.GetConnectionString("DBConnection"));
             }
         }
-        
-            // ...
 
-            
-        
+        // ...
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -125,7 +125,7 @@ namespace CopyStart.Data
                     Codigo = "PCMAN",
                     Descripcion = "",
                     Estado = true,
-                    TipoActivoId= Guid.Parse("f443468f-26a6-4e4c-a9c5-77de2953f802")
+                    TipoActivoId = Guid.Parse("f443468f-26a6-4e4c-a9c5-77de2953f802")
 
                 });
             });
@@ -173,20 +173,23 @@ namespace CopyStart.Data
             modelBuilder.Entity<Procedimiento>(b =>
             {
                 b.HasData(
-                    new Procedimiento() {
-                    Id = new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),                   
-                    Nombre = "Abrir maquina",
-                    Codigo = "AMAQ",
-                    Descripcion = "",
-                    Estado = true
-                }, new Procedimiento()
-                {
-                    Id = new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
-                    Nombre = "Revisar componentes",
-                    Codigo = "RCOMP",
-                    Descripcion = "",
-                    Estado = true
-                }
+                    new Procedimiento()
+                    {
+                        Id = new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),
+                        Nombre = "Abrir maquina",
+                        Codigo = "AMAQ",
+                        Descripcion = "",
+                        TiempoEjecucion = 10,
+                        Estado = true
+                    }, new Procedimiento()
+                    {
+                        Id = new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                        Nombre = "Revisar componentes",
+                        Codigo = "RCOMP",
+                        Descripcion = "",
+                        TiempoEjecucion = 20,
+                        Estado = true
+                    }
                     );
             });
 
@@ -198,13 +201,13 @@ namespace CopyStart.Data
                         Id = new Guid("2f3a8930-b64a-4cd8-beec-0c539551ea6a"),
                         Numero = 1,
                         ProcedimientoId = Guid.Parse("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"),
-                        TipoServicioId= Guid.Parse("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
+                        TipoServicioId = Guid.Parse("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
 
                     }, new ProcedimientoTipoServicio()
                     {
                         Id = new Guid("a35d9139-39dd-4fa2-b1a4-9dc64358c27a"),
-                        Numero= 2,
-                       ProcedimientoId = Guid.Parse("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
+                        Numero = 2,
+                        ProcedimientoId = Guid.Parse("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"),
                         TipoServicioId = Guid.Parse("64b5a31e-0d62-42d4-82d2-2eef76330d9d")
                     }
                     );
@@ -258,8 +261,8 @@ namespace CopyStart.Data
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001,
-                   
-                   
+
+
                 }
                 , new Persona()
                 {
