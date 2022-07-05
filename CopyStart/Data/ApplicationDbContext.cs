@@ -72,7 +72,10 @@ namespace CopyStart.Data
             modelBuilder.Entity<ProcedimientoTipoServicio>()
             .HasIndex(p => new { p.TipoServicioId, p.Numero })
             .IsUnique(true);
-
+            
+            modelBuilder.Entity<Activo>()
+          .HasIndex(p => new { p.Id, p.Serial })
+          .IsUnique(true);
 
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetForeignKeys())

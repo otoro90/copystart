@@ -4,8 +4,33 @@
     ViewData["Title"] = "Detalles";
 }
 
-<div>
-    <dl class="row">
+            
+ <div class="row my-3">
+</div>
+
+
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 card">
+        <div class="card-header">
+            
+            <div class="row">
+
+                <div class="col-md-3 my-2">
+                      <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
+                </div>
+                
+                <div class="col-md-3 my-2">
+                    <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Index">Volver</a> 
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card-body">
+           <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
@@ -31,8 +56,8 @@
             @Html.DisplayFor(model => model.Estado)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+   
+        </div>
+    </div>
+    <div class="col-md-3"></div>
 </div>

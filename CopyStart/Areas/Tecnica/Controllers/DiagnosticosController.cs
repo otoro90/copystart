@@ -157,7 +157,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Tecnico")]
-        public async Task<IActionResult> Create([Bind("Id,Descripción,FechaDiagnostico,TipoServicioId,SoportesId,SolicitudId")] CreateDiagnosticosModel diagnostico)
+        public async Task<IActionResult> Create([Bind("Id,Descripcion,FechaDiagnostico,TipoServicioId,SoportesId,SolicitudId")] CreateDiagnosticosModel diagnostico)
         {
             diagnostico.FechaDiagnostico = DateTime.Now;
             if (ModelState.IsValid)

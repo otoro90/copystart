@@ -31,8 +31,8 @@
                                 <select asp-for="TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId"></select>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Descripcion" class="control-label"></label>
-                                <input asp-for="Descripcion" class="form-control" />
+                                <label >Descripcion (incluye datos que puedan diferenciar un activo si tienes mas de uno del mismo tipo)</label>                              
+                                <input asp-for="Descripcion" class="form-control" />                               
                                 <span asp-validation-for="Descripcion" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -43,12 +43,18 @@
                                 <label  class="control-label">Modelo de activo</label>
                                 <select asp-for="ModeloActivoId" class="form-control" asp-items="ViewBag.ModeloActivoId"></select>
                             </div>
-                           
-                            
-                           
-                            
+                             <div class="form-group">
+                            <label >Ubicacion</label>
+                            <select asp-for="UbicacionId" class="form-control"asp-items="ViewBag.UbicacionId"></select>
+                            <span asp-validation-for="UbicacionId" class="text-danger"></span>
+                        </div>
 
-
+                          <div class="form-group">
+                            <label asp-for="Direccion" class="control-label"></label>
+                            <input asp-for="Direccion" class="form-control" />
+                            <span asp-validation-for="Direccion" class="text-danger"></span>
+                        </div>
+                            
                             <div class="form-group">
                                 <input type="submit" value="Crear" class="btn btn-primary" />
                             </div>

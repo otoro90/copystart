@@ -7,7 +7,7 @@ namespace CopyStart.Entities
     [Table("TiposServicio")]
     public class TipoServicio : Parametrica
     {
-        [Required]
+        
         public Guid? TipoActivoId { get; set; }
         
         

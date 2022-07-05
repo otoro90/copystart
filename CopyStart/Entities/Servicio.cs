@@ -51,5 +51,7 @@ namespace CopyStart.Entities
         [Display(Name = "Tipo de Servicio")]
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicios { get; set; }
+
+        public string Observaciones { get; set; }
     }
 }

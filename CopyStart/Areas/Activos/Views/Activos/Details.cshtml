@@ -71,6 +71,18 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.ModeloActivo.Nombre)
                 </dd>
+                 <dt class="col-sm-4">
+                   @Html.DisplayNameFor(model => model.Ubicacion)
+                  </dt>
+                 <dd class="col-sm-8">
+                   @Html.DisplayFor(model => model.Ubicacion.Lugar)
+                  </dd>
+                     <dt class="col-sm-4">
+                   @Html.DisplayNameFor(model => model.Direccion)
+                  </dt>
+                 <dd class="col-sm-8">
+                   @Html.DisplayFor(model => model.Direccion)
+                  </dd>
 
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.FechaRegistro)

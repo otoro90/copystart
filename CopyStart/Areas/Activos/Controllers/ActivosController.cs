@@ -117,6 +117,7 @@ namespace CopyStart.Areas.Activos.Controllers
                 .Include(a => a.TipoActivo)
                 .Include(a => a.MarcaActivo)
                 .Include(a => a.ModeloActivo)
+                .Include(a=>a.Ubicacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (activo == null)
             {
@@ -160,25 +161,19 @@ namespace CopyStart.Areas.Activos.Controllers
            
             ViewBag.Breadcrumbs = breadcrumbList;
 
-
-
-
-
-
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar");
             return View();
         }
 
-        // POST: Activos/Activos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId")] Activo activo)
         {
             var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
@@ -197,6 +192,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar");
             return View(activo);
         }
 
@@ -244,6 +240,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar", activo.UbicacionId);
             ViewData["Serial"] = activo.Serial;
             ViewData["Estado"] = activo.Estado;
 
@@ -256,7 +253,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente")]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,FechaRegistro,PersonaId,Estado")] Activo activo)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId,Estado")] Activo activo)
         {
             if (id != activo.Id)
             {
@@ -287,6 +284,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar", activo.UbicacionId);
             return View(activo);
         }
 

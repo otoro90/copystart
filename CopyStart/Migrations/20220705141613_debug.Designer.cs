@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220705141613_debug")]
+    partial class debug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace CopyStart.Migrations
                     b.Property<string>("Descripcion")
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("text");
 
                     b.Property<string>("Estado")
                         .HasColumnType("text");
@@ -55,9 +54,6 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("TipoActivoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UbicacionId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MarcaActivoId");
@@ -67,8 +63,6 @@ namespace CopyStart.Migrations
                     b.HasIndex("PersonaId");
 
                     b.HasIndex("TipoActivoId");
-
-                    b.HasIndex("UbicacionId");
 
                     b.ToTable("Activos");
                 });
@@ -102,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "cb412bdc-7e3b-4a0b-b716-742b6638c4e8",
+                            ConcurrencyStamp = "6cdd8635-66f0-4a3b-8c83-193664022bbd",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "d3a7b7c4-4a23-4c4a-a78d-d0063a6a07da",
+                            ConcurrencyStamp = "5e25ce51-f000-4fc1-a0dc-b34d1ebec063",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "7595aece-a8e6-4972-9daf-9205a52964c7",
+                            ConcurrencyStamp = "7c2f9af8-ffd7-45ac-8700-d47899508845",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "11bd5162-871a-47aa-a0cd-56a974ae26a2",
+                            ConcurrencyStamp = "4b7dfa9e-22c5-4519-86f3-e0cdaa4ca7cc",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -803,9 +797,6 @@ namespace CopyStart.Migrations
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Observaciones")
-                        .HasColumnType("text");
-
                     b.Property<long>("SolicitudId")
                         .HasColumnType("bigint");
 
@@ -895,6 +886,9 @@ namespace CopyStart.Migrations
                     b.Property<Guid?>("TecnicoId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("UbicacionId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ActivoId");
@@ -902,6 +896,8 @@ namespace CopyStart.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("TecnicoId");
+
+                    b.HasIndex("UbicacionId");
 
                     b.ToTable("Solicitudes");
                 });
@@ -1035,6 +1031,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<Guid?>("TipoActivoId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -1103,12 +1100,6 @@ namespace CopyStart.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("MarcaActivo");
 
                     b.Navigation("ModeloActivo");
@@ -1116,8 +1107,6 @@ namespace CopyStart.Migrations
                     b.Navigation("Persona");
 
                     b.Navigation("TipoActivo");
-
-                    b.Navigation("Ubicacion");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationRoleClaim", b =>
@@ -1354,11 +1343,19 @@ namespace CopyStart.Migrations
                         .WithMany()
                         .HasForeignKey("TecnicoId");
 
+                    b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
+                        .WithMany()
+                        .HasForeignKey("UbicacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Activo");
 
                     b.Navigation("Cliente");
 
                     b.Navigation("Tecnico");
+
+                    b.Navigation("Ubicacion");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Soporte", b =>
@@ -1390,7 +1387,9 @@ namespace CopyStart.Migrations
                 {
                     b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
                         .WithMany()
-                        .HasForeignKey("TipoActivoId");
+                        .HasForeignKey("TipoActivoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TipoActivo");
                 });
