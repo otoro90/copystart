@@ -6,9 +6,8 @@
 
 <div class="row p-3">
     <div class="col-4">
-        
     </div>
-  
+
 
 </div>
 
@@ -16,24 +15,24 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body table-responsive">
-                <table  class="table table-bordered table-hover" id="table-servicios">
-                    <thead >
+                <table class="table table-bordered table-hover" id="table-servicios">
+                    <thead>
                         <tr>
                             <th>
-                                 Cliente
+                                Cliente
                             </th>
                             <th>
-                               Tipo de servicio
+                                Tipo de servicio
                             </th>
 
                             <th>
-                              Activo
-                            </th>
-                              <th>
-                              Fecha inicio
+                                Activo
                             </th>
                             <th>
-                               Estado del servicio
+                                Fecha inicio
+                            </th>
+                            <th>
+                                Estado del servicio
                             </th>
 
                             <th></th>
@@ -43,37 +42,42 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
+                            <tr>
 
-                            <td>
+                                <td>
 
-                                @{
-                                    var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
-                                    @Html.DisplayFor(modelItem => fullName)
-                                }
-                               
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial) 
-                            </td>
-                             <td>
-                                @Html.DisplayFor(modelItem => item.FechaInicio)
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.Estado) 
+                                    @{
+                                        var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
+                                        @Html.DisplayFor(modelItem => fullName)
+                                    }
 
-                            </td>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial)
+                                </td>
+                                <td>
+                                    @if (item.FechaInicio != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.FechaInicio)
+                                    }else{
+                                        <p>Sin iniciar</p>                                    
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
 
-                            <td>
-                               
+                                </td>
 
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                <td>
 
-                            </td>
-                        </tr>
+
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

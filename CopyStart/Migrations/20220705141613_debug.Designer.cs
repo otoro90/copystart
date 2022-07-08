@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220705141613_debug")]
+    partial class debug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace CopyStart.Migrations
                     b.Property<string>("Descripcion")
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("text");
 
                     b.Property<string>("Estado")
                         .HasColumnType("text");
@@ -55,9 +54,6 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("TipoActivoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UbicacionId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MarcaActivoId");
@@ -67,11 +63,6 @@ namespace CopyStart.Migrations
                     b.HasIndex("PersonaId");
 
                     b.HasIndex("TipoActivoId");
-
-                    b.HasIndex("UbicacionId");
-
-                    b.HasIndex("Id", "Serial")
-                        .IsUnique();
 
                     b.ToTable("Activos");
                 });
@@ -105,28 +96,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "5ec78bd8-49cf-4a34-8331-23d2ae65f00a",
+                            ConcurrencyStamp = "6cdd8635-66f0-4a3b-8c83-193664022bbd",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "59bdabce-1106-4f5d-b0de-4a2840ff1735",
+                            ConcurrencyStamp = "5e25ce51-f000-4fc1-a0dc-b34d1ebec063",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "e61d4514-0b52-4dee-b375-c51177f4d35e",
+                            ConcurrencyStamp = "7c2f9af8-ffd7-45ac-8700-d47899508845",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "8dce1b1b-fdb0-4450-9e4b-4ae223763195",
+                            ConcurrencyStamp = "4b7dfa9e-22c5-4519-86f3-e0cdaa4ca7cc",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -399,6 +390,31 @@ namespace CopyStart.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens");
+                });
+
+            modelBuilder.Entity("CopyStart.Entities.Diagnostico", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)");
+
+                    b.Property<DateTime>("FechaDiagnostico")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("SoportesId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SoportesId");
+
+                    b.ToTable("Diagnosticos");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Documento", b =>
@@ -769,17 +785,17 @@ namespace CopyStart.Migrations
                     b.Property<long>("ActivoId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("DiagnosticoId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Estado")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("FechaFinalizacion")
+                    b.Property<DateTime>("FechaFinalizacion")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("FechaInicio")
+                    b.Property<DateTime>("FechaInicio")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Observaciones")
-                        .HasColumnType("text");
 
                     b.Property<long>("SolicitudId")
                         .HasColumnType("bigint");
@@ -793,6 +809,8 @@ namespace CopyStart.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ActivoId");
+
+                    b.HasIndex("DiagnosticoId");
 
                     b.HasIndex("SolicitudId");
 
@@ -868,6 +886,9 @@ namespace CopyStart.Migrations
                     b.Property<Guid?>("TecnicoId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("UbicacionId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ActivoId");
@@ -875,6 +896,8 @@ namespace CopyStart.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("TecnicoId");
+
+                    b.HasIndex("UbicacionId");
 
                     b.ToTable("Solicitudes");
                 });
@@ -1008,6 +1031,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<Guid?>("TipoActivoId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -1076,12 +1100,6 @@ namespace CopyStart.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("MarcaActivo");
 
                     b.Navigation("ModeloActivo");
@@ -1089,8 +1107,6 @@ namespace CopyStart.Migrations
                     b.Navigation("Persona");
 
                     b.Navigation("TipoActivo");
-
-                    b.Navigation("Ubicacion");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationRoleClaim", b =>
@@ -1163,6 +1179,15 @@ namespace CopyStart.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CopyStart.Entities.Diagnostico", b =>
+                {
+                    b.HasOne("CopyStart.Entities.Soporte", "Soportes")
+                        .WithMany()
+                        .HasForeignKey("SoportesId");
+
+                    b.Navigation("Soportes");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.MarcaActivo", b =>
@@ -1252,6 +1277,10 @@ namespace CopyStart.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CopyStart.Entities.Diagnostico", "Diagnostico")
+                        .WithMany()
+                        .HasForeignKey("DiagnosticoId");
+
                     b.HasOne("CopyStart.Entities.Solicitud", "Solicitudes")
                         .WithMany()
                         .HasForeignKey("SolicitudId")
@@ -1267,6 +1296,8 @@ namespace CopyStart.Migrations
                         .HasForeignKey("TipoServicioId");
 
                     b.Navigation("Activo");
+
+                    b.Navigation("Diagnostico");
 
                     b.Navigation("Solicitudes");
 
@@ -1312,11 +1343,19 @@ namespace CopyStart.Migrations
                         .WithMany()
                         .HasForeignKey("TecnicoId");
 
+                    b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
+                        .WithMany()
+                        .HasForeignKey("UbicacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Activo");
 
                     b.Navigation("Cliente");
 
                     b.Navigation("Tecnico");
+
+                    b.Navigation("Ubicacion");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Soporte", b =>
@@ -1348,7 +1387,9 @@ namespace CopyStart.Migrations
                 {
                     b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
                         .WithMany()
-                        .HasForeignKey("TipoActivoId");
+                        .HasForeignKey("TipoActivoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TipoActivo");
                 });

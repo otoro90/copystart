@@ -12,17 +12,10 @@ namespace CopyStart.Entities
         public string Estado { get; set; }
 
         [Display(Name = "Fecha de inicio")]
-        public DateTime FechaInicio { get; set; }
+        public DateTime? FechaInicio { get; set; }
 
         [Display(Name = "Fecha de finalización")]
-        public DateTime FechaFinalizacion { get; set; }
-
-        [Display(Name = "Diagnostico")]
-        public long? DiagnosticoId { get; set; }
-
-        [Display(Name = "Diagnostico")]
-        [ForeignKey("DiagnosticoId")]
-        public Diagnostico Diagnostico { get; set; }
+        public DateTime? FechaFinalizacion { get; set; }
 
         [Display(Name = "Activo")]
         public long ActivoId { get; set; }
@@ -51,5 +44,7 @@ namespace CopyStart.Entities
         [Display(Name = "Tipo de Servicio")]
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicios { get; set; }
+
+        public string Observaciones { get; set; }
     }
 }

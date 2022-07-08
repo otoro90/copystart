@@ -20,12 +20,7 @@ namespace CopyStart.Entities
 
         [MaxLength(1024)]
         public string Motivo { get; set; }
-
-        public int UbicacionId { get; set; }
-
-        [ForeignKey("UbicacionId")]
-        [Display(Name = "Ubicación")]
-        public Ubicacion Ubicacion { get; set; }
+       
 
         [Display(Name = "Fecha de creación")]
         public DateTime FechaSolicitud { get; set; }

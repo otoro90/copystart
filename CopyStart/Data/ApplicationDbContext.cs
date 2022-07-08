@@ -22,7 +22,6 @@ namespace CopyStart.Data
 
         public virtual DbSet<Activo> Activo { get; set; }
         public virtual DbSet<Documento> Certificacion { get; set; }
-        public virtual DbSet<Diagnostico> Diagnostico { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Procedimiento> Procedimiento { get; set; }
         public virtual DbSet<ProcedimientoTipoServicio> ProcedimientoTipoServicio { get; set; }
@@ -72,7 +71,10 @@ namespace CopyStart.Data
             modelBuilder.Entity<ProcedimientoTipoServicio>()
             .HasIndex(p => new { p.TipoServicioId, p.Numero })
             .IsUnique(true);
-
+            
+            modelBuilder.Entity<Activo>()
+          .HasIndex(p => new { p.Id, p.Serial })
+          .IsUnique(true);
 
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetForeignKeys())
@@ -95,11 +97,6 @@ namespace CopyStart.Data
             modelBuilder.Entity<Servicio>()
             .Property(f => f.Id)
             .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Diagnostico>()
-            .Property(f => f.Id)
-            .ValueGeneratedOnAdd();
-
 
             modelBuilder.Entity<TipoDocumento>(b =>
             {
