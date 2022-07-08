@@ -150,7 +150,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s=>s.MarcaActivo).Include(s=>s.ModeloActivo).Where(a=>a.Estado!="Eliminado").Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id");
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+            
 
             return View();
 
@@ -447,7 +447,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 
                 solicitud.TecnicoId = tecnico.TecnicoId;
-                solicitud.EstadoSolicitud = "Por diagnosticar";
+                solicitud.EstadoSolicitud = "Asignada";
                 solicitud.FechaAsignacion=DateTime.Now;
                 await _context.SaveChangesAsync();
             }           
@@ -556,19 +556,32 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         }
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> VerServicioAsync(long? id)
+        public async Task<IActionResult> VerServicios(long? id)
         {
-            
 
-            var servicio = await _context.Servicio
-                .Include(s => s.Activo)
-                .Include(s => s.Diagnostico)
+
+            var servicios = await _context.Servicio
+                .Include(s => s.Activo)  
                 .Include(s => s.Solicitudes)
-                .FirstOrDefaultAsync(m => m.SolicitudId == id);
+                .Where(m => m.SolicitudId == id).ToListAsync();
 
+            if (servicios.LongCount() != 0)
+            {
+                if(servicios.LongCount() == 1)
+                {
+                    var servicio = await _context.Servicio.FirstOrDefaultAsync(s => s.SolicitudId == id);
+                    return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+                }
+                else
+                {
+                    return RedirectToAction("ServiciosPorSolicitud", "Servicios", new { area = "Tecnica", idSolicitud = id });
+                }
+
+            }
             
-
-            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+            
+                return RedirectToAction("Details", "Solicitudes", new { area = "Tecnica", id = id });
+            
 
         }
 

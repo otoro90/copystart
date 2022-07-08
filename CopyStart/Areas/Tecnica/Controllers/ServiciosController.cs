@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using CopyStart.Models;
 using CopyStart.Filters;
+using CopyStart.Areas.Tecnica.Models;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -56,19 +57,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (User.IsInRole("Cliente"))
             {
 
-                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
             }
             if (User.IsInRole("Tecnico"))
             {
 
-                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes).ThenInclude(s => s.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes).ThenInclude(s => s.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
             }
 
 
 
             if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
             {
-                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).ToListAsync();
 
             }
 
@@ -78,32 +79,20 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Servicios/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
-        public async Task<IActionResult> Details(long? id, long? idDiagnostico)
+        public async Task<IActionResult> Details(long? id)
         {
 
             Servicio servicio;
-
-            if (idDiagnostico != null)
-            {
+    
                 servicio = await _context.Servicio
-                                  .Include(s => s.Activo)
-                                  .Include(s => s.Solicitudes)
-                                  .Include(s => s.Soportes)
-                                  .Include(s => s.TipoServicios)
-                                  .Include(s => s.Diagnostico)
-                                  .FirstOrDefaultAsync(m => m.DiagnosticoId == idDiagnostico);
-            }
-            else
-            {
-                servicio = await _context.Servicio
-                                .Include(s => s.Activo)
+                                .Include(s => s.Activo).ThenInclude(x=>x.Persona)
+                                .Include(s=>s.Activo.MarcaActivo).
+                                Include(s=>s.Activo.ModeloActivo)
+                                .Include(s=>s.Solicitudes.Tecnico)
                                 .Include(s => s.Solicitudes)
                                 .Include(s => s.Soportes)
-                                .Include(s => s.TipoServicios)
-                                .Include(s => s.Diagnostico)
+                                .Include(s => s.TipoServicios)                            
                                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            }
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -140,10 +129,10 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Servicios/Create
-        [Authorize(Roles = "Administrador")]
-        public IActionResult Create()
+        [Authorize(Roles = "Administrador, Tecnico, Coordinador")]
+        public IActionResult Create(long? idSolicitud)
         {
-
+            var solicitud = _context.Solicitud.Include(x=>x.Activo).FirstOrDefault(x => x.Id == idSolicitud);
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
             {
@@ -168,14 +157,9 @@ namespace CopyStart.Areas.Tecnica.Controllers
             
             ViewBag.Breadcrumbs = breadcrumbList;
 
-
-
-
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca");
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion");
-            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion");
-            ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id");
-
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Where(x=>x.Estado!="Eliminado"), "Id", "Serial",solicitud.ActivoId);
+            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion",idSolicitud);
+            ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio.Where(x=>x.TipoActivoId==solicitud.Activo.TipoActivoId),"Id","Nombre");
 
 
 
@@ -188,9 +172,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Create([Bind("Id,Estado,FechaRealizacion,DiagnosticoId,ActivoId,SolicitudId,SoportesId")] Servicio servicio)
+        [Authorize(Roles = "Administrador, Tecnico, Coordinador")]
+        public async Task<IActionResult> Create([Bind("Id,ActivoId,SolicitudId,TipoServicioId")] Servicio servicio)
         {
+            servicio.Estado = "Por confirmar";        
+            
+           
             if (ModelState.IsValid)
             {
 
@@ -200,9 +187,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion", servicio.DiagnosticoId);
-            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
-            ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);
+            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);       
             return View(servicio);
         }
 
@@ -221,7 +206,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return NotFound();
             }
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "MarcaActivo", servicio.ActivoId);
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion", servicio.DiagnosticoId);
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);
             return View(servicio);
@@ -261,7 +245,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
-            ViewData["DiagnosticoId"] = new SelectList(_context.Diagnostico, "Id", "Descripcion", servicio.DiagnosticoId);
             ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
             ViewData["SoportesId"] = new SelectList(_context.Soporte, "Id", "Id", servicio.SoportesId);
             return View(servicio);
@@ -278,11 +261,9 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             var servicio = await _context.Servicio
                 .Include(s => s.Activo)
-                .Include(s => s.Diagnostico)
                 .Include(s => s.Solicitudes)
                 .Include(s => s.Soportes)
                 .Include(s => s.TipoServicios)
-                .Include(s => s.Diagnostico)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (servicio == null)
             {
@@ -315,7 +296,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
 
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Tecnico, Coordinador")]
         public async Task<IActionResult> ConfirmarServicioAsync(long? id)
         {
             var servicio = await _context.Servicio
@@ -335,7 +316,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
 
-        [Authorize(Roles = "Administrador, Tecnico")]
+        [Authorize(Roles = "Administrador, Tecnico, Coordinador")]
         public async Task<IActionResult> FinalizarServicioAsync(long? id)
         {
             var servicio = await _context.Servicio
@@ -365,7 +346,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public async Task<IActionResult> HistorialPorActivo(long? idActivo)
         {
             
-            var servicios = _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
+            var servicios = _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
 
 
             var breadcrumbList = new List<Breadcrumb>();
@@ -445,18 +426,18 @@ namespace CopyStart.Areas.Tecnica.Controllers
             List<Servicio> listaServicios = null;
             if (User.IsInRole("Cliente"))
             {
-                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.Activo.PersonaId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
 
 
             }
             if (User.IsInRole("Tecnico"))
             {
-                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado == "Finalizado").ToListAsync();
 
             }
             else
             {
-                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Include(s => s.Diagnostico).Where(x => x.Estado == "Finalizado").ToListAsync();
+                listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.Estado == "Finalizado").ToListAsync();
 
 
             }
@@ -542,9 +523,115 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
 
         }
+
+
+
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
+        [UrlScriptActionFilter]
+        public async Task<IActionResult> ServiciosPorSolicitud(long? idSolicitud)
+        {
+
+            var servicios = _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.Soportes).Include(s => s.TipoServicios).Where(x => x.SolicitudId == idSolicitud);
+
+
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitud " + idSolicitud.ToString(),
+                Action = "Details",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true,
+                Params = new Dictionary<string, string>
+                {
+                    { "id", idSolicitud.ToString() }
+                }
+            }); breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Servicios por solicitud",
+                Active = false,
+
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+            return View(await servicios.ToListAsync());
+        }
+
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
+        public async Task<IActionResult> AgregarObservaciones(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var servicio = await _context.Servicio.FindAsync(id);
+            if (servicio == null)
+            {
+                return NotFound();
+            }
+            ViewData["Observaciones"] = servicio.Observaciones;
+            return View(servicio);
+        }
+
+        // POST: Tecnica/Servicios/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> AgregarObservaciones(long id, [Bind("Observaciones")] AggObservaciones Ob)
+        {
+
+            var servicio = await _context.Servicio.FindAsync(id);
+            if (id != servicio.Id)
+            {
+                return NotFound();
+            }
+            servicio.Observaciones = Ob.Observaciones;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(servicio);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ServicioExists(servicio.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Observaciones"] = servicio.Observaciones;
+            return View(servicio);
+        }
     }
 }
+

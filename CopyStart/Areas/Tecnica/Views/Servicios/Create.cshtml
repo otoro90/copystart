@@ -1,7 +1,7 @@
 ﻿@model CopyStart.Entities.Servicio
 
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Crear servicio nuevo";
 }
 
 
@@ -14,39 +14,31 @@
             <div class="ml-3">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h2 class="card-title"><b>Crear solicitud</b></h2>
+                      
 
                     </div>
                     <div class="card-body">
                         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-       
-            
-            <div class="form-group">
-                <label asp-for="DiagnosticoId" class="control-label"></label>
-                <select asp-for="DiagnosticoId" class ="form-control" asp-items="ViewBag.DiagnosticoId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ActivoId" class="control-label"></label>
-                <select asp-for="ActivoId" class ="form-control" asp-items="ViewBag.ActivoId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SolicitudId" class="control-label"></label>
-                <select asp-for="SolicitudId" class ="form-control" asp-items="ViewBag.SolicitudId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoportesId" class="control-label"></label>
-                <select asp-for="SoportesId" class ="form-control" asp-items="ViewBag.SoportesId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group">                               
+                                <select asp-for="ActivoId" class="form-control" asp-items="ViewBag.ActivoId" hidden></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="SolicitudId" class="control-label"></label>
+                                <select asp-for="SolicitudId" class="form-control" asp-items="ViewBag.SolicitudId"></select>
+                            </div>
+
+                             <div class="form-group">
+                                <label asp-for="TipoServicioId" class="control-label"></label>
+                                <select asp-for="TipoServicioId" class="form-control" asp-items="ViewBag.TipoServicioId"></select>
+                            </div>
+                            <p>Recuerda iniciar el servicio al estar en la ubicacion</p>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -67,5 +59,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
