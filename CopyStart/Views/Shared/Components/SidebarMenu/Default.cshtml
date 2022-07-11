@@ -141,7 +141,7 @@
                 </a>
 
                 <ul class="nav nav-treeview" style="display: none;">
-                    @if (User.IsInRole("Administrador"))
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
                     {
                         <li class="nav-item">
                             <a href="/Administracion/Personas" class="nav-link">

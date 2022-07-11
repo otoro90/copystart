@@ -19,27 +19,13 @@
                 <table  class="table table-bordered table-hover" id="table-historialporactivo">
                     <thead >
                         <tr>
-                            <th>
-                                 Cliente
-                            </th>
-                            <th>
-                               Tipo de servicio
-                            </th>
-                            <th>
-                              Activo
-                            </th>
-                            <th>
-                              Fecha inicio
-                            </th>
-                            <th>
-                                Fecha finalizacion
-                            </th>
-                            <th>
-                               Estado del servicio
-                            </th>
-
-                            <th></th>
-
+                          <th>@Html.DisplayNameFor(x => x.Solicitudes.Cliente)</th>
+                            <th>@Html.DisplayNameFor(x => x.TipoServicios)</th>
+                            <th>@Html.DisplayNameFor(x => x.Activo)</th>
+                            <th>@Html.DisplayNameFor(x => x.FechaInicio)</th>
+                            <th>@Html.DisplayNameFor(x => x.FechaFinalizacion)</th>
+                            <th>@Html.DisplayNameFor(x => x.Observaciones)</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,8 +47,14 @@
                             <td>
                                   @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial) 
                             </td>
+                             <td>
+                                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaFinalizacion)
+                                </td>
                             <td>
-                                  @Html.DisplayFor(modelItem => item.Estado) 
+                                  @Html.DisplayFor(modelItem => item.Observaciones) 
 
                             </td>
 

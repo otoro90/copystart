@@ -62,7 +62,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             if (User.IsInRole("Coordinador"))
             {
-                listadoPersonas.Where(x => x.UserRoles.Any( x=> x.Role.Id == "TEC"));
+                listadoPersonas.Where(x => x.UserRoles.Any( x=> x.RoleId == "TEC"));
             }
 
             return View(await listadoPersonas.ToListAsync());

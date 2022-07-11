@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using CopyStart.Models;
 using CopyStart.Filters;
+using CopyStart.Areas.Activos.Models;
 
 namespace CopyStart.Areas.Activos.Controllers
 {
@@ -133,8 +134,8 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos/Create
-        [Authorize(Roles = "Administrador, Cliente")]
-        public IActionResult Create()
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        public IActionResult Create(Guid? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -161,7 +162,7 @@ namespace CopyStart.Areas.Activos.Controllers
            
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id");
+            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", id);
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
@@ -172,16 +173,23 @@ namespace CopyStart.Areas.Activos.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId")] Activo activo)
         {
-            var user = await _userManager.GetUserAsync(User);
+
+
+            if (User.IsInRole("Cliente"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                activo.PersonaId = (Guid)user.PersonaId;
+            }
+          
+            
+
+
             if (ModelState.IsValid)
             {
-                
-               
                 activo.FechaRegistro = DateTime.Now;
-                activo.PersonaId = (Guid)user.PersonaId;
                 activo.Estado = "Inactivo";
                 _context.Add(activo);
                 await _context.SaveChangesAsync();
@@ -348,7 +356,7 @@ namespace CopyStart.Areas.Activos.Controllers
             return _context.Activo.Any(e => e.Id == id);
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Coordinador")]
         [UrlScriptActionFilter]
         public async Task<IActionResult> ActivosPorCliente(Guid? idCliente)
         {
@@ -391,7 +399,9 @@ namespace CopyStart.Areas.Activos.Controllers
 
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Where(x => x.PersonaId == idCliente && x.Estado!="Eliminado");
+            var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a=>a.MarcaActivo).Include(a => a.ModeloActivo).Include(a => a.Ubicacion).Where(x => x.PersonaId == idCliente && x.Estado!="Eliminado");
+
+            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", idCliente);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -456,5 +466,101 @@ namespace CopyStart.Areas.Activos.Controllers
 
 
 
+        [Authorize(Roles = "Administrador, Tecnico")]
+        public async Task<IActionResult> AgregarSerial(long? id)
+        {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Index",
+                Controller = "Activos",
+                Area = "Activos",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Agregar serial " + id.ToString(),
+                Active = false
+
+            });
+
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var activo = await _context.Activo.FindAsync(id);
+            var serialmodel = new SerialModel();
+
+            if (activo == null)
+            {
+                return NotFound();
+            }
+            
+
+            return View(serialmodel);
+        }
+
+        // POST: Activos/Activos/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Tecnico")]
+        public async Task<IActionResult> AgregarSerial(long id, [Bind("Id,Serial")] SerialModel aggserial )
+        {
+
+            var activo = await _context.Activo.FindAsync(id);
+            if (id != activo.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activo.Serial = aggserial.Serial;
+                    _context.Update(activo);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ActivoExists(activo.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                
+            }
+            var solicitud = await _context.Solicitud.Where(m => m.Activo.Id==activo.Id).FirstOrDefaultAsync();
+
+            return RedirectToAction("Create", "Servicios", new { area = "Tecnica", idSolicitud = id });
+        }
+
+
+
+
     }
+
+
+
+
 }
+
+

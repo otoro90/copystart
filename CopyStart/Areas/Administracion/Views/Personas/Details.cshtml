@@ -19,9 +19,12 @@
                 <div class="col-md-3 my-2">
                    <a  asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
                 </div>
-                <div class="col-md-3 my-2">
-                    <a  asp-action="Edit" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
-                </div>
+                 @if (User.IsInRole("Administrador"))
+                {
+                    <div class="col-md-3 my-2">
+                        <a  asp-action="Edit" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
+                </div>}
+
                 @if (Model.RolesUsuario.Where(x => x.Role.Id == "CLN").Count()>0)
                 {
                     <div class="col-md-3 my-2">

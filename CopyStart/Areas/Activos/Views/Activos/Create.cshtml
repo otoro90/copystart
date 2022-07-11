@@ -21,6 +21,13 @@
                     <form asp-action="Create">
                         <div class="card-body">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group">
+
+                                <select asp-for="PersonaId" class="form-control" asp-items="ViewBag.PersonaId" hidden></select>
+
+                            </div>  
+
                             <div class="form-group">
                                 <label asp-for="Serial" class="control-label"></label>
                                 <input asp-for="Serial" class="form-control" />
