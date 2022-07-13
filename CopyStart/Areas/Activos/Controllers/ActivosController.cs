@@ -174,23 +174,22 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
-        public async Task<IActionResult> Create([Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId")] Activo activo)
+        public async Task<IActionResult> Create([Bind("Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId")] Activo activo)
         {
-
 
             if (User.IsInRole("Cliente"))
             {
                 var user = await _userManager.GetUserAsync(User);
                 activo.PersonaId = (Guid)user.PersonaId;
             }
-          
-            
+            activo.FechaRegistro = DateTime.Now;
+            activo.Estado = "Inactivo";
+           
 
 
             if (ModelState.IsValid)
             {
-                activo.FechaRegistro = DateTime.Now;
-                activo.Estado = "Inactivo";
+
                 _context.Add(activo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Activos", new { area = "Activos", id = activo.Id });
@@ -297,7 +296,7 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         // GET: Activos/Activos/Delete/5
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> Delete(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -342,7 +341,7 @@ namespace CopyStart.Areas.Activos.Controllers
         // POST: Activos/Activos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var activo = await _context.Activo.FindAsync(id);
@@ -401,7 +400,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
             var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a=>a.MarcaActivo).Include(a => a.ModeloActivo).Include(a => a.Ubicacion).Where(x => x.PersonaId == idCliente && x.Estado!="Eliminado");
 
-            ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", idCliente);
+            ViewData["PersonaId"] =  idCliente;
             return View(await applicationDbContext.ToListAsync());
         }
 

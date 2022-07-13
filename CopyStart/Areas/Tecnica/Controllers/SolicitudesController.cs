@@ -68,7 +68,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 listaSolicitudes =await _context.Solicitud.Include(s => s.Activo).ThenInclude(s => s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
                 
             }
-
+           
             return View(listaSolicitudes);
         }
 
@@ -120,8 +120,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Create
-        [Authorize(Roles = "Administrador, Cliente")]
-        public IActionResult Create(string idActivo)
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        public IActionResult Create(string idActivo, Guid? idCliente)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -147,10 +147,14 @@ namespace CopyStart.Areas.Tecnica.Controllers
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s=>s.MarcaActivo).Include(s=>s.ModeloActivo).Where(a=>a.Estado!="Eliminado").Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
-            ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id");
+
+
+           ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", idCliente);
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s=>s.MarcaActivo).Include(s=>s.ModeloActivo).Where(a=>a.Estado!="Eliminado").Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);         
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
             
+            
+
 
             return View();
 
@@ -161,15 +165,16 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
-            var user = await _userManager.GetUserAsync(User);
-           
-            solicitud.ClienteId = (Guid)user.PersonaId;
             solicitud.FechaSolicitud = DateTime.Now;
             solicitud.EstadoSolicitud = "Por tramitar";
-            
+            if (User.IsInRole("Cliente"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                solicitud.ClienteId = (Guid)user.PersonaId;
+            }
 
 
 

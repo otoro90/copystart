@@ -34,6 +34,12 @@
                                  <select asp-for="ActivoId" class ="form-control" asp-items="ViewBag.ActivoId"></select>
                               </div>
 
+                                <div class="form-group">
+
+                                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId" hidden></select>
+
+                            </div>  
+
                             <div class="form-group">
                                 <input type="submit" value="Crear" class="btn btn-primary" />
 
