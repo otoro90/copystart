@@ -49,7 +49,6 @@ namespace CopyStart.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Serial")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("TipoActivoId")
@@ -105,28 +104,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "5ec78bd8-49cf-4a34-8331-23d2ae65f00a",
+                            ConcurrencyStamp = "f33764ec-71e5-4e5d-b2ea-447a9e116717",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "59bdabce-1106-4f5d-b0de-4a2840ff1735",
+                            ConcurrencyStamp = "089c613c-b6c4-4a70-86a3-7f1165096081",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "e61d4514-0b52-4dee-b375-c51177f4d35e",
+                            ConcurrencyStamp = "5d70486b-abee-4de5-8390-b915ef262700",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "8dce1b1b-fdb0-4450-9e4b-4ae223763195",
+                            ConcurrencyStamp = "790fe0fc-067a-4d47-bc04-13e322305ec4",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });

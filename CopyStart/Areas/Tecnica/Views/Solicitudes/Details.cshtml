@@ -43,7 +43,7 @@
                 </div>
 
                 }
-                 @if (Model.EstadoSolicitud == "Asignada")
+                 @if (Model.EstadoSolicitud != "Por tramitar")
                 {
                  <div class="col-md-3 my-2">
 
@@ -108,8 +108,15 @@
                     @Html.DisplayNameFor(model => model.Tecnico)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Tecnico.Nombres) @Html.DisplayFor(model => model.Tecnico.Apellidos)
-                </dd>
+                        @if (Model.Tecnico != null)
+                        {
+                            @Html.DisplayFor(model => model.Tecnico.Nombres) @Html.DisplayFor(model => model.Tecnico.Apellidos)
+                        }
+                        else
+                        {
+                           <p>Sin asignar </p>
+                        }
+                    </dd>
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Cliente)
                 </dt>
@@ -138,4 +145,4 @@
     <div class="col-md-3"></div>
 </div>
 
-
+</div>

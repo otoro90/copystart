@@ -17,7 +17,7 @@
                             <th>@Html.DisplayNameFor(x => x.Activo)</th>
                             <th>@Html.DisplayNameFor(x => x.FechaInicio)</th>
                             <th>@Html.DisplayNameFor(x => x.FechaFinalizacion)</th>
-                            <th>@Html.DisplayNameFor(x => x.Estado)</th>
+                            <th>@Html.DisplayNameFor(x => x.Observaciones)</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -46,7 +46,7 @@
                                     @Html.DisplayFor(modelItem => item.FechaFinalizacion)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Estado)
+                                    @Html.DisplayFor(modelItem => item.Observaciones)
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-priamry"><i class="fas fa-pen"></i></a>

@@ -9,8 +9,10 @@ namespace CopyStart.Entities
     {
         [Key]
         public long Id { get; set; }
-        [Required]
+
+
         public string Serial { get; set; }
+ 
         [Required]
         public Guid TipoActivoId { get; set; }
 

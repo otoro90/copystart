@@ -133,6 +133,10 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public IActionResult Create(long? idSolicitud)
         {
             var solicitud = _context.Solicitud.Include(x=>x.Activo).FirstOrDefault(x => x.Id == idSolicitud);
+            if (solicitud.Activo.Serial == null)
+            {
+                return RedirectToAction("AgregarSerial", "Activos", new { area = "Activos", id = solicitud.ActivoId });
+            }
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
             {
@@ -297,7 +301,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Tecnico, Coordinador")]
-        public async Task<IActionResult> ConfirmarServicioAsync(long? id)
+        public async Task<IActionResult> ConfirmarServicio(long? id)
         {
             var servicio = await _context.Servicio
                .Include(s => s.Activo)
@@ -306,6 +310,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             var tecnico = await _context.Persona.FindAsync(servicio.Solicitudes.TecnicoId);
             tecnico.Estado = "En servicio";
             servicio.Estado = "En ejecucion";
+            servicio.Solicitudes.EstadoSolicitud = "En servicio";
+            servicio.FechaInicio = DateTime.Now;
             _context.Update(servicio);
             _context.Update(tecnico);
             await _context.SaveChangesAsync();
@@ -328,6 +334,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             servicio.Estado = "Finalizado";
             servicio.FechaFinalizacion = DateTime.Now;
+            servicio.Solicitudes.EstadoSolicitud = "Servicios Finalizados";
 
 
             _context.Update(servicio);
@@ -418,8 +425,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }); 
 
             ViewBag.Breadcrumbs = breadcrumbList;
-
-
 
 
             var user = await _userManager.GetUserAsync(User);
@@ -599,7 +604,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
         public async Task<IActionResult> AgregarObservaciones(long id, [Bind("Observaciones")] AggObservaciones Ob)
         {
 
