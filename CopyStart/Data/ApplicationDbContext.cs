@@ -76,6 +76,10 @@ namespace CopyStart.Data
           .HasIndex(p => new { p.Id, p.Serial })
           .IsUnique(true);
 
+            modelBuilder.Entity<Persona>()
+         .HasIndex(p => new { p.Id, p.NumeroDocumento })
+         .IsUnique(true);
+
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetForeignKeys())
                 .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);

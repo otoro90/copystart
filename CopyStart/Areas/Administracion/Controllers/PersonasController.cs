@@ -59,6 +59,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                                            .ThenInclude(p => p.TipoDocumento)
                                            .Include(a => a.UserRoles)
                                            .ThenInclude(r => r.Role);
+         
 
             if (User.IsInRole("Coordinador"))
             {
@@ -345,11 +346,30 @@ namespace CopyStart.Areas.Administracion.Controllers
         {
             if (ModelState.IsValid)
             {
-                persona.Id = Guid.NewGuid();
-                persona.Estado = "Activo";
-                _context.Add(persona);
-                var user = _context.User.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
-                user.PersonaId = persona.Id;
+                
+                persona.Estado = "Activo";     
+                //verifica si ya hay una persona con esos datos
+                var oldpersona = _context.Persona.Where(x => x.NumeroDocumento == persona.NumeroDocumento).FirstOrDefault();
+
+                //verifica si hay un usuario con los datos de esa persona
+                var user = _context.User.Where(x => x.Email == User.Identity.Name && x.PersonaId ==null).FirstOrDefault();
+                
+                if ((user != null)&&(oldpersona==null) )
+                {
+                    user.PersonaId = persona.Id;
+                    _context.Update(user);
+                    _context.Add(persona);
+                }
+                else if((user != null) && (oldpersona != null))
+                {
+                    persona.Id = Guid.NewGuid();
+                    user.PersonaId =oldpersona.Id;
+                    _context.Update(user);
+                }
+
+              
+                
+               
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Manage", "Account", new { area = "Identity" });
