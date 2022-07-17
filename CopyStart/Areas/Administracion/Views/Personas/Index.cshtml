@@ -17,9 +17,13 @@
                     <thead>
 
                         <tr>
+                            <div class="col-12 mb-2">
+                                <a asp-action="Create" class="btn btn-default bg-primary" role="button">
+                                    Registrar
+                                </a>
+                            </div>
 
-                            <th>Nombres completos</th>
-                            
+                            <th>Nombres completos</th>                          
                             <th>@Html.DisplayNameFor(model => model.Persona.NumeroDocumento)</th>
                             <th>Estado</th>
                             <th>Roles</th>

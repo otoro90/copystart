@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
-    public partial class newsoli : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,6 +27,7 @@ namespace CopyStart.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TiempoEjecucion = table.Column<int>(type: "integer", nullable: false),
                     Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
@@ -117,7 +118,6 @@ namespace CopyStart.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     DocumentoReciboId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ReciboId = table.Column<Guid>(type: "uuid", nullable: true),
                     CopiaFacturaFirmadaId = table.Column<Guid>(type: "uuid", nullable: false),
                     DocumentoFacturaId = table.Column<Guid>(type: "uuid", nullable: true),
                     DocumentoCertificacionId = table.Column<Guid>(type: "uuid", nullable: false)
@@ -138,8 +138,8 @@ namespace CopyStart.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Soportes_Documentos_ReciboId",
-                        column: x => x.ReciboId,
+                        name: "FK_Soportes_Documentos_DocumentoReciboId",
+                        column: x => x.DocumentoReciboId,
                         principalTable: "Documentos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -219,7 +219,7 @@ namespace CopyStart.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TipoActivoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TipoActivoId = table.Column<Guid>(type: "uuid", nullable: true),
                     Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
@@ -264,27 +264,6 @@ namespace CopyStart.Migrations
                         column: x => x.UbicacionId,
                         principalTable: "Ubicaciones",
                         principalColumn: "CodigoLugar",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Diagnosticos",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Descripción = table.Column<string>(type: "character varying(4096)", maxLength: 4096, nullable: false),
-                    FechaDiagnostico = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    SoportesId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Diagnosticos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Diagnosticos_Soportes_SoportesId",
-                        column: x => x.SoportesId,
-                        principalTable: "Soportes",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -374,14 +353,16 @@ namespace CopyStart.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Serial = table.Column<string>(type: "text", nullable: false),
+                    Serial = table.Column<string>(type: "text", nullable: true),
                     TipoActivoId = table.Column<Guid>(type: "uuid", nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
                     MarcaActivoId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModeloActivoId = table.Column<Guid>(type: "uuid", nullable: false),
                     Estado = table.Column<string>(type: "text", nullable: true),
                     FechaRegistro = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    PersonaId = table.Column<Guid>(type: "uuid", nullable: false)
+                    PersonaId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UbicacionId = table.Column<int>(type: "integer", nullable: false),
+                    Direccion = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -409,6 +390,12 @@ namespace CopyStart.Migrations
                         column: x => x.TipoActivoId,
                         principalTable: "TiposActivo",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Activos_Ubicaciones_UbicacionId",
+                        column: x => x.UbicacionId,
+                        principalTable: "Ubicaciones",
+                        principalColumn: "CodigoLugar",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -506,8 +493,8 @@ namespace CopyStart.Migrations
                     Incidencia = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Motivo = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
-                    UbicacionId = table.Column<int>(type: "integer", nullable: false),
                     FechaSolicitud = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    FechaAsignacion = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EstadoSolicitud = table.Column<string>(type: "text", nullable: true),
                     TecnicoId = table.Column<Guid>(type: "uuid", nullable: true),
                     ClienteId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -534,12 +521,6 @@ namespace CopyStart.Migrations
                         principalTable: "Personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Solicitudes_Ubicaciones_UbicacionId",
-                        column: x => x.UbicacionId,
-                        principalTable: "Ubicaciones",
-                        principalColumn: "CodigoLugar",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -549,12 +530,13 @@ namespace CopyStart.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Estado = table.Column<string>(type: "text", nullable: true),
-                    FechaRealizacion = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    DiagnosticoId = table.Column<long>(type: "bigint", nullable: true),
+                    FechaInicio = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    FechaFinalizacion = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     ActivoId = table.Column<long>(type: "bigint", nullable: false),
                     SolicitudId = table.Column<long>(type: "bigint", nullable: false),
                     SoportesId = table.Column<Guid>(type: "uuid", nullable: true),
-                    TipoServicioId = table.Column<Guid>(type: "uuid", nullable: true)
+                    TipoServicioId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Observaciones = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -563,12 +545,6 @@ namespace CopyStart.Migrations
                         name: "FK_Servicios_Activos_ActivoId",
                         column: x => x.ActivoId,
                         principalTable: "Activos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Servicios_Diagnosticos_DiagnosticoId",
-                        column: x => x.DiagnosticoId,
-                        principalTable: "Diagnosticos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -592,7 +568,7 @@ namespace CopyStart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiciosProcedimientoSTipoServicios",
+                name: "ServiciosProcedimientosTipoServicios",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -603,15 +579,15 @@ namespace CopyStart.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiciosProcedimientoSTipoServicios", x => x.Id);
+                    table.PrimaryKey("PK_ServiciosProcedimientosTipoServicios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ServiciosProcedimientoSTipoServicios_ProcedimientosTipoServ~",
+                        name: "FK_ServiciosProcedimientosTipoServicios_ProcedimientosTipoServ~",
                         column: x => x.ProcedimientoTipoServicioId,
                         principalTable: "ProcedimientosTipoServicios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ServiciosProcedimientoSTipoServicios_Servicios_ServicioId",
+                        name: "FK_ServiciosProcedimientosTipoServicios_Servicios_ServicioId",
                         column: x => x.ServicioId,
                         principalTable: "Servicios",
                         principalColumn: "Id",
@@ -620,11 +596,11 @@ namespace CopyStart.Migrations
 
             migrationBuilder.InsertData(
                 table: "Procedimientos",
-                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "Nombre" },
+                columns: new[] { "Id", "Codigo", "Descripcion", "Estado", "Nombre", "TiempoEjecucion" },
                 values: new object[,]
                 {
-                    { new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"), "AMAQ", "", true, "Abrir maquina" },
-                    { new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"), "RCOMP", "", true, "Revisar componentes" }
+                    { new Guid("29c31d04-82cd-4fdb-9470-9fa95a22e2f0"), "AMAQ", "", true, "Abrir maquina", 10 },
+                    { new Guid("d86abe63-f8ae-4b6c-9ad9-b10db92f9f01"), "RCOMP", "", true, "Revisar componentes", 20 }
                 });
 
             migrationBuilder.InsertData(
@@ -632,10 +608,10 @@ namespace CopyStart.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "abf3b387-2c6c-49de-871c-2781b1e6f0fb", "Administrador", "Administrador" },
-                    { "COORD", "9af88b48-61a5-4825-889b-d59e112b011e", "Coordinador", "Coordinador" },
-                    { "TEC", "431122f9-218b-48a4-ab34-6ba2b43579d0", "Tecnico", "Tecnico" },
-                    { "CLN", "a221ac07-a340-4777-83ef-e89a7455da28", "Cliente", "Cliente" }
+                    { "ADMIN", "ad32e78b-fed2-43d5-b8ca-815cd0eebb8e", "Administrador", "Administrador" },
+                    { "COORD", "32b7dc37-e25a-4157-8ec8-3f38b8900c0d", "Coordinador", "Coordinador" },
+                    { "TEC", "a99f7e38-6fed-4fd8-9744-06f11173d6ab", "Tecnico", "Tecnico" },
+                    { "CLN", "d411ea62-750b-4f41-969d-e59995a2aa20", "Cliente", "Cliente" }
                 });
 
             migrationBuilder.InsertData(
@@ -663,10 +639,10 @@ namespace CopyStart.Migrations
                 columns: new[] { "Id", "Apellidos", "Direccion", "Estado", "Nombres", "NumeroDocumento", "Telefono", "TipoDocumentoId", "UbicacionId" },
                 values: new object[,]
                 {
-                    { new Guid("510c6b6e-a475-488c-9bd9-84a6215da1cb"), "Por defecto", "Calle 40, #33-18", null, "Administrador", "1234567890", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
-                    { new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"), "Por defecto", "Calle 40, #33-18", null, "Coordinador", "1234567890", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
-                    { new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"), "Por defecto", "Calle 40, #33-18", null, "Tecnico", "1234567890", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
-                    { new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"), "Por defecto", "Calle 40, #33-18", null, "Cliente", "1234567890", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 }
+                    { new Guid("510c6b6e-a475-488c-9bd9-84a6215da1cb"), "Por defecto", "Calle 40, #33-18", null, "Administrador", "1000000000", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
+                    { new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"), "Por defecto", "Calle 40, #33-18", null, "Coordinador", "1000000001", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
+                    { new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"), "Por defecto", "Calle 40, #33-18", null, "Tecnico", "1000000002", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
+                    { new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"), "Por defecto", "Calle 40, #33-18", null, "Cliente", "1000000003", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 }
                 });
 
             migrationBuilder.InsertData(
@@ -711,6 +687,12 @@ namespace CopyStart.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Activos_Id_Serial",
+                table: "Activos",
+                columns: new[] { "Id", "Serial" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Activos_MarcaActivoId",
                 table: "Activos",
                 column: "MarcaActivoId");
@@ -731,6 +713,11 @@ namespace CopyStart.Migrations
                 column: "TipoActivoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Activos_UbicacionId",
+                table: "Activos",
+                column: "UbicacionId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -747,11 +734,6 @@ namespace CopyStart.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Diagnosticos_SoportesId",
-                table: "Diagnosticos",
-                column: "SoportesId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_MarcaActivos_TipoActivoId",
                 table: "MarcaActivos",
                 column: "TipoActivoId");
@@ -760,6 +742,18 @@ namespace CopyStart.Migrations
                 name: "IX_ModeloActivos_MarcaActivoId",
                 table: "ModeloActivos",
                 column: "MarcaActivoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Personas_Id_NumeroDocumento",
+                table: "Personas",
+                columns: new[] { "Id", "NumeroDocumento" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Personas_NumeroDocumento",
+                table: "Personas",
+                column: "NumeroDocumento",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Personas_TipoDocumentoId",
@@ -815,11 +809,6 @@ namespace CopyStart.Migrations
                 column: "ActivoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Servicios_DiagnosticoId",
-                table: "Servicios",
-                column: "DiagnosticoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Servicios_SolicitudId",
                 table: "Servicios",
                 column: "SolicitudId");
@@ -835,13 +824,13 @@ namespace CopyStart.Migrations
                 column: "TipoServicioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiciosProcedimientoSTipoServicios_ProcedimientoTipoServi~",
-                table: "ServiciosProcedimientoSTipoServicios",
+                name: "IX_ServiciosProcedimientosTipoServicios_ProcedimientoTipoServi~",
+                table: "ServiciosProcedimientosTipoServicios",
                 column: "ProcedimientoTipoServicioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiciosProcedimientoSTipoServicios_ServicioId",
-                table: "ServiciosProcedimientoSTipoServicios",
+                name: "IX_ServiciosProcedimientosTipoServicios_ServicioId",
+                table: "ServiciosProcedimientosTipoServicios",
                 column: "ServicioId");
 
             migrationBuilder.CreateIndex(
@@ -860,11 +849,6 @@ namespace CopyStart.Migrations
                 column: "TecnicoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Solicitudes_UbicacionId",
-                table: "Solicitudes",
-                column: "UbicacionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Soportes_DocumentoCertificacionId",
                 table: "Soportes",
                 column: "DocumentoCertificacionId");
@@ -875,9 +859,9 @@ namespace CopyStart.Migrations
                 column: "DocumentoFacturaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Soportes_ReciboId",
+                name: "IX_Soportes_DocumentoReciboId",
                 table: "Soportes",
-                column: "ReciboId");
+                column: "DocumentoReciboId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TiposServicio_TipoActivoId",
@@ -909,7 +893,7 @@ namespace CopyStart.Migrations
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
-                name: "ServiciosProcedimientoSTipoServicios");
+                name: "ServiciosProcedimientosTipoServicios");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
@@ -942,16 +926,13 @@ namespace CopyStart.Migrations
                 name: "Procedimientos");
 
             migrationBuilder.DropTable(
-                name: "Diagnosticos");
-
-            migrationBuilder.DropTable(
                 name: "Solicitudes");
 
             migrationBuilder.DropTable(
-                name: "TiposServicio");
+                name: "Soportes");
 
             migrationBuilder.DropTable(
-                name: "Soportes");
+                name: "TiposServicio");
 
             migrationBuilder.DropTable(
                 name: "Activos");

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220706185738_btw")]
-    partial class btw
+    [Migration("20220717001936_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,6 @@ namespace CopyStart.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Serial")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("TipoActivoId")
@@ -107,28 +106,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "5ec78bd8-49cf-4a34-8331-23d2ae65f00a",
+                            ConcurrencyStamp = "ad32e78b-fed2-43d5-b8ca-815cd0eebb8e",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "59bdabce-1106-4f5d-b0de-4a2840ff1735",
+                            ConcurrencyStamp = "32b7dc37-e25a-4157-8ec8-3f38b8900c0d",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "e61d4514-0b52-4dee-b375-c51177f4d35e",
+                            ConcurrencyStamp = "a99f7e38-6fed-4fd8-9744-06f11173d6ab",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "8dce1b1b-fdb0-4450-9e4b-4ae223763195",
+                            ConcurrencyStamp = "d411ea62-750b-4f41-969d-e59995a2aa20",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -552,9 +551,15 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NumeroDocumento")
+                        .IsUnique();
+
                     b.HasIndex("TipoDocumentoId");
 
                     b.HasIndex("UbicacionId");
+
+                    b.HasIndex("Id", "NumeroDocumento")
+                        .IsUnique();
 
                     b.ToTable("Personas");
 
@@ -565,7 +570,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Administrador",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000000",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
@@ -576,7 +581,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Coordinador",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000001",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
@@ -587,7 +592,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Tecnico",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000002",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
@@ -598,7 +603,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Cliente",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000003",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
