@@ -80,6 +80,11 @@ namespace CopyStart.Data
          .HasIndex(p => new { p.Id, p.NumeroDocumento })
          .IsUnique(true);
 
+            modelBuilder.Entity<Persona>()
+         .HasIndex(p => new { p.NumeroDocumento })
+         .IsUnique(true);
+
+
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetForeignKeys())
                 .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
@@ -235,7 +240,7 @@ namespace CopyStart.Data
                     Nombres = "Administrador",
                     Apellidos = "Por defecto",
                     TipoDocumentoId = Guid.Parse("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                    NumeroDocumento = "1234567890",
+                    NumeroDocumento = "1000000000",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001
@@ -245,7 +250,7 @@ namespace CopyStart.Data
                     Nombres = "Coordinador",
                     Apellidos = "Por defecto",
                     TipoDocumentoId = Guid.Parse("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                    NumeroDocumento = "1234567890",
+                    NumeroDocumento = "1000000001",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001
@@ -255,7 +260,7 @@ namespace CopyStart.Data
                     Nombres = "Tecnico",
                     Apellidos = "Por defecto",
                     TipoDocumentoId = Guid.Parse("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                    NumeroDocumento = "1234567890",
+                    NumeroDocumento = "1000000002",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001,
@@ -268,7 +273,7 @@ namespace CopyStart.Data
                     Nombres = "Cliente",
                     Apellidos = "Por defecto",
                     TipoDocumentoId = Guid.Parse("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                    NumeroDocumento = "1234567890",
+                    NumeroDocumento = "1000000003",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = 50001

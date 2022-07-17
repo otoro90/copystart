@@ -143,8 +143,9 @@ namespace CopyStart.Areas.Administracion.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
+        public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,UbicacionId")] Persona persona)
         {
+            persona.Estado = "Activo";
             if (ModelState.IsValid)
             {
                 persona.Id = Guid.NewGuid();
@@ -355,21 +356,18 @@ namespace CopyStart.Areas.Administracion.Controllers
                 var user = _context.User.Where(x => x.Email == User.Identity.Name && x.PersonaId ==null).FirstOrDefault();
                 
                 if ((user != null)&&(oldpersona==null) )
-                {
+                {   persona.Id= Guid.NewGuid();
                     user.PersonaId = persona.Id;
-                    _context.Update(user);
                     _context.Add(persona);
+                    _context.Update(user);
+                    
                 }
                 else if((user != null) && (oldpersona != null))
                 {
-                    persona.Id = Guid.NewGuid();
+                    
                     user.PersonaId =oldpersona.Id;
                     _context.Update(user);
                 }
-
-              
-                
-               
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Manage", "Account", new { area = "Identity" });

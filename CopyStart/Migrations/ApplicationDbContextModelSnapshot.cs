@@ -104,28 +104,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "30d79e7f-ffda-4b64-8d00-c9ab9d05a66b",
+                            ConcurrencyStamp = "ad32e78b-fed2-43d5-b8ca-815cd0eebb8e",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "6b5e2d77-6b5b-4680-89c7-752094d9fec3",
+                            ConcurrencyStamp = "32b7dc37-e25a-4157-8ec8-3f38b8900c0d",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "429d91aa-224d-43e6-9051-cdf86e13c313",
+                            ConcurrencyStamp = "a99f7e38-6fed-4fd8-9744-06f11173d6ab",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "a8e35f99-6364-435a-b0fe-e6254c01e904",
+                            ConcurrencyStamp = "d411ea62-750b-4f41-969d-e59995a2aa20",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -549,6 +549,9 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NumeroDocumento")
+                        .IsUnique();
+
                     b.HasIndex("TipoDocumentoId");
 
                     b.HasIndex("UbicacionId");
@@ -565,7 +568,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Administrador",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000000",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
@@ -576,7 +579,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Coordinador",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000001",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
@@ -587,7 +590,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Tecnico",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000002",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
@@ -598,7 +601,7 @@ namespace CopyStart.Migrations
                             Apellidos = "Por defecto",
                             Direccion = "Calle 40, #33-18",
                             Nombres = "Cliente",
-                            NumeroDocumento = "1234567890",
+                            NumeroDocumento = "1000000003",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = 50001
