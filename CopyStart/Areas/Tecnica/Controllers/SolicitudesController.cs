@@ -591,6 +591,70 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
 
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        public IActionResult CrearSolicitudRapida()
+        {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitudes",
+                Action = "Index",
+                Controller = "Solicitudes",
+                Area = "Tecnica",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Solicitud rapida",
+                Action = "Create",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
+            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
+            ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar");
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
+
+
+            return View();
+
+        }
+
+        // POST: Tecnica/Solicitudes/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        public async Task<IActionResult> CrearSolicitudRapida([Bind("TipoDocumentoId,NumeroDocumento,Serial,TipoActivoId,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,Incidencia")] SolicitudRapidaModel solicitudform)
+        {
+            var persona = await _context.Persona.Where(p => p.NumeroDocumento == solicitudform.NumeroDocumento).FirstOrDefaultAsync();
+
+
+
+            if (ModelState.IsValid)
+            {
+
+                _context.Add(solicitudform);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+        
+
+            return View(solicitudform);
+        }
+
+
+
     }
 
 

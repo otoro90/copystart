@@ -19,13 +19,22 @@
                 <table  class="table table-bordered table-hover" id="table-solicitudes">
                     <thead >
                         <tr>
-                             @if (User.IsInRole("Cliente")){
+                             
                              <div class="col-12 mb-2">
+                                 @if (User.IsInRole("Cliente")){
                                 <a asp-action="Create" asp-route-idCliente="@ViewData["ClienteId"]" class="btn btn-default bg-primary" role="button">
                                     Registrar
-                                </a>
+                                    </a>
+                                }else if (User.IsInRole("Coordinador"))
+                                {
+                                <a asp-action="CrearSolicitudRapida"  class="btn btn-default bg-primary" role="button">
+                                    Registrar
+                                    </a>
+
+                                    
+                                }
                             </div>
-                             }
+                            
 
 
                             <th>
