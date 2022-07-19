@@ -33,6 +33,10 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Nombre)
                             </th>
+                             <th>
+                                @Html.DisplayNameFor(model => model.TipoActivo)
+                            </th>
+
                             <th>
                                 @Html.DisplayNameFor(model => model.Descripcion)
                             </th>
@@ -53,6 +57,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nombre)
                                 </td>
+                                 <th>
+                                @Html.DisplayNameFor(modelItem => item.TipoActivo)
+                            </th>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Descripcion)
                                 </td>

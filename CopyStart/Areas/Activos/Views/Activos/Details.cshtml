@@ -18,12 +18,12 @@
 
             <div class="row">
 
-                <div class="col-md-3 my-2">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
-                </div>
-                <div class="col-md-3 my-2">
+                 <div class="col-md-3 my-2">
                     <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
                 </div>
+                <div class="col-md-3 my-2">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
+                </div>               
                 @if (User.IsInRole("Cliente")||User.IsInRole("Coordinador"))
                 {
                 <div class="col-md-3 my-2">

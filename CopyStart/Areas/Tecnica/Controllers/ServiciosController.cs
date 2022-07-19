@@ -528,7 +528,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
