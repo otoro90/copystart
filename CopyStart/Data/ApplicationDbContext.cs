@@ -104,8 +104,18 @@ namespace CopyStart.Data
             .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Servicio>()
-            .Property(f => f.Id)
-            .ValueGeneratedOnAdd();
+            .Property(f => f.Id)            
+            .ValueGeneratedOnAdd()
+            ;
+
+            modelBuilder.Entity<ServicioProcedimientoTipoServicio>(entity =>
+            {
+                entity.HasOne(e => e.Servicio)
+                       .WithMany(r => r.ProcedimientosRealizados)
+                       .HasForeignKey(ur => ur.ServicioId);
+            });
+
+            modelBuilder.Entity<Servicio>();
 
             modelBuilder.Entity<TipoDocumento>(b =>
             {
