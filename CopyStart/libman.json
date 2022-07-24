@@ -59,7 +59,7 @@
       "destination": "wwwroot/lib/jquery-validate/"
     },
     {
-      "library": "jquery-validation-unobtrusive@3.2.11",
+      "library": "jquery-validation-unobtrusive@4.0.0",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
       "files": [
         "jquery.validate.unobtrusive.min.js"
@@ -68,6 +68,21 @@
     {
       "library": "datatables@1.10.21",
       "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "datatables.net@1.12.1",
+      "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "filesystem/dataTables.select/css/dataTables.select.min.css",
+      "destination": "wwwroot/lib/datatables/css/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "filesystem/dataTables.select/js/dataTables.select.min.js",
+      "destination": "wwwroot/lib/datatables/js/"
     }
   ]
 }

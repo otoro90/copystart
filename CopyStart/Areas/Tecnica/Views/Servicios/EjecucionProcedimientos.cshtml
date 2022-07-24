@@ -6,54 +6,88 @@
 
 
 
-<div class="card">
-   <div class="card-body table-responsive">
-<table class="table table-bordered table-hover text-center" id="table-proser">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Numero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Procedimientos.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Procedimientos.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Procedimientos.TiempoEjecucion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProcedimientosRealizados)
-            </th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Numero)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Procedimientos.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Procedimientos.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Procedimientos.TiempoEjecucion)
-                </td>
-                <td>
-                    @Html.CheckBoxFor(modelItem => item.ProcedimientosRealizados)
+<div class="row ">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table table-bordered table-hover text-center" id="table-proser">
+                    <thead>
+                        <tr>
+                            <th id="id" class="d-none">
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th id="servicioId" class="d-none">
+                                @Html.DisplayNameFor(model => model.ServicioId)
+                            </th>
+                            <th id="procedimientoTipoServicioId" class="d-none">
+                                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicioId)
+                            </th>
+                            <th id="procedimientosRealizados" class="d-none">
+                                @Html.DisplayNameFor(model => model.ProcedimientosRealizados)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Numero)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Procedimientos.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Procedimientos.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProcedimientoTipoServicio.Procedimientos.TiempoEjecucion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProcedimientosRealizados)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Observaciones)
+                            </th>
 
-                </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td id="id" class="d-none">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td id="servicioId" class="d-none">
+                                @Html.DisplayFor(modelItem => item.ServicioId)
+                            </td>
+                            <td id="procedimientoTipoServicioId" class="d-none">
+                                @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicioId)
+                            </td>
+                            <td id="procedimientosRealizados" class="d-none">
+                                @item.ProcedimientosRealizados
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Numero)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Procedimientos.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Procedimientos.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProcedimientoTipoServicio.Procedimientos.TiempoEjecucion)
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox checkbox-xl">
+                                    @Html.CheckBoxFor(modelItem => item.ProcedimientosRealizados , new { style = "-ms-transform: scale(3);-moz-transform: scale(3);-webkit-transform: scale(3);-o-transform: scale(3);transform: scale(3);margin-top: 30px; margin-left:-20px" })
+                                </div>
+                            </td>
+                            <td>
+                                @Html.TextAreaFor(modelItem => item.Observaciones, new { style = "width: 100%; height: 80px " })
+                            </td>
+                        </tr>
 
-            </tr>
-
-        }
-    </tbody>
-</table>
-</div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
