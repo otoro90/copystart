@@ -510,21 +510,21 @@ namespace CopyStart.Areas.Tecnica.Controllers
                                                                                                   .Include(x => x.ProcedimientoTipoServicio.Procedimientos)
                                                                                 .Where(e => e.ServicioId == idServicio).ToList();
 
-                var procedimientosServicios =
-                    from procedimientos in procedimientoTipoServicio
-                    join procedimientosRealizados in servicioProcedimientoTipoServicio on procedimientos.Id equals procedimientosRealizados?.ProcedimientoTipoServicio?.ProcedimientoId into prosedimientosTipoServicio
-                    from proServ in prosedimientosTipoServicio.DefaultIfEmpty()
-                    select new ServicioProcedimientoTipoServicio
+                var result = from procedimiento in procedimientoTipoServicio
+                             join servicioProcedimiento in servicioProcedimientoTipoServicio on procedimiento.Id equals servicioProcedimiento.ProcedimientoTipoServicioId into ServiciosProcedimientos
+                             from m in ServiciosProcedimientos.DefaultIfEmpty()
+
+                select new ServicioProcedimientoTipoServicio
                     {
-                        ProcedimientoTipoServicioId = procedimientos.Id,
-                        ProcedimientoTipoServicio = procedimientos,
-                        ServicioId = proServ?.ServicioId ?? idServicio,
-                        Servicio = proServ?.Servicio,
-                        ProcedimientosRealizados = proServ?.ProcedimientosRealizados ?? false,
-                        Observaciones = proServ?.Observaciones
+                        Id = m?.Id ?? new Guid("00000000-0000-0000-0000-000000000000"),
+                        ProcedimientoTipoServicioId = procedimiento.Id,
+                        ProcedimientoTipoServicio = procedimiento,
+                        ServicioId = idServicio,
+                        ProcedimientosRealizados = m?.ProcedimientosRealizados ?? false,
+                        Observaciones = m?.Observaciones
                     };
 
-                return View(procedimientosServicios);
+                return View(result);
             }
             catch (Exception ex)
             {
@@ -535,14 +535,39 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         [Authorize(Roles = "Tecnico, Administrador, Coordinador")]
         [HttpPost]
-        public async Task<IActionResult> EjecucionProcedimientosAsync(IEnumerable<ServicioProcedimientoTipoServicio> servicioProcedimientoTipoServicioList)
+        public async Task<IActionResult> EjecucionProcedimientosAsync([FromBody] List<EjecucionProcedimientosVM> data)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Enter required fields");
+
             try
             {
-                _context.ServicioProcedimientoTipoServicio.AddRange(servicioProcedimientoTipoServicioList);
+                data.ForEach(x =>
+                {
+                    if(x.Id == "00000000-0000-0000-0000-000000000000")
+                    {
+                        var servicioProcedimientoTipoServicio = new ServicioProcedimientoTipoServicio()
+                        {
+                            Id = Guid.NewGuid(),
+                            ServicioId = long.Parse(x.ServicioId),
+                            ProcedimientoTipoServicioId = new Guid(x.ProcedimientoTipoServicioId),
+                            ProcedimientosRealizados = x.ProcedimientosRealizados,
+                            Observaciones = x.Observaciones
+                        }; 
+                        
+                        _context.ServicioProcedimientoTipoServicio.Add(servicioProcedimientoTipoServicio);
+                    }
+                    else
+                    {
+                        var servicioProcedimientoTipoServicio =  _context.ServicioProcedimientoTipoServicio.FirstOrDefault(p=>p.Id == new Guid(x.Id));
+                        servicioProcedimientoTipoServicio.ProcedimientosRealizados = x.ProcedimientosRealizados;
+                        servicioProcedimientoTipoServicio.Observaciones = x.Observaciones;
+                    }
+                });
+
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("EjecucionProcedimientos");
+                return Json("Transaccion realizada satisfactoriamente");
             }
             catch (Exception ex)
             {

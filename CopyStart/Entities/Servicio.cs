@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -46,5 +47,7 @@ namespace CopyStart.Entities
         public TipoServicio TipoServicios { get; set; }
 
         public string Observaciones { get; set; }
+
+        public IEnumerable<ServicioProcedimientoTipoServicio> ProcedimientosRealizados { get; set; }
     }
 }
