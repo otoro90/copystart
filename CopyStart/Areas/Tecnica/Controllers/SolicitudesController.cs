@@ -49,7 +49,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewBag.Breadcrumbs = breadcrumbList;
 
             var user = await _userManager.GetUserAsync(User);
-            List<Solicitud> listaSolicitudes=null;
+            List<Solicitud> listaSolicitudes = null;
             if (User.IsInRole("Cliente"))
             {
 
@@ -58,17 +58,17 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (User.IsInRole("Tecnico"))
             {
 
-               listaSolicitudes =await _context.Solicitud.Where(e => e.TecnicoId == user.PersonaId).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
+                listaSolicitudes = await _context.Solicitud.Where(e => e.TecnicoId == user.PersonaId).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
             }
 
 
 
             if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
             {
-                listaSolicitudes =await _context.Solicitud.Include(s => s.Activo).ThenInclude(s => s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
-                
+                listaSolicitudes = await _context.Solicitud.Include(s => s.Activo).ThenInclude(s => s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
+
             }
-           
+
             return View(listaSolicitudes);
         }
 
@@ -95,14 +95,14 @@ namespace CopyStart.Areas.Tecnica.Controllers
             });
             breadcrumbList.Add(new Breadcrumb
             {
-                Text = "Solicitud "+id.ToString(),
+                Text = "Solicitud " + id.ToString(),
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
             if (id == null)
             {
-               return NotFound();
+                return NotFound();
             }
             var solicitud = await _context.Solicitud
                 .Include(s => s.Activo).ThenInclude(s => s.MarcaActivo)
@@ -142,18 +142,18 @@ namespace CopyStart.Areas.Tecnica.Controllers
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Crear",
-                Action="Create",
+                Action = "Create",
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
 
 
-           ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", idCliente);
-            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s=>s.MarcaActivo).Include(s=>s.ModeloActivo).Where(a=>a.Estado!="Eliminado").Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);         
+            ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", idCliente);
+            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Where(a => a.Estado != "Eliminado").Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
-            
-            
+
+
 
 
             return View();
@@ -176,8 +176,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 solicitud.ClienteId = (Guid)user.PersonaId;
             }
 
-
-
             if (ModelState.IsValid)
             {
 
@@ -188,7 +186,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto");
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
-           
+
 
             return View(solicitud);
         }
@@ -197,7 +195,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(long? id)
         {
-           
+
             if (id == null)
             {
                 return NotFound();
@@ -212,7 +210,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["FechaSolicitud"] = solicitud.FechaSolicitud;
             ViewData["ActivoId"] = solicitud.ActivoId;
             ViewData["ClienteId"] = solicitud.ClienteId;
-            ViewData["TecnicoId"] = solicitud.TecnicoId;          
+            ViewData["TecnicoId"] = solicitud.TecnicoId;
             return View(solicitud);
         }
 
@@ -311,7 +309,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-       
+
         [Authorize(Roles = "Administrador")]
         private bool SolicitudExists(long id)
         {
@@ -351,7 +349,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Tramitar",
-              
+
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
@@ -423,26 +421,26 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (id == null)
             {
                 return NotFound();
-            }          
+            }
             var solicitud = await _context.Solicitud.FindAsync(id);
 
-            ViewData["TecnicoId"] = new SelectList(_context.UserRoles.Where(x => x.RoleId == "TEC" && x.User.Persona.Estado!="En servicio").Include(a => a.User).ThenInclude(a => a.Persona).Select(x => new { Id = x.User.Persona.Id, Texto = x.User.Persona.Nombres + " " + x.User.Persona.Apellidos + " - " + x.User.Persona.NumeroDocumento }), "Id", "Texto");
+            ViewData["TecnicoId"] = new SelectList(_context.UserRoles.Where(x => x.RoleId == "TEC" && x.User.Persona.Estado != "En servicio").Include(a => a.User).ThenInclude(a => a.Persona).Select(x => new { Id = x.User.Persona.Id, Texto = x.User.Persona.Nombres + " " + x.User.Persona.Apellidos + " - " + x.User.Persona.NumeroDocumento }), "Id", "Texto");
             _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona);
 
             return View(solicitud);
 
         }
 
-        
+
         // POST: Administracion/Personas/AsignarTecnico
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Coordinador")]
-        public async Task<IActionResult> AsignarTecnico(long? id,[Bind("TecnicoId")] AsignarTecnico tecnico)
+        public async Task<IActionResult> AsignarTecnico(long? id, [Bind("TecnicoId")] AsignarTecnico tecnico)
         {
-            
+
             var solicitud = await _context.Solicitud
                 .Include(s => s.Activo)
                 .Include(s => s.Cliente)
@@ -450,12 +448,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ModelState.IsValid)
             {
-                
+
                 solicitud.TecnicoId = tecnico.TecnicoId;
                 solicitud.EstadoSolicitud = "Asignada";
-                solicitud.FechaAsignacion=DateTime.Now;
+                solicitud.FechaAsignacion = DateTime.Now;
                 await _context.SaveChangesAsync();
-            }           
+            }
             return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });
 
         }
@@ -528,7 +526,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             ViewData["Descripcion"] = solicitud.Descripcion;
-            
+
             return View(solicitud);
 
         }
@@ -550,7 +548,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (ModelState.IsValid)
             {
 
-                solicitud.Motivo = desc.Motivo;           
+                solicitud.Motivo = desc.Motivo;
                 solicitud.EstadoSolicitud = "Cancelada";
                 await _context.SaveChangesAsync();
             }
@@ -566,13 +564,13 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
             var servicios = await _context.Servicio
-                .Include(s => s.Activo)  
+                .Include(s => s.Activo)
                 .Include(s => s.Solicitudes)
                 .Where(m => m.SolicitudId == id).ToListAsync();
 
             if (servicios.LongCount() != 0)
             {
-                if(servicios.LongCount() == 1)
+                if (servicios.LongCount() == 1)
                 {
                     var servicio = await _context.Servicio.FirstOrDefaultAsync(s => s.SolicitudId == id);
                     return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
@@ -583,16 +581,16 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 }
 
             }
-            
-            
-                return RedirectToAction("Details", "Solicitudes", new { area = "Tecnica", id = id });
-            
+
+
+            return RedirectToAction("Details", "Solicitudes", new { area = "Tecnica", id = id });
+
 
         }
 
 
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
-        public IActionResult CrearSolicitudRapida()
+        public async Task<IActionResult> CrearSolicitudRapida(Guid? _persona, long? _activo)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -617,14 +615,36 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Active = false
             });
             ViewBag.Breadcrumbs = breadcrumbList;
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
-            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
-            ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar");
-            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
+
+            var persona = await _context.Persona.FirstOrDefaultAsync(m => m.Id == _persona);
+            var activo = await _context.Activo.Include(a => a.TipoActivo).FirstOrDefaultAsync(m =>( m.Id == _activo)&&(m.PersonaId==_persona));
+            var form = new SolicitudRapidaModel
+            {
+                Activo = activo,
+                Persona = persona,
+            };
+
+            if ((persona != null) && (activo != null))
+            {
+                ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Nombre", persona.TipoDocumentoId);
+                ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre", activo.TipoActivoId);
+            }
+            else if ((persona != null)&&(activo==null))
+            {
+                ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Nombre", persona.TipoDocumentoId);
+                ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
+            }
+            else
+            {
+                ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Nombre");
+                ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
+            }
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Nombre");
+            ViewData["ModeloActivoId"] = new SelectList(_context.ModeloActivo, "Id", "Nombre");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
 
 
-            return View();
+            return View(form);
 
         }
 
@@ -634,25 +654,90 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
-        public async Task<IActionResult> CrearSolicitudRapida([Bind("TipoDocumentoId,NumeroDocumento,Serial,TipoActivoId,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,Incidencia")] SolicitudRapidaModel solicitudform)
+        public async Task<IActionResult> CrearSolicitudRapida([Bind("Persona,Activo,Solicitud")] SolicitudRapidaModel solicitudform)
         {
-            var persona = await _context.Persona.Where(p => p.NumeroDocumento == solicitudform.NumeroDocumento).FirstOrDefaultAsync();
+            //aqui se pide el documento
+            var persona = await _context.Persona.Where(p => p.NumeroDocumento == solicitudform.Persona.NumeroDocumento).FirstOrDefaultAsync();
+            var activo = await _context.Activo.Include(a => a.TipoActivo).Where(a => (a.Serial == solicitudform.Activo.Serial)&&(a.PersonaId==persona.Id)).FirstOrDefaultAsync();
 
-
-
-            if (ModelState.IsValid)
+            if ((persona == null) && (solicitudform.Persona.Nombres == null))
             {
 
-                _context.Add(solicitudform);
+                return RedirectToAction("CrearSolicitudRapida", "Solicitudes", new { area = "Tecnica" });
+                //aqui se piden los datos
+            }
+            if ((persona == null) && (solicitudform.Persona.Nombres != null))
+            {
+                persona = new Persona
+                {
+                    Id = Guid.NewGuid(),
+                    TipoDocumentoId = solicitudform.Persona.TipoDocumentoId,
+                    NumeroDocumento = solicitudform.Persona.NumeroDocumento,
+                    Estado = "Activo",
+                    Nombres = solicitudform.Persona.Nombres,
+                    Apellidos = solicitudform.Persona.Apellidos,
+                    Telefono = solicitudform.Persona.Telefono,
+                    UbicacionId = solicitudform.Persona.UbicacionId,
+                };
+                _context.Add(persona);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("CrearSolicitudRapida", "Solicitudes", new { area = "Tecnica", _persona = persona.Id });
+                //aqui se pide serial del activo
+
+            }
+            if ((persona != null) && (solicitudform.Activo.Serial == null))
+            {
+                return RedirectToAction("CrearSolicitudRapida", "Solicitudes", new { area = "Tecnica", _persona = persona.Id });
+                //aqui se pide serial del activo
             }
 
-        
+            if ((activo == null) && (solicitudform.Activo.Direccion == null))
+            {
+                return RedirectToAction("CrearSolicitudRapida", "Solicitudes", new { area = "Tecnica", _persona = persona.Id });
+            }
+            if ((activo == null) && (solicitudform.Activo.Direccion != null))
+            {
+                activo = new Activo
+                {
+                    Serial = solicitudform.Activo.Serial,
+                    TipoActivoId = solicitudform.Activo.TipoActivoId,
+                    MarcaActivoId = solicitudform.Activo.MarcaActivoId,
+                    ModeloActivoId = solicitudform.Activo.ModeloActivoId,
+                    UbicacionId = solicitudform.Activo.UbicacionId,
+                    Direccion = solicitudform.Activo.Direccion,
+                    PersonaId = persona.Id,
+                    FechaRegistro = DateTime.Now,
+                    Estado = "Inactivo",
+                };
 
-            return View(solicitudform);
+                _context.Add(activo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("CrearSolicitudRapida", "Solicitudes", new { area = "Tecnica", _activo = activo.Id, _persona = persona.Id });
+            }
+            if ((activo != null) && (solicitudform.Solicitud.Incidencia == null))
+            {
+                return RedirectToAction("CrearSolicitudRapida", "Solicitudes", new { area = "Tecnica", _activo = activo.Id, _persona = persona.Id });
+            }
+
+            if ((activo != null) && (solicitudform.Solicitud.Incidencia != null))
+            {
+                var solicitud = new Solicitud
+                {
+                    Incidencia = solicitudform.Solicitud.Incidencia,
+                    ActivoId = activo.Id,
+                    ClienteId = persona.Id,
+                    FechaSolicitud = DateTime.Now,
+                    EstadoSolicitud = "Por tramitar"
+                };
+
+                _context.Add(solicitud);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", "Solicitudes", new { area = "Tecnica", id = solicitud.Id });
+            }
+            return RedirectToAction("Index", "Solicitudes", new { area = "Tecnica" });
+
         }
-
 
 
     }
@@ -660,4 +745,5 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
 }
+
 
