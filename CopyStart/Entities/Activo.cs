@@ -55,8 +55,8 @@ namespace CopyStart.Entities
 
         public int UbicacionId { get; set; }
 
-        [ForeignKey("UbicacionId")]
         [Display(Name = "Ubicación")]
+        [ForeignKey("UbicacionId")]       
         public Ubicacion Ubicacion { get; set; }
 
         public string Direccion { get; set; }

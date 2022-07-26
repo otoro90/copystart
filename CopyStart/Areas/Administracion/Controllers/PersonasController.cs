@@ -142,7 +142,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]//aun queda pendiente el listado que muestra roles tambien
         public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,UbicacionId")] Persona persona)
         {
             persona.Estado = "Activo";

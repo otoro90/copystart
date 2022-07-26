@@ -48,7 +48,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
            
 
             ViewBag.Breadcrumbs = breadcrumbList;
-            return View(await _context.TipoServicio.ToListAsync());
+            return View(await _context.TipoServicio.Include(x=>x.TipoActivo).ToListAsync());
         }
 
         // GET: Parametricas/TipoServicios/Details/5
@@ -144,7 +144,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado")] TipoServicio tipoServicio)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado,TipoActivoId")] TipoServicio tipoServicio)
         {
             if (ModelState.IsValid)
             {
@@ -207,7 +207,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado, TipoActivoId")] TipoServicio tipoServicio)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado,TipoActivoId")] TipoServicio tipoServicio)
         {
             if (id != tipoServicio.Id)
             {

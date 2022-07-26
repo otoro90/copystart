@@ -9,7 +9,7 @@ namespace CopyStart.Entities
         public Guid Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Nombre { get; set; }
 
         [MaxLength(1024)]
