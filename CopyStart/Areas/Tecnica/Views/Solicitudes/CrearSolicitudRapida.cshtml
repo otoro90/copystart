@@ -19,10 +19,11 @@
                             <div class="row">
 
 
-                                <div id="datos-persona" class="@((@Model?.Persona == null) ? "col-12" :"d-none" )">
+                                <div id="datos-persona" class="@((@Model?.Persona?.NumeroDocumento == null) ? "col-12" :"d-none" )">
                                     <div class="form-group col-md-7">
                                         <label asp-for="Persona.TipoDocumentoId" class="control-label"></label>
-                                        <select asp-for="Persona.TipoDocumentoId" class="form-control" asp-items="ViewBag.TipoDocumentoId"></select>
+                                        <select asp-for="Persona.TipoDocumentoId" class="form-control" asp-items="ViewBag.TipoDocumentoId" >                                           
+                                        </select>
 
                                     </div>
                                     <div class="form-group col-md-7">
@@ -31,7 +32,7 @@
                                     </div>
                                 </div>
 
-                                <div id="form-persona" class="@((@Model?.Persona == null) ? "col-12" : "d-none")">
+                                <div id="form-persona" class="@(((@Model?.Persona?.NumeroDocumento != null)&&(@Model?.Persona?.Nombres==null)) ? "col-12" : "d-none")">
 
                                     <div class="form-group col-md-8">
                                         <label asp-for="Persona.Nombres" class="control-label"></label>
@@ -57,7 +58,7 @@
 
                                 </div>
 
-                                <div id="datos-activo" class="@(((@Model?.Activo == null)&&(@Model?.Persona?.Nombres != null)) ?  "col-12" : "d-none")">
+                                <div id="datos-activo" class="@(((@Model?.Activo?.Serial == null)&&(@Model?.Persona?.Nombres != null)) ?  "col-12" : "d-none")">
 
                                     <div class="form-group col-md-6">
                                         <label asp-for="Activo.Serial" class="control-label"></label>
@@ -67,10 +68,11 @@
 
                                 </div>
 
-                                <div id="form-activo" class="@(((@Model?.Activo == null)&&(@Model?.Persona?.Nombres != null)) ?  "col-12" : "d-none")">
+                                <div id="form-activo" class="@(((@Model?.Activo?.Serial != null)&&(@Model?.Activo?.Direccion == null)) ?  "col-12" : "d-none")">
                                     <div class="form-group col-md-6">
                                         <label asp-for="Activo.TipoActivoId" class="control-label"></label>
-                                        <select asp-for="Activo.TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId"></select>
+                                        <select asp-for="Activo.TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId">
+                                        </select>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -80,13 +82,13 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label asp-for="Activo.ModeloActivoId" class="control-label"></label>
-                                        <select asp-for="Activo.ModeloActivoId" class="form-control" asp-items="ViewBag.ModeloActivoId"></select>
+                                        <select asp-for="Activo.ModeloActivoId" class="form-control" asp-items="ViewBag.ModeloActivoId"> </select>
 
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label asp-for="Activo.UbicacionId" class="control-label"></label>
-                                        <select asp-for="Activo.UbicacionId" class="form-control" asp-items="ViewBag.UbicacionId"></select>
+                                        <select asp-for="Activo.UbicacionId" class="form-control" asp-items="ViewBag.UbicacionId"> </select>
 
                                     </div>
 
@@ -96,9 +98,8 @@
                                         <span asp-validation-for="Activo.Direccion" class="text-danger"></span>
                                     </div>
 
-
                                 </div>
-                                <div id="datos-solicitud" class="@(((@Model?.Persona != null)&&(@Model?.Activo != null)) ? "col-12" : "d-none")">
+                                <div id="datos-solicitud" class="@(((@Model?.Activo?.Direccion != null)&&(@Model?.Solicitud?.Incidencia == null)) ? "col-12" : "d-none")">
 
                                     <div class="form-group col-md-12">
                                         <label asp-for="Solicitud.Incidencia" class="control-label"></label>
