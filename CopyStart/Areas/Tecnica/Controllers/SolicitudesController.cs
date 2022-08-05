@@ -590,6 +590,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> CrearSolicitudRapida(Guid? personaId, long? activoId)
         {
            
@@ -658,6 +659,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UrlScriptActionFilter]
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> CrearSolicitudRapida([Bind("Persona,Activo,Solicitud")] SolicitudRapidaModel solicitudform)
          {

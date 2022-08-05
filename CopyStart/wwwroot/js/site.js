@@ -12,6 +12,7 @@
 
         init: function () {
             this.onModalClick();
+            this.initSelect2();
         },
 
         onModalClick: function () {
@@ -23,6 +24,14 @@
                     PlaceHolderElement.html(data);
                     PlaceHolderElement.find('.modal').modal('show');
                 })
+            })
+        },
+
+        initSelect2: function () {
+            $('.select2').select2({
+                theme: 'bootstrap',
+                placeholder: "Seleccione...",
+                allowClear: true
             })
         }
     }
