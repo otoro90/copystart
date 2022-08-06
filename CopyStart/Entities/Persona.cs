@@ -17,14 +17,14 @@ namespace CopyStart.Entities
         [MaxLength(200)]
         public string Apellidos { get; set; }
 
-        [Display(Name = "Tipo de Documento")]
+        [Display(Name = "Tipo de documento", Prompt = "Ingrese número de documento")]
         public Guid TipoDocumentoId { get; set; }
 
-        [Display(Name = "Tipo de Documento")]
+        [Display(Name = "Tipo de documento")]
         [ForeignKey("TipoDocumentoId")]
         public TipoDocumento TipoDocumento { get; set; }
 
-        [Display(Name = "Documento")]
+        [Display(Name = "Documento", Prompt ="Ingrese número de documento")]
         [MaxLength(20)]
         public string NumeroDocumento { get; set; }
 
