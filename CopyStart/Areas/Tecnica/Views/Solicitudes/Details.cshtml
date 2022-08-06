@@ -36,7 +36,7 @@
                     </div>
                 }   
                 
-                 @if (User.IsInRole("Tecnico") && Model.EstadoSolicitud == "Asignada")
+                 @if (User.IsInRole("Tecnico") && Model.EstadoSolicitud != "Por tramitar")
                 {
                   <div class="col-md-3 my-2">
                     <a asp-area="Tecnica" asp-controller="Servicios" asp-action="Create" asp-route-idSolicitud="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Crear servicio</a>

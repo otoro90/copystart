@@ -55,19 +55,13 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            var listadoPersonas = _context.User.Include(a => a.Persona)
-                                           .ThenInclude(p => p.TipoDocumento)
-                                           .Include(a => a.UserRoles)
-                                           .ThenInclude(r => r.Role);
-         
+            var personas = await _context.Persona.Include(P => P.Users).ThenInclude(u=>u.UserRoles).ThenInclude(u => u.Role).Include(p => p.TipoDocumento).Include(p => p.Ubicacion).ToListAsync();
+            return View(personas);
 
-            if (User.IsInRole("Coordinador"))
-            {
-                listadoPersonas.Where(x => x.UserRoles.Any( x=> x.RoleId == "TEC"));
-            }
-
-            return View(await listadoPersonas.ToListAsync());
         }
+
+           
+        
 
         // GET: Administracion/Personas/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
@@ -79,7 +73,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             }
 
             var persona = await _context.Persona
-                .Include(p => p.TipoDocumento).Include(p => p.Ubicacion)
+                .Include(p => p.TipoDocumento).Include(p => p.Ubicacion).Include(P => P.Users).ThenInclude(u => u.UserRoles).ThenInclude(u => u.Role)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
@@ -117,16 +111,9 @@ namespace CopyStart.Areas.Administracion.Controllers
             {
                 return NotFound();
             }
-            var usuario = await _context.Users.Include(m => m.Persona).FirstOrDefaultAsync(m => m.PersonaId == id);
-            var applicationUserRoles = await _context.ApplicationUserRole.Include(m => m.Role).Where(m => m.UserId == usuario.Id).ToListAsync();
+            
 
-            var detallePersonaVm = new DetallePersonaVM
-            {
-                Persona = persona,
-                RolesUsuario = applicationUserRoles
-            };
-
-            return View(detallePersonaVm);
+            return View(persona);
         }
 
         // GET: Administracion/Personas/Create

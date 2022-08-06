@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace CopyStart.Entities
 {
@@ -17,6 +18,11 @@ namespace CopyStart.Entities
         public virtual ICollection<ApplicationUserLogin> Logins { get; set; }
         public virtual ICollection<ApplicationUserToken> Tokens { get; set; }
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
+
+        public static implicit operator ApplicationUser(Task<ApplicationUser> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ApplicationRole : IdentityRole

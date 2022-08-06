@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CopyStart.Entities.ApplicationUser>
+﻿@model IEnumerable<CopyStart.Entities.Persona>
 
 @{
     ViewData["Title"] = "Listado de personas";
@@ -24,44 +24,42 @@
                             </div>
 
                             <th>Nombres completos</th>                          
-                            <th>@Html.DisplayNameFor(model => model.Persona.NumeroDocumento)</th>
+                            <th>@Html.DisplayNameFor(model => model.NumeroDocumento)</th>
                             <th>Estado</th>
-                            <th>Roles</th>
+                            <th>Roles</th>   
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            var documento = $"{item.Persona.TipoDocumento.Codigo} {item.Persona.NumeroDocumento}";
+                            var documento = $"{item.TipoDocumento.Codigo} {item.NumeroDocumento}";
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Persona.Nombres)  @Html.DisplayFor(modelItem => item.Persona.Apellidos)
+                                    @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
                                 </td>                              
                                 <td>
                                     @Html.DisplayFor(modelItem => documento)
                                 </td>
                                 <td>                               
-                                        @Html.DisplayFor(modelItem => item.Persona.Estado)                                 
+                                        @Html.DisplayFor(modelItem => item.Estado)                                 
                                 </td>
-                                 <td>     
-                                     <ul class="list-unstyled"> 
-                                         
-                                    @foreach(var rol in item.UserRoles)
-                                    {
-                                       <li> 
-                                            @Html.DisplayFor(modelItem => rol.Role.Name)
-                                       </li>
-                                    }
-                                    
-                                    </ul>
-                                </td>
-
-
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.PersonaId" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
-                                    <a asp-action="Details" asp-route-id="@item.PersonaId" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
-                                    <a asp-action="Delete" asp-route-id="@item.PersonaId" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+                                     @foreach (var user in item.Users)
+                                    {
+                                        @foreach (var role in user.UserRoles)
+                                      {
+                                         @Html.DisplayFor(modelItem => role.Role.Name)  
+
+                                      } 
+
+                                    }
+
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         }
