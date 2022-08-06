@@ -673,6 +673,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (activo == null)
             {
                 activo = solicitudform.Activo;
+                activo.Persona = persona;
+
             }
 
             solicitud = new Solicitud()
