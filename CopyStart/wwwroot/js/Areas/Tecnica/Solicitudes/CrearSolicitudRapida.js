@@ -42,14 +42,17 @@
                 url: `/Administracion/Personas/GetPersonaByDocument?tipoDocumentoId=${tipoDocumentoId}&documento=${documento}`,
                 success: function (response) {
                     if (response) {
-                        $("#Persona_Nombres").val(response.nombres).prop('disabled', true);
-                        $("#Persona_Apellidos").val(response.apellidos).prop('disabled', true);
-                        $("#Persona_Telefono").val(response.telefono).prop('disabled', true);
-                        $("#Persona_UbicacionId").val(response.ubicacionId).trigger("change").prop('disabled', true);
+                        $("#Persona_Nombres").val(response.nombres).prop('readonly', true);
+                        $("#Persona_Apellidos").val(response.apellidos).prop('readonly', true);
+                        $("#Persona_Telefono").val(response.telefono).prop('readonly', true);
+                        var element = $("#Persona_UbicacionId");
+                        element.val(response.ubicacionId).trigger("change");
+                        site.initSelect2(element, {disabled : "readonly"});
                     }
                     else {
                         CrearSolicitudRapida.inputsPersonaHidden.forEach(x => {
-                            $(x).find("input,select").val("").trigger("change").prop('disabled', false);
+                            site.initSelect2($(x).find("select").val("").trigger("change").prop('readonly', false));
+                            $(x).find("input").val("").prop('readonly', false);
                         });
                         alert('Persona no registrada, ingrese sus datos');
                     }
@@ -78,15 +81,15 @@
                 url: `/Activos/Activos/GetActivoBySerial?serial=${serial}`,
                 success: function (response) {
                     if (response) {
-                        $("#Activo_TipoActivoId").val(response.tipoActivoId).trigger("change").prop('disabled', true);
-                        $("#Activo_MarcaActivoId").val(response.marcaActivoId).trigger("change").prop('disabled', true);
-                        $("#Activo_ModeloActivoId").val(response.modeloActivoId).trigger("change").prop('disabled', true);
-                        $("#Activo_UbicacionId").val(response.ubicacionId).trigger("change").prop('disabled', true);
-                        $("#Activo_Direccion").val(response.direccion).prop('disabled', true);
+                        $("#Activo_TipoActivoId").val(response.tipoActivoId).trigger("change").prop('readonly', true);
+                        $("#Activo_MarcaActivoId").val(response.marcaActivoId).trigger("change").prop('readonly', true);
+                        $("#Activo_ModeloActivoId").val(response.modeloActivoId).trigger("change").prop('readonly', true);
+                        $("#Activo_UbicacionId").val(response.ubicacionId).trigger("change").prop('readonly', true);
+                        $("#Activo_Direccion").val(response.direccion).prop('readonly', true);
                     }
                     else {
                         CrearSolicitudRapida.inputsActivoHidden.forEach(x => {
-                            $(x).find("input,select").val("").trigger("change").prop('disabled', false);
+                            $(x).find("input,select").val("").trigger("change").prop('readonly', false);
                         });
                         alert('Equipo no registrado, ingrese sus datos');
                     }
