@@ -83,6 +83,16 @@
       "provider": "filesystem",
       "library": "filesystem/dataTables.select/js/dataTables.select.min.js",
       "destination": "wwwroot/lib/datatables/js/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "select2@4.1.0-rc.0",
+      "destination": "wwwroot/lib/select2/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "select2-theme-bootstrap4@1.0.1",
+      "destination": "wwwroot/lib/select2-theme-bootstrap4/"
     }
   ]
 }
