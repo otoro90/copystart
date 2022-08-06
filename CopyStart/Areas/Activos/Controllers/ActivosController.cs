@@ -519,7 +519,6 @@ namespace CopyStart.Areas.Activos.Controllers
         [Authorize(Roles = "Administrador, Tecnico")]
         public async Task<IActionResult> AgregarSerial(long id, [Bind("Id,Serial")] SerialModel aggserial )
         {
-
             var activo = await _context.Activo.FindAsync(id);
             if (id != activo.Id)
             {
@@ -552,7 +551,13 @@ namespace CopyStart.Areas.Activos.Controllers
             return RedirectToAction("Create", "Servicios", new { area = "Tecnica", idSolicitud = solicitud.Id });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetActivoBySerial(string serial)
+        {
+            var activo = await _context.Activo.FirstOrDefaultAsync(x => x.Serial == serial);
 
+            return Json(activo);
+        }
 
 
     }

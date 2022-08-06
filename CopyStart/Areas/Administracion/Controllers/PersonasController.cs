@@ -55,13 +55,19 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            var personas = await _context.Persona.Include(P => P.Users).ThenInclude(u=>u.UserRoles).ThenInclude(u => u.Role).Include(p => p.TipoDocumento).Include(p => p.Ubicacion).ToListAsync();
-            return View(personas);
+            var listadoPersonas = _context.User.Include(a => a.Persona)
+                                           .ThenInclude(p => p.TipoDocumento)
+                                           .Include(a => a.UserRoles)
+                                           .ThenInclude(r => r.Role);
 
+
+            if (User.IsInRole("Coordinador"))
+            {
+                listadoPersonas.Where(x => x.UserRoles.Any(x => x.RoleId == "TEC"));
+            }
+
+            return View(await listadoPersonas.ToListAsync());
         }
-
-           
-        
 
         // GET: Administracion/Personas/Details/5
         [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
@@ -73,7 +79,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             }
 
             var persona = await _context.Persona
-                .Include(p => p.TipoDocumento).Include(p => p.Ubicacion).Include(P => P.Users).ThenInclude(u => u.UserRoles).ThenInclude(u => u.Role)
+                .Include(p => p.TipoDocumento).Include(p => p.Ubicacion)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
@@ -111,9 +117,16 @@ namespace CopyStart.Areas.Administracion.Controllers
             {
                 return NotFound();
             }
-            
+            var usuario = await _context.Users.Include(m => m.Persona).FirstOrDefaultAsync(m => m.PersonaId == id);
+            var applicationUserRoles = await _context.ApplicationUserRole.Include(m => m.Role).Where(m => m.UserId == usuario.Id).ToListAsync();
 
-            return View(persona);
+            var detallePersonaVm = new DetallePersonaVM
+            {
+                Persona = persona,
+                RolesUsuario = applicationUserRoles
+            };
+
+            return View(detallePersonaVm);
         }
 
         // GET: Administracion/Personas/Create
@@ -334,25 +347,26 @@ namespace CopyStart.Areas.Administracion.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                persona.Estado = "Activo";     
+
+                persona.Estado = "Activo";
                 //verifica si ya hay una persona con esos datos
                 var oldpersona = _context.Persona.Where(x => x.NumeroDocumento == persona.NumeroDocumento).FirstOrDefault();
 
                 //verifica si hay un usuario con los datos de esa persona
-                var user = _context.User.Where(x => x.Email == User.Identity.Name && x.PersonaId ==null).FirstOrDefault();
-                
-                if ((user != null)&&(oldpersona==null) )
-                {   persona.Id= Guid.NewGuid();
+                var user = _context.User.Where(x => x.Email == User.Identity.Name && x.PersonaId == null).FirstOrDefault();
+
+                if ((user != null) && (oldpersona == null))
+                {
+                    persona.Id = Guid.NewGuid();
                     user.PersonaId = persona.Id;
                     _context.Add(persona);
                     _context.Update(user);
-                    
+
                 }
-                else if((user != null) && (oldpersona != null))
+                else if ((user != null) && (oldpersona != null))
                 {
-                    
-                    user.PersonaId =oldpersona.Id;
+
+                    user.PersonaId = oldpersona.Id;
                     _context.Update(user);
                 }
 
@@ -523,6 +537,14 @@ namespace CopyStart.Areas.Administracion.Controllers
                 .FirstOrDefaultAsync(s => (s.Solicitudes.TecnicoId == id) && (s.Estado == "En ejecucion"));
 
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = servicio.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPersonaByDocument(string tipoDocumentoId, string documento)
+        {
+            var persona = await _context.Persona.FirstOrDefaultAsync(x => x.TipoDocumento.Id.ToString() == tipoDocumentoId && x.NumeroDocumento == documento);
+
+            return Json(persona);
         }
 
     }
