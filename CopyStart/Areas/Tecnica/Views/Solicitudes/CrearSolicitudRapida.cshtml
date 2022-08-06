@@ -109,8 +109,13 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label asp-for="Solicitud.Incidencia" class="control-label"></label>
-                            @Html.TextAreaFor(modelItem => modelItem.Solicitud.Incidencia, new { style = "width: 100%; height: 60px ", @class = "form-control" })
+                            <input asp-for="Solicitud.Incidencia" class="form-control" />
                             <span asp-validation-for="Solicitud.Incidencia" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="Solicitud.Descripcion" class="control-label"></label>
+                            @Html.TextAreaFor(modelItem => modelItem.Solicitud.Descripcion, new { style = "width: 100%; height: 60px ", @class = "form-control" })
+                            <span asp-validation-for="Solicitud.Descripcion" class="text-danger"></span>
                         </div>
                     </div>
                 </div>

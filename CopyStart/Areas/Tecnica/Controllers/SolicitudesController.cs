@@ -548,7 +548,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (ModelState.IsValid)
             {
 
-                solicitud.Motivo = desc.Motivo;
+                solicitud.MotivoCancelacion = desc.Motivo;
                 solicitud.EstadoSolicitud = "Cancelada";
                 await _context.SaveChangesAsync();
             }
@@ -686,7 +686,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Json(solicitud);
+            return RedirectToAction("Details", new { id = solicitud.Id });
         }
     }
 }
