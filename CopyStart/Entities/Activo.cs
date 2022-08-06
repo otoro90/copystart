@@ -11,6 +11,7 @@ namespace CopyStart.Entities
         public long Id { get; set; }
 
 
+        [Display(Name = "Serial de equipo", Prompt ="Ingrese el serial del equipo")]
         public string Serial { get; set; }
  
         [Required]

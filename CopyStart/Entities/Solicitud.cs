@@ -12,15 +12,16 @@ namespace CopyStart.Entities
        
         [MaxLength(150)]
         [Required]
+        [Display(Name = "Falla presentada", Prompt = "Ingrese falla del equipo")]
         public string Incidencia { get; set; }
         
         [MaxLength(1024)]
-        [Display(Name = "Descripción")]
+        [Display(Name = "Descripción de la solicitud" , Prompt = "Ingrese descripción de la solicitud")]
         public string Descripcion { get; set; }
 
         [MaxLength(1024)]
-        public string Motivo { get; set; }
-       
+        [Display(Name = "Motivo de cancelación", Prompt = "Ingrese motivo de cancelación")]
+        public string MotivoCancelacion { get; set; }       
 
         [Display(Name = "Fecha de creación")]
         public DateTime FechaSolicitud { get; set; }

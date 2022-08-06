@@ -71,18 +71,18 @@ namespace CopyStart.Data
             modelBuilder.Entity<ProcedimientoTipoServicio>()
             .HasIndex(p => new { p.TipoServicioId, p.Numero })
             .IsUnique(true);
-            
+
             modelBuilder.Entity<Activo>()
-          .HasIndex(p => new { p.Id, p.Serial })
-          .IsUnique(true);
+              .HasIndex(p => new { p.Id, p.Serial })
+              .IsUnique(true);
 
             modelBuilder.Entity<Persona>()
-         .HasIndex(p => new { p.Id, p.NumeroDocumento })
-         .IsUnique(true);
+             .HasIndex(p => new { p.Id, p.NumeroDocumento })
+             .IsUnique(true);
 
             modelBuilder.Entity<Persona>()
-         .HasIndex(p => new { p.NumeroDocumento })
-         .IsUnique(true);
+             .HasIndex(p => new { p.NumeroDocumento })
+             .IsUnique(true);
 
 
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
@@ -104,7 +104,7 @@ namespace CopyStart.Data
             .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Servicio>()
-            .Property(f => f.Id)            
+            .Property(f => f.Id)
             .ValueGeneratedOnAdd()
             ;
 
