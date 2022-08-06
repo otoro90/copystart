@@ -1,8 +1,8 @@
-﻿@model CopyStart.Areas.Administracion.Models.DetallePersonaVM
+﻿@model CopyStart.Entities.Persona
 
 @{
     ViewData["Title"] = "Detalles de persona";
-    var urlCliente= "/Activos/Activos/ActivosPorCliente?idCliente=" + Model.Persona.Id;
+    var urlCliente= "/Activos/Activos/ActivosPorCliente?idCliente=" + Model.Id;
    
 }
 
@@ -22,10 +22,10 @@
                  @if (User.IsInRole("Administrador"))
                 {
                     <div class="col-md-3 my-2">
-                        <a  asp-action="Edit" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
+                        <a  asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
                 </div>}
 
-                @if (Model.RolesUsuario.Where(x => x.Role.Id == "CLN").Count()>0)
+                @if ((Model.Users.Any(x => x.UserRoles.Where(p=>p.RoleId == "CLN").Count()>0 ))||(Model.Users.Count()==0))
                 {
                     <div class="col-md-3 my-2">
                         <a  href="@urlCliente" role="button" class="btn btn-block btn-default btn-sm">Ver activos</a>  
@@ -35,14 +35,14 @@
                 @if (User.IsInRole("Administrador"))
                 {
                     <div class="col-md-3 my-2">
-                        <a  asp-action="AsignarRol" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Asignar rol</a>
+                        <a  asp-action="AsignarRol" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default bmntn-sm">Asignar rol</a>
                     </div>
                 }
 
-                @if ((Model.RolesUsuario.Where(x => x.Role.Id == "TEC").Count() > 0) && (Model.Persona.Estado == "En servicio"))
+                @if ((Model.Users.Any(x => x.UserRoles.Where(p=>p.RoleId == "CLN").Count()>0 )) && (Model.Estado == "En servicio"))
                 {
                     <div class="col-md-3 my-2">
-                        <a  asp-action="VerServicio" asp-route-id="@Model.Persona.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicio</a>
+                        <a  asp-action="VerServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicio</a>
                     </div>
                 }
             </div>
@@ -52,52 +52,52 @@
             <h2>Datos de persona</h2>
             <dl class="row my-4">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.Nombres)
+                    @Html.DisplayNameFor(model => model.Nombres)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.Nombres)
+                    @Html.DisplayFor(model => model.Nombres)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.Apellidos)
+                    @Html.DisplayNameFor(model => model.Apellidos)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.Apellidos)
+                    @Html.DisplayFor(model => model.Apellidos)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.TipoDocumento)
+                    @Html.DisplayNameFor(model => model.TipoDocumento)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.TipoDocumento.Codigo)
+                    @Html.DisplayFor(model => model.TipoDocumento.Codigo)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.NumeroDocumento)
+                    @Html.DisplayNameFor(model => model.NumeroDocumento)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.NumeroDocumento)
+                    @Html.DisplayFor(model => model.NumeroDocumento)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.Direccion)
+                    @Html.DisplayNameFor(model => model.Direccion)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.Direccion)
+                    @Html.DisplayFor(model => model.Direccion)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.Ubicacion.Lugar)
+                    @Html.DisplayNameFor(model => model.Ubicacion.Lugar)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.Ubicacion.Lugar)
+                    @Html.DisplayFor(model => model.Ubicacion.Lugar)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.Telefono)
+                    @Html.DisplayNameFor(model => model.Telefono)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.Telefono)
+                    @Html.DisplayFor(model => model.Telefono)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Persona.Estado)
+                    @Html.DisplayNameFor(model => model.Estado)
                 </dt>
                 <dd class="col-sm-4">
-                    @Html.DisplayFor(model => model.Persona.Estado)
+                    @Html.DisplayFor(model => model.Estado)
                 </dd>
             </dl>
 
@@ -109,19 +109,22 @@
                     <table class="col-6">
 
                         <tbody>
-                            @foreach (var item in Model.RolesUsuario)
+                            @foreach (var item in Model.Users)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Role.Name)
-                                    </td>
-                                    <td class="float-right">
+                                @foreach (var rol in item.UserRoles)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => rol.Role.Name)
+                                        </td>
+                                        <td class="float-right">
 
-                                        <a  asp-action="BorrarRol" asp-route-id="@item.Role.Id" asp-route-user="@item.User.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
-                                    </td>
+                                            <a  asp-action="BorrarRol" asp-route-id="@rol.Role.Id" asp-route-user="@item.PersonaId" role="button" class="btn btn-default bg-blue"><i class="far fa-trash-alt"></i></a>
+                                        </td>
 
 
-                                </tr>
+                                    </tr>
+                                }
                             }
                         </tbody>
                 </table>

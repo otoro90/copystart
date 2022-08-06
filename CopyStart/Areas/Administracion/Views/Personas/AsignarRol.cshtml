@@ -19,19 +19,19 @@
             <div class="ml-3">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h2 class="card-title"><b>Asignar tecnico</b></h2>
+                        <h2 class="card-title"><b>Asignar rol a una persona</b></h2>
 
                     </div>
                     <div class="card-body">
                         <form asp-action="AsignarRol">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
-                                <label asp-for="UserId" class="control-label"></label>
+                                <label  class="control-label">Persona</label>
                                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
                                 <span asp-validation-for="UserId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="RoleId" class="control-label"></label>
+                                <label class="control-label">Rol</label>
                                 <select asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
                                 <span asp-validation-for="RoleId" class="text-danger"></span>
                             </div>

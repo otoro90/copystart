@@ -548,7 +548,7 @@ namespace CopyStart.Areas.Activos.Controllers
             }
             var solicitud = await _context.Solicitud.Where(m => m.Activo.Id==activo.Id).FirstOrDefaultAsync();
 
-            return RedirectToAction("Create", "Servicios", new { area = "Tecnica", idSolicitud = id });
+            return RedirectToAction("Create", "Servicios", new { area = "Tecnica", idSolicitud = solicitud.Id });
         }
 
         [HttpGet]
