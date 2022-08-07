@@ -633,7 +633,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.ModeloActivo, "Id", "Nombre");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
+            ViewData["DepartamentosList"] = new SelectList(await _context.Ubicacion.Select(x => new { x.CodigoDepartamento, x.Departamento }).Distinct().ToListAsync(), "CodigoDepartamento", "Departamento");
 
 
             return View(solicitud);
@@ -649,6 +649,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> CrearSolicitudRapida([Bind("Persona,Activo,Solicitud")] SolicitudRapidaModel solicitudform)
         {
+            solicitudform.Activo.Ubicacion = null;
+            solicitudform.Persona.Ubicacion = null;
             if (!ModelState.IsValid)
             {
                 return View(solicitudform);
@@ -671,7 +673,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 activo = solicitudform.Activo;
                 activo.Persona = persona;
-
             }
 
             var solicitud = new Solicitud()
@@ -679,7 +680,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Incidencia = solicitudform.Solicitud.Incidencia,
                 Cliente = persona,
                 Activo = activo,
-                FechaSolicitud = DateTime.Now
+                FechaSolicitud = DateTime.Now,
+                Direccion = activo.Direccion
             };
             await _context.Solicitud.AddAsync(solicitud);
 

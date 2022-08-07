@@ -119,7 +119,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 Area = "Parametricas",
                 Active = true
             });
-           
+
             breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Crear",
@@ -187,9 +187,9 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }); breadcrumbList.Add(new Breadcrumb
             {
                 Text = "Editar",
-                
+
                 Active = false,
-               
+
             });
 
             ViewBag.Breadcrumbs = breadcrumbList;
@@ -311,13 +311,14 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/Ubicaciones
         public async Task<IActionResult> GetDepartamentos()
         {
-            return Json(new SelectList(await _context.Ubicacion.Select(x=> new { Codigo = x.CodigoDepartamento, Departamento = x.Departamento  }).ToListAsync(), "Codigo", "Departamento"));
+            return Json(new SelectList(await _context.Ubicacion.Select(x => new { Codigo = x.CodigoDepartamento, Departamento = x.Departamento }).ToListAsync(), "Codigo", "Departamento"));
         }
 
         // GET: Parametricas/Ubicaciones
         public async Task<IActionResult> GetMunicipios(string codigoDepartamento)
         {
-            return Json(new SelectList(await _context.Ubicacion.Where(x => string.IsNullOrEmpty(codigoDepartamento) || x.CodigoDepartamento == codigoDepartamento).ToListAsync(), "CodigoMunicipio", "Municipio"));
+            var list = await _context.Ubicacion.Where(x => string.IsNullOrEmpty(codigoDepartamento) || x.CodigoDepartamento == codigoDepartamento).ToListAsync();
+            return Json(new SelectList(list, "CodigoMunicipio", "Municipio"));
         }
     }
 }

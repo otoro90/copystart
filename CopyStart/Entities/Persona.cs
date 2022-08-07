@@ -29,7 +29,7 @@ namespace CopyStart.Entities
         public string NumeroDocumento { get; set; }
 
         [MaxLength(500)]
-        [Display(Name = "Dirección")]
+        [Display(Name = "Dirección de residencia")]
         public string Direccion { get; set; }
 
         [Display(Name = "Ubicación")]       
