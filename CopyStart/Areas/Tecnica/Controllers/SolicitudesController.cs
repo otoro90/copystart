@@ -633,7 +633,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.ModeloActivo, "Id", "Nombre");
-            ViewData["DepartamentosList"] = new SelectList(await _context.Ubicacion.Select(x => new { x.CodigoDepartamento, x.Departamento }).Distinct().ToListAsync(), "CodigoDepartamento", "Departamento");
+            ViewData["DepartamentosList"] = new SelectList(_context.Ubicacion.Select(x => new { x.CodigoDepartamento, x.Departamento }).Distinct().ToList(), "CodigoDepartamento", "Departamento");
 
 
             return View(solicitud);
