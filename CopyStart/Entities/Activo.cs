@@ -54,12 +54,14 @@ namespace CopyStart.Entities
         [ForeignKey("PersonaId")]
         public Persona Persona { get; set; }
 
+        [Display(Name = "Lugar de ubicación del equipo")]
         public string UbicacionId { get; set; }
 
         [Display(Name = "Ubicación")]
-        [ForeignKey("UbicacionId")]       
+        [ForeignKey("UbicacionId")]
         public Ubicacion Ubicacion { get; set; }
 
+        [Display(Name = "Dirección de la ubicación del equipo", Prompt = "Ingrese la dirección de la ubicación del equipo")]
         public string Direccion { get; set; }
 
 

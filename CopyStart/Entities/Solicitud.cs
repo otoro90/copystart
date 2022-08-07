@@ -52,5 +52,8 @@ namespace CopyStart.Entities
         [Display(Name = "Activo")]
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
+
+        [Display(Name = "Dirección")]
+        public string Direccion { get; set; }
     }
 }
