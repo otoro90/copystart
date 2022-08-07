@@ -166,7 +166,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar");
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio");
             return View();
         }
 
@@ -199,7 +199,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar");
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio");
             return View(activo);
         }
 
@@ -247,7 +247,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar", activo.UbicacionId);
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio", activo.UbicacionId);
             ViewData["Serial"] = activo.Serial;
             ViewData["Estado"] = activo.Estado;
 
@@ -291,7 +291,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoLugar", "Lugar", activo.UbicacionId);
+            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio", activo.UbicacionId);
             return View(activo);
         }
 

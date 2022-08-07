@@ -54,8 +54,8 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("TipoActivoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UbicacionId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UbicacionId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -104,28 +104,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "610507b8-15c9-48ac-b06d-30ce362332f9",
+                            ConcurrencyStamp = "a3cda99e-7e3c-451d-a1e5-677d1d44cdc3",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "94b27f07-35c0-47d4-896b-8f6f4be64588",
+                            ConcurrencyStamp = "1bdc826d-d783-4308-a434-b241613d58fa",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "4d435ac6-dfb9-4dac-a2d0-79e1850e16b0",
+                            ConcurrencyStamp = "92425f03-1824-46eb-8b8e-d8d5d5cfa0a7",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "26427fb7-2bf3-4227-92a8-3d61e377714d",
+                            ConcurrencyStamp = "2f274b98-22d6-43ee-bb40-70ebf12c8c95",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -544,8 +544,8 @@ namespace CopyStart.Migrations
                     b.Property<Guid>("TipoDocumentoId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UbicacionId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UbicacionId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -571,7 +571,7 @@ namespace CopyStart.Migrations
                             NumeroDocumento = "1000000000",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = 50001
+                            UbicacionId = "50001"
                         },
                         new
                         {
@@ -582,7 +582,7 @@ namespace CopyStart.Migrations
                             NumeroDocumento = "1000000001",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = 50001
+                            UbicacionId = "50001"
                         },
                         new
                         {
@@ -593,7 +593,7 @@ namespace CopyStart.Migrations
                             NumeroDocumento = "1000000002",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = 50001
+                            UbicacionId = "50001"
                         },
                         new
                         {
@@ -604,7 +604,7 @@ namespace CopyStart.Migrations
                             NumeroDocumento = "1000000003",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = 50001
+                            UbicacionId = "50001"
                         });
                 });
 
@@ -1035,23 +1035,37 @@ namespace CopyStart.Migrations
 
             modelBuilder.Entity("CopyStart.Entities.Ubicacion", b =>
                 {
-                    b.Property<int>("CodigoLugar")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Lugar")
+                    b.Property<string>("CodigoMunicipio")
                         .HasColumnType("text");
 
-                    b.HasKey("CodigoLugar");
+                    b.Property<string>("CodigoDepartamento")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Departamento")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Latitud")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Longitud")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Municipio")
+                        .HasColumnType("text");
+
+                    b.HasKey("CodigoMunicipio");
 
                     b.ToTable("Ubicaciones");
 
                     b.HasData(
                         new
                         {
-                            CodigoLugar = 50001,
-                            Lugar = "Villavicencio"
+                            CodigoMunicipio = "50001",
+                            CodigoDepartamento = "50",
+                            Departamento = "META",
+                            Latitud = "4,09166877",
+                            Longitud = "-73,492915945",
+                            Municipio = "VILLAVICENCIO"
                         });
                 });
 
@@ -1083,9 +1097,7 @@ namespace CopyStart.Migrations
 
                     b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
                         .WithMany()
-                        .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UbicacionId");
 
                     b.Navigation("MarcaActivo");
 
@@ -1202,9 +1214,7 @@ namespace CopyStart.Migrations
 
                     b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
                         .WithMany()
-                        .HasForeignKey("UbicacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UbicacionId");
 
                     b.Navigation("TipoDocumento");
 

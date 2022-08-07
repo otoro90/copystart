@@ -33,7 +33,7 @@ namespace CopyStart.Entities
         public string Direccion { get; set; }
 
         [Display(Name = "Ubicación")]       
-        public int UbicacionId { get; set; }
+        public string UbicacionId { get; set; }
         
         [ForeignKey("UbicacionId")]
         [Display(Name = "Ubicación")]
