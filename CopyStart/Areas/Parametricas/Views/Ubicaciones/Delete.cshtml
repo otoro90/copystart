@@ -6,15 +6,15 @@
 <div>
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lugar)
+            @Html.DisplayNameFor(model => model.Municipio)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Lugar)
+            @Html.DisplayFor(model => model.Municipio)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="CodigoLugar" />
+        <input type="hidden" asp-for="CodigoMunicipio" />
         <input type="submit" value="Borrar" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
