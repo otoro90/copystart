@@ -24,7 +24,7 @@
 
                             <div class="form-group">
 
-                                <select asp-for="PersonaId" class="form-control" asp-items="ViewBag.PersonaId" hidden></select>
+                                <select asp-for="PersonaId" class="form-control select2" asp-items="ViewBag.PersonaId" hidden></select>
 
                             </div>  
 
@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="TipoActivoId" class="control-label">Tipo de activo</label>
-                                <select asp-for="TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId"></select>
+                                <select asp-for="TipoActivoId" class="form-control select2" asp-items="ViewBag.TipoActivoId"></select>
                             </div>
                             <div class="form-group">
                                 <label >Descripcion (incluye datos que puedan diferenciar un activo si tienes mas de uno del mismo tipo)</label>                              
@@ -44,15 +44,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Marca de activo</label>
-                                <select asp-for="MarcaActivoId" class="form-control" asp-items="ViewBag.MarcaActivoId"></select>
+                                <select asp-for="MarcaActivoId" class="form-control select2" asp-items="ViewBag.MarcaActivoId"></select>
                             </div>
                             <div class="form-group">
                                 <label  class="control-label">Modelo de activo</label>
-                                <select asp-for="ModeloActivoId" class="form-control" asp-items="ViewBag.ModeloActivoId"></select>
+                                <select asp-for="ModeloActivoId" class="form-control select2" asp-items="ViewBag.ModeloActivoId"></select>
                             </div>
                              <div class="form-group">
                             <label >Ubicacion</label>
-                            <select asp-for="UbicacionId" class="form-control"asp-items="ViewBag.UbicacionId"></select>
+                            <select asp-for="UbicacionId" class="form-control select2"asp-items="ViewBag.UbicacionId"></select>
                             <span asp-validation-for="UbicacionId" class="text-danger"></span>
                         </div>
 

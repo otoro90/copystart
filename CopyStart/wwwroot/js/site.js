@@ -28,7 +28,7 @@
         },
 
         initAllSelect2Render: function () {
-            var selects = $('.select2');
+            var selects = $('select.select2');
             selects.each(function () {
                 var element = $(this);
                 site.initSelect2(element);
