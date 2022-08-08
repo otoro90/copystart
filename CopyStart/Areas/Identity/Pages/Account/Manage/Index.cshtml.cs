@@ -65,7 +65,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
             [MaxLength(500)]
             public string Direccion { get; set; }
 
-            public int UbicacionId { get; set; }
+            public string UbicacionId { get; set; }
 
             
             [ForeignKey("UbicacionId")]
@@ -114,7 +114,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
                 return RedirectToAction("CompleteData", "Personas", new { area = "Administracion" });
 
             }
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
             await LoadAsync(user);
             
             return Page();

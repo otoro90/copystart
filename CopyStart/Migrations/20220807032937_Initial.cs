@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
-    public partial class v1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace CopyStart.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TiempoEjecucion = table.Column<int>(type: "integer", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -45,7 +45,7 @@ namespace CopyStart.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Marca = table.Column<string>(type: "text", nullable: false),
                     Modelo = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -74,7 +74,7 @@ namespace CopyStart.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -89,7 +89,7 @@ namespace CopyStart.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -103,13 +103,16 @@ namespace CopyStart.Migrations
                 name: "Ubicaciones",
                 columns: table => new
                 {
-                    CodigoLugar = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Lugar = table.Column<string>(type: "text", nullable: true)
+                    CodigoMunicipio = table.Column<string>(type: "text", nullable: false),
+                    CodigoDepartamento = table.Column<string>(type: "text", nullable: true),
+                    Departamento = table.Column<string>(type: "text", nullable: true),
+                    Municipio = table.Column<string>(type: "text", nullable: true),
+                    Latitud = table.Column<string>(type: "text", nullable: true),
+                    Longitud = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ubicaciones", x => x.CodigoLugar);
+                    table.PrimaryKey("PK_Ubicaciones", x => x.CodigoMunicipio);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,7 +201,7 @@ namespace CopyStart.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TipoActivoId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -220,7 +223,7 @@ namespace CopyStart.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TipoActivoId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -246,7 +249,7 @@ namespace CopyStart.Migrations
                     TipoDocumentoId = table.Column<Guid>(type: "uuid", nullable: false),
                     NumeroDocumento = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     Direccion = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    UbicacionId = table.Column<int>(type: "integer", nullable: false),
+                    UbicacionId = table.Column<string>(type: "text", nullable: true),
                     Telefono = table.Column<long>(type: "bigint", nullable: false),
                     Estado = table.Column<string>(type: "text", nullable: true)
                 },
@@ -263,7 +266,7 @@ namespace CopyStart.Migrations
                         name: "FK_Personas_Ubicaciones_UbicacionId",
                         column: x => x.UbicacionId,
                         principalTable: "Ubicaciones",
-                        principalColumn: "CodigoLugar",
+                        principalColumn: "CodigoMunicipio",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -273,7 +276,7 @@ namespace CopyStart.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     MarcaActivoId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     Codigo = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
                     Estado = table.Column<bool>(type: "boolean", nullable: false)
@@ -361,7 +364,7 @@ namespace CopyStart.Migrations
                     Estado = table.Column<string>(type: "text", nullable: true),
                     FechaRegistro = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     PersonaId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UbicacionId = table.Column<int>(type: "integer", nullable: false),
+                    UbicacionId = table.Column<string>(type: "text", nullable: true),
                     Direccion = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -395,7 +398,7 @@ namespace CopyStart.Migrations
                         name: "FK_Activos_Ubicaciones_UbicacionId",
                         column: x => x.UbicacionId,
                         principalTable: "Ubicaciones",
-                        principalColumn: "CodigoLugar",
+                        principalColumn: "CodigoMunicipio",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -492,7 +495,7 @@ namespace CopyStart.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Incidencia = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Descripcion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
-                    Motivo = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    MotivoCancelacion = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     FechaSolicitud = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     FechaAsignacion = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EstadoSolicitud = table.Column<string>(type: "text", nullable: true),
@@ -608,10 +611,10 @@ namespace CopyStart.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "ad32e78b-fed2-43d5-b8ca-815cd0eebb8e", "Administrador", "Administrador" },
-                    { "COORD", "32b7dc37-e25a-4157-8ec8-3f38b8900c0d", "Coordinador", "Coordinador" },
-                    { "TEC", "a99f7e38-6fed-4fd8-9744-06f11173d6ab", "Tecnico", "Tecnico" },
-                    { "CLN", "d411ea62-750b-4f41-969d-e59995a2aa20", "Cliente", "Cliente" }
+                    { "ADMIN", "a3cda99e-7e3c-451d-a1e5-677d1d44cdc3", "Administrador", "Administrador" },
+                    { "COORD", "1bdc826d-d783-4308-a434-b241613d58fa", "Coordinador", "Coordinador" },
+                    { "TEC", "92425f03-1824-46eb-8b8e-d8d5d5cfa0a7", "Tecnico", "Tecnico" },
+                    { "CLN", "2f274b98-22d6-43ee-bb40-70ebf12c8c95", "Cliente", "Cliente" }
                 });
 
             migrationBuilder.InsertData(
@@ -626,8 +629,8 @@ namespace CopyStart.Migrations
 
             migrationBuilder.InsertData(
                 table: "Ubicaciones",
-                columns: new[] { "CodigoLugar", "Lugar" },
-                values: new object[] { 50001, "Villavicencio" });
+                columns: new[] { "CodigoMunicipio", "CodigoDepartamento", "Departamento", "Latitud", "Longitud", "Municipio" },
+                values: new object[] { "50001", "50", "META", "4,09166877", "-73,492915945", "VILLAVICENCIO" });
 
             migrationBuilder.InsertData(
                 table: "MarcaActivos",
@@ -639,10 +642,10 @@ namespace CopyStart.Migrations
                 columns: new[] { "Id", "Apellidos", "Direccion", "Estado", "Nombres", "NumeroDocumento", "Telefono", "TipoDocumentoId", "UbicacionId" },
                 values: new object[,]
                 {
-                    { new Guid("510c6b6e-a475-488c-9bd9-84a6215da1cb"), "Por defecto", "Calle 40, #33-18", null, "Administrador", "1000000000", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
-                    { new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"), "Por defecto", "Calle 40, #33-18", null, "Coordinador", "1000000001", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
-                    { new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"), "Por defecto", "Calle 40, #33-18", null, "Tecnico", "1000000002", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 },
-                    { new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"), "Por defecto", "Calle 40, #33-18", null, "Cliente", "1000000003", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), 50001 }
+                    { new Guid("510c6b6e-a475-488c-9bd9-84a6215da1cb"), "Por defecto", "Calle 40, #33-18", null, "Administrador", "1000000000", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), "50001" },
+                    { new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"), "Por defecto", "Calle 40, #33-18", null, "Coordinador", "1000000001", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), "50001" },
+                    { new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"), "Por defecto", "Calle 40, #33-18", null, "Tecnico", "1000000002", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), "50001" },
+                    { new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"), "Por defecto", "Calle 40, #33-18", null, "Cliente", "1000000003", 3188743948L, new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"), "50001" }
                 });
 
             migrationBuilder.InsertData(

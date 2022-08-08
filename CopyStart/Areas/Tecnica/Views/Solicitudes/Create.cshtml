@@ -1,7 +1,7 @@
 ﻿@model CopyStart.Entities.Solicitud
 
 @{
-    ViewData["Title"] = "Crear solicitud rapida";
+    ViewData["Title"] = "Crear solicitud de servicio";
 }
 
 
@@ -30,12 +30,12 @@
                             </div>
                              <div class="form-group">
                                  <label asp-for="ActivoId" class="control-label"></label>
-                                 <select asp-for="ActivoId" class ="form-control" asp-items="ViewBag.ActivoId"></select>
+                                 <select asp-for="ActivoId" class ="form-control select2" asp-items="ViewBag.ActivoId"></select>
                               </div>
 
                                 <div class="form-group">
 
-                                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId" hidden></select>
+                                <select asp-for="ClienteId" class="form-control select2" asp-items="ViewBag.ClienteId" hidden></select>
 
                             </div>  
 

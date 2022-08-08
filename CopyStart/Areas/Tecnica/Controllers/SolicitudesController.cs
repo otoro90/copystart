@@ -630,7 +630,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.ModeloActivo, "Id", "Nombre");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+            ViewData["DepartamentosList"] = new SelectList(_context.Ubicacion.Select(x => new { x.CodigoDepartamento, x.Departamento }).Distinct().ToList(), "CodigoDepartamento", "Departamento");
 
 
             return View(solicitud);
@@ -646,13 +646,12 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> CrearSolicitudRapida([Bind("Persona,Activo,Solicitud")] SolicitudRapidaModel solicitudform)
         {
-            Solicitud solicitud;
-
-            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Nombre");
-            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Nombre");
-            ViewData["ModeloActivoId"] = new SelectList(_context.ModeloActivo, "Id", "Nombre");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+            solicitudform.Activo.Ubicacion = null;
+            solicitudform.Persona.Ubicacion = null;
+            if (!ModelState.IsValid)
+            {
+                return View(solicitudform);
+            }
 
             //aqui se pide el documento
             var personaTask = _context.Persona.Where(p => (p.NumeroDocumento == solicitudform.Persona.NumeroDocumento) && (p.TipoDocumentoId == solicitudform.Persona.TipoDocumentoId)).FirstOrDefaultAsync();
@@ -670,14 +669,16 @@ namespace CopyStart.Areas.Tecnica.Controllers
             if (activo == null)
             {
                 activo = solicitudform.Activo;
+                activo.Persona = persona;
             }
 
-            solicitud = new Solicitud()
+            var solicitud = new Solicitud()
             {
                 Incidencia = solicitudform.Solicitud.Incidencia,
                 Cliente = persona,
                 Activo = activo,
-                FechaSolicitud = DateTime.Now
+                FechaSolicitud = DateTime.Now,
+                Direccion = activo.Direccion
             };
             await _context.Solicitud.AddAsync(solicitud);
 

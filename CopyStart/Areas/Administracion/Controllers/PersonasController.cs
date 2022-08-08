@@ -192,7 +192,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar", persona.UbicacionId);
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
 
             return View(persona);
         }
@@ -310,10 +310,10 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         [Authorize]
+    
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             return View();
         }
 

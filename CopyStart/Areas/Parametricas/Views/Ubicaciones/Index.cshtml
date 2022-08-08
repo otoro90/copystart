@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Lugar)
+                                @Html.DisplayNameFor(model => model.Municipio)
                             </th>
                             <th></th>
                         </tr>
@@ -26,12 +26,12 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Lugar)
+                                    @Html.DisplayFor(modelItem => item.Municipio)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.CodigoLugar">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.CodigoLugar">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.CodigoLugar">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.CodigoMunicipio">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.CodigoMunicipio">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.CodigoMunicipio">Delete</a>
                                 </td>
                             </tr>
                         }

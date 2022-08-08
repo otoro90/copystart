@@ -55,11 +55,6 @@ namespace CopyStart.Data
             }
         }
 
-        // ...
-
-
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -233,8 +228,12 @@ namespace CopyStart.Data
             {
                 b.HasData(new Ubicacion()
                 {
-                    CodigoLugar = 50001,
-                    Lugar = "Villavicencio"
+                    CodigoDepartamento = "50",
+                    Departamento = "META",
+                    CodigoMunicipio = "50001",
+                    Municipio = "VILLAVICENCIO",
+                    Latitud = "4,09166877",
+                    Longitud = "-73,492915945"
                 });
             });
 
@@ -253,7 +252,7 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000000",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = 50001
+                    UbicacionId = "50001"
                 }, new Persona()
                 {
                     Id = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
@@ -263,7 +262,7 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000001",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = 50001
+                    UbicacionId = "50001"
                 }, new Persona()
                 {
                     Id = new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"),
@@ -273,7 +272,7 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000002",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = 50001,
+                    UbicacionId = "50001",
 
 
                 }
@@ -286,7 +285,7 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000003",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = 50001
+                    UbicacionId = "50001"
                 });
             });
 
