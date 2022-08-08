@@ -40,19 +40,29 @@
                 var data = e.params.data;
                 CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id);
             });
+
+            this.selectPersonaDepartamento.on('select2:clear', function (e) {
+                site.initSelect2(CrearSolicitudRapida.selectPersonaUbicacion.val("").trigger("change"), { disabled: "readonly" });
+            });
+
+            this.selectActivoDepartamento.on('select2:clear', function (e) {
+                site.initSelect2(CrearSolicitudRapida.selectActivoUbicacion.val("").trigger("change"), { disabled: "readonly" });
+            });
         },
 
-        initSelectMunicipio: function (selectMunicipio, codigoDepartamento, properties,functionBeforeInit) {            
+        initSelectMunicipio: function (selectMunicipio, codigoDepartamento, properties, functionBeforeInit) {
             if (codigoDepartamento) {
                 $.ajax({
                     url: '/Parametricas/Ubicaciones/GetMunicipios?codigoDepartamento=' + codigoDepartamento,
                     type: 'GET',
                     dataType: 'json',
                     success: function (response) {
+                        selectMunicipio.html("<option></option>");
                         $.each(response, function (key, value) {
                             selectMunicipio.append('<option value=' + value.value + '>' + value.text + '</option>');
                         });
-                        functionBeforeInit.call();
+                        if (functionBeforeInit)
+                            functionBeforeInit.call();
                     }
                 });
                 site.initSelect2(selectMunicipio, properties);
@@ -136,7 +146,7 @@
                             codeDepartamento,
                             { disabled: "readonly" },
                             () => CrearSolicitudRapida.selectActivoUbicacion.val(response.ubicacionId).trigger("change").prop('readonly', true));
-                        
+
                     }
                     else {
                         CrearSolicitudRapida.inputsActivoHidden.forEach(x => {
