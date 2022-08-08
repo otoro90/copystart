@@ -330,10 +330,10 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         [Authorize]
+        [UrlScriptActionFilter]
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
             return View();
         }
 
@@ -343,6 +343,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,UbicacionId,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)
@@ -375,7 +376,6 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
             return View(persona);
         }
 
