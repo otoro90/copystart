@@ -10,6 +10,7 @@ namespace CopyStart.Entities
     {
 
         [Required]
+        [Display(Name = "Marca de activo")]
         public Guid MarcaActivoId { get; set; }
 
 

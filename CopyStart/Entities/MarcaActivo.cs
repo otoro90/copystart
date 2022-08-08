@@ -9,6 +9,7 @@ namespace CopyStart.Entities
     public class MarcaActivo: Parametrica
     {
         [Required]
+        [Display(Name = "Tipo de activo")]
         public Guid TipoActivoId { get; set; }
 
        

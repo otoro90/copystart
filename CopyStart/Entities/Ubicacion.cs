@@ -7,8 +7,10 @@ namespace CopyStart.Entities
     public class Ubicacion
     {
         [Key]
-       public int CodigoLugar { get; set; }
+        [Display(Name = "Codigo Divipola")]
+        public int CodigoLugar { get; set; }
 
-       public string Lugar { get; set; }
+        [Display(Name = "Nombre")]
+        public string Lugar { get; set; }
     }
 }

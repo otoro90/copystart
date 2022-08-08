@@ -41,7 +41,9 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="TipoDocumentoId" class="control-label"></label>
-                                <select asp-for="TipoDocumentoId" class="form-control" asp-items="ViewBag.TipoDocumentoId"></select>
+                                <select asp-for="TipoDocumentoId" class="form-control select2" asp-items="ViewBag.TipoDocumentoId">
+                                    <option></option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label asp-for="NumeroDocumento" class="control-label"></label>
@@ -55,7 +57,9 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="UbicacionId" class="control-label"></label>
-                                <input asp-for="UbicacionId" class="form-control" />
+                                 <select asp-for="UbicacionId" class="form-control select2" asp-items="ViewBag.TipoDocumentoId">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="UbicacionId" class="text-danger"></span>
                             </div>
                             <div class="form-group">

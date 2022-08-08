@@ -55,18 +55,9 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            var listadoPersonas = _context.User.Include(a => a.Persona)
-                                           .ThenInclude(p => p.TipoDocumento)
-                                           .Include(a => a.UserRoles)
-                                           .ThenInclude(r => r.Role);
 
-
-            if (User.IsInRole("Coordinador"))
-            {
-                listadoPersonas.Where(x => x.UserRoles.Any(x => x.RoleId == "TEC"));
-            }
-
-            return View(await listadoPersonas.ToListAsync());
+            var personas = await _context.Persona.Include(P => P.Users).ThenInclude(u => u.UserRoles).ThenInclude(u => u.Role).Include(p => p.TipoDocumento).Include(p => p.Ubicacion).ToListAsync();
+         return View(personas);
         }
 
         // GET: Administracion/Personas/Details/5
@@ -79,7 +70,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             }
 
             var persona = await _context.Persona
-                .Include(p => p.TipoDocumento).Include(p => p.Ubicacion)
+               .Include(p => p.TipoDocumento).Include(p => p.Ubicacion).Include(P => P.Users).ThenInclude(u => u.UserRoles).ThenInclude(u => u.Role)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
@@ -113,20 +104,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            if (persona == null)
-            {
-                return NotFound();
-            }
-            var usuario = await _context.Users.Include(m => m.Persona).FirstOrDefaultAsync(m => m.PersonaId == id);
-            var applicationUserRoles = await _context.ApplicationUserRole.Include(m => m.Role).Where(m => m.UserId == usuario.Id).ToListAsync();
-
-            var detallePersonaVm = new DetallePersonaVM
-            {
-                Persona = persona,
-                RolesUsuario = applicationUserRoles
-            };
-
-            return View(detallePersonaVm);
+            return View(persona);
         }
 
         // GET: Administracion/Personas/Create
@@ -134,6 +112,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         public IActionResult Create()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
             return View();
         }
 
@@ -154,6 +133,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar", persona.UbicacionId);
             return View(persona);
         }
 
@@ -212,7 +192,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar", persona.UbicacionId);
 
             return View(persona);
         }

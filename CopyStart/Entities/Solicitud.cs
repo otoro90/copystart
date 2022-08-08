@@ -20,7 +20,7 @@ namespace CopyStart.Entities
         public string Descripcion { get; set; }
 
         [MaxLength(1024)]
-        [Display(Name = "Motivo de cancelación", Prompt = "Ingrese motivo de cancelación")]
+        [Display(Name = "Motivo de cancelación", Prompt = "Ingrese motivo de cancelación de la solicitud")]
         public string MotivoCancelacion { get; set; }       
 
         [Display(Name = "Fecha de creación")]
@@ -29,7 +29,7 @@ namespace CopyStart.Entities
         [Display(Name = "Fecha de asignación")]
         public DateTime FechaAsignacion { get; set; }
 
-        [Display(Name = "Estado")]        
+        [Display(Name = "Estado actual")]        
         public string EstadoSolicitud { get; set; }
 
         [Display(Name = "Técnico")]

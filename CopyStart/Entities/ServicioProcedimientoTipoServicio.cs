@@ -18,6 +18,7 @@ namespace CopyStart.Entities
         public Servicio Servicio { get; set; }
 
         [Required]
+        [Display(Name = "Procedimiento")]
         public Guid ProcedimientoTipoServicioId { get; set; }
 
         [Display(Name = "Procedimiento")]

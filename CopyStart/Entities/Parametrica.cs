@@ -18,6 +18,7 @@ namespace CopyStart.Entities
 
         [Required]
         [MaxLength(5)]
+        [Display(Name = "Codigo identificador")]
         public string Codigo { get; set; }
 
         public bool Estado { get; set; }

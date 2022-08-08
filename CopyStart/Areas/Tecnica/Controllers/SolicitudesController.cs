@@ -50,19 +50,11 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             var user = await _userManager.GetUserAsync(User);
             List<Solicitud> listaSolicitudes = null;
-            if (User.IsInRole("Cliente"))
+            if (User.IsInRole("Cliente") || User.IsInRole("Tecnico"))
             {
 
-                listaSolicitudes = await _context.Solicitud.Where(e => e.ClienteId == user.PersonaId).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
+                listaSolicitudes = await _context.Solicitud.Where(e => (e.ClienteId == user.PersonaId) || (e.TecnicoId == user.PersonaId)).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
             }
-            if (User.IsInRole("Tecnico"))
-            {
-
-                listaSolicitudes = await _context.Solicitud.Where(e => e.TecnicoId == user.PersonaId).Include(s => s.Activo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
-            }
-
-
-
             if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
             {
                 listaSolicitudes = await _context.Solicitud.Include(s => s.Activo).ThenInclude(s => s.MarcaActivo).Include(s => s.Cliente).Include(s => s.Tecnico).ToListAsync();
@@ -121,7 +113,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes/Create
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
-        public IActionResult Create(string idActivo, Guid? idCliente)
+        public async Task<IActionResult> CreateAsync(string idActivo, Guid? idCliente)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -147,14 +139,19 @@ namespace CopyStart.Areas.Tecnica.Controllers
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
-
+            if (idCliente==null)
+            {
+                var user =  await _userManager.GetUserAsync(User);
+                idCliente = user.PersonaId;
+            }
 
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", idCliente);
-            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Where(a => a.Estado != "Eliminado").Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
+            
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
 
-
-
+                ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Where(a => (a.Estado != "Eliminado") && (a.PersonaId == idCliente)).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
+            
+           
 
             return View();
 
@@ -687,6 +684,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = solicitud.Id });
+
         }
     }
 }

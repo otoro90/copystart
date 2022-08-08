@@ -16,16 +16,19 @@
                         <form asp-action="Edit">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
+                             <div class="form-group">                             
+                                <select asp-for="TipoServicioId" class="form-control" asp-items="ViewBag.TipoServicioId" hidden></select>                              
+                            </div>
+                              <div class="form-group">                             
+                                <select asp-for="ProcedimientoId" class="form-control" asp-items="ViewBag.ProcedimientoId" hidden></select>                              
+                            </div>
                             <div class="form-group">
                                 <label asp-for="Numero" class="control-label"></label>
                                 <input asp-for="Numero" class="form-control" />
                                 <span asp-validation-for="Numero" class="text-danger"></span>
                             </div>                           
-                            <div class="form-group">
-                               
-                                <select asp-for="TipoServicioId" class="form-control" asp-items="ViewBag.TipoServicioId" hidden></select>
-                               
-                            </div>
+                           
+
                             <div class="form-group">
                                 <label asp-for="Nombre" class="control-label"></label>
                                 <input asp-for="Nombre" class="form-control" />
@@ -50,12 +53,6 @@
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
                                 </label>
-                            </div>
-
-                            <div class="form-group">
-                               
-                                <select asp-for="ProcedimientoId" class="form-control" asp-items="ViewBag.ProcedimientoId" hidden></select>
-                                
                             </div>
 
                             <div class="form-group">

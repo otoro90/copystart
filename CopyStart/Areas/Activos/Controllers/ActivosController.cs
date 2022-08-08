@@ -184,12 +184,9 @@ namespace CopyStart.Areas.Activos.Controllers
             }
             activo.FechaRegistro = DateTime.Now;
             activo.Estado = "Inactivo";
-           
-
 
             if (ModelState.IsValid)
             {
-
                 _context.Add(activo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Activos", new { area = "Activos", id = activo.Id });
@@ -549,6 +546,7 @@ namespace CopyStart.Areas.Activos.Controllers
             var solicitud = await _context.Solicitud.Where(m => m.Activo.Id==activo.Id).FirstOrDefaultAsync();
 
             return RedirectToAction("Create", "Servicios", new { area = "Tecnica", idSolicitud = solicitud.Id });
+
         }
 
         [HttpGet]

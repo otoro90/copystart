@@ -25,7 +25,7 @@
 
                             <th>Nombres completos</th>                          
                             <th>@Html.DisplayNameFor(model => model.NumeroDocumento)</th>
-                            <th>Estado</th>
+                            <th>@Html.DisplayNameFor(model => model.Estado)</th>
                             <th>Roles</th>   
                             <th>Acciones</th>
                         </tr>
@@ -45,16 +45,17 @@
                                         @Html.DisplayFor(modelItem => item.Estado)                                 
                                 </td>
                                 <td>
+                                    <ul class="list-unstyled">
                                      @foreach (var user in item.Users)
                                     {
                                         @foreach (var role in user.UserRoles)
                                       {
-                                         @Html.DisplayFor(modelItem => role.Role.Name)  
+                                        <li> @Html.DisplayFor(modelItem => role.Role.Name)  </li>
 
                                       } 
 
                                     }
-
+                                    </ul>
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>

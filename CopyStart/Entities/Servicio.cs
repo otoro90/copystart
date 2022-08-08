@@ -10,6 +10,8 @@ namespace CopyStart.Entities
     {
         [Key]
         public long Id { get; set; }
+
+        [Display(Name = "Estado actual")]
         public string Estado { get; set; }
 
         [Display(Name = "Fecha de inicio")]

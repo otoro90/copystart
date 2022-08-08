@@ -34,25 +34,33 @@
                                 <span asp-validation-for="Serial" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="TipoActivoId" class="control-label">Tipo de activo</label>
-                                <select asp-for="TipoActivoId" class="form-control" asp-items="ViewBag.TipoActivoId"></select>
+                                <label asp-for="TipoActivoId" class="control-label"></label>
+                                <select asp-for="TipoActivoId" class="form-control select2" asp-items="ViewBag.TipoActivoId">
+                                     <option></option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label >Descripcion (incluye datos que puedan diferenciar un activo si tienes mas de uno del mismo tipo)</label>                              
+                               <label asp-for="Descripcion" class="control-label"></label>                           
                                 <input asp-for="Descripcion" class="form-control" />                               
                                 <span asp-validation-for="Descripcion" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Marca de activo</label>
-                                <select asp-for="MarcaActivoId" class="form-control" asp-items="ViewBag.MarcaActivoId"></select>
+                               <label asp-for="MarcaActivoId" class="control-label"></label>
+                                <select asp-for="MarcaActivoId" class="form-control select2" asp-items="ViewBag.MarcaActivoId">
+                                     <option></option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label  class="control-label">Modelo de activo</label>
-                                <select asp-for="ModeloActivoId" class="form-control" asp-items="ViewBag.ModeloActivoId"></select>
+                                <label asp-for="ModeloActivoId" class="control-label"></label>
+                                <select asp-for="ModeloActivoId" class="form-control select2" asp-items="ViewBag.ModeloActivoId">
+                                     <option></option>
+                                </select>
                             </div>
                              <div class="form-group">
-                            <label >Ubicacion</label>
-                            <select asp-for="UbicacionId" class="form-control"asp-items="ViewBag.UbicacionId"></select>
+                            <label asp-for="UbicacionId" class="control-label"></label>
+                            <select asp-for="UbicacionId" class="form-control select2"asp-items="ViewBag.UbicacionId">
+                                 <option></option>
+                            </select>
                             <span asp-validation-for="UbicacionId" class="text-danger"></span>
                         </div>
 
