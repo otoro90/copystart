@@ -6,85 +6,99 @@
 
 
 
-<div class="row">
-    <div class="col-md-3 "></div>
+<div class="row  justify-content-center">
 
-    <div class="col-md-6">
+
+    <div class="col-md-12">
         <div class="mt-3">
-            <div class="ml-3">
-                <div class="card card-primary">
-                    <div class="card-header">
-                      
 
-                    </div>
-
+            <div class="card card-primary">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
                     <form asp-action="Create">
-                        <div class="card-body">
+                        <div class="row">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="form-group">
 
-                                <select asp-for="PersonaId" class="form-control select2" asp-items="ViewBag.PersonaId" hidden></select>
+                                <select asp-for="PersonaId" class="form-control" asp-items="ViewBag.PersonaId" hidden></select>
 
-                            </div>  
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="TipoActivoId" class="control-label"></label>
+                                <select asp-for="TipoActivoId" class="form-control select2" asp-items="ViewBag.TipoActivoId">
+                                    <option></option>
+                                </select>
+                            </div>
 
-                            <div class="form-group">
+                            <div class="form-group col-md-6">
                                 <label asp-for="Serial" class="control-label"></label>
                                 <input asp-for="Serial" class="form-control" />
                                 <span asp-validation-for="Serial" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="TipoActivoId" class="control-label"></label>
-                                <select asp-for="TipoActivoId" class="form-control select2" asp-items="ViewBag.TipoActivoId">
-                                     <option></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                               <label asp-for="Descripcion" class="control-label"></label>                           
-                                <input asp-for="Descripcion" class="form-control" />                               
-                                <span asp-validation-for="Descripcion" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                               <label asp-for="MarcaActivoId" class="control-label"></label>
+
+                            <div class="form-group col-md-6">
+                                <label asp-for="MarcaActivoId" class="control-label"></label>
                                 <select asp-for="MarcaActivoId" class="form-control select2" asp-items="ViewBag.MarcaActivoId">
-                                     <option></option>
+                                    <option></option>
                                 </select>
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group col-md-6">
                                 <label asp-for="ModeloActivoId" class="control-label"></label>
                                 <select asp-for="ModeloActivoId" class="form-control select2" asp-items="ViewBag.ModeloActivoId">
-                                     <option></option>
+                                    <option></option>
                                 </select>
                             </div>
-                             <div class="form-group">
-                            <label asp-for="UbicacionId" class="control-label"></label>
-                            <select asp-for="UbicacionId" class="form-control select2"asp-items="ViewBag.UbicacionId">
-                                 <option></option>
-                            </select>
-                            <span asp-validation-for="UbicacionId" class="text-danger"></span>
-                        </div>
 
-                          <div class="form-group">
-                            <label asp-for="Direccion" class="control-label"></label>
-                            <input asp-for="Direccion" class="form-control" />
-                            <span asp-validation-for="Direccion" class="text-danger"></span>
-                        </div>
-                            
-                            <div class="form-group">
-                                <input type="submit" value="Crear" class="btn btn-primary" />
+                            <div class="form-group col-md-6">
+                                <label asp-for="Descripcion" class="control-label"></label>
+                                <input asp-for="Descripcion" class="form-control" />
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+
+                                <label asp-for="Ubicacion.CodigoDepartamento" class="control-label">Departamento</label>
+                                <select asp-for="Ubicacion.CodigoDepartamento" class="form-control select2">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="Ubicacion.CodigoDepartamento" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="UbicacionId" class="control-label">Municipio</label>
+                                <select asp-for="UbicacionId" class="form-control select2">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="UbicacionId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label asp-for="Direccion" class="control-label"></label>
+                                <input asp-for="Direccion" class="form-control" />
+                                <span asp-validation-for="Direccion" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-12 float-right">
+                                <input type="submit" value="Crear" class="btn btn-primary float-right" />
                             </div>
 
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
-    <div class="col-md-3 "></div>
+
 </div>
 
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
