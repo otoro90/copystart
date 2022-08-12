@@ -108,11 +108,12 @@
                                     </div>
                                     <div class=" col-md-8 text-center">
                                         <span class="collapses">@Model.PersonaInput.Ubicacion.Municipio</span>
-                                        <select asp-for="PersonaInput.UbicacionId" class="form-control collapse multi-collapse select2" asp-items="ViewBag.UbicacionId" id="multiCollapse7"></select>
-                                        
+                                        <select asp-for="PersonaInput.UbicacionId" class="form-control collapse multi-collapse" id="multiCollapse7" asp-items="ViewBag.UbicacionId"><option></option></select>                           
                                     </div>
 
                                 </div>
+
+                             
                                 <div class="row form-group">
                                     <div class="col md-4">
                                         <label>

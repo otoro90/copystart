@@ -148,7 +148,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         }
 
         // GET: Parametricas/Ubicaciones/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {

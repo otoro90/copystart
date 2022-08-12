@@ -114,7 +114,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
                 return RedirectToAction("CompleteData", "Personas", new { area = "Administracion" });
 
             }
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion.Select(x => new { Id = x.CodigoMunicipio, Texto = x.Municipio + ", " + x.Departamento }), "Id", "Texto");
             await LoadAsync(user);
             
             return Page();

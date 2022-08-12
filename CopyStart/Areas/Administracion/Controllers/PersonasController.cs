@@ -109,10 +109,11 @@ namespace CopyStart.Areas.Administracion.Controllers
 
         // GET: Administracion/Personas/Create
         [Authorize(Roles = "Administrador")]
+        [UrlScriptActionFilter]
         public IActionResult Create()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar");
+          
             return View();
         }
 
@@ -120,6 +121,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [UrlScriptActionFilter]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]//aun queda pendiente el listado que muestra roles tambien
         public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,UbicacionId")] Persona persona)
@@ -133,12 +135,12 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoLugar", "Lugar", persona.UbicacionId);
             return View(persona);
         }
 
         // GET: Administracion/Personas/Edit/5
         [Authorize(Roles = "Administrador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -146,7 +148,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
 
-            var persona = await _context.Persona.FindAsync(id);
+            var persona = await _context.Persona.Include(p => p.Ubicacion).FirstOrDefaultAsync(p => p.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -191,8 +193,7 @@ namespace CopyStart.Areas.Administracion.Controllers
             {
                 return NotFound();
             }
-            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion, "CodigoMunicipio", "Municipio");
+            ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo", persona.TipoDocumentoId);     
 
             return View(persona);
         }
@@ -202,6 +203,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UrlScriptActionFilter]
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
         {
@@ -310,7 +312,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         }
 
         [Authorize]
-    
+        [UrlScriptActionFilter]
         public IActionResult CompleteData()
         {
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Codigo");
@@ -323,6 +325,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> CompleteData([Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,UbicacionId,Telefono,Estado")] Persona persona)
         {
             if (ModelState.IsValid)

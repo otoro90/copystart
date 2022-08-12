@@ -135,6 +135,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
         // GET: Activos/Activos/Create
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        [UrlScriptActionFilter]
         public IActionResult Create(Guid? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -166,7 +167,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio");
+          
             return View();
         }
 
@@ -174,6 +175,7 @@ namespace CopyStart.Areas.Activos.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Create([Bind("Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId")] Activo activo)
         {
 
@@ -196,12 +198,12 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio");
             return View(activo);
         }
 
         // GET: Activos/Activos/Edit/5
         [Authorize(Roles = "Administrador, Cliente")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Edit(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -244,7 +246,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Codigo", activo.TipoActivoId);
             ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre", activo.MarcaActivoId);
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre", activo.ModeloActivoId);
-            ViewData["UbicacionId"] = new SelectList(_context.Set<Ubicacion>(), "CodigoMunicipio", "Municipio", activo.UbicacionId);
+           
             ViewData["Serial"] = activo.Serial;
             ViewData["Estado"] = activo.Estado;
 
@@ -256,6 +258,7 @@ namespace CopyStart.Areas.Activos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UrlScriptActionFilter]
         [Authorize(Roles = "Administrador, Cliente")]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Serial,TipoActivoId,Descripcion,MarcaActivoId,ModeloActivoId,UbicacionId,Direccion,FechaRegistro,PersonaId,Estado")] Activo activo)
         {

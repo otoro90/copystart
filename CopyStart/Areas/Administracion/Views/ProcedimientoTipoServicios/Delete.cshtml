@@ -5,8 +5,8 @@
 }
 
 
-<div class="row">
-    <div class="col-md-3 "></div>
+<div class="row justify-content-center">
+
 
          <div class="col-md-6">
              <div class="mt-3">
@@ -19,24 +19,24 @@
                    
                       <div class="card-body">
                             <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Numero)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.Numero)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.Procedimientos)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.Procedimientos.Codigo)
         </dd class>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-4">
             @Html.DisplayNameFor(model => model.TipoServicio)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.TipoServicio.Codigo)
-        </dd class>
+        </dd>
     </dl>  
                         </div>
                         <div class="card-footer">
@@ -50,5 +50,5 @@
                      </div>
                  </div>
             </div>
-    <div class="col-md-3 "></div>
+
 </div>
