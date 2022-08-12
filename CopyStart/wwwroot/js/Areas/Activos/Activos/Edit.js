@@ -16,6 +16,7 @@
         },
 
         initSelectDepartamento: function () {
+            debugger
             var selectDepartamento = $("#Ubicacion_CodigoDepartamento");
             $.ajax({
                 url: '/Parametricas/Ubicaciones/GetDepartamentos',
@@ -30,10 +31,11 @@
             site.initSelect2(selectDepartamento);
 
             var selectMunicipio = $("#UbicacionId");
+            var that = this;
 
             selectDepartamento.on('select2:select', function (e) {
                 var data = e.params.data;
-                CompleteData.configSelectMunicipio(selectMunicipio, data.id, { disabled: false });
+                that.configSelectMunicipio(selectMunicipio, data.id, { disabled: false });
             });
 
             selectDepartamento.on('select2:clear', function (e) {

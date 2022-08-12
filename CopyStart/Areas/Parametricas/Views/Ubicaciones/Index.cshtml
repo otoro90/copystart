@@ -15,6 +15,9 @@
                 <table class="table table-bordered table-hover text-center" id="table-ubicaciones">
                     <thead>
                         <tr>
+                             <th>
+                                @Html.DisplayNameFor(model => model.Departamento)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Municipio)
                             </th>
@@ -26,12 +29,17 @@
                         {
                             <tr>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Departamento)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Municipio)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.CodigoMunicipio">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.CodigoMunicipio">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.CodigoMunicipio">Delete</a>
+                                   <a asp-action="Edit" asp-route-id="@item.CodigoMunicipio" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+
+                                <a asp-action="Details" asp-route-id="@item.CodigoMunicipio" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+
+                                <a asp-action="Delete" asp-route-id="@item.CodigoMunicipio" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         }

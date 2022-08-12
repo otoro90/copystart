@@ -5,46 +5,44 @@
 }
 
 
-<div class="row">
-    <div class="col-md-3 "></div>
+<div class="row justify-content-center">
+
     <div class="col-md-6">
         <div class="mt-3">
-            <div class="ml-3">
+            
                 <div class="card card-primary">
                     
                     <div class="card-body">
+                        <div class="row">
                          <form asp-action="Edit">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
-                            <div class="form-group">
-                                <label asp-for="Estado" class="control-label"></label>
-                                <input asp-for="Estado" class="form-control" />
-                                <span asp-validation-for="Estado" class="text-danger"></span>
-                            </div>                        
-                            <div class="form-group">
+                                               
+                            <div class="form-group col-md-6">
                                 <label asp-for="ActivoId" class="control-label"></label>
-                                <select asp-for="ActivoId" class="form-control select2" asp-items="ViewBag.ActivoId"></select>
+                                <select asp-for="ActivoId" class="form-control select2" asp-items="ViewBag.ActivoId">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="ActivoId" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-md-6">
                                 <label asp-for="SolicitudId" class="control-label"></label>
-                                <select asp-for="SolicitudId" class="form-control select2" asp-items="ViewBag.SolicitudId"></select>
+                                <select asp-for="SolicitudId" class="form-control select2" asp-items="ViewBag.SolicitudId">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="SolicitudId" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="SoportesId" class="control-label"></label>
-                                <select asp-for="SoportesId" class="form-control select2" asp-items="ViewBag.SoportesId"></select>
-                                <span asp-validation-for="SoportesId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                            
+                            <div class="form-group col-md-12">
+                                <input type="submit" value="Guardar" class="btn btn-primary float-left" />
                             </div>
                         </form>
                     </div>
+                    </div>
                 </div>
-            </div>
+            
         </div>
-        <div class="col-md-3 "></div>
+
     </div>
 
 </div>
