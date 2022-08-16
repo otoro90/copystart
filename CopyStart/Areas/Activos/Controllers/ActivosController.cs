@@ -203,7 +203,7 @@ namespace CopyStart.Areas.Activos.Controllers
 
         // GET: Activos/Activos/Edit/5
         [Authorize(Roles = "Administrador, Cliente")]
-        [UrlScriptActionFilter]
+        [UrlScriptActionFilter("Edit")]
         public async Task<IActionResult> Edit(long? id)
         {
             var breadcrumbList = new List<Breadcrumb>();
