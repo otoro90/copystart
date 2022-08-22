@@ -13,44 +13,44 @@
             <div class="ml-3">
                 <div class="card card-primary">
                     <div class="card-header bg-red">
-                        <h2 class="card-title"><b>¿Quieres borrar esta marca de activo?</b></h2>
+                        ¿Quieres borrar esta marca de activo?
                     </div>
 
 
                     <div class="card-body">
                         <p>Recuerda: No es posible eliminar una marca de activo si hay modelos referenciados a el</p>
                         <dl class="row">
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.TipoActivo)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.TipoActivo.Codigo)
-        </dd class>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.Codigo)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Codigo)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-    </dl>
+                            <dt class = "col-sm-4">
+                                @Html.DisplayNameFor(model => model.TipoActivo)
+                            </dt>
+                            <dd class = "col-sm-8">
+                                @Html.DisplayFor(model => model.TipoActivo.Codigo)
+                            </dd class>
+                            <dt class = "col-sm-4">
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </dt>
+                            <dd class = "col-sm-8">
+                                @Html.DisplayFor(model => model.Nombre)
+                            </dd>
+                            <dt class = "col-sm-4">
+                                @Html.DisplayNameFor(model => model.Descripcion)
+                            </dt>
+                            <dd class = "col-sm-8">
+                                @Html.DisplayFor(model => model.Descripcion)
+                            </dd>
+                            <dt class = "col-sm-4">
+                                @Html.DisplayNameFor(model => model.Codigo)
+                            </dt>
+                            <dd class = "col-sm-8">
+                                @Html.DisplayFor(model => model.Codigo)
+                            </dd>
+                            <dt class = "col-sm-4">
+                                @Html.DisplayNameFor(model => model.Estado)
+                            </dt>
+                            <dd class = "col-sm-8">
+                                @Html.DisplayFor(model => model.Estado)
+                            </dd>
+                     </dl>
                     </div>
                     <div class="card-footer">
                         <form asp-action="Delete">

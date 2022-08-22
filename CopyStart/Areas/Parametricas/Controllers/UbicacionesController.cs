@@ -138,6 +138,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CodigoMunicipio,Municipio,CodigoDepartamento,Departamento,Latitud,Longitud")] Ubicacion ubicacion)
         {
+            ubicacion.CodigoDepartamento = ubicacion.CodigoMunicipio.Substring(0, 2);
             if (ModelState.IsValid)
             {
                 _context.Add(ubicacion);

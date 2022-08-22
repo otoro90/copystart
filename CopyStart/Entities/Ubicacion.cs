@@ -7,10 +7,10 @@ namespace CopyStart.Entities
     public class Ubicacion
     {
         [Key]
-        [Display(Name = "Código de municipio", Prompt ="Ingrese código de departamento")]
+        [Display(Name = "Código de municipio", Prompt = "Ingrese código de municipio")]
         public string CodigoMunicipio { get; set; }
 
-        [Display(Name ="Código de departamento", Prompt = "Ingrese código de municipio")]
+        [Display(Name ="Código de departamento", Prompt = "Ingrese código de departamento")]
         public string CodigoDepartamento { get; set; }
 
         [Display(Name = "Departamento", Prompt = "Ingrese nombre de departamento")]

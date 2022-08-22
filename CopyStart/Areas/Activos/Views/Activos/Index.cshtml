@@ -11,6 +11,9 @@
                 <table class="table table-bordered table-hover text-center" id="table-activos">
                     <thead>
                         <tr>
+                             <div class="col-12 mb-4">
+                                <h4>Index de activos</h4> 
+                              </div>
                             @if (User.IsInRole("Cliente")){
                             <div class="col-12 mb-2">
                                 <a asp-action="Create" class="btn btn-default bg-primary" role="button">
@@ -18,7 +21,6 @@
                                 </a>
                             </div>
                             }
-
 
                             <th>@Html.DisplayNameFor(model => model.Serial)</th>
                             <th>@Html.DisplayNameFor(model => model.TipoActivo)</th>

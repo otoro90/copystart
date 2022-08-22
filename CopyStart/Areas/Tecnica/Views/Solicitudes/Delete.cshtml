@@ -13,7 +13,7 @@
             
                 <div class="card card-primary">
                     <div class="card-header bg-red">
-                        <h2 class="card-title"><b>¿Quieres cancelar esta solicitud?</b></h2>
+                       ¿Quieres cancelar esta solicitud?
                     </div>
 
 
@@ -60,7 +60,7 @@
                                 @Html.DisplayNameFor(model => model.Activo)
                             </dt>
                             <dd class="col-sm-8">
-                                @Html.DisplayFor(model => model.Activo.MarcaActivo.Nombre)
+                                 @Html.DisplayFor(model => model.Activo.MarcaActivo.Nombre) @Html.DisplayFor(model => model.Activo.ModeloActivo.Nombre)   S/N: @Html.DisplayFor(model => model.Activo.Serial)
                             </dd>
                         </dl>
                     </div>

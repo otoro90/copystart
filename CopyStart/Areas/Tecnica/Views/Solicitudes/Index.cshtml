@@ -19,7 +19,9 @@
                 <table  class="table table-bordered table-hover" id="table-solicitudes">
                     <thead >
                         <tr>
-                             
+                             <div class="col-12 mb-4">
+                                <h4>Index de solicitudes</h4> 
+                              </div>
                              <div class="col-12 mb-2">
                                  @if (User.IsInRole("Cliente")){
                                 <a asp-action="Create" asp-route-idCliente="@ViewData["ClienteId"]" class="btn btn-default bg-primary" role="button">
