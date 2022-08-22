@@ -7,17 +7,20 @@
 
 
 <div class="row justify-content-center">
-    
+
     <div class="col-md-6 card">
         <div class="card-header">
-        <div class="row">
+            <div class="row mb-3">
+                <b>Información detallada del procedimiento</b>
+            </div>
+            <div class="row">
 
                 <div class="col-md-3 my-2">
-                      <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
+                    <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
                 </div>
-                
+
                 <div class="col-md-3 my-2">
-                    <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Index">Volver</a> 
+                    <a role="button" class="btn btn-block btn-default btn-sm" asp-action="Index">Volver</a>
                 </div>
 
             </div>
@@ -46,20 +49,20 @@
                     @Html.DisplayFor(model => model.Procedimientos.Nombre)
                 </dd>
 
-                <dt  class="col-sm-4">
+                <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Procedimientos.Descripcion)
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Procedimientos.Descripcion)
                 </dd>
-                 <dt  class="col-sm-4">
+                <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Procedimientos.Codigo)
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Procedimientos.Codigo)
                 </dd>
 
-                <dt  class="col-sm-4">
+                <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Procedimientos.TiempoEjecucion)
                 </dt>
                 <dd class="col-sm-8">

@@ -9,15 +9,14 @@
 <div class="row justify-content-center">
   
     <div class="col-md-6 card">
-
+  
         <div class="card-header">
-           
+             <div class="row mb-3"><b>Información detallada de solicitud</b></div>
+            <div class="row mb-3">
 
-            <div class="row">
-
-                   <div class="col-md-3 my-2">
+             <div class="col-md-3 my-2">
                     <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver </a>
-                     </div>
+              </div>
 
                  @if (User.IsInRole("Cliente"))
                 {
@@ -51,8 +50,11 @@
 
         </div>
 
+        </div>
 
         <div class="card-body">
+
+    
             <dl class="row">
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Incidencia)
@@ -138,7 +140,8 @@
             }
             </dl>
         </div>
+        </div>
     </div>
-</div>
 
-</div>
+
+

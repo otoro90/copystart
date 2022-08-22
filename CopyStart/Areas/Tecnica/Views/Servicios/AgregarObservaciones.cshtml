@@ -80,7 +80,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
                             <div class="form-group">
-                                <label> Agrega detalles sobre la realizacion del servicio (repuestos usados, pendientes a futuro, estado de la maquina al final del servicio), se veran reflejados cuando termine el servicio</label>
+                                <label> Agrega detalles sobre la realización del servicio (repuestos usados, pendientes a futuro, estado de la maquina al final del servicio), se veran reflejados cuando termine el servicio</label>
                                  @Html.TextAreaFor(modelItem => modelItem.Observaciones, new { style = "width: 100%; height: 70px ", @class = "form-control" })
                                 <span asp-validation-for="Observaciones" class="text-danger"></span>
                             </div>
