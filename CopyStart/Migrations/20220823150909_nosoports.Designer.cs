@@ -3,15 +3,17 @@ using System;
 using CopyStart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220823150909_nosoports")]
+    partial class nosoports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,28 +106,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "1712d113-b786-42f0-aa40-3f9e2fb100dc",
+                            ConcurrencyStamp = "41d1931a-8e90-4eff-a4d8-754afcd7490e",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "9af3ff5f-fcab-4e31-b6c6-2a61ab8b20b9",
+                            ConcurrencyStamp = "6b073d77-a8ff-4802-8296-8d0acdd54ffb",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "8c286ef8-e427-4122-bd34-62dc20254b49",
+                            ConcurrencyStamp = "6c298094-8d98-4301-80f2-ba66bc1e4fb3",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "7a9137d3-fee6-47ee-9420-4224c1df9be0",
+                            ConcurrencyStamp = "d644881f-0727-4ce2-b9eb-9cbc0ee1ca85",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -400,7 +402,7 @@ namespace CopyStart.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("CopyStart.Entities.Archivo", b =>
+            modelBuilder.Entity("CopyStart.Entities.Documento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -422,7 +424,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Archivos");
+                    b.ToTable("Documentos");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.MarcaActivo", b =>

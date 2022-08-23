@@ -138,7 +138,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
 
 
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Codigo");
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo");
             return View();
         }
 
@@ -156,7 +156,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Codigo", modeloActivo.MarcaActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo", modeloActivo.MarcaActivoId);
             return View(modeloActivo);
         }
 
@@ -212,7 +212,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             {
                 return NotFound();
             }
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Codigo", modeloActivo.MarcaActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo", modeloActivo.MarcaActivoId);
             return View(modeloActivo);
         }
 
@@ -248,7 +248,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Codigo", modeloActivo.MarcaActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo", modeloActivo.MarcaActivoId);
             return View(modeloActivo);
         }
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CopyStart.Entities
 {
-    [Table("Documentos")]
-    public class Documento
+    [Table("Archivos")]
+    public class Archivo
     {
         [Key]
         public Guid Id { get; set; }
@@ -22,5 +23,8 @@ namespace CopyStart.Entities
         //Peso en Kbytes
         [Required]
         public double? Peso { get; set; }
+
+        [NotMapped]
+        public IFormFile File { get; set; }
     }
 }

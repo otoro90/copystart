@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CopyStart.Entities.Soporte>
+﻿@model IEnumerable<CopyStart.Entities.Archivo>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentoReciboId)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CopiaFacturaFirmadaId)
+                @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentoCertificacion)
+                @Html.DisplayNameFor(model => model.Peso)
             </th>
             <th></th>
         </tr>
@@ -28,13 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DocumentoReciboId)
+                @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CopiaFacturaFirmadaId)
+                @Html.DisplayFor(modelItem => item.Tipo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DocumentoCertificacion.Nombre)
+                @Html.DisplayFor(modelItem => item.Peso)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

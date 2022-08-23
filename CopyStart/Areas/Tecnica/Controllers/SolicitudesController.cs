@@ -628,7 +628,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             ViewData["TipoDocumentoId"] = new SelectList(_context.TipoDocumento, "Id", "Nombre");
             ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Nombre");
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActvo, "Id", "Nombre");
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Nombre");
             ViewData["ModeloActivoId"] = new SelectList(_context.ModeloActivo, "Id", "Nombre");
             ViewData["DepartamentosList"] = new SelectList(_context.Ubicacion.Select(x => new { x.CodigoDepartamento, x.Departamento }).Distinct().ToList(), "CodigoDepartamento", "Departamento");
 

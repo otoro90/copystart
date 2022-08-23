@@ -21,7 +21,7 @@ namespace CopyStart.Data
 
 
         public virtual DbSet<Activo> Activo { get; set; }
-        public virtual DbSet<Documento> Certificacion { get; set; }
+        public virtual DbSet<Archivo> Archivo { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Procedimiento> Procedimiento { get; set; }
         public virtual DbSet<ProcedimientoTipoServicio> ProcedimientoTipoServicio { get; set; }
@@ -30,12 +30,11 @@ namespace CopyStart.Data
         public virtual DbSet<Servicio> Servicio { get; set; }
         public virtual DbSet<ServicioProcedimientoTipoServicio> ServicioProcedimientoTipoServicio { get; set; }
         public virtual DbSet<Solicitud> Solicitud { get; set; }
-        public virtual DbSet<Soporte> Soporte { get; set; }
         public virtual DbSet<TipoServicio> TipoServicio { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoActivo> TipoActivo { get; set; }
         public virtual DbSet<Ubicacion> Ubicacion { get; set; }
-        public virtual DbSet<MarcaActivo> MarcaActvo { get; set; }
+        public virtual DbSet<MarcaActivo> MarcaActivo { get; set; }
         public virtual DbSet<ModeloActivo> ModeloActivo { get; set; }
         public virtual DbSet<ApplicationUser> User { get; set; }
         public virtual DbSet<ApplicationUserClaim> ApplicationUserClaim { get; set; }

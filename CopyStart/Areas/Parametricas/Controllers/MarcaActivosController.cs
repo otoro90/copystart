@@ -47,7 +47,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
 
 
-            var applicationDbContext = _context.MarcaActvo.Include(m => m.TipoActivo);
+            var applicationDbContext = _context.MarcaActivo.Include(m => m.TipoActivo);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -59,7 +59,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var marcaActivo = await _context.MarcaActvo
+            var marcaActivo = await _context.MarcaActivo
                 .Include(m => m.TipoActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -167,7 +167,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var marcaActivo = await _context.MarcaActvo.FindAsync(id);
+            var marcaActivo = await _context.MarcaActivo.FindAsync(id);
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -253,7 +253,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var marcaActivo = await _context.MarcaActvo
+            var marcaActivo = await _context.MarcaActivo
                 .Include(m => m.TipoActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -311,15 +311,15 @@ namespace CopyStart.Areas.Parametricas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var marcaActivo = await _context.MarcaActvo.FindAsync(id);
-            _context.MarcaActvo.Remove(marcaActivo);
+            var marcaActivo = await _context.MarcaActivo.FindAsync(id);
+            _context.MarcaActivo.Remove(marcaActivo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MarcaActivoExists(Guid id)
         {
-            return _context.MarcaActvo.Any(e => e.Id == id);
+            return _context.MarcaActivo.Any(e => e.Id == id);
         }
     }
 }

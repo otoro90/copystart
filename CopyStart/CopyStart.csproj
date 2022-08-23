@@ -41,9 +41,9 @@
     <Folder Include="Areas\Parametricas\Data\" />
     <Folder Include="Areas\Parametricas\Models\" />
     <Folder Include="Areas\Soportes\Data\" />
-    <Folder Include="Areas\Soportes\Models\" />
     <Folder Include="Areas\Tecnica\Data\" />
     <Folder Include="Data\" />
+    <Folder Include="filesystem\archivos\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" libman_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
