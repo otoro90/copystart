@@ -42,9 +42,11 @@ namespace CopyStart.Filters
             if (context.HttpContext.Request.Path.HasValue)
             {
                 var pathSplit = context.HttpContext.Request.Path.Value.Split("/");
-                var nameScript = pathSplit.Last();
-                var page = _namePage ?? (pathSplit.Length == 4 ? nameScript != "" ? nameScript : "Index" : "Index");
-                var scriptUrl = $"/js/Areas/{pathSplit[1]}/{pathSplit[2]}/{page}.js";
+                var nameScript = _namePage ?? (pathSplit.Length == 4 ? pathSplit.Last() != "" ? pathSplit.Last() : "Index"
+                                                                     : pathSplit.Length == 5 ? pathSplit[3] : "Index");
+                var page =  nameScript;
+
+                var scriptUrl = $"/js/Areas/{pathSplit[1]}/{pathSplit[2]}/{nameScript}.js";
 
                 controller.ViewBag.ScriptUrl = scriptUrl;
                 controller.ViewBag.Page = page;

@@ -113,7 +113,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes/Create
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
-        public async Task<IActionResult> CreateAsync(string idActivo, Guid? idCliente)
+        public async Task<IActionResult> Create(string idActivo, Guid? idCliente)
         {
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -678,7 +678,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 Cliente = persona,
                 Activo = activo,
                 FechaSolicitud = DateTime.Now,
-                Direccion = activo.Direccion
+                Direccion = activo.Direccion,
+                EstadoSolicitud = "Por tramitar",
             };
             await _context.Solicitud.AddAsync(solicitud);
 

@@ -148,7 +148,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
 
-            var persona = await _context.Persona.FindAsync(id);
+            var persona = await _context.Persona.Include(a=>a.Ubicacion).FirstOrDefaultAsync(a => a.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb

@@ -47,6 +47,10 @@
                  </div>   
 
                 }
+                    <div class="col-md-3 my-2">
+                        <a asp-area="Activos" asp-controller="Activos" asp-action="Details" asp-route-id="@Model.ActivoId" role="button" class="btn btn-block btn-default btn-sm"> Ver activo</a>
+                    </div>
+      
 
         </div>
 
@@ -109,7 +113,7 @@
                 <dd class="col-sm-8">
                         @if (Model.Tecnico != null)
                         {
-                            @Html.DisplayFor(model => model.Tecnico.Nombres) @Html.DisplayFor(model => model.Tecnico.Apellidos)
+                          <p>  @Html.DisplayFor(model => model.Tecnico.Nombres) @Html.DisplayFor(model => model.Tecnico.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Tecnico.Telefono) </p>
                         }
                         else
                         {
@@ -120,7 +124,7 @@
                     @Html.DisplayNameFor(model => model.Cliente)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Cliente.Nombres) @Html.DisplayFor(model => model.Cliente.Apellidos)
+                    @Html.DisplayFor(model => model.Cliente.Nombres) @Html.DisplayFor(model => model.Cliente.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Cliente.Telefono)
                 </dd>
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Activo)

@@ -237,7 +237,7 @@ namespace CopyStart.Areas.Activos.Controllers
                 return NotFound();
             }
 
-            var activo = await _context.Activo.FindAsync(id);
+            var activo = await _context.Activo.FirstOrDefaultAsync(a => a.Id == id);
             if (activo == null)
             {
                 return NotFound();
