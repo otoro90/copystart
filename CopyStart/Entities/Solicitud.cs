@@ -29,7 +29,7 @@ namespace CopyStart.Entities
         [Display(Name = "Fecha de asignación")]
         public DateTime FechaAsignacion { get; set; }
 
-        [Display(Name = "Estado actual")]        
+        [Display(Name = "Estado actual", Prompt = "Ingrese el estado inicial de la solicitud")]        
         public string EstadoSolicitud { get; set; }
 
         [Display(Name = "Técnico")]
@@ -53,7 +53,7 @@ namespace CopyStart.Entities
         [ForeignKey("ActivoId")]
         public Activo Activo { get; set; }
 
-        [Display(Name = "Dirección")]
+        [Display(Name = "Direccion de la solicitud", Prompt = "Ingrese la direccion")]
         public string Direccion { get; set; }
     }
 }

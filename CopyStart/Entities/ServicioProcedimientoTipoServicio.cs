@@ -28,6 +28,8 @@ namespace CopyStart.Entities
         [Display(Name = "Procedimientos Realizados")]
         [Required]
         public bool ProcedimientosRealizados { get; set; }
+
+        [Display(Name = "Observaciones del procedimiento", Prompt = "Ingrese la observacion")]
         public string Observaciones { get; set; }
     }
 }

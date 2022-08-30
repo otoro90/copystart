@@ -41,6 +41,7 @@ namespace CopyStart.Entities
         [ForeignKey("TipoServicioId")]
         public TipoServicio TipoServicios { get; set; }
 
+        [Display(Name = "Observaciones finales", Prompt = "Ingrese observaciones, si las hay")]
         public string Observaciones { get; set; }
 
         public IEnumerable<ServicioProcedimientoTipoServicio> ProcedimientosRealizados { get; set; }

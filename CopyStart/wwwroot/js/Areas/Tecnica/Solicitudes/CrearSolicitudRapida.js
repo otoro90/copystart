@@ -32,13 +32,14 @@
 
 
             this.selectPersonaDepartamento.on('select2:select', function (e) {
+                debugger
                 var data = e.params.data;
                 CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectPersonaUbicacion, data.id);
                 CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id);
             });
             this.selectActivoDepartamento.on('select2:select', function (e) {
                 var data = e.params.data;
-                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id);
+                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id, { disabled:false});
             });
 
             this.selectPersonaDepartamento.on('select2:clear', function (e) {
@@ -51,6 +52,7 @@
         },
 
         initSelectMunicipio: function (selectMunicipio, codigoDepartamento, properties, functionBeforeInit) {
+            debugger
             if (codigoDepartamento) {
                 $.ajax({
                     url: '/Parametricas/Ubicaciones/GetMunicipios?codigoDepartamento=' + codigoDepartamento,
@@ -130,7 +132,7 @@
 
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
+                dataType: 'json', 
                 type: 'GET',
                 url: `/Activos/Activos/GetActivoBySerial?serial=${serial}`,
                 success: function (response) {

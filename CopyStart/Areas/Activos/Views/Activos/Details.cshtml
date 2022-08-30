@@ -37,7 +37,7 @@
                 @if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
                 {
                     <div class="col-md-3 my-2">
-                        <a asp-area="Administracion" asp-controller="Personas" asp-action="Details" asp-route-id="@Model.PersonaId" role="button" class="btn btn-block btn-default btn-sm">Ir a cliente</a>
+                        <a asp-area="Administracion" asp-controller="Personas" asp-action="Details" asp-route-id="@Model.PersonaId" role="button" class="btn btn-block btn-default btn-sm">Ver cliente</a>
                     </div>
                 }
             </div>
