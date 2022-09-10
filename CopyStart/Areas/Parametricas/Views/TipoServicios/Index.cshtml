@@ -6,7 +6,6 @@
 
 <div class="row ml-3 mb-2">
     <div class="col-md-3">
-    
     </div>
 </div>
 
@@ -16,27 +15,27 @@
 
 
             <div class="card-body table-responsive">
-                
+
 
                 <table class="table table-bordered table-hover text-center" id="table-tiposervicios">
-                   
-                    <thead >
-                        
+
+                    <thead>
+
                         <tr>
                             <div class="col-12 mb-4">
-                                <h4>Index de ubicaciones</h4> 
-                              </div>
+                                <h4>Index de tipos de servicios</h4>
+                            </div>
 
-                             <div class="col-12 mb-2">
+                            <div class="col-12 mb-2">
                                 <a asp-action="Create" class="btn btn-default bg-primary" role="button">
                                     Registrar
                                 </a>
                             </div>
-                             
+
                             <th>
                                 @Html.DisplayNameFor(model => model.Nombre)
                             </th>
-                             <th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.TipoActivo)
                             </th>
 
@@ -60,9 +59,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nombre)
                                 </td>
-                                 <th>
-                                @Html.DisplayFor(modelItem => item.TipoActivo.Nombre)
-                            </th>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoActivo.Nombre)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Descripcion)
                                 </td>
@@ -74,12 +73,12 @@
                                 </td>
 
                                 <td>
-                                    
+
                                     <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
 
-                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
 
-                                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
 
                                 </td>
                             </tr>

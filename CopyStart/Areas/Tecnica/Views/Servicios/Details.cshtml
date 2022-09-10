@@ -31,14 +31,14 @@
 
 
 
-                @if((Model.Estado=="Por confirmar")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordiandor")))
+                @if((Model.Estado=="Por confirmar")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
                 {
                     <div class="col-md-3 my-2">
                         <a asp-action="ConfirmarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Iniciar procedimientos</a>
 
                     </div>
                 }
-                 @if((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordiandor")))
+                 @if((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
                 {
                     <div class="col-md-3 my-2">
                         <a asp-action="AgregarObservaciones" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Agregar observaciones</a>
@@ -48,7 +48,7 @@
 
 
                
-                @if ((Model.Estado!="Por confirmar")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordiandor")))
+                @if ((Model.Estado!="Por confirmar")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
                 {
                 <div class="col-md-3 my-2">
                     <a asp-action="EjecucionProcedimientos" asp-route-idServicio="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver procedimientos </a>
@@ -56,7 +56,7 @@
                 </div>
                 }
 
-                 @if ((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordiandor")))
+                 @if ((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
                 {
                 <div class="col-md-3 my-2">
                     <a asp-action="FinalizarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Finalizar Servicio </a>
@@ -82,13 +82,13 @@
                     Cliente
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Activo.Persona.Nombres) @Html.DisplayFor(model => model.Activo.Persona.Apellidos) Contacto: @Html.DisplayFor(model => model.Activo.Persona.Telefono)
+                    @Html.DisplayFor(model => model.Activo.Persona.Nombres) @Html.DisplayFor(model => model.Activo.Persona.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Activo.Persona.Telefono)
                 </dd>
                  <dt class="col-sm-4">
                    Tecnico
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Solicitudes.Tecnico.Nombres) @Html.DisplayFor(model => model.Solicitudes.Tecnico.Apellidos) Contacto: @Html.DisplayFor(model => model.Solicitudes.Tecnico.Telefono)
+                    @Html.DisplayFor(model => model.Solicitudes.Tecnico.Nombres) @Html.DisplayFor(model => model.Solicitudes.Tecnico.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Solicitudes.Tecnico.Telefono)
                 </dd>
                  <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Solicitudes)
@@ -97,7 +97,8 @@
                     @Html.DisplayFor(model => model.Solicitudes.Incidencia)
                 </dd>
                 <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Estado)
+                    @Html.DisplayNameFor(model => model.Estado)                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                   
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Estado)
@@ -127,6 +128,60 @@
 
                
             </dl>
+
+             @if ((User.IsInRole("Administrador")||(User.IsInRole("Coordinador")||(User.IsInRole("Tecnico")))&&(Model.Estado!="Por confirmar")))
+            {
+                <h2>Soportes del servicio</h2>
+
+                <div class="row my-4">
+                    <table class="col-12">
+                        <thead>
+                             <tr>
+                            
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Tipo de documento
+                            </th>
+
+                            <th>
+                               Peso
+                            </th>
+
+                            <th></th>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.Archivos)
+                            {
+                              
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem =>item.Archivo.Nombre)
+                                        </td>
+                                         <td>
+                                            @Html.DisplayFor(modelItem =>item.Archivo.Tipo)
+                                        </td>
+                                         <td>
+                                            @Html.DisplayFor(modelItem =>item.Archivo.Peso) KB
+                                        </td>
+                                        <td class="float-right">
+                                              <a asp-action="Download" asp-route-area="Soportes" asp-route-controller="Archivos" asp-route-id="@item.ArchivoId" role="button" class="btn btn-default bg-primary"><i class="fas fa-download"></i></a>
+                                             <a  asp-action="DeleteSoporte" asp-route-idservicio="@Model.Id" asp-route-idsoporte="@item.ArchivoId" role="button" class="btn btn-default bg-red"><i class="far fa-trash-alt"></i></a> 
+                                           
+                                        </td>
+                                        
+
+                                    </tr>
+                                
+                            }
+                        </tbody>
+                </table>
+
+            </div>
+            }
+
         </div>
     </div>
 </div>

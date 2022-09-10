@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,6 +29,7 @@ namespace CopyStart.Entities
         public Activo Activo { get; set; }
 
         [Display(Name = "Solicitud")]
+        [Required]
         public long SolicitudId { get; set; }
 
         [Display(Name = "Solicitud")]
@@ -35,6 +37,7 @@ namespace CopyStart.Entities
         public Solicitud Solicitudes { get; set; }
 
         [Display(Name = "Tipo de Servicio")]
+        [Required]
         public Guid? TipoServicioId { get; set; }
 
         [Display(Name = "Tipo de Servicio")]
@@ -44,6 +47,10 @@ namespace CopyStart.Entities
         [Display(Name = "Observaciones finales", Prompt = "Ingrese observaciones, si las hay")]
         public string Observaciones { get; set; }
 
+
         public IEnumerable<ServicioProcedimientoTipoServicio> ProcedimientosRealizados { get; set; }
+
+        public ICollection<ArchivoServicio> Archivos { get; set; }
     }
 }
+

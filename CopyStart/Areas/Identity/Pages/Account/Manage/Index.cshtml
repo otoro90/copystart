@@ -108,9 +108,12 @@
                                     </div>
                                     <div class=" col-md-8 text-center">
                                         <span class="collapses">@Model.PersonaInput.Ubicacion.Municipio</span>
-                                        <select asp-for="PersonaInput.UbicacionId" class="form-control collapse multi-collapse" id="multiCollapse7" asp-items="ViewBag.UbicacionId"><option></option></select>                           
+                                        <div class="collapse multi-collapse" id="multiCollapse7" >                                        
+                                          <select asp-for="PersonaInput.UbicacionId" class="form-control" asp-items="ViewBag.UbicacionId">
+                                    </select>
                                     </div>
-
+                                    </div>
+                                    
                                 </div>
 
                              
@@ -129,7 +132,7 @@
                                 <div>
 
                                     <button class="btn btn-primary " type="button" id="btntoggle" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
-                                            aria-controls=" multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8  update-profile-button" onclick="alternarInput()">
+                                            aria-controls=" multiCollapse5 multiCollapse6 multiCollapse7 multiCollapse8 update-profile-button" onclick="alternarInput()">
                                         Editar
                                     </button>
 

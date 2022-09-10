@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using CopyStart.Models;
 using CopyStart.Filters;
 using CopyStart.Areas.Tecnica.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace CopyStart.Areas.Tecnica.Controllers
 {
@@ -21,11 +22,13 @@ namespace CopyStart.Areas.Tecnica.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public ServiciosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ServiciosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         // GET: Tecnica/Servicios
@@ -81,17 +84,18 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [Authorize(Roles = "Administrador, Coordinador, Tecnico, Cliente")]
         public async Task<IActionResult> Details(long? id)
         {
+                
 
-            Servicio servicio;
-
-            servicio = await _context.Servicio
+ 
+            var servicio = await _context.Servicio
                             .Include(s => s.Activo).ThenInclude(x => x.Persona)
-                            .Include(s => s.Activo.MarcaActivo).
-                            Include(s => s.Activo.ModeloActivo)
+                            .Include(s => s.Activo.MarcaActivo)
+                            .Include(s => s.Activo.ModeloActivo)
                             .Include(s => s.Solicitudes.Tecnico)
                             .Include(s => s.Solicitudes)
-                            .Include(s => s.TipoServicios)
+                            .Include(s => s.TipoServicios).Include(s=>s.Archivos).ThenInclude(u => u.Archivo)
                             .FirstOrDefaultAsync(m => m.Id == id);
+          
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -161,7 +165,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             ViewBag.Breadcrumbs = breadcrumbList;
 
             ViewData["ActivoId"] = new SelectList(_context.Activo.Where(x => x.Estado != "Eliminado"), "Id", "Serial", solicitud.ActivoId);
-            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", idSolicitud);
+            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Incidencia", idSolicitud);
             ViewData["TipoServicioId"] = new SelectList(_context.TipoServicio.Where(x => x.TipoActivoId == solicitud.Activo.TipoActivoId), "Id", "Nombre");
 
 
@@ -189,8 +193,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
-            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Serial", servicio.ActivoId);
+            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Incidencia", servicio.SolicitudId);
             return View(servicio);
         }
 
@@ -208,8 +212,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 return NotFound();
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "MarcaActivo", servicio.ActivoId);
-            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Serial", servicio.ActivoId);
+            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Incidencia", servicio.SolicitudId);
             return View(servicio);
         }
 
@@ -246,8 +250,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Marca", servicio.ActivoId);
-            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Descripcion", servicio.SolicitudId);
+            ViewData["ActivoId"] = new SelectList(_context.Activo, "Id", "Serial", servicio.ActivoId);
+            ViewData["SolicitudId"] = new SelectList(_context.Solicitud, "Id", "Incidencia", servicio.SolicitudId);
             return View(servicio);
         }
 
@@ -628,13 +632,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 return NotFound();
             }
 
-            var servicio = await _context.Servicio.FindAsync(id);
-            if (servicio == null)
-            {
-                return NotFound();
-            }
-            ViewData["Observaciones"] = servicio.Observaciones;
-            return View(servicio);
+           
+            return View();
         }
 
         // POST: Tecnica/Servicios/Edit/5
@@ -643,38 +642,67 @@ namespace CopyStart.Areas.Tecnica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
-        public async Task<IActionResult> AgregarObservaciones(long id, [Bind("Observaciones")] AggObservaciones Ob)
+        public async Task<IActionResult> AgregarObservaciones(long id, [Bind("Observaciones,File")] AggObservaciones Ob)
         {
 
+
             var servicio = await _context.Servicio.FindAsync(id);
+            servicio.Observaciones = Ob.Observaciones;
+
             if (id != servicio.Id)
             {
                 return NotFound();
             }
-            servicio.Observaciones = Ob.Observaciones;
             if (ModelState.IsValid)
             {
-                try
+                _context.Update(servicio);
+                await _context.SaveChangesAsync();
+
+            }
+
+            
+            foreach (var a in Ob.File)
+            {
+                var archivo = new Archivo();
+                archivo.Tipo = a.FileName.Split(".").Last();
+                archivo.Nombre = a.FileName.Substring(0, a.FileName.Length - (archivo.Tipo.Length + 1));
+                archivo.Peso = a.Length;
+                if (ModelState.IsValid)
                 {
-                    _context.Update(servicio);
+                    archivo.Id = Guid.NewGuid();
+                    _context.Add(archivo);
+                    await _context.SaveChangesAsync();
+                    var basePath = _configuration["PathBaseFiles"] + "/" + archivo.Id;
+
+                    using (var fileStream = System.IO.File.Create(basePath))
+                    {
+                        await a.CopyToAsync(fileStream);
+                    }
+                    var arcser = new ArchivoServicio { ArchivoId = archivo.Id, ServicioId = servicio.Id };
+                    _context.Add(arcser);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!ServicioExists(servicio.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ViewData["Observaciones"] = servicio.Observaciones;
+                    return View(servicio);
                 }
-                return RedirectToAction(nameof(Index));
+               
             }
-            ViewData["Observaciones"] = servicio.Observaciones;
-            return View(servicio);
+
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = id });
+
         }
+
+        public async Task<IActionResult> DeleteSoporte(long idservicio, Guid idsoporte)
+        {
+            var archivoServicio = await _context.ArchivoServicio.FindAsync(idservicio, idsoporte);
+            _context.ArchivoServicio.Remove(archivoServicio);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = idservicio });
+        }
+
+
     }
 }
 

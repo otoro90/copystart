@@ -43,7 +43,7 @@
                             <form asp-action="Delete">
                                 <input type="hidden" asp-for="Id" />
                                  <input type="submit" value="Borrar" class="btn btn-danger" />
-                                 <button type="button" class="btn btn-default"> <a asp-action="Index">Volver</a></button>
+                                 <button type="button" class="btn btn-default"> <a asp-action="Index" asp-route-tipoServicioId="@Model.TipoServicioId">Volver</a></button>
                             </form></div>
                     
                          </div>
