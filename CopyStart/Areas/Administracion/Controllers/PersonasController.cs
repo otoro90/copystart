@@ -148,7 +148,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 return NotFound();
             }
 
-            var persona = await _context.Persona.Include(a=>a.Ubicacion).FirstOrDefaultAsync(a => a.Id == id);
+            var persona = await _context.Persona.FirstOrDefaultAsync(a => a.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -205,7 +205,7 @@ namespace CopyStart.Areas.Administracion.Controllers
         [ValidateAntiForgeryToken]
         [UrlScriptActionFilter]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado")] Persona persona)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombres,Apellidos,TipoDocumentoId,NumeroDocumento,Direccion,Ciudad,Telefono,Estado,UbicacionId")] Persona persona)
         {
             if (id != persona.Id)
             {
@@ -491,7 +491,7 @@ namespace CopyStart.Areas.Administracion.Controllers
 
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Personas", new { area = "Administracion" });
+            return RedirectToAction("Details", "Personas", new { area = "Administracion", id = id });
 
         }
 

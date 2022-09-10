@@ -18,14 +18,19 @@
             </div>
 
             <div class="row">
-
-                 <div class="col-md-3 my-2">
-                    <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
-                </div>
+                @if (User.IsInRole("Cliente") || User.IsInRole("Coordinador"))
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
+                    </div>
+                }
+                @if((User.IsInRole("Cliente")||User.IsInRole("Coordinador"))&&(Model.Estado!="Eliminado"))
+                {
                 <div class="col-md-3 my-2">
                     <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
-                </div>               
-                @if (User.IsInRole("Cliente")||User.IsInRole("Coordinador"))
+                </div>
+                }
+                @if ((User.IsInRole("Cliente")||User.IsInRole("Coordinador"))&&(Model.Estado!="Eliminado"))
                 {
                 <div class="col-md-3 my-2">
                     <a asp-area="Tecnica" asp-controller="Solicitudes" asp-action="Create" asp-route-idActivo="@Model.Id" asp-route-idCliente="@Model.PersonaId" type="button" class="btn btn-block btn-default btn-sm">Solicitar</a>

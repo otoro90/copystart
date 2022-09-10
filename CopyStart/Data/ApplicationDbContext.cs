@@ -29,6 +29,7 @@ namespace CopyStart.Data
         public virtual DbSet<RepuestoProcedimiento> RepuestoProcedimiento { get; set; }
         public virtual DbSet<Servicio> Servicio { get; set; }
         public virtual DbSet<ServicioProcedimientoTipoServicio> ServicioProcedimientoTipoServicio { get; set; }
+        public virtual DbSet<ArchivoServicio> ArchivoServicio { get; set; }
         public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<TipoServicio> TipoServicio { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
@@ -70,9 +71,8 @@ namespace CopyStart.Data
               .HasIndex(p => new { p.Id, p.Serial })
               .IsUnique(true);
 
-            modelBuilder.Entity<Persona>()
-             .HasIndex(p => new { p.Id, p.NumeroDocumento })
-             .IsUnique(true);
+            modelBuilder.Entity<ArchivoServicio>().HasKey(p => new { p.ServicioId, p.ArchivoId });          
+
 
             modelBuilder.Entity<Persona>()
              .HasIndex(p => new { p.NumeroDocumento })

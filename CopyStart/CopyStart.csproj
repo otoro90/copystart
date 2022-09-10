@@ -44,6 +44,7 @@
     <Folder Include="Areas\Tecnica\Data\" />
     <Folder Include="Data\" />
     <Folder Include="filesystem\archivos\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" libman_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

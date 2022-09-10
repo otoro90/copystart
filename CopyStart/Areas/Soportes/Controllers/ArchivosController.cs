@@ -10,6 +10,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Http;
 using CopyStart.Areas.Soportes.Models;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace CopyStart.Areas.Soportes.Controllers
 {
@@ -50,9 +51,12 @@ namespace CopyStart.Areas.Soportes.Controllers
         }
 
         // GET: Soportes/Archivos/Create
+      
+
         public IActionResult Create()
         {
-            return View();
+            ArchivoVM model = new ArchivoVM();
+            return View(model);
         }
 
         // POST: Soportes/Archivos/Create
@@ -60,29 +64,31 @@ namespace CopyStart.Areas.Soportes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("File")] ArchivoVM archivoVM)
+        public async Task<IActionResult> CreateArc(ArchivoVM archivovm)
         {
+            
             var archivo = new Archivo();
-            archivo.Tipo = archivoVM.File.FileName.Split(".").Last();
-            archivo.Nombre = archivoVM.File.FileName.Substring(0, archivoVM.File.FileName.Length - (archivo.Tipo.Length+1));
-            archivo.Peso = archivoVM.File.Length;
+            foreach(var a in archivovm.File) { 
+            archivo.Tipo = a.FileName.Split(".").Last();
+            archivo.Nombre = a.FileName.Substring(0, a.FileName.Length - (archivo.Tipo.Length+1));
+            archivo.Peso = a.Length;
             if (ModelState.IsValid)
             {
                 archivo.Id = Guid.NewGuid();
                 _context.Add(archivo);
 
-                var basePath = _configuration["PathBaseFiles"];
+                var basePath = _configuration["PathBaseFiles"]+"/"+archivo.Id;
 
                 using (var fileStream = System.IO.File.Create(basePath))
                 {
-                    await archivoVM.File.CopyToAsync(fileStream);
+                    await a.CopyToAsync(fileStream);
                 }
-
+                }
                 await _context.SaveChangesAsync();
+            }
 
                 return RedirectToAction(nameof(Index));
-            }
-            return View(archivoVM);
+        
         }
 
         // GET: Soportes/Archivos/Delete/5
@@ -95,12 +101,13 @@ namespace CopyStart.Areas.Soportes.Controllers
 
             var archivo = await _context.Archivo
                 .FirstOrDefaultAsync(m => m.Id == id);
+          
             if (archivo == null)
             {
                 return NotFound();
             }
 
-            return View(archivo);
+        return View(archivo);
         }
 
         // POST: Soportes/Archivos/Delete/5
@@ -109,7 +116,12 @@ namespace CopyStart.Areas.Soportes.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var archivo = await _context.Archivo.FindAsync(id);
+            
+            var basePath = _configuration["PathBaseFiles"] + "/" + archivo.Id;
+
+            System.IO.File.Delete(basePath);
             _context.Archivo.Remove(archivo);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -117,6 +129,22 @@ namespace CopyStart.Areas.Soportes.Controllers
         private bool ArchivoExists(Guid id)
         {
             return _context.Archivo.Any(e => e.Id == id);
+        }
+
+
+        public async Task<IActionResult> Download(Guid id)
+        {
+            var archivo = await _context.Archivo.FindAsync(id);
+
+            var basePath = _configuration["PathBaseFiles"] + "/" + archivo.Id;
+
+            string fileName = archivo.Nombre + "." + archivo.Tipo;
+
+
+            byte[] bytes = System.IO.File.ReadAllBytes(basePath);
+            
+
+            return File(bytes, "application/octet-stream", fileName);
         }
     }
 }

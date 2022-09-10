@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CopyStart.Data;
 using CopyStart.Entities;
+using CopyStart.Filters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -114,7 +115,7 @@ namespace CopyStart.Areas.Identity.Pages.Account.Manage
                 return RedirectToAction("CompleteData", "Personas", new { area = "Administracion" });
 
             }
-            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion.Select(x => new { Id = x.CodigoMunicipio, Texto = x.Municipio + ", " + x.Departamento }), "Id", "Texto");
+            ViewData["UbicacionId"] = new SelectList(_context.Ubicacion.Select(x => new { Id = x.CodigoMunicipio, Texto = x.Departamento  + ", " + x.Municipio }), "Id", "Texto");
             await LoadAsync(user);
             
             return Page();

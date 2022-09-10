@@ -113,6 +113,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
         // GET: Tecnica/Solicitudes/Create
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+        [UrlScriptActionFilter]
         public async Task<IActionResult> Create(string idActivo, Guid? idCliente)
         {
             var breadcrumbList = new List<Breadcrumb>();
@@ -149,7 +150,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id");
 
-                ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Where(a => (a.Estado != "Eliminado") && (a.PersonaId == idCliente)).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
+            ViewData["ActivoId"] = new SelectList(_context.Set<Activo>().Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Where(a => (a.Estado != "Eliminado") && (a.PersonaId == idCliente)).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", idActivo);
             
            
 
@@ -162,6 +163,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UrlScriptActionFilter]
         [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> Create([Bind("Id,Incidencia,Descripcion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
@@ -180,7 +182,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActivoId"] = new SelectList(_context.Activo.Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto");
+            ViewData["ActivoId"] = new SelectList(_context.Set<Activo>().Include(s => s.MarcaActivo).Include(s => s.ModeloActivo).Where(a => (a.Estado != "Eliminado") && (a.PersonaId == solicitud.ClienteId)).Select(x => new { Id = x.Id, Texto = x.MarcaActivo.Nombre + " - " + x.ModeloActivo.Nombre + ". Sn " + x.Serial }), "Id", "Texto", solicitud.ActivoId);
             ViewData["ClienteId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.ClienteId);
             ViewData["TecnicoId"] = new SelectList(_context.Persona, "Id", "Id", solicitud.TecnicoId);
 
@@ -189,7 +191,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
         // GET: Tecnica/Solicitudes/Edit/5
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> Edit(long? id)
         {
 
@@ -216,7 +218,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador, Cliente")]
+        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Incidencia,Descripcion,FechaSolicitud,EstadoSolicitud,TecnicoId,ClienteId,ActivoId")] Solicitud solicitud)
         {
             if (id != solicitud.Id)
@@ -670,15 +672,18 @@ namespace CopyStart.Areas.Tecnica.Controllers
             {
                 activo = solicitudform.Activo;
                 activo.Persona = persona;
+                activo.FechaRegistro = DateTime.Now;
+                activo.Estado = "Inactivo";
             }
 
             var solicitud = new Solicitud()
             {
                 Incidencia = solicitudform.Solicitud.Incidencia,
+                Descripcion = solicitudform.Solicitud.Descripcion,
                 Cliente = persona,
                 Activo = activo,
                 FechaSolicitud = DateTime.Now,
-                Direccion = activo.Direccion,
+                Direccion = activo.Direccion,              
                 EstadoSolicitud = "Por tramitar",
             };
             await _context.Solicitud.AddAsync(solicitud);

@@ -11,14 +11,17 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         [MaxLength(200)]
         [Display(Name = "Nombres", Prompt = "Ingrese nombres de la persona")]
         public string Nombres { get; set; }
 
+        [Required]
         [MaxLength(200)]
         [Display(Name = "Apellidos", Prompt = "Ingrese apellidos de la persona")]
         public string Apellidos { get; set; }
 
+        [Required]
         [Display(Name = "Tipo de documento")]
         public Guid TipoDocumentoId { get; set; }
 
@@ -42,6 +45,7 @@ namespace CopyStart.Entities
         public Ubicacion Ubicacion { get; set; }
 
         [Display(Name = "Teléfono o celular", Prompt ="Ingrese número telefónico de contacto")]
+        [Required]
         public long Telefono { get; set; }
 
         [Display(Name = "Estado")]
