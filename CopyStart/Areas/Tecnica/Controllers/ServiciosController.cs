@@ -647,57 +647,72 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
 
             var servicio = await _context.Servicio.FindAsync(id);
-            servicio.Observaciones = Ob.Observaciones;
-
             if (id != servicio.Id)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            if (((User.IsInRole("Tecnico")) && (servicio.Estado != "En ejecucion")) || ((User.IsInRole("Coordinador")) && (servicio.Estado != "Por confirmar")))
             {
-                _context.Update(servicio);
-                await _context.SaveChangesAsync();
+                servicio.Observaciones = Ob.Observaciones;
 
-            }
 
-            
-            foreach (var a in Ob.File)
-            {
-                var archivo = new Archivo();
-                archivo.Tipo = a.FileName.Split(".").Last();
-                archivo.Nombre = a.FileName.Substring(0, a.FileName.Length - (archivo.Tipo.Length + 1));
-                archivo.Peso = a.Length;
                 if (ModelState.IsValid)
                 {
-                    archivo.Id = Guid.NewGuid();
-                    _context.Add(archivo);
+                    _context.Update(servicio);
                     await _context.SaveChangesAsync();
-                    var basePath = _configuration["PathBaseFiles"] + "/" + archivo.Id;
 
-                    using (var fileStream = System.IO.File.Create(basePath))
-                    {
-                        await a.CopyToAsync(fileStream);
-                    }
-                    var arcser = new ArchivoServicio { ArchivoId = archivo.Id, ServicioId = servicio.Id };
-                    _context.Add(arcser);
-                    await _context.SaveChangesAsync();
                 }
-                else
+
+
+                foreach (var a in Ob.File)
                 {
-                    ViewData["Observaciones"] = servicio.Observaciones;
-                    return View(servicio);
-                }
-               
-            }
+                    var archivo = new Archivo();
+                    archivo.Tipo = a.FileName.Split(".").Last();
+                    archivo.Nombre = a.FileName.Substring(0, a.FileName.Length - (archivo.Tipo.Length + 1));
+                    archivo.Peso = a.Length;
+                    if (ModelState.IsValid)
+                    {
+                        archivo.Id = Guid.NewGuid();
+                        _context.Add(archivo);
+                        await _context.SaveChangesAsync();
+                        var basePath = _configuration["PathBaseFiles"] + "/" + archivo.Id;
 
+                        using (var fileStream = System.IO.File.Create(basePath))
+                        {
+                            await a.CopyToAsync(fileStream);
+                        }
+                        var arcser = new ArchivoServicio { ArchivoId = archivo.Id, ServicioId = servicio.Id };
+                        _context.Add(arcser);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        ViewData["Observaciones"] = servicio.Observaciones;
+                        return View(servicio);
+                    }
+
+                }
+            }
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = id });
 
         }
 
+        [Authorize(Roles = "Administrador, Coordinador, Tecnico")]
         public async Task<IActionResult> DeleteSoporte(long idservicio, Guid idsoporte)
         {
+            var servicio = await _context.Servicio.FindAsync(idservicio);
+            if (servicio.Estado == "Finalizado")
+            {
+                return BadRequest();
+            }
+
+
             var archivoServicio = await _context.ArchivoServicio.FindAsync(idservicio, idsoporte);
             _context.ArchivoServicio.Remove(archivoServicio);
+            var archivo = await _context.Archivo.FindAsync(idsoporte);
+            var basePath = _configuration["PathBaseFiles"] + "/" + archivo.Id;
+            System.IO.File.Delete(basePath);
+            _context.Archivo.Remove(archivo);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", "Servicios", new { area = "Tecnica", id = idservicio });
         }
