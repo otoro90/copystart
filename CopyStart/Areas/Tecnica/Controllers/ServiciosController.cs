@@ -701,7 +701,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         public async Task<IActionResult> DeleteSoporte(long idservicio, Guid idsoporte)
         {
             var servicio = await _context.Servicio.FindAsync(idservicio);
-            if (servicio.Estado == "Finalizado")
+            if ((servicio.Estado == "Finalizado")&&(User.IsInRole("Tecnico")))
             {
                 return BadRequest();
             }
