@@ -32,14 +32,12 @@
 
 
             this.selectPersonaDepartamento.on('select2:select', function (e) {
-                debugger
                 var data = e.params.data;
-                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectPersonaUbicacion, data.id);
-                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id);
+                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectPersonaUbicacion, data.id, { disabled: false });
             });
             this.selectActivoDepartamento.on('select2:select', function (e) {
                 var data = e.params.data;
-                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id, { disabled:false});
+                CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion, data.id, { disabled: false });
             });
 
             this.selectPersonaDepartamento.on('select2:clear', function (e) {
@@ -52,7 +50,6 @@
         },
 
         initSelectMunicipio: function (selectMunicipio, codigoDepartamento, properties, functionBeforeInit) {
-            debugger
             if (codigoDepartamento) {
                 $.ajax({
                     url: '/Parametricas/Ubicaciones/GetMunicipios?codigoDepartamento=' + codigoDepartamento,
@@ -100,14 +97,16 @@
                         $("#Persona_Telefono").val(response.telefono).prop('readonly', true);
                         $("#Persona_Direccion").val(response.direccion);
                         ///selects ubicacion
-                        var codeDepartamento = response.ubicacionId.substring(0, 2);
-                        site.initSelect2(CrearSolicitudRapida.selectPersonaDepartamento.val(codeDepartamento).trigger("change"), { disabled: "readonly" });
-                        CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectPersonaUbicacion, codeDepartamento, { disabled: "readonly" },
-                            () => CrearSolicitudRapida.selectPersonaUbicacion.val(response.ubicacionId).trigger("change"));
+                        if (response.ubicacionId) {
+                            var codeDepartamento = response.ubicacionId.substring(0, 2);
+                            site.initSelect2(CrearSolicitudRapida.selectPersonaDepartamento.val(codeDepartamento).trigger("change"), { disabled: "readonly" });
+                            CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectPersonaUbicacion, codeDepartamento, { disabled: "readonly" },
+                                () => CrearSolicitudRapida.selectPersonaUbicacion.val(response.ubicacionId).trigger("change"));
+                        }
                     }
                     else {
                         CrearSolicitudRapida.inputsPersonaHidden.forEach(x => {
-                            site.initSelect2($(x).find("select").val("").trigger("change").prop('readonly', false));
+                            site.initSelect2($(x).find("select").val("").trigger("change").prop('readonly', false), { disabled: false });
                             $(x).find("input").val("").prop('readonly', false);
                         });
                         alert('Persona no registrada, ingrese sus datos');
@@ -124,6 +123,7 @@
 
         buscarEquipo: function () {
             var serial = document.getElementById("Activo_Serial").value;
+            var documento = document.getElementById("Persona_NumeroDocumento").value;
 
             if (!serial) {
                 alert('El serial es un campo obligatorio');
@@ -132,9 +132,9 @@
 
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
-                dataType: 'json', 
+                dataType: 'json',
                 type: 'GET',
-                url: `/Activos/Activos/GetActivoBySerial?serial=${serial}`,
+                url: `/Activos/Activos/GetActivoBySerial?serial=${serial}&documento=${documento}`,
                 success: function (response) {
                     if (response) {
                         site.initSelect2($("#Activo_TipoActivoId").val(response.tipoActivoId).trigger("change").prop('readonly', true), { disabled: "readonly" });
@@ -142,17 +142,20 @@
                         site.initSelect2($("#Activo_ModeloActivoId").val(response.modeloActivoId).trigger("change").prop('readonly', true), { disabled: "readonly" });
                         $("#Activo_Direccion").val(response.direccion).prop('readonly', true);
                         ///selects ubicacion
-                        var codeDepartamento = response.ubicacionId.substring(0, 2);
-                        site.initSelect2(CrearSolicitudRapida.selectActivoDepartamento.val(codeDepartamento).trigger("change").prop('readonly', true), { disabled: "readonly" });
-                        CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion,
-                            codeDepartamento,
-                            { disabled: "readonly" },
-                            () => CrearSolicitudRapida.selectActivoUbicacion.val(response.ubicacionId).trigger("change").prop('readonly', true));
+                        if (response.ubicacionId) {
+                            var codeDepartamento = response.ubicacionId.substring(0, 2);
+                            site.initSelect2(CrearSolicitudRapida.selectActivoDepartamento.val(codeDepartamento).trigger("change").prop('readonly', true), { disabled: "readonly" });
+                            CrearSolicitudRapida.initSelectMunicipio(CrearSolicitudRapida.selectActivoUbicacion,
+                                codeDepartamento,
+                                { disabled: "readonly" },
+                                () => CrearSolicitudRapida.selectActivoUbicacion.val(response.ubicacionId).trigger("change").prop('readonly', true));
+                        }
 
                     }
                     else {
                         CrearSolicitudRapida.inputsActivoHidden.forEach(x => {
-                            $(x).find("input,select").val("").trigger("change").prop('readonly', false);
+                            site.initSelect2($(x).find("select").val("").trigger("change").prop('readonly', false), { disabled: false });
+                            $("#Activo_Direccion").val($("#Persona_Direccion").val()).prop('readonly', false);
                         });
                         ///selects ubicacion
                         CrearSolicitudRapida.selectActivoDepartamento.val(CrearSolicitudRapida.selectPersonaDepartamento.val()).trigger("change").prop('readonly', false);

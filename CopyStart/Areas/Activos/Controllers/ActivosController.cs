@@ -553,9 +553,9 @@ namespace CopyStart.Areas.Activos.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetActivoBySerial(string serial)
+        public async Task<IActionResult> GetActivoBySerial(string serial, string documento)
         {
-            var activo = await _context.Activo.FirstOrDefaultAsync(x => x.Serial == serial);
+            var activo = await _context.Activo.Include(x=>x.Persona).FirstOrDefaultAsync(x => (x.Serial == serial)&&(x.Persona.NumeroDocumento==documento)&&(x.Estado!="Eliminado"));
 
             return Json(activo);
         }

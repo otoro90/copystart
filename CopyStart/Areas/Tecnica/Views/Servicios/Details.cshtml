@@ -38,7 +38,7 @@
 
                     </div>
                 }
-                 @if((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
+                 @if(((User.IsInRole("Tecnico"))&&(Model.Estado!="En ejecucion"))||((User.IsInRole("Coordinador"))&&(Model.Estado!="Por confirmar")))
                 {
                     <div class="col-md-3 my-2">
                         <a asp-action="AgregarObservaciones" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Agregar observaciones</a>
@@ -168,8 +168,10 @@
                                         </td>
                                         <td class="float-right">
                                               <a asp-action="Download" asp-route-area="Soportes" asp-route-controller="Archivos" asp-route-id="@item.ArchivoId" role="button" class="btn btn-default bg-primary"><i class="fas fa-download"></i></a>
-                                             <a  asp-action="DeleteSoporte" asp-route-idservicio="@Model.Id" asp-route-idsoporte="@item.ArchivoId" role="button" class="btn btn-default bg-red"><i class="far fa-trash-alt"></i></a> 
-                                           
+                                            
+                                              @if(User.IsInRole("Coordinador")||User.IsInRole("Tecnico")){
+                                              <a  asp-action="DeleteSoporte" asp-route-idservicio="@Model.Id" asp-route-idsoporte="@item.ArchivoId" role="button" class="btn btn-default bg-red"><i class="far fa-trash-alt"></i></a> 
+                                           }
                                         </td>
                                         
 
