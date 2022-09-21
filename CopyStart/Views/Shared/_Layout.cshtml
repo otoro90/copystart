@@ -12,19 +12,130 @@
 
     <title>CopyStart | @ViewData["Title"]</title>
 
-    <link rel="icon" type="image/png" href="~/lib/admin-lte/dist/img/AdminLTELogo.png" />
+    <link rel="icon" type="image/png" href="~/images/logo.svg" />
+
 
     @await Html.PartialAsync("Layout/_Styles.cshtml")
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box w-50">
+<body class="hold-transition">
+    <header class="row px-4 py-4 ">
+        <div class="col-md-3">
+            <img src="~/images/fav.png" height="240vw" width="80%" />
+        </div>
+        <div class="col-md-9 d-flex align-items-center" style="font-family:Tahoma; font-size:8vw; color: black; line-height:8vw">
+            <div class="row text-center">
+                <b>IMPORTACIONES COPYSTART</b>
+            </div>
+        </div>
 
-        @RenderBody()
+    </header>
+    <main>
+        <div class="row" style="height:70px">
+            <div class="col-md-12 bg-blue"></div>
 
-    </div>
-        @await Html.PartialAsync("Layout/_Scripts.cshtml")
-        @await RenderSectionAsync("Scripts", required: false)
+        </div>
+        <div style="max-width:1400px" class="m-auto px-5 py-5">
+
+
+
+
+
+            <div class=" container">
+                <div class="row">
+                     <div class="col-md-3 order-md-2 my-4">
+
+                        @RenderBody()
+
+                    </div>
+
+                    <div class="col-md-9 order-md-1">
+                        <div class="row px-4">
+                            <div class="col-xl-12 ">
+                                <h2><b>Nuestros servicios</b></h2>
+                                <ul>
+                                    <li>  Venta y alquiler de fotocopiadoras e impresoras multifuncionales</li>
+                                    <li> Venta de insumos y repuestos especializados en fotocopiadoras e impresoras</li>
+                                    <li> Servicio tecnico especializado (mantenimiento, correctivo, diagnostico, etc.) con o sin repuestos</li>
+                                </ul>
+
+
+                            </div>
+                            <div class="col-md-12 my-4">
+                                <h2><b>¿Quienes somos?</b></h2>
+                                <p>
+                                    Somos una empresa dedicada a la importación, comercialización,
+                                    alquiler y servicio especializado de fotocopiadoras multifuncionales
+                                    de las marcas: RICOH, CANON y KYOCERA sus insumos y repuestos; nuestro fin es
+                                    brindar soluciones integrales de manera rápida, efectiva y confiable
+                                    con los más altos estándares de calidad, brindando satisfacción a nuestros clientes,
+                                    excelente respaldo de nuestros equipos y servicios garantizando la confiabilidad de
+                                    su inversión.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                   
+
+
+
+                </div>
+            </div>
+            <div class="row justify-content-center my-4">
+                <div class="col-md-6 text-center">
+                    <h3><b>Mision</b></h3>
+                    <p>
+                        Queremos convertirnos en una empresa de referencia en servicio técnico, alquiler, venta de fotocopiadoras e insumos en las diferentes marcas a nivel nacional;
+                        Nuestro compromiso es brindar a nuestros clientes un excelente servicio garantizado y de calidad con un amplio portafolio de productos permitiéndoles
+                        un trabajo más ágil, eficaz y flexible.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h3><b>Vision</b></h3>
+                    <p>
+                        Seremos para el año 2030 una empresa de rápido crecimiento, reconocida a nivel nacional, liderando el mercado en copiado, impresión y escáner; Incursionando con
+                        variedad de productos tecnológicos y efectuando la apertura de nuevos puntos de servicio directo como también en línea, contaremos con una infraestructura propia
+                        y mejorada, brindando soluciones integrales a nuestros clientes mediante servicio de cálida y garantizado con amplia gama de productos.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="bg-black align-bottom" style="height:auto">
+
+            <div class="row px-4 py-4 text-white m-auto" style="max-width:1400px">
+                <div class="col-md-6">
+                    <h3><b>Contacto:</b></h3>
+                    <div class="my-4">
+                        <p>
+                            copystart2020@gmail.com <br />
+                            Encuentranos en: Calle 40 No 33-24, Villavicencio, Meta
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3><b>Celular:</b></h3>
+                    <ul>
+                        <li>310 852 1476</li>
+                        <li>318 874 3948</li>
+                        <li>316 471 4891</li>
+                    </ul>
+
+                </div>
+
+
+
+            </div>
+        </footer>
+    </main>
+
+    @await Html.PartialAsync("Layout/_Scripts.cshtml")
+    @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>
+

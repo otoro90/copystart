@@ -13,11 +13,11 @@
 
 
 <body class="login-page" style="min-height: 465.851px;">
-    <div class="login-box">
+   
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a class="h1">Copy<b>Start</b>SAS</a>
+        <div class="card card-primary">
+            <div class="card-header">
+                 <h3 class="card-title">Ingresa al sistema</h3> 
             </div>
             <div class="card-body">
                 <form id="account" method="post">
@@ -54,13 +54,14 @@
 
 
                         <!-- /.col -->
-                        <div class="col-6  mt-1 mb-1">
+                        <div class="col-12  mt-1 mb-1">
                             <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                         </div>
                         <!-- /.col -->
                     </div>
                     <div class="mb-2"></div>
 
+                    <hr />
 
                     <p class="mb-0">
                         <a id="register-newuser" asp-page="./Register">Registrar como nuevo usuario</a>
@@ -84,11 +85,7 @@
                     @{
                         if ((Model.ExternalLogins?.Count ?? 0) == 0)
                         {
-                            <div class="mt-2">
-                                <p>
-                                    Te damos la Bienvenida a nuestro sitio oficial para la gestion de servicios tecnicos para nuestros clientes.
-                                </p>
-                            </div>
+                           
                         }
                         else
                         {
@@ -125,7 +122,7 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-    </div>
+    
     <!-- /.login-box -->
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
