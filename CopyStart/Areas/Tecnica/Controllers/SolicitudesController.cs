@@ -657,10 +657,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
             //aqui se pide el documento
             var personaTask = _context.Persona.Where(p => (p.NumeroDocumento == solicitudform.Persona.NumeroDocumento) && (p.TipoDocumentoId == solicitudform.Persona.TipoDocumentoId)).FirstOrDefaultAsync();
-
-            var activoTask = _context.Activo.Where(p => p.Serial == solicitudform.Activo.Serial).FirstOrDefaultAsync();
-
             var persona = await personaTask;
+            var activoTask = _context.Activo.Where(p => ((p.Serial == solicitudform.Activo.Serial) && (p.PersonaId==persona.Id))&&(p.Estado!="Eliminado")).FirstOrDefaultAsync();
             var activo = await activoTask;
 
             if (persona == null)

@@ -12,7 +12,7 @@
 
 <div class="row justify-content-center">
     
-    <div class="col-md-6 card">
+    <div class="col-md-12 card">
         <div class="card-header">
              <div class="row mb-3"><b>Información detallada de servicio</b></div>
             <div class="row mb-3">
@@ -38,7 +38,7 @@
 
                     </div>
                 }
-                 @if((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
+                 @if(((User.IsInRole("Tecnico"))&&(Model.Estado!="En ejecucion"))||((User.IsInRole("Coordinador"))&&(Model.Estado!="Por confirmar")))
                 {
                     <div class="col-md-3 my-2">
                         <a asp-action="AgregarObservaciones" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Agregar observaciones</a>
@@ -129,12 +129,12 @@
                
             </dl>
 
-             @if ((User.IsInRole("Administrador")||(User.IsInRole("Coordinador")||(User.IsInRole("Tecnico")))&&(Model.Estado!="Por confirmar")))
+             @if (Model.Estado!="Por confirmar")
             {
                 <h2>Soportes del servicio</h2>
 
                 <div class="row my-4">
-                    <table class="col-12">
+                    <table  class="table table-bordered table-hover">
                         <thead>
                              <tr>
                             
@@ -149,7 +149,8 @@
                                Peso
                             </th>
 
-                            <th></th>
+                            <th>Acciones</th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -166,10 +167,13 @@
                                          <td>
                                             @Html.DisplayFor(modelItem =>item.Archivo.Peso) KB
                                         </td>
-                                        <td class="float-right">
+                                        <td>
                                               <a asp-action="Download" asp-route-area="Soportes" asp-route-controller="Archivos" asp-route-id="@item.ArchivoId" role="button" class="btn btn-default bg-primary"><i class="fas fa-download"></i></a>
-                                             <a  asp-action="DeleteSoporte" asp-route-idservicio="@Model.Id" asp-route-idsoporte="@item.ArchivoId" role="button" class="btn btn-default bg-red"><i class="far fa-trash-alt"></i></a> 
-                                           
+                                            
+                                              @if(User.IsInRole("Coordinador")||User.IsInRole("Tecnico"))
+                                              {
+                                              <a  asp-action="DeleteSoporte" asp-route-idservicio="@Model.Id" asp-route-idsoporte="@item.ArchivoId" role="button" class="btn btn-default bg-red"><i class="far fa-trash-alt"></i></a> 
+                                           }
                                         </td>
                                         
 
