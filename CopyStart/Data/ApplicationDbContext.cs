@@ -251,7 +251,8 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000000",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = "50001"
+                    UbicacionId = "50001",
+                    Estado = "Activo"
                 }, new Persona()
                 {
                     Id = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
@@ -261,7 +262,8 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000001",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = "50001"
+                    UbicacionId = "50001",
+                    Estado = "Activo"
                 }, new Persona()
                 {
                     Id = new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"),
@@ -272,6 +274,7 @@ namespace CopyStart.Data
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
                     UbicacionId = "50001",
+                    Estado = "Disponible"
 
 
                 }
@@ -284,7 +287,9 @@ namespace CopyStart.Data
                     NumeroDocumento = "1000000003",
                     Direccion = "Calle 40, #33-18",
                     Telefono = 3188743948,
-                    UbicacionId = "50001"
+                    UbicacionId = "50001",
+                    Estado="Activo"
+                    
                 });
             });
 
