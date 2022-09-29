@@ -7,57 +7,106 @@
     <div class="container-fluid" >
         <div class="row">
             <div class="col-lg-6">
-                <div class="card">
+                <div class="card card-primary card-outline">
+                   <div class="card-header">
+                        <h4>Nuestros servicios</h4>
+                        <i class="fas fa-list-alt"></i>
+                         <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                   </div>
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                       
 
                         <p class="card-text">
-                            Some quick example text to build on the card title and make up the bulk of the card's
-                            content.
-                        </p>
+                           - Venta y alquiler de fotocopiadoras e impresoras multifuncionales <br />
+                           - Venta de insumos y repuestos especializados en fotocopiadoras e impresoras <br />
+                           - Servicio tecnico especializado (mantenimiento, correctivo, diagnostico, instalacion y configuracion a PC, etc.) con o sin repuestos
 
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        </p>
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            <a href="/Tecnica/Solicitudes/Create" class="btn btn-primary">Solicita un servicio</a>
+                         }
+                          @if (User.IsInRole("Coordinador"))
+                        {
+                            <a href="/Tecnica/Solicitudes/CrearSolicitudRapida" class="btn btn-primary">Solicita un servicio</a>
+                         }
+                        <a href="#" class="btn btn-primary">Nuestro catalogo</a> 
+                        
+                       
                     </div>
                 </div>
 
                 <div class="card card-primary card-outline">
+                   <div class="card-header"> <h4>¿Quienes somos?</h4>
+                       <i class="fas fa-users"></i>
+                        <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                   
+                   </div>
+                    
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                       
 
                         <p class="card-text">
-                            Some quick example text to build on the card title and make up the bulk of the card's
-                            content.
+                            Somos una empresa dedicada a la importación, comercialización,
+                                    alquiler y servicio especializado de fotocopiadoras multifuncionales
+                                    de las marcas: RICOH, CANON y KYOCERA sus insumos y repuestos; nuestro fin es
+                                    brindar soluciones integrales de manera rápida, efectiva y confiable
+                                    con los más altos estándares de calidad, brindando satisfacción a nuestros clientes,
+                                    excelente respaldo de nuestros equipos y servicios garantizando la confiabilidad de
+                                    su inversión.
                         </p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                       
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="m-0">Featured</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
+              
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title mr-3">Misión</h3>
+                <i class="fas fa-check-square"></i>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              
+              </div>
+             
+              <div class="card-body" style="display: block;">
+                Queremos convertirnos en una empresa de referencia en servicio técnico, alquiler, venta de fotocopiadoras e insumos en las diferentes marcas a nivel nacional;
+                Nuestro compromiso es brindar a nuestros clientes un excelente servicio garantizado y de calidad con un amplio portafolio de productos permitiéndoles
+                un trabajo más ágil, eficaz y flexible.
 
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+              </div>
+             
+            </div>
+
+              
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title mr-3">Visión</h3>
+                <i class="far fa-flag"></i>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
                 </div>
 
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <h5 class="m-0">Featured</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
+              </div>
 
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
+              <div class="card-body" style="display: block;">
+                Seremos para el año 2030 una empresa de rápido crecimiento, reconocida a nivel nacional, liderando el mercado en copiado, impresión y escáner; Incursionando con
+                            variedad de productos tecnológicos y efectuando la apertura de nuevos puntos de servicio directo como también en línea, contaremos con una infraestructura propia
+                            y mejorada, brindando soluciones integrales a nuestros clientes mediante servicio de cálidad y garantizado con amplia gama de productos.
+
+              </div>
+            </div>
+        
             </div>
         </div>
     </div>

@@ -588,7 +588,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         }
 
 
-        [Authorize(Roles = "Administrador, Cliente, Coordinador")]
+       
         [UrlScriptActionFilter]
         public async Task<IActionResult> CrearSolicitudRapida(Guid? personaId, long? activoId)
         {
