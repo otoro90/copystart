@@ -67,9 +67,6 @@ namespace CopyStart.Areas.Tecnica.Controllers
 
                 listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes).ThenInclude(s => s.Cliente).Include(s => s.TipoServicios).Where(x => x.Solicitudes.TecnicoId == user.PersonaId && x.Estado != "Finalizado").ToListAsync();
             }
-
-
-
             if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
             {
                 listaServicios = await _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.TipoServicios).ToListAsync();
