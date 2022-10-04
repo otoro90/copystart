@@ -1,0 +1,151 @@
+﻿@model CopyStart.Entities.Solicitud
+
+@{
+    ViewData["Title"] = "Detalles de solicitud";
+
+}
+
+
+<div class="row justify-content-center">
+  
+    <div class="col-md-6 card">
+  
+        <div class="card-header">
+             <div class="row mb-3"><b>Información detallada de solicitud</b></div>
+            <div class="row mb-3">
+
+             <div class="col-md-3 my-2">
+                    <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver </a>
+              </div>
+
+                 @if (User.IsInRole("Cliente"))
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar </a>
+                    </div>
+                }
+             
+                @if (User.IsInRole("Coordinador") && Model.EstadoSolicitud == "Por tramitar")
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="TramitarSolicitud" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm"> Tramitar</a>
+                    </div>
+                }   
+                
+                 @if (User.IsInRole("Tecnico") && Model.EstadoSolicitud != "Por tramitar")
+                {
+                  <div class="col-md-3 my-2">
+                    <a asp-area="Tecnica" asp-controller="Servicios" asp-action="Create" asp-route-idSolicitud="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Crear servicio</a>
+                </div>
+
+                }
+                 @if (Model.EstadoSolicitud != "Por tramitar")
+                {
+                 <div class="col-md-3 my-2">
+
+                     <a  asp-action="VerServicios" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver servicios</a>
+                 </div>   
+
+                }
+                    <div class="col-md-3 my-2">
+                        <a asp-area="Activos" asp-controller="Activos" asp-action="Details" asp-route-id="@Model.ActivoId" role="button" class="btn btn-block btn-default btn-sm"> Ver activo</a>
+                    </div>
+      
+
+        </div>
+
+        </div>
+
+        <div class="card-body">
+
+    
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Incidencia)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Incidencia)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd> 
+                 
+                 <dt class="col-sm-4">
+                     @Html.DisplayNameFor(model => model.Activo.Ubicacion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Activo.Ubicacion.Municipio) 
+                </dd>
+                <dt class="col-sm-4">
+                    Direccion
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Activo.Direccion) 
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaSolicitud)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FechaSolicitud)
+                </dd>
+
+                @if(Model.EstadoSolicitud=="Asignada"){
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaAsignacion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FechaAsignacion)
+                </dd>
+                }
+
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.EstadoSolicitud)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.EstadoSolicitud)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Tecnico)
+                </dt>
+                <dd class="col-sm-8">
+                        @if (Model.Tecnico != null)
+                        {
+                          <p>  @Html.DisplayFor(model => model.Tecnico.Nombres) @Html.DisplayFor(model => model.Tecnico.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Tecnico.Telefono) </p>
+                        }
+                        else
+                        {
+                           <p>Sin asignar </p>
+                        }
+                    </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Cliente.Nombres) @Html.DisplayFor(model => model.Cliente.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Cliente.Telefono)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Activo)
+                </dt>
+                <dd class="col-sm-8">
+                   @Html.DisplayFor(model => model.Activo.MarcaActivo.Nombre) @Html.DisplayFor(model => model.Activo.ModeloActivo.Nombre)   S/N: @Html.DisplayFor(model => model.Activo.Serial)
+                </dd>
+
+            @if(Model.EstadoSolicitud=="Cancelada"){
+                <dt class="col-sm-4">
+                    Motivo de cancelacion
+                </dt>
+                <dd class="col-sm-8">
+                   @Html.DisplayFor(model => model.MotivoCancelacion)
+                </dd>
+
+            }
+            </dl>
+        </div>
+        </div>
+    </div>
+
+
+

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CopyStart.Entities.ApplicationUserRole>
+
+@{
+ ViewData["Title"] = "Listado tecnico";
+}
+
+    <div class="col-12 form-group">
+        <div class="card">
+            
+
+            <div class="card-body table-responsive">
+
+                <table class="table table-bordered table-hover text-center" id="table-tecnicos">
+
+                    <thead >
+                        <tr>
+                             <div class="col-12 mb-4">
+                                <h4>Index de tecnicos</h4> 
+                              </div>
+
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.User.Persona.Nombres)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User.Persona.Apellidos)
+                            </th>
+                            <th>
+                                 @Html.DisplayNameFor(model => model.User.Persona.TipoDocumento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User.Persona.NumeroDocumento)
+                            </th>
+                            <th> @Html.DisplayNameFor(model => model.User.Persona.Estado)
+                            </th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.Nombres)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.Apellidos)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.TipoDocumento.Codigo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Persona.NumeroDocumento)
+                                </td>
+                                  <td>
+                                @if (item.RoleId == "TEC")
+                                {
+                                
+                                    @Html.DisplayFor(modelItem => item.User.Persona.Estado)
+                                  
+
+                                }
+                                 </td> 
+
+                                
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.User.PersonaId" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i> </a>
+                                </td>
+                                
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+

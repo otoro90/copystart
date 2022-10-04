@@ -1,0 +1,54 @@
+﻿@model CopyStart.Entities.Ubicacion
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<div class="row justify-content-center">
+
+
+    <div class="col-md-6">
+        <div class="mt-3">
+
+            <div class="card card-primary">
+                <div class="card-header bg-red">
+                  ¿Quieres borrar esta ubicación?
+                </div>
+
+
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            Codigo Divipola
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.CodigoMunicipio)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Municipio)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Municipio)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Departamento)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Departamento)
+                        </dd>                      
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="CodigoMunicipio" />
+                        <input type="submit" value="Borrar" class="btn btn-danger" />
+                        <button type="button" class="btn btn-default"> <a asp-action="Index">Volver</a></button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

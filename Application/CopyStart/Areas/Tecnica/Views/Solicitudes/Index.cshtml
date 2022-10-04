@@ -1,0 +1,112 @@
+﻿@model IEnumerable<CopyStart.Entities.Solicitud>
+
+@{
+    ViewData["Title"] = "Listado de solicitudes";
+}
+
+<div class="row p-3">
+    <div class="col-4">
+        
+    </div>
+    
+
+</div>
+
+<div class="row ">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive" >
+                <table  class="table table-bordered table-hover" id="table-solicitudes">
+                    <thead >
+                        <tr>
+                             <div class="col-12 mb-4">
+                                <h4>Index de solicitudes</h4> 
+                              </div>
+                             <div class="col-12 mb-2">
+                                 @if (User.IsInRole("Cliente")){
+                                <a asp-action="Create" asp-route-idCliente="@ViewData["ClienteId"]" class="btn btn-default bg-primary" role="button">
+                                    Registrar
+                                    </a>
+                                }else if (User.IsInRole("Coordinador"))
+                                {
+                                <a asp-action="CrearSolicitudRapida"  class="btn btn-default bg-primary" role="button">
+                                    Registrar
+                                    </a>
+
+                                    
+                                }
+                            </div>
+                            
+
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cliente)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Activo.Serial)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Incidencia)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EstadoSolicitud)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaSolicitud)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+
+                            <td>
+                                @{
+                                    var fullName = item.Cliente.Nombres + " " + item.Cliente.Apellidos;
+                                        @Html.DisplayFor(modelItem => fullName)
+                                }
+
+                            </td>
+
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Activo.Serial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Incidencia)
+                            </td>
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EstadoSolicitud)
+                            </td>
+                               <td>
+                                @Html.DisplayFor(modelItem => item.FechaSolicitud)
+                            </td>
+
+                            
+                            <td>
+                                    
+                                   
+
+                                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                               
+                                @if(item.EstadoSolicitud=="Por tramitar" || item.EstadoSolicitud=="Cancelada")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a> 
+                                         <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+                                    }
+                               
+
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

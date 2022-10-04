@@ -1,0 +1,61 @@
+﻿@model CopyStart.Entities.TipoActivo
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<div class="row justify-content-center">
+  
+    <div class="col-md-6">
+        <div class="mt-3">
+ 
+                <div class="card card-primary">
+                    <div class="card-header bg-red">
+                        ¿Quieres borrar este tipo de activo?
+                    </div>
+
+
+                    <div class="card-body">
+                        <p>Recuerda: No es posible eliminar un tipo de activo si hay marcas referenciadas a el</p>
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Nombre)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Descripcion)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Descripcion)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Codigo)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Codigo)
+                            </dd>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Estado)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Estado)
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="card-footer">
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="submit" value="Borrar" class="btn btn-danger" />
+                            <button type="button" class="btn btn-default"> <a asp-action="Index">Volver</a></button>
+                        </form>
+                    </div>
+
+                </div>
+           
+        </div>
+    </div>
+
+</div>

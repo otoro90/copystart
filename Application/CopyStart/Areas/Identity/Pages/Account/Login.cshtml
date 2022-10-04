@@ -1,0 +1,136 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Ingresa tu usuario para iniciar sesión";
+}
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<body class="login-page" style="min-height: 465.851px;">
+   
+        <!-- /.login-logo -->
+        <div class="card card-primary ">
+            <div class="card-header">
+                 <h3 class="card-title">Ingresa al sistema</h3> 
+            </div>
+            <div class="card-body">
+                <form id="account" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Input.Email" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Input.Email)" />
+                       
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Input.Password" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Input.Password)" />
+                        
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="col-12">
+                            <div class="icheck-primary">
+                                <input asp-for="Input.RememberMe" />
+                                Recordarme
+
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row align-bottom">
+
+
+
+                        <!-- /.col -->
+                        <div class="col-12  mt-1 mb-1">
+                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                   
+
+                    <hr />
+
+                    <p class="mb-0">
+                        <a id="register-newuser" asp-page="./Register">Registrar como nuevo usuario</a>
+                    </p>
+                    <p class="mb-0">
+                        <a id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a>
+                    </p>
+
+
+                    <p class="mb-0">
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmacion por email</a>
+                    </p>
+
+
+
+
+
+
+                    <!-- /.social-auth-links -->
+
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                           
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p>
+                                        @foreach (var provider in Model.ExternalLogins)
+                                        {
+                                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+
+                            <div class="social-auth-links text-center mb-3">
+                                <p>- OR -</p>
+                                <a href="#" class="btn btn-block btn-primary">
+                                    <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                                </a>
+                                <a href="#" class="btn btn-block btn-danger">
+                                    <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                                </a>
+                            </div>
+                        }
+                    }
+                  
+
+                </form>
+
+                
+
+                
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+
+
+</body>

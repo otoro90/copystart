@@ -1,0 +1,194 @@
+﻿@model CopyStart.Entities.Servicio
+
+@{
+    ViewData["Title"] = "Detalles de servicio";
+    var urlProcedimientos = "/Parametricas/TipoServicios/VerProcedimientos?idTipoServicio=" + Model.TipoServicioId;
+    var urlSolicitud = "/Tecnica/Solicitudes/Details/" + Model.SolicitudId;
+
+}
+
+
+
+
+<div class="row justify-content-center">
+    
+    <div class="col-md-12 card">
+        <div class="card-header">
+             <div class="row mb-3"><b>Información detallada de servicio</b></div>
+            <div class="row mb-3">
+           
+                 <div class="col-md-3 my-2">
+
+                    <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
+                </div>
+
+
+
+                  <div class="col-md-3 my-2">
+
+                    <a href="@urlSolicitud" role="button" class="btn btn-block btn-default btn-sm">Ver solicitud</a>
+                </div>
+
+
+
+                @if((Model.Estado=="Por confirmar")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="ConfirmarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Iniciar procedimientos</a>
+
+                    </div>
+                }
+                 @if(((User.IsInRole("Tecnico"))&&(Model.Estado!="En ejecucion"))||((User.IsInRole("Coordinador"))&&(Model.Estado!="Por confirmar")))
+                {
+                    <div class="col-md-3 my-2">
+                        <a asp-action="AgregarObservaciones" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Agregar observaciones</a>
+
+                    </div>
+                }
+
+
+               
+                @if ((Model.Estado!="Por confirmar")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
+                {
+                <div class="col-md-3 my-2">
+                    <a asp-action="EjecucionProcedimientos" asp-route-idServicio="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Ver procedimientos </a>
+
+                </div>
+                }
+
+                 @if ((Model.Estado=="En ejecucion")&&(User.IsInRole("Tecnico")||User.IsInRole("Coordinador")))
+                {
+                <div class="col-md-3 my-2">
+                    <a asp-action="FinalizarServicio" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Finalizar Servicio </a>
+
+                </div>
+                }
+
+            </div>
+        </div>
+
+
+        <div class="card-body">
+            <dl class="row">
+
+                 <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Activo)
+                </dt>
+                <dd class="col-sm-8">
+                 @Html.DisplayFor(model => model.Activo.TipoActivo.Nombre) @Html.DisplayFor(model => model.Activo.MarcaActivo.Nombre)  @Html.DisplayFor(model => model.Activo.ModeloActivo.Nombre)  S/N:  @Html.DisplayFor(model => model.Activo.Serial)
+                </dd>
+               
+                <dt class="col-sm-4">
+                    Cliente
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Activo.Persona.Nombres) @Html.DisplayFor(model => model.Activo.Persona.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Activo.Persona.Telefono)
+                </dd>
+                 <dt class="col-sm-4">
+                   Tecnico
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Solicitudes.Tecnico.Nombres) @Html.DisplayFor(model => model.Solicitudes.Tecnico.Apellidos) <b>Contacto:</b> @Html.DisplayFor(model => model.Solicitudes.Tecnico.Telefono)
+                </dd>
+                 <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Solicitudes)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Solicitudes.Incidencia)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Estado)                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                   
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+                  @if(Model.Estado!="Por confirmar"){
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaInicio)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FechaInicio)
+                </dd>
+                  }
+                @if(Model.Estado=="Finalizado"){
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaFinalizacion)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FechaFinalizacion)
+                </dd>
+                  <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Observaciones)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Observaciones)
+                </dd>
+                }
+
+               
+            </dl>
+
+             @if (Model.Estado!="Por confirmar")
+            {
+                <h2>Soportes del servicio</h2>
+
+                <div class="row my-4">
+                    <table  class="table table-bordered table-hover">
+                        <thead>
+                             <tr>
+                            
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Tipo de documento
+                            </th>
+
+                            <th>
+                               Peso
+                            </th>
+
+                            <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.Archivos)
+                            {
+                              
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem =>item.Archivo.Nombre)
+                                        </td>
+                                         <td>
+                                            @Html.DisplayFor(modelItem =>item.Archivo.Tipo)
+                                        </td>
+                                         <td>
+                                            @Html.DisplayFor(modelItem =>item.Archivo.Peso) KB
+                                        </td>
+                                        <td>
+                                              <a asp-action="Download" asp-route-area="Soportes" asp-route-controller="Archivos" asp-route-id="@item.ArchivoId" role="button" class="btn btn-default bg-primary"><i class="fas fa-download"></i></a>
+                                            
+                                              @if(User.IsInRole("Coordinador")||User.IsInRole("Tecnico"))
+                                              {
+                                              <a  asp-action="DeleteSoporte" asp-route-idservicio="@Model.Id" asp-route-idsoporte="@item.ArchivoId" role="button" class="btn btn-default bg-red"><i class="far fa-trash-alt"></i></a> 
+                                           }
+                                        </td>
+                                        
+
+                                    </tr>
+                                
+                            }
+                        </tbody>
+                </table>
+
+            </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+                               

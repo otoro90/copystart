@@ -1,0 +1,16 @@
+﻿@using AdminLte.Mvc.Views.Shared.Components.HeaderSearchForm
+﻿@using Microsoft.AspNetCore.Identity
+﻿@using CopyStart.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" ><i class="fas fa-bars"></i></a>
+    </li>
+
+</ul>
+
+@(await Component.InvokeAsync<HeaderSearchFormViewComponent>())
+
+
