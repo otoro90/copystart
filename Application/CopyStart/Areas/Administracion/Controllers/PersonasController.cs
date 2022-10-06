@@ -163,7 +163,7 @@ namespace CopyStart.Areas.Administracion.Controllers
                 Text = "Usuarios",
                 Action = "Index",
                 Controller = "Personas",
-                Area = "Activos",
+                Area = "Administracion",
                 Active = true
             });
             breadcrumbList.Add(new Breadcrumb
