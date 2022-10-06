@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CopyStart.Entities.Ubicacion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row ">
+    <div class="col-12">
+        <div class="card">
+
+
+            <div class="card-body table-responsive">
+
+                <table class="table table-bordered table-hover text-center" id="table-ubicaciones">
+                    <thead>
+                        <tr>
+                            <div class="col-12 mb-4">
+                                <h4>Index de ubicaciones</h4> 
+                              </div>
+                               <div class="col-12 mb-2">
+                                <a asp-action="Create" class="btn btn-default bg-primary" role="button">
+                                    Registrar
+                                </a>
+                            </div>
+                             <th>
+                                @Html.DisplayNameFor(model => model.Departamento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Municipio)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Departamento)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Municipio)
+                                </td>
+                                <td>
+                                   <a asp-action="Edit" asp-route-id="@item.CodigoMunicipio" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+
+                                <a asp-action="Details" asp-route-id="@item.CodigoMunicipio" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+
+                                <a asp-action="Delete" asp-route-id="@item.CodigoMunicipio" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

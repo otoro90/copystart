@@ -1,0 +1,158 @@
+﻿@model CopyStart.Areas.Tecnica.Models.SolicitudRapidaModel
+
+@{
+    ViewData["Title"] = "Solicitar servicio técnico";
+}
+
+<section class="row justify-content-center">
+    <div class="col-md-12">
+        <form asp-action="CrearSolicitudRapida" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="card card-primary">
+                <div class="card-header">
+                   Datos personales
+                </div>
+                <div class="card-body px-5" id="datos-persona">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Persona.TipoDocumentoId" class="control-label"></label>
+                            <select asp-for="Persona.TipoDocumentoId" class="form-control select2" asp-items="ViewBag.TipoDocumentoId">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Persona.TipoDocumentoId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Persona.NumeroDocumento" class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="Persona.NumeroDocumento" class="form-control" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="buscar-persona">Buscar</button>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Persona.NumeroDocumento" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6 d-none">
+                            <label asp-for="Persona.Nombres" class="control-label"></label>
+                            <input asp-for="Persona.Nombres" class="form-control" />
+                            <span asp-validation-for="Persona.Nombres" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6 d-none">
+                            <label asp-for="Persona.Apellidos" class="control-label"></label>
+                            <input asp-for="Persona.Apellidos" class="form-control" />
+                            <span asp-validation-for="Persona.Apellidos" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 d-none">
+                            <label asp-for="Persona.Ubicacion.CodigoDepartamento" class="control-label">Departamento</label>
+                            <select asp-for="Persona.Ubicacion.CodigoDepartamento" class="form-control select2" asp-items="ViewBag.DepartamentosList">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Persona.Ubicacion.CodigoDepartamento" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 d-none">
+                            <label asp-for="Persona.UbicacionId" class="control-label">Municipio</label>
+                            <select asp-for="Persona.UbicacionId" class="form-control select2">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Persona.UbicacionId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 d-none">
+                            <label asp-for="Persona.Direccion" class="control-label"></label>
+                            <input asp-for="Persona.Direccion" class="form-control" />
+                            <span asp-validation-for="Persona.Direccion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 d-none">
+                            <label asp-for="Persona.Telefono" class="control-label"></label>
+                            <input asp-for="Persona.Telefono" class="form-control" />
+                            <span asp-validation-for="Persona.Telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-header">
+                    Datos del equipo
+                </div>
+                <div class="card-body px-5" id="datos-equipo">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Activo.Serial" class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="Activo.Serial" class="form-control" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="buscar-equipo">Buscar</button>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Activo.Serial" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6 d-none">
+                            <label asp-for="Activo.TipoActivoId" class="control-label"></label>
+                            <select asp-for="Activo.TipoActivoId" class="form-control select2" asp-items="ViewBag.TipoActivoId">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 d-none">
+                            <label asp-for="Activo.MarcaActivoId" class="control-label"></label>
+                            <select asp-for="Activo.MarcaActivoId" class="form-control select2" asp-items="ViewBag.MarcaActivoId">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 d-none">
+                            <label asp-for="Activo.ModeloActivoId" class="control-label"></label>
+                            <select asp-for="Activo.ModeloActivoId" class="form-control select2" asp-items="ViewBag.ModeloActivoId">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 d-none">
+                            <label asp-for="Activo.Ubicacion.CodigoDepartamento" class="control-label">Departamento</label>
+                            <select asp-for="Activo.Ubicacion.CodigoDepartamento" class="form-control select2" asp-items="ViewBag.DepartamentosList">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Persona.Ubicacion.CodigoDepartamento" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 d-none">
+                            <label asp-for="Activo.UbicacionId" class="control-label">Municipio</label>
+                            <select asp-for="Activo.UbicacionId" class="form-control select2">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Activo.UbicacionId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    Falla del equipo
+                </div>
+                <div class="card-body px-5">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Solicitud.Incidencia" class="control-label"></label>
+                            <input asp-for="Solicitud.Incidencia" class="form-control" />
+                            <span asp-validation-for="Solicitud.Incidencia" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="Solicitud.Descripcion" class="control-label"></label>
+                            @Html.TextAreaFor(modelItem => modelItem.Solicitud.Descripcion, new { style = "width: 100%; height: 60px ", @class = "form-control" })
+                            <span asp-validation-for="Solicitud.Descripcion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Activo.Direccion" class="control-label"></label>
+                            <input asp-for="Activo.Direccion" class="form-control" />
+                            <span asp-validation-for="Activo.Direccion" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="/" class="btn btn-secondary mx-2" role="button">Cancelar</a>
+                        <input type="submit" class="btn btn-primary mx-2" value="Enviar" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

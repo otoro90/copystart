@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CopyStart.Entities.Servicio>
+
+@{
+    ViewData["Title"] = "Historial de servicios";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            
+            <div class="card-body table-responsive">
+                <table class="table table-bordered table-hover text-center" id="tabla-historial">
+                    <thead>
+                        <tr>
+                            <div class="col-12 mb-4">
+                                <h4>Historial de servicios</h4> 
+                              </div>
+                            <th>@Html.DisplayNameFor(x => x.Solicitudes.Cliente)</th>
+                            <th>@Html.DisplayNameFor(x => x.TipoServicios)</th>
+                            <th>@Html.DisplayNameFor(x => x.Activo)</th>
+                            <th>@Html.DisplayNameFor(x => x.FechaInicio)</th>
+                            <th>@Html.DisplayNameFor(x => x.FechaFinalizacion)</th>
+                            <th>@Html.DisplayNameFor(x => x.Observaciones)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+
+                                    @{
+                                        var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
+                                        @Html.DisplayFor(modelItem => fullName)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaFinalizacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Observaciones)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-priamry"><i class="fas fa-pen"></i></a>
+
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+
+                                    <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model CopyStart.Entities.Servicio
+
+@{
+    ViewData["Title"] = "Crear servicio nuevo";
+}
+
+
+
+<section class="row justify-content-center">
+ 
+
+    <div class="col-md-6">
+        <div class="mt-3">
+            
+                <div class="card card-primary">
+                    <div class="card-header">
+                      Formulario de creación de nuevo servicio
+                       
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div class="row">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group">                               
+                                <select asp-for="ActivoId" class="form-control" asp-items="ViewBag.ActivoId" hidden></select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label asp-for="SolicitudId" class="control-label"></label>
+                                <select asp-for="SolicitudId" class="form-control select2" asp-items="ViewBag.SolicitudId">
+                                    <option></option>
+                                </select>
+                                 <span asp-validation-for="SolicitudId" class="text-danger"></span>
+                            </div>
+
+                             <div class="form-group col-md-6">
+                                <label asp-for="TipoServicioId" class="control-label"></label>
+                                <select asp-for="TipoServicioId" class="form-control select2" asp-items="ViewBag.TipoServicioId">
+                                       <option></option>
+                                </select>
+                                 <span asp-validation-for="TipoServicioId" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group col-md-12">
+                                <input type="submit" value="Crear" class="btn btn-primary float-right" />
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+        </div>
+       
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CopyStart.Entities.Servicio>
+
+@{
+    ViewData["Title"] = "Listado de servicios";
+}
+
+
+<div class="row ">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table table-bordered table-hover" id="table-servicios">
+                    <thead>
+                        <tr>
+                            <dihv class="col-12 mb-4">
+                                <h4>Index de servicios</h4> 
+                              </dihv>
+
+                            <th>
+                                Cliente
+                            </th>
+                            <th>
+                                Tipo de servicio
+                            </th>
+
+                            <th>
+                                Activo
+                            </th>
+                            <th>
+                                Fecha inicio
+                            </th>
+                            <th>
+                                Estado del servicio
+                            </th>
+
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+
+                                    @{
+                                        var fullName = item.Solicitudes.Cliente.Nombres + " " + item.Solicitudes.Cliente.Apellidos;
+                                        @Html.DisplayFor(modelItem => fullName)
+                                    }
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoServicios.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Activo.TipoActivo.Nombre)  ||  @Html.DisplayFor(modelItem => item.Activo.Serial)
+                                </td>
+                                <td>
+                                    @if (item.FechaInicio != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.FechaInicio)
+                                    }else{
+                                        <p>Sin iniciar</p>                                    
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
+
+                                </td>
+
+                                <td>
+
+
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

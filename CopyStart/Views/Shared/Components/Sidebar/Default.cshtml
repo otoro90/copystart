@@ -1,0 +1,11 @@
+﻿@using AdminLte.Mvc.Views.Shared.Components.SidebarBrand
+@using AdminLte.Mvc.Views.Shared.Components.SidebarUserPanel
+@using AdminLte.Mvc.Views.Shared.Components.SidebarMenu
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4 overflow-auto position-fixed">
+    @(await Component.InvokeAsync<SidebarBrandViewComponent>())
+   
+        @(await Component.InvokeAsync<SidebarUserPanelViewComponent>())
+        @(await Component.InvokeAsync<SidebarMenuViewComponent>())
+    
+</aside>

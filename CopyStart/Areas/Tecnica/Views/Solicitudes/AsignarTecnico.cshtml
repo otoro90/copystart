@@ -1,0 +1,42 @@
+﻿@model CopyStart.Entities.Solicitud
+
+@{
+    ViewData["Title"] = "Asignar tecnico";
+}
+
+
+<div class="row justify-content-center">
+ 
+
+    <div class="col-md-6">
+        <div class="mt-3">
+           
+                <div class="card card-primary">
+                    <div class="card-header">
+                        Seleccione el tecnico a asignar
+
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="AsignarTecnico">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="TecnicoId" class="control-label"></label>
+                                <select asp-for="TecnicoId" class="form-control select2" asp-items="ViewBag.TecnicoId"></select>
+                                <span asp-validation-for="TecnicoId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Crear" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CopyStart.Entities.Activo>
+
+@{
+<<<<<<< HEAD
+ViewData["Title"] = "Index";
+=======
+    ViewData["Title"] = "Listado de activos";
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
+}
+
+<div class="row ">
+    <div class="col-12">
+        <div class="card">
+<<<<<<< HEAD
+            <div class="card-body">
+<table class="table table-bordered table-hover text-center" id="table-activos">
+=======
+            <div class="card-header">
+                <h3 class="card-title">Listado de activos</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover text-center" id="table-activos">
+>>>>>>> 8e2133e067598315ffe36340cec7d7a2a7864410
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Serial)</th>
+                            <th>@Html.DisplayNameFor(model => model.TipoActivo)</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Serial)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoActivo.Nombre)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MarcaActivo.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModeloActivo.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-default bg-primary"><i class="fas fa-pen"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-default bg-secondary"><i class="far fa-file"></i></a>
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" role="button" class="btn btn-default bg-danger"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@model CopyStart.Entities.TipoServicio
+
+@{
+    ViewData["Title"] = "Detalles";
+    var urlTipoServicios = "/Administracion/ProcedimientoTipoServicios/?tipoServicioId=" + Model.Id;
+}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6 card">
+        <div class="card-header">
+            <div class="row mb-3"><b>Información detallada de tipo de servicio</b></div>
+            <div class="row">
+
+                <div class="col-md-3 my-2">
+                    <a asp-action="Index" role="button" class="btn btn-block btn-default btn-sm">Volver</a>
+                </div>
+                <div class="col-md-3 my-2">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" role="button" class="btn btn-block btn-default btn-sm">Editar</a>
+
+                </div>
+                <div class="col-md-3 my-2">
+                    <a role="button" class="btn btn-block btn-default btn-sm" href="@urlTipoServicios">Ver Procedimientos</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Codigo)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Codigo)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Estado)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Estado)
+            </dd>
+        </dl>
+
+    </div>
+    </div>
+</div>
+   
