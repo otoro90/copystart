@@ -518,7 +518,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
 
             var solicitud = await _context.Solicitud
-                .Include(s => s.Activo).ThenInclude(s => s.ModeloActivo).ThenInclude(s => s.MarcaActivo)
+                .Include(s => s.Activo).ThenInclude(s => s.ModeloActivo).ThenInclude(s => s.TipoActivo)
                 .Include(s => s.Cliente)
                 .Include(s => s.Tecnico)
                 .FirstOrDefaultAsync(m => m.Id == id);

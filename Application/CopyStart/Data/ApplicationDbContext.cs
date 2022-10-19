@@ -131,7 +131,8 @@ namespace CopyStart.Data
 
             modelBuilder.Entity<TipoActivo>(b =>
             {
-                
+                b.HasIndex(p => new { p.MarcaActivoId, p.Nombre })
+             .IsUnique(true);
             });
 
             modelBuilder.Entity<MarcaActivo>(b =>

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220926175444_newdata2")]
-    partial class newdata2
+    [Migration("20221019201859_a")]
+    partial class a
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,6 +61,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("UbicacionId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -110,28 +111,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "f8ee70d4-3209-4003-a5b9-4b04e44875df",
+                            ConcurrencyStamp = "860d39f9-8367-4875-9f9d-25a39e97162f",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "93e65c48-ddf1-4ebf-8081-8e3a6185aec7",
+                            ConcurrencyStamp = "4b3839d3-5608-4a32-9d86-f895237a09c5",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "fd07801a-380b-4023-9657-f0d2094a82f7",
+                            ConcurrencyStamp = "0c10b08e-46d4-4422-8e72-ca71428a425c",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "cde4de92-07fb-4269-894d-51de6888d602",
+                            ConcurrencyStamp = "d92b89bf-9634-447f-ab08-570af3319755",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -236,7 +237,7 @@ namespace CopyStart.Migrations
                             Id = "1cf68c49-edd7-4d24-ab0c-b14c6aef0ebe",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "ce435a30-8d16-4770-a7fb-118fab13767b",
-                            Email = "cpadmin@gmail.com",
+                            Email = "cpadmin@yopmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "CPADMIN@YOPMAIL.COM",
@@ -247,57 +248,6 @@ namespace CopyStart.Migrations
                             SecurityStamp = "SVKHSIPWR4JE76RDYMGA7MQGFIIBR3TX",
                             TwoFactorEnabled = false,
                             UserName = "cpadmin@yopmail.com"
-                        },
-                        new
-                        {
-                            Id = "5c141fdd-ab2f-49be-8a31-43aec63f918f",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "776e1d1a-0c3c-41b0-bb44-bcb151add354",
-                            Email = "cpcoordinador@yopmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "CPCOORDINADOR@YOPMAIL.COM",
-                            NormalizedUserName = "CPCOORDINADOR@YOPMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDv98UwloGC1tI3Elt0TgyWk9DxWPi475t9/P2SOAO/TgHilR1/Tnp0kQpnctazOJw==",
-                            PersonaId = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "RZABU4JPNDQVJF4LWR5ZS755BS7H6HDR",
-                            TwoFactorEnabled = false,
-                            UserName = "cpcoordinador@yopmail.com"
-                        },
-                        new
-                        {
-                            Id = "3cbfb0a7-d323-4f84-9d14-daeef363f947",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "aa35d6da-54e6-476b-8810-4a182b8b07de",
-                            Email = "cptecnico@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "CPTECNICO@GMAIL.COM",
-                            NormalizedUserName = "CPTECNICO@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHRn5OJw1NKAwjB4w6dEsVjB2qi/bOR+8/WbmTjTa8lQCvTy6Xg4WqMtm6A/yYYxDw==",
-                            PersonaId = new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"),
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "4LNTJIEMTON6KDXWASKMDXTFM2BCUCH6",
-                            TwoFactorEnabled = false,
-                            UserName = "cptecnico@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "cacd6063-c77d-437e-8cad-2e97ba1a0a6a",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e3330e49-ac28-4952-a50a-a30e8222aed7",
-                            Email = "cpcliente@yopmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "CPCLIENTE@YOPMAIL.COM",
-                            NormalizedUserName = "CPCLIENTE@YOPMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGAsB2jMI6Q3cJTunTexm1lX3qqiVzHMV9sDws+mh3JcqAGY2og313y5uNjZ+32OAg==",
-                            PersonaId = new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"),
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "WJR7XMGC332UT234BG7O35M6MIIGKQ2Q",
-                            TwoFactorEnabled = false,
-                            UserName = "cpcliente@yopmail.com"
                         });
                 });
 
@@ -369,21 +319,6 @@ namespace CopyStart.Migrations
                         {
                             UserId = "1cf68c49-edd7-4d24-ab0c-b14c6aef0ebe",
                             RoleId = "ADMIN"
-                        },
-                        new
-                        {
-                            UserId = "5c141fdd-ab2f-49be-8a31-43aec63f918f",
-                            RoleId = "COORD"
-                        },
-                        new
-                        {
-                            UserId = "3cbfb0a7-d323-4f84-9d14-daeef363f947",
-                            RoleId = "TEC"
-                        },
-                        new
-                        {
-                            UserId = "cacd6063-c77d-437e-8cad-2e97ba1a0a6a",
-                            RoleId = "CLN"
                         });
                 });
 
@@ -473,12 +408,7 @@ namespace CopyStart.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<Guid>("TipoActivoId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TipoActivoId");
 
                     b.ToTable("MarcaActivos");
                 });
@@ -501,17 +431,17 @@ namespace CopyStart.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("MarcaActivoId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<Guid>("TipoActivoId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MarcaActivoId");
+                    b.HasIndex("TipoActivoId");
 
                     b.ToTable("ModeloActivos");
                 });
@@ -540,6 +470,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("character varying(200)");
 
                     b.Property<string>("NumeroDocumento")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
@@ -550,6 +481,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("UbicacionId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -572,42 +504,6 @@ namespace CopyStart.Migrations
                             Estado = "Activo",
                             Nombres = "Administrador",
                             NumeroDocumento = "1000000000",
-                            Telefono = 3188743948L,
-                            TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = "50001"
-                        },
-                        new
-                        {
-                            Id = new Guid("f8d8b32a-7fad-43e1-a35e-e5a52621594d"),
-                            Apellidos = "Por defecto",
-                            Direccion = "Calle 40, #33-18",
-                            Estado = "Activo",
-                            Nombres = "Coordinador",
-                            NumeroDocumento = "1000000001",
-                            Telefono = 3188743948L,
-                            TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = "50001"
-                        },
-                        new
-                        {
-                            Id = new Guid("2481e6f4-7aeb-43bf-8dac-e57c1d1568ed"),
-                            Apellidos = "Por defecto",
-                            Direccion = "Calle 40, #33-18",
-                            Estado = "Disponible",
-                            Nombres = "Tecnico",
-                            NumeroDocumento = "1000000002",
-                            Telefono = 3188743948L,
-                            TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
-                            UbicacionId = "50001"
-                        },
-                        new
-                        {
-                            Id = new Guid("8af22848-85fb-4c50-9d7d-1137fd84eb98"),
-                            Apellidos = "Por defecto",
-                            Direccion = "Calle 40, #33-18",
-                            Estado = "Activo",
-                            Nombres = "Cliente",
-                            NumeroDocumento = "1000000003",
                             Telefono = 3188743948L,
                             TipoDocumentoId = new Guid("324df0a1-337d-45c4-bf79-eb3a01e14273"),
                             UbicacionId = "50001"
@@ -873,12 +769,17 @@ namespace CopyStart.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("MarcaActivoId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MarcaActivoId");
 
                     b.ToTable("TiposActivo");
                 });
@@ -945,6 +846,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<Guid?>("TipoActivoId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -963,6 +865,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Departamento")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Latitud")
@@ -972,6 +875,7 @@ namespace CopyStart.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Municipio")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("CodigoMunicipio");
@@ -1018,7 +922,9 @@ namespace CopyStart.Migrations
 
                     b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
                         .WithMany()
-                        .HasForeignKey("UbicacionId");
+                        .HasForeignKey("UbicacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("MarcaActivo");
 
@@ -1122,7 +1028,7 @@ namespace CopyStart.Migrations
                     b.Navigation("Servicio");
                 });
 
-            modelBuilder.Entity("CopyStart.Entities.MarcaActivo", b =>
+            modelBuilder.Entity("CopyStart.Entities.ModeloActivo", b =>
                 {
                     b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
                         .WithMany()
@@ -1131,17 +1037,6 @@ namespace CopyStart.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoActivo");
-                });
-
-            modelBuilder.Entity("CopyStart.Entities.ModeloActivo", b =>
-                {
-                    b.HasOne("CopyStart.Entities.MarcaActivo", "MarcaActivo")
-                        .WithMany()
-                        .HasForeignKey("MarcaActivoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("MarcaActivo");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Persona", b =>
@@ -1154,7 +1049,9 @@ namespace CopyStart.Migrations
 
                     b.HasOne("CopyStart.Entities.Ubicacion", "Ubicacion")
                         .WithMany()
-                        .HasForeignKey("UbicacionId");
+                        .HasForeignKey("UbicacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TipoDocumento");
 
@@ -1270,11 +1167,24 @@ namespace CopyStart.Migrations
                     b.Navigation("Tecnico");
                 });
 
+            modelBuilder.Entity("CopyStart.Entities.TipoActivo", b =>
+                {
+                    b.HasOne("CopyStart.Entities.MarcaActivo", "MarcaActivo")
+                        .WithMany()
+                        .HasForeignKey("MarcaActivoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("MarcaActivo");
+                });
+
             modelBuilder.Entity("CopyStart.Entities.TipoServicio", b =>
                 {
                     b.HasOne("CopyStart.Entities.TipoActivo", "TipoActivo")
                         .WithMany()
-                        .HasForeignKey("TipoActivoId");
+                        .HasForeignKey("TipoActivoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TipoActivo");
                 });

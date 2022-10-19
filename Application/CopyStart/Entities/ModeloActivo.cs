@@ -10,12 +10,12 @@ namespace CopyStart.Entities
     {
 
         [Required(ErrorMessage = "Este campo es obligatorio")]
-        [Display(Name = "Marca de activo")]
-        public Guid MarcaActivoId { get; set; }
+        [Display(Name = "Tipo de activo")]
+        public Guid TipoActivoId { get; set; }
 
 
-        [ForeignKey("MarcaActivoId")]
-        [Display(Name = "Marca de activo")]
-        public MarcaActivo MarcaActivo { get; set; }
+        [ForeignKey("TipoActivoId")]
+        [Display(Name = "Tipo de activo")]
+        public TipoActivo TipoActivo { get; set; }
     }
 }

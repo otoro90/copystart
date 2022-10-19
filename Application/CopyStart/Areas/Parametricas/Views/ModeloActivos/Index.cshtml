@@ -24,7 +24,7 @@
                             </div>
 
                             <th>
-                                @Html.DisplayNameFor(model => model.MarcaActivo)
+                                @Html.DisplayNameFor(model => model.TipoActivo)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Nombre)
@@ -46,7 +46,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.MarcaActivo.Codigo)
+                                    @Html.DisplayFor(modelItem => item.TipoActivo.MarcaActivo.Nombre)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nombre)

@@ -47,7 +47,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            var applicationDbContext = _context.ModeloActivo.Include(m => m.MarcaActivo);
+            var applicationDbContext = _context.ModeloActivo.Include(m => m.TipoActivo).ThenInclude(m=>m.MarcaActivo);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -59,8 +59,8 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var modeloActivo = await _context.ModeloActivo
-                .Include(m => m.MarcaActivo)
+            var modeloActivo = await _context.ModeloActivo.
+                Include(m => m.TipoActivo).ThenInclude(m => m.MarcaActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
@@ -147,7 +147,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MarcaActivoId,Id,Nombre,Descripcion,Codigo,Estado")] ModeloActivo modeloActivo)
+        public async Task<IActionResult> Create([Bind("TipoActivoId,Id,Nombre,Descripcion,Codigo,Estado")] ModeloActivo modeloActivo)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +156,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo", modeloActivo.MarcaActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.TipoActivo.Include(m => m.MarcaActivo).Select(x => new { Id = x.Id, Texto = x.Nombre + " " + x.MarcaActivo.Nombre }), "Id", "Texto");
             return View(modeloActivo);
         }
 
@@ -212,7 +212,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             {
                 return NotFound();
             }
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo", modeloActivo.MarcaActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.TipoActivo.Include(m => m.MarcaActivo).Select(x => new { Id = x.Id, Texto = x.Nombre + " " + x.MarcaActivo.Nombre }), "Id", "Texto");
             return View(modeloActivo);
         }
 
@@ -221,7 +221,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MarcaActivoId,Id,Nombre,Descripcion,Codigo,Estado")] ModeloActivo modeloActivo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("TipoActivoId,Id,Nombre,Descripcion,Codigo,Estado")] ModeloActivo modeloActivo)
         {
             if (id != modeloActivo.Id)
             {
@@ -248,7 +248,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo", modeloActivo.MarcaActivoId);
+            ViewData["MarcaActivoId"] = new SelectList(_context.TipoActivo.Include(m => m.MarcaActivo).Select(x => new { Id = x.Id, Texto = x.Nombre + " " + x.MarcaActivo.Nombre }), "Id", "Texto");
             return View(modeloActivo);
         }
 
@@ -261,7 +261,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var modeloActivo = await _context.ModeloActivo
-                .Include(m => m.MarcaActivo)
+                .Include(m => m.TipoActivo).ThenInclude(m => m.MarcaActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();

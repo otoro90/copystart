@@ -142,6 +142,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Nombre");
             return View(tipoActivo);
         }
 
@@ -194,6 +195,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             {
                 return NotFound();
             }
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Nombre");
             return View(tipoActivo);
         }
 
