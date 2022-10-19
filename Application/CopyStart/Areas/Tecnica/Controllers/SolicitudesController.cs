@@ -423,9 +423,8 @@ namespace CopyStart.Areas.Tecnica.Controllers
             }
             var solicitud = await _context.Solicitud.FindAsync(id);
 
-            ViewData["TecnicoId"] = new SelectList(_context.UserRoles.Where(x => x.RoleId == "TEC" && x.User.Persona.Estado != "En servicio").Include(a => a.User).ThenInclude(a => a.Persona).Select(x => new { Id = x.User.Persona.Id, Texto = x.User.Persona.Nombres + " " + x.User.Persona.Apellidos + " - " + x.User.Persona.NumeroDocumento }), "Id", "Texto");
-            _context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona);
-
+            ViewData["TecnicoId"] = new SelectList(_context.UserRoles.Where(x => x.RoleId == "TEC").Include(a => a.User).ThenInclude(a => a.Persona).Select(x => new { Id = x.User.Persona.Id, Texto = x.User.Persona.Nombres + " " + x.User.Persona.Apellidos + " - " + x.User.Persona.NumeroDocumento }), "Id", "Texto");
+          
             return View(solicitud);
 
         }

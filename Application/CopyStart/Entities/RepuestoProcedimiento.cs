@@ -9,8 +9,8 @@ namespace CopyStart.Entities
     {
         [Key]
         public Guid Id { get; set; }
-
-        [Required]
+        
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Procedimiento")]
         public Guid ProcedimientoId { get; set; }
 
@@ -18,7 +18,7 @@ namespace CopyStart.Entities
         [Display(Name = "Procedimiento")]
         public Procedimiento Procedimientos { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Repuesto")]
         public Guid RepuestoId { get; set; }
 
@@ -26,7 +26,7 @@ namespace CopyStart.Entities
         [Display(Name = "Repuesto")]
         public Repuesto Repuesto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public int Cantidad { get; set; }
     }
 }

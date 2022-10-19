@@ -164,8 +164,7 @@ namespace CopyStart.Areas.Activos.Controllers
             ViewBag.Breadcrumbs = breadcrumbList;
 
             ViewData["PersonaId"] = new SelectList(_context.Persona, "Id", "Id", id);
-            ViewData["TipoActivoId"] = new SelectList(_context.Set<TipoActivo>(), "Id", "Nombre");
-            ViewData["MarcaActivoId"] = new SelectList(_context.Set<MarcaActivo>(), "Id", "Nombre");
+            ViewData["MarcaActivoId"] = new SelectList(_context.TipoActivo.Include(m => m.MarcaActivo).Select(x => new { Id = x.Id, Texto = x.Nombre + " " + x.MarcaActivo.Nombre }), "Id", "Texto");
             ViewData["ModeloActivoId"] = new SelectList(_context.Set<ModeloActivo>(), "Id", "Nombre");
           
             return View();
@@ -401,6 +400,7 @@ namespace CopyStart.Areas.Activos.Controllers
             var applicationDbContext = _context.Activo.Include(a => a.Persona).Include(a => a.TipoActivo).Include(a=>a.MarcaActivo).Include(a => a.ModeloActivo).Include(a => a.Ubicacion).Where(x => x.PersonaId == idCliente && x.Estado!="Eliminado");
 
             ViewData["PersonaId"] =  idCliente;
+            ViewData["PersonaNombre"] = persona.Nombres + " " + persona.Apellidos;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -559,6 +559,32 @@ namespace CopyStart.Areas.Activos.Controllers
 
             return Json(activo);
         }
+
+        [Authorize(Roles = "Administrador, Tecnico, Coordinador, Cliente")]
+        public IActionResult Catalogo()
+
+        {
+            var breadcrumbList = new List<Breadcrumb>();
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Inicio",
+                Action = "Index",
+                Controller = "Home",
+                Active = true
+            });
+            breadcrumbList.Add(new Breadcrumb
+            {
+                Text = "Activos",
+                Action = "Catalogo",
+                Controller = "Activos",
+                Area = "Tecnica",
+                Active = false
+            });
+            ViewBag.Breadcrumbs = breadcrumbList;
+
+            return View();
+        }
+
 
 
     }

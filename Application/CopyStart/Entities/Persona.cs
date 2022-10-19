@@ -11,17 +11,17 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [MaxLength(200)]
         [Display(Name = "Nombres", Prompt = "Ingrese nombres de la persona")]
         public string Nombres { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [MaxLength(200)]
         [Display(Name = "Apellidos", Prompt = "Ingrese apellidos de la persona")]
         public string Apellidos { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Tipo de documento")]
         public Guid TipoDocumentoId { get; set; }
 
@@ -29,23 +29,25 @@ namespace CopyStart.Entities
         [ForeignKey("TipoDocumentoId")]
         public TipoDocumento TipoDocumento { get; set; }
 
-        [Display(Name = "Documento de identidad", Prompt ="Ingrese número de documento")]
+        [Display(Name = "Documento de identidad", Prompt = "Ingrese número de documento")]
         [MaxLength(20)]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public string NumeroDocumento { get; set; }
 
         [MaxLength(500)]
-        [Display(Name = "Dirección de residencia", Prompt ="Ingrese su direccion")]
+        [Display(Name = "Dirección de residencia", Prompt = "Ingrese su direccion")]
         public string Direccion { get; set; }
 
-        [Display(Name = "Ubicación")]       
+        [Display(Name = "Ubicación")]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public string UbicacionId { get; set; }
-        
+
         [ForeignKey("UbicacionId")]
         [Display(Name = "Ubicación")]
         public Ubicacion Ubicacion { get; set; }
 
-        [Display(Name = "Teléfono o celular", Prompt ="Ingrese número telefónico de contacto")]
-        [Required]
+        [Display(Name = "Teléfono o celular", Prompt = "Ingrese número telefónico de contacto")]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public long Telefono { get; set; }
 
         [Display(Name = "Estado")]

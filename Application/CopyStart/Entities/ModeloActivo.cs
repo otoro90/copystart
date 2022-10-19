@@ -9,7 +9,7 @@ namespace CopyStart.Entities
     public class ModeloActivo: Parametrica
     {
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Marca de activo")]
         public Guid MarcaActivoId { get; set; }
 

@@ -9,6 +9,7 @@ using CopyStart.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CopyStart.Filters;
 using CopyStart.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CopyStart.Areas.Parametricas.Controllers
 {
@@ -45,7 +46,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             });
             ViewBag.Breadcrumbs = breadcrumbList;
 
-            return View(await _context.TipoActivo.ToListAsync());
+            return View(await _context.TipoActivo.Include(t=>t.MarcaActivo).ToListAsync());
         }
 
         // GET: Parametricas/TipoActivos/Details/5
@@ -56,7 +57,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var tipoActivo = await _context.TipoActivo
+            var tipoActivo = await _context.TipoActivo.Include(t=>t.MarcaActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();
@@ -123,7 +124,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 
             });
             ViewBag.Breadcrumbs = breadcrumbList;
-
+            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Nombre");
             return View();
         }
 
@@ -132,7 +133,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado")] TipoActivo tipoActivo)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado,MarcaActivoId")] TipoActivo tipoActivo)
         {
             if (ModelState.IsValid)
             {
@@ -201,7 +202,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado")] TipoActivo tipoActivo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado,MarcaActivoId")] TipoActivo tipoActivo)
         {
             if (id != tipoActivo.Id)
             {

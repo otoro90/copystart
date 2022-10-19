@@ -312,7 +312,9 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // GET: Parametricas/Ubicaciones
         public async Task<IActionResult> GetDepartamentos()
         {
-            return Json(new SelectList(await _context.Ubicacion.Select(x => new { Codigo = x.CodigoDepartamento, Departamento = x.Departamento }).ToListAsync(), "Codigo", "Departamento"));
+
+            var list = await _context.Ubicacion.Select(x => new { Codigo = x.CodigoDepartamento, Departamento = x.Departamento }).Distinct().ToListAsync();
+            return Json(new SelectList(list, "Codigo", "Departamento"));
         }
 
         // GET: Parametricas/Ubicaciones

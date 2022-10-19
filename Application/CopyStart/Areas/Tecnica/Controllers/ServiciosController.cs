@@ -351,7 +351,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
         {
 
             var servicios = _context.Servicio.Include(s => s.Activo).ThenInclude(a => a.TipoActivo).Include(s => s.Solicitudes.Cliente).Include(s => s.TipoServicios).Where(x => x.Activo.Id == idActivo && x.Estado == "Finalizado");
-
+            var activo = await _context.Activo.Include(a => a.TipoActivo).Include(a => a.MarcaActivo).Include(a => a.ModeloActivo).FirstOrDefaultAsync(a => a.Id == idActivo);
 
             var breadcrumbList = new List<Breadcrumb>();
             breadcrumbList.Add(new Breadcrumb
@@ -388,7 +388,7 @@ namespace CopyStart.Areas.Tecnica.Controllers
             });
 
             ViewBag.Breadcrumbs = breadcrumbList;
-
+            ViewData["ActivoDatos"] = activo.MarcaActivo.Nombre + " " + activo.ModeloActivo.Nombre + " S/N:" + activo.Serial;
             return View(await servicios.ToListAsync());
         }
 

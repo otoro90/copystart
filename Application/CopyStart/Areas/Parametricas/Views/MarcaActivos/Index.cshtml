@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CopyStart.Entities.MarcaActivo>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Marcas de activos";
 }
 
 <div class="row">
@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                              <div class="col-12 mb-4">
-                                <h4>Index de marcas de activos</h4> 
+                                <h4>Listado de marcas de activos</h4> 
                               </div>
 
                              <div class="col-12 mb-2">
@@ -25,10 +25,6 @@
                                 </a>
                             </div>
 
-
-                            <th>
-                                @Html.DisplayNameFor(model => model.TipoActivo)
-                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Nombre)
                             </th>
@@ -48,9 +44,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoActivo.Codigo)
-                                </td>
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nombre)
                                 </td>

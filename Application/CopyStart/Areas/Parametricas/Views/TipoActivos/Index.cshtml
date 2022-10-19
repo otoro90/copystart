@@ -1,21 +1,21 @@
 ﻿@model IEnumerable<CopyStart.Entities.TipoActivo>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tipos de activo";
 }
 
 <div class="row">
     <div class="col-12 form-group">
         <div class="card">
-            
+
             <div class="card-body table-responsive">
                 <table class="table table-bordered table-hover text-center" id="table-tipoactivos">
                     <thead>
                         <tr>
                             <div class="col-12 mb-4">
-                                <h4>Index de tipos de activo</h4> 
-                              </div>
-                             <div class="col-12 mb-2">
+                                <h4>Listado de tipos de activo</h4>
+                            </div>
+                            <div class="col-12 mb-2">
                                 <a asp-action="Create" class="btn btn-default bg-primary" role="button">
                                     Registrar
                                 </a>
@@ -24,6 +24,9 @@
 
                             <th>
                                 @Html.DisplayNameFor(model => model.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MarcaActivo)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -43,6 +46,9 @@
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MarcaActivo.Nombre)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Descripcion)

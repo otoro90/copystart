@@ -29,7 +29,7 @@ namespace CopyStart.Entities
         public Activo Activo { get; set; }
 
         [Display(Name = "Solicitud")]
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public long SolicitudId { get; set; }
 
         [Display(Name = "Solicitud")]
@@ -37,7 +37,7 @@ namespace CopyStart.Entities
         public Solicitud Solicitudes { get; set; }
 
         [Display(Name = "Tipo de Servicio")]
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public Guid? TipoServicioId { get; set; }
 
         [Display(Name = "Tipo de Servicio")]

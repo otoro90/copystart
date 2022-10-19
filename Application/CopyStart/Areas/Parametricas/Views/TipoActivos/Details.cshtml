@@ -12,8 +12,8 @@
     <div class="col-md-6 card">
         <div class="card-header">
             <div class="row mb-3">
-                  <b>Información detallada de tipo de activo</b>
-                  </div>
+                <b>Información detallada de tipo de activo</b>
+            </div>
             <div class="row">
 
                 <div class="col-md-3 my-2">
@@ -36,6 +36,12 @@
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Nombre)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.MarcaActivo)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.MarcaActivo.Nombre)
                 </dd>
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.Descripcion)

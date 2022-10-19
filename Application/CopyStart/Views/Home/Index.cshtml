@@ -1,9 +1,14 @@
-﻿
+﻿@{
+    var urlservicio = User.IsInRole("Coordinador")||User.IsInRole("Administrador") ? "/Tecnica/Solicitudes/CrearSolicitudRapida" :
+                                                      User.IsInRole("Cliente") ? "/Tecnica/Solicitudes/Create" : "";
+    var urlcatalogo = "/Activos/Activos/Catalogo";
+}
+
 <div class="content">
 
     <div class="container-fluid">
         <div class="row">
-            <div
+           
                 <div class="card card-primary card-outline col-lg-6">
                     <div class="card-header">
                         <h3 class="card-title mr-3 " style="font-family:'Franklin Gothic Medium'">Nuestros servicios</h3>
@@ -17,15 +22,10 @@
                             - Servicio tecnico especializado (mantenimiento, correctivo, diagnostico, instalacion y configuracion a PC, etc.) con o sin repuestos
 
                         </p>
-                        @if (User.IsInRole("Cliente"))
-                        {
-                            <a href="/Tecnica/Solicitudes/Create" class="btn btn-primary">Solicita un servicio</a>
-                        }
-                        @if (User.IsInRole("Coordinador"))
-                        {
-                            <a href="/Tecnica/Solicitudes/CrearSolicitudRapida" class="btn btn-primary">Solicita un servicio</a>
-                        }
-                        <a href="#" class="btn btn-primary">Nuestro catalogo</a>
+
+                        <a href=@urlservicio class="btn btn-primary">Solicita un servicio</a>
+
+                        <a href="@urlcatalogo" class="btn btn-primary">Nuestro catalogo</a>
 
                     </div>
                 </div>
@@ -84,5 +84,5 @@
                 </div>
 
         </div>
+        </div>
     </div>
-</div>

@@ -47,7 +47,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
 
 
-            var applicationDbContext = _context.MarcaActivo.Include(m => m.TipoActivo);
+            var applicationDbContext = _context.MarcaActivo;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -59,8 +59,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 return NotFound();
             }
 
-            var marcaActivo = await _context.MarcaActivo
-                .Include(m => m.TipoActivo)
+            var marcaActivo = await _context.MarcaActivo               
                 .FirstOrDefaultAsync(m => m.Id == id);
 
 
@@ -146,7 +145,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TipoActivoId,Id,Nombre,Descripcion,Codigo,Estado")] MarcaActivo marcaActivo)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Codigo,Estado")] MarcaActivo marcaActivo)
         {
             if (ModelState.IsValid)
             {
@@ -155,7 +154,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Codigo", marcaActivo.TipoActivoId);
+
             return View(marcaActivo);
         }
 
@@ -205,7 +204,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
             {
                 return NotFound();
             }
-            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Codigo", marcaActivo.TipoActivoId);
+
             return View(marcaActivo);
         }
 
@@ -214,7 +213,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("TipoActivoId,Id,Nombre,Descripcion,Codigo,Estado")] MarcaActivo marcaActivo)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Descripcion,Codigo,Estado")] MarcaActivo marcaActivo)
         {
             if (id != marcaActivo.Id)
             {
@@ -241,7 +240,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoActivoId"] = new SelectList(_context.TipoActivo, "Id", "Codigo", marcaActivo.TipoActivoId);
+
             return View(marcaActivo);
         }
 
@@ -254,7 +253,6 @@ namespace CopyStart.Areas.Parametricas.Controllers
             }
 
             var marcaActivo = await _context.MarcaActivo
-                .Include(m => m.TipoActivo)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             var breadcrumbList = new List<Breadcrumb>();

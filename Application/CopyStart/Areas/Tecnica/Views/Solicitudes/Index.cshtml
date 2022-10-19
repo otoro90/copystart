@@ -1,16 +1,9 @@
 ﻿@model IEnumerable<CopyStart.Entities.Solicitud>
 
 @{
-    ViewData["Title"] = "Listado de solicitudes";
+    ViewData["Title"] = "Solicitudes";
 }
 
-<div class="row p-3">
-    <div class="col-4">
-        
-    </div>
-    
-
-</div>
 
 <div class="row ">
     <div class="col-12">
@@ -20,7 +13,7 @@
                     <thead >
                         <tr>
                              <div class="col-12 mb-4">
-                                <h4>Index de solicitudes</h4> 
+                                <h4>Listado de solicitudes</h4> 
                               </div>
                              <div class="col-12 mb-2">
                                  @if (User.IsInRole("Cliente")){

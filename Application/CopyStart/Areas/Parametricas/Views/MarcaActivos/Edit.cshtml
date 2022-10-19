@@ -21,13 +21,7 @@
                             <div class="row">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
-                            <div class="form-group col-md-6">
-                                <label asp-for="TipoActivoId" class="control-label"></label>
-                                <select asp-for="TipoActivoId" class="form-control select2" asp-items="ViewBag.TipoActivoId">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="TipoActivoId" class="text-danger"></span>
-                            </div>
+                          
 
                             <div class="form-group col-md-6">
                                 <label asp-for="Nombre" class="control-label"></label>

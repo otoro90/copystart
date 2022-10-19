@@ -14,7 +14,7 @@ namespace CopyStart.Entities
         [Display(Name = "Serial del equipo", Prompt ="Ingrese el serial del equipo")]
         public string Serial { get; set; }
  
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Tipo de activo")]
         public Guid TipoActivoId { get; set; }
 
@@ -26,7 +26,7 @@ namespace CopyStart.Entities
         [Display(Name = "Descripción", Prompt ="Ingrese los detalles del equipo")]
         public string Descripcion { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Marca de activo")]
         public Guid MarcaActivoId { get; set; }
 
@@ -34,7 +34,7 @@ namespace CopyStart.Entities
         [ForeignKey("MarcaActivoId")]
         public MarcaActivo MarcaActivo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Modelo de activo")]
         public Guid ModeloActivoId { get; set; }
 
@@ -56,6 +56,7 @@ namespace CopyStart.Entities
         [ForeignKey("PersonaId")]
         public Persona Persona { get; set; }
 
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Lugar de ubicación del equipo")]
         public string UbicacionId { get; set; }
 

@@ -138,7 +138,7 @@ namespace CopyStart.Areas.Parametricas.Controllers
 
 
 
-            ViewData["MarcaActivoId"] = new SelectList(_context.MarcaActivo, "Id", "Codigo");
+            ViewData["MarcaActivoId"] = new SelectList(_context.TipoActivo.Include(m=>m.MarcaActivo).Select(x => new { Id = x.Id, Texto = x.Nombre+" "+x.MarcaActivo.Nombre }), "Id", "Texto");
             return View();
         }
 

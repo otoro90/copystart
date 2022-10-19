@@ -11,7 +11,7 @@ namespace CopyStart.Entities
         public long Id { get; set; }        
        
         [MaxLength(150)]
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Falla presentada", Prompt = "Ingrese falla del equipo")]
         public string Incidencia { get; set; }
         
@@ -40,6 +40,7 @@ namespace CopyStart.Entities
         public Persona Tecnico { get; set; }
 
         [Display(Name = "Cliente")]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public Guid ClienteId { get; set; }
 
         [Display(Name = "Cliente")]
@@ -47,6 +48,7 @@ namespace CopyStart.Entities
         public Persona Cliente { get; set; }
 
         [Display(Name = "Activo")]
+        [Required(ErrorMessage = "Este campo es obligatorio")] 
         public long ActivoId { get; set; }
 
         [Display(Name = "Activo")]

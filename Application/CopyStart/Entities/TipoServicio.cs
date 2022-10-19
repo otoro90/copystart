@@ -7,6 +7,7 @@ namespace CopyStart.Entities
     [Table("TiposServicio")]
     public class TipoServicio : Parametrica
     {
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Tipo de Activo")]
         public Guid? TipoActivoId { get; set; }
         

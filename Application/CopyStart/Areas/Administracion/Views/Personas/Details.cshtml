@@ -13,7 +13,7 @@
     <div class="col-md-12 card">
         <div class="card-header">
             <div class="row mb-3">
-                <b>Información detallada de la persona</b>
+               
             </div>
 
             <div class="row">
@@ -50,7 +50,7 @@
         </div>
 
         <div class="card-body">
-            <h2>Datos de persona</h2>
+            <h4>Datos de persona</h4>
             <dl class="row my-4">
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Nombres)
@@ -104,7 +104,7 @@
 
              @if (User.IsInRole("Administrador"))
             {
-                <h2>Roles de persona</h2>
+                <h4>Roles de persona</h4>
 
                 <div class="row my-4">
                     <div class="col-6">

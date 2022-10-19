@@ -10,10 +10,11 @@ namespace CopyStart.Entities
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Número")]
         public int Numero { get; set; }
 
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Procedimiento")]
         public Guid ProcedimientoId { get; set; }
 
@@ -21,6 +22,7 @@ namespace CopyStart.Entities
         [ForeignKey("ProcedimientoId")]
         public Procedimiento Procedimientos { get; set; }
 
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Tipo de Servicio")]
         public Guid TipoServicioId { get; set; }
 
