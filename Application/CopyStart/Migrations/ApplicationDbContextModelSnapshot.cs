@@ -17,6 +17,7 @@ namespace CopyStart.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("public")
                 .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -77,7 +78,7 @@ namespace CopyStart.Migrations
                     b.HasIndex("Id", "Serial")
                         .IsUnique();
 
-                    b.ToTable("Activos");
+                    b.ToTable("Activos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationRole", b =>
@@ -103,34 +104,34 @@ namespace CopyStart.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles", "public");
 
                     b.HasData(
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "e2ca9015-13b8-45bf-8a6a-b33a574a278d",
+                            ConcurrencyStamp = "2dba45d4-f60a-4e63-b08d-6f947902b2ab",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "2490e8bf-c4f9-465b-beef-0ba6a3c61201",
+                            ConcurrencyStamp = "cb08b4e0-4697-4cf8-bf5d-1f74e0d8590c",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "42aa164f-5449-489e-ad9e-45c3bf8c5abb",
+                            ConcurrencyStamp = "6cff4868-ef07-4cc5-badf-7208d7dfdbf3",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "92658845-86dd-4a98-b98a-265dfbe65af3",
+                            ConcurrencyStamp = "298b44be-1740-4643-8a18-5bef832683c9",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
@@ -158,7 +159,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", (string)null);
+                    b.ToTable("RoleClaims", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationUser", b =>
@@ -227,7 +228,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("PersonaId");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers", "public");
 
                     b.HasData(
                         new
@@ -271,7 +272,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", (string)null);
+                    b.ToTable("UserClaims", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationUserLogin", b =>
@@ -295,7 +296,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", (string)null);
+                    b.ToTable("UserLogins", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ApplicationUserRole", b =>
@@ -310,7 +311,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles", "public");
 
                     b.HasData(
                         new
@@ -338,7 +339,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("UserTokens", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Archivo", b =>
@@ -363,7 +364,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Archivos");
+                    b.ToTable("Archivos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ArchivoServicio", b =>
@@ -380,7 +381,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("ArchivoId");
 
-                    b.ToTable("ArchivoServicio");
+                    b.ToTable("ArchivoServicio", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.MarcaActivo", b =>
@@ -408,7 +409,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MarcaActivos");
+                    b.ToTable("MarcaActivos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ModeloActivo", b =>
@@ -441,7 +442,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("TipoActivoId");
 
-                    b.ToTable("ModeloActivos");
+                    b.ToTable("ModeloActivos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Persona", b =>
@@ -491,7 +492,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("UbicacionId");
 
-                    b.ToTable("Personas");
+                    b.ToTable("Personas", "public");
 
                     b.HasData(
                         new
@@ -536,7 +537,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Procedimientos");
+                    b.ToTable("Procedimientos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ProcedimientoTipoServicio", b =>
@@ -564,7 +565,7 @@ namespace CopyStart.Migrations
                     b.HasIndex("TipoServicioId", "ProcedimientoId")
                         .IsUnique();
 
-                    b.ToTable("ProcedimientosTipoServicios");
+                    b.ToTable("ProcedimientosTipoServicios", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Repuesto", b =>
@@ -601,7 +602,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Repuestos");
+                    b.ToTable("Repuestos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.RepuestoProcedimiento", b =>
@@ -625,7 +626,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("RepuestoId");
 
-                    b.ToTable("RepuestosProcedimientos");
+                    b.ToTable("RepuestosProcedimientos", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Servicio", b =>
@@ -666,7 +667,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("TipoServicioId");
 
-                    b.ToTable("Servicios");
+                    b.ToTable("Servicios", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.ServicioProcedimientoTipoServicio", b =>
@@ -693,7 +694,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("ServicioId");
 
-                    b.ToTable("ServiciosProcedimientosTipoServicios");
+                    b.ToTable("ServiciosProcedimientosTipoServicios", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Solicitud", b =>
@@ -746,7 +747,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("TecnicoId");
 
-                    b.ToTable("Solicitudes");
+                    b.ToTable("Solicitudes", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.TipoActivo", b =>
@@ -780,7 +781,7 @@ namespace CopyStart.Migrations
                     b.HasIndex("MarcaActivoId", "Nombre")
                         .IsUnique();
 
-                    b.ToTable("TiposActivo");
+                    b.ToTable("TiposActivo", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.TipoDocumento", b =>
@@ -808,7 +809,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TiposDocumento");
+                    b.ToTable("TiposDocumento", "public");
 
                     b.HasData(
                         new
@@ -852,7 +853,7 @@ namespace CopyStart.Migrations
 
                     b.HasIndex("TipoActivoId");
 
-                    b.ToTable("TiposServicio");
+                    b.ToTable("TiposServicio", "public");
                 });
 
             modelBuilder.Entity("CopyStart.Entities.Ubicacion", b =>
@@ -879,7 +880,7 @@ namespace CopyStart.Migrations
 
                     b.HasKey("CodigoMunicipio");
 
-                    b.ToTable("Ubicaciones");
+                    b.ToTable("Ubicaciones", "public");
 
                     b.HasData(
                         new
