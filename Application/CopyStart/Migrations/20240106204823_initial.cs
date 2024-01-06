@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CopyStart.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -646,10 +646,10 @@ namespace CopyStart.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "2dba45d4-f60a-4e63-b08d-6f947902b2ab", "Administrador", "Administrador" },
-                    { "CLN", "298b44be-1740-4643-8a18-5bef832683c9", "Cliente", "Cliente" },
-                    { "COORD", "cb08b4e0-4697-4cf8-bf5d-1f74e0d8590c", "Coordinador", "Coordinador" },
-                    { "TEC", "6cff4868-ef07-4cc5-badf-7208d7dfdbf3", "Tecnico", "Tecnico" }
+                    { "ADMIN", "33ed25c9-a33b-4903-b4f2-7c8919a13a91", "Administrador", "Administrador" },
+                    { "CLN", "93119def-95f6-4f41-8fe9-2bf9ef6d758e", "Cliente", "Cliente" },
+                    { "COORD", "bd0123f3-6ae6-4d41-ab6c-76a19fb2f106", "Coordinador", "Coordinador" },
+                    { "TEC", "5eec0f06-65a1-4de0-ad36-69d87f15fd39", "Tecnico", "Tecnico" }
                 });
 
             migrationBuilder.InsertData(

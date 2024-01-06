@@ -7,5 +7,24 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5000:5000
+    depends_on:
+      - postgres
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Database=CopyStartDB;User Id=postgres;Password=ots17332554;
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=ots17332554
+      - POSTGRES_DB=CopyStartDB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

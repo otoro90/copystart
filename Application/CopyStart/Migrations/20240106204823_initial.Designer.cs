@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CopyStart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221019205826_Initial")]
-    partial class Initial
+    [Migration("20240106204823_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,28 +112,28 @@ namespace CopyStart.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "2dba45d4-f60a-4e63-b08d-6f947902b2ab",
+                            ConcurrencyStamp = "33ed25c9-a33b-4903-b4f2-7c8919a13a91",
                             Name = "Administrador",
                             NormalizedName = "Administrador"
                         },
                         new
                         {
                             Id = "COORD",
-                            ConcurrencyStamp = "cb08b4e0-4697-4cf8-bf5d-1f74e0d8590c",
+                            ConcurrencyStamp = "bd0123f3-6ae6-4d41-ab6c-76a19fb2f106",
                             Name = "Coordinador",
                             NormalizedName = "Coordinador"
                         },
                         new
                         {
                             Id = "TEC",
-                            ConcurrencyStamp = "6cff4868-ef07-4cc5-badf-7208d7dfdbf3",
+                            ConcurrencyStamp = "5eec0f06-65a1-4de0-ad36-69d87f15fd39",
                             Name = "Tecnico",
                             NormalizedName = "Tecnico"
                         },
                         new
                         {
                             Id = "CLN",
-                            ConcurrencyStamp = "298b44be-1740-4643-8a18-5bef832683c9",
+                            ConcurrencyStamp = "93119def-95f6-4f41-8fe9-2bf9ef6d758e",
                             Name = "Cliente",
                             NormalizedName = "Cliente"
                         });
