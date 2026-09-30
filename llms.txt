@@ -1,6 +1,6 @@
 # CopyStart project index
 
-CopyStart is a new multi-tenant SaaS for repair and technical-service businesses. The old .NET 6 MVC application is discovery evidence only; it is not the target architecture or a production data source.
+CopyStart is a new multi-tenant SaaS for repair and technical-service businesses. The legacy .NET 6 MVC prototype is discovery evidence only; it is not the target architecture or a production data source. The public brand is undecided and is not a delivery gate.
 
 ## Sources of truth
 
@@ -10,6 +10,9 @@ CopyStart is a new multi-tenant SaaS for repair and technical-service businesses
 - `docs/README.md`: documentation index.
 - `docs/delivery/roadmap.md`: required implementation order and gates.
 - `openspec/changes/`: planned behavior; update artifacts before implementation.
+- `openspec/specs/engineering-governance/spec.md`: documentation authority, evidence, completion gates, and agent-guidance rules.
+- `docs/development/governance-checks.md`: executable link, version-drift, validation, and customization checks (`python3 scripts/governance_checks.py`).
+- `docs/agent-workflows/skill-candidates.md`: rejected skill proposals. Do not add a skill that duplicates those checks.
 
 ## Security and legacy data
 

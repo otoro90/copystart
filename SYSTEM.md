@@ -17,6 +17,7 @@ A task is complete only when all applicable items have fresh evidence:
 - Build, lint, and type checks passing.
 - Tenant-isolation tests for any tenant-owned data path.
 - `openspec validate <change> --strict` passing.
+- `python3 scripts/governance_checks.py` passing when docs, instructions, or OpenSpec tasks change.
 - `CONTEXT.md` or the relevant `docs/` guide updated.
 - Migration, rollback, and secret-handling notes when data or infrastructure changes.
 

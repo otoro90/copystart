@@ -9,5 +9,6 @@
 | Copilot usage | [agent-workflows/copilot-usage.md](agent-workflows/copilot-usage.md) |
 | Skill candidates | [agent-workflows/skill-candidates.md](agent-workflows/skill-candidates.md) |
 | Testing | [development/testing.md](development/testing.md) |
+| Governance checks | [development/governance-checks.md](development/governance-checks.md) |
 | Security | [security/baseline.md](security/baseline.md) |
 | Legacy prototype inventory | [security/legacy-inventory.md](security/legacy-inventory.md) |

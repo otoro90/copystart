@@ -46,5 +46,5 @@ Rollback removes only the new governance artifacts; application runtime is uncha
 
 ## Open Questions
 
-- Which project name should replace the historical CopyStart brand before public release?
-- Which instructions should be global versus path-scoped after the target directory structure exists?
+- Which project name should replace the historical CopyStart brand before public release? Undecided as of 2026-09-30. The repository name stays CopyStart, and the decision is not a delivery gate.
+- Path scope is resolved: every file in `.github/instructions/` is path-scoped with `applyTo`. A missing `applyTo` fails `scripts/governance_checks.py`. No separate governance skill is warranted; the check is deterministic.

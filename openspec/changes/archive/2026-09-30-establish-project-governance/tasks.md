@@ -14,6 +14,6 @@
 
 ## 3. Governance Verification
 
-- [ ] 3.1 Add documentation link, version-drift, and required-validation checks
-- [ ] 3.2 Verify all links and customization files and run `openspec doctor --json`
-- [ ] 3.3 Run `openspec validate establish-project-governance --strict` and record fresh evidence
+- [x] 3.1 Add documentation link, version-drift, and required-validation checks
+- [x] 3.2 Verify all links and customization files and run `openspec doctor --json`
+- [x] 3.3 Run `openspec validate establish-project-governance --strict` and record fresh evidence

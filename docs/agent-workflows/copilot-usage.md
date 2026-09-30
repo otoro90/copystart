@@ -14,7 +14,7 @@ Verified against official VS Code and GitHub documentation on 2026-09-30. Copilo
 ## Customization Rules
 
 - Always-on project guidance: `AGENTS.md` (read by Copilot, cloud agent, Codex, and the Local agent).
-- File-specific conventions: `.github/instructions/*.instructions.md` with `applyTo` and `description`.
+- File-specific conventions: `.github/instructions/*.instructions.md` with `name`, `description`, and `applyTo`. Every instruction is path-scoped. Do not add a skill for link, version, or validation checks; run `python3 scripts/governance_checks.py`.
 - Reusable workflows: skills in `.github/skills/<name>/SKILL.md`; `name` must match the folder, lowercase and hyphens only.
 - Prompt files are deprecated for Agent Host sessions. Existing `opsx-*` prompts still work in the Local agent; prefer the equivalent `openspec-*` skills.
 - Verify discovery in **Chat: Open Customizations** and check **References** in a response.
