@@ -7,6 +7,7 @@ Last verified: 2026-09-30.
 - Multi-tenant SaaS for repair and technical-service businesses: requests, work orders, assets, procedures, parts, attachments, and history.
 - First pilots: a photocopier service business (origin of the prototype) and an automotive workshop.
 - Each tenant gets a branded public site, a customer portal, and a staff console, configured from versioned vertical templates.
+- Working name: CopyStart. A public brand replacement is undecided and is not a delivery gate.
 
 ## Legacy Prototype (discovery evidence only)
 
@@ -31,6 +32,11 @@ The prototype is product-discovery evidence only. No authoritative database dump
 | Identity | ZITADEL, one organization per tenant, shared project + Project Grants | [ADR-0003](docs/architecture/decisions/0003-tenant-identity.md) |
 | Files | SeaweedFS S3, private bucket, tenant-prefixed keys, presigned URLs | [ADR-0004](docs/architecture/decisions/0004-object-storage.md) |
 | Runtime | mini-cluster K3s ARM64, Argo CD, OpenBao/ESO, Traefik | `mini-cluster/CONTEXT.md` |
+
+## Repository Controls
+
+- The Target Baseline table is the only current runtime-version source. `llms.txt` may repeat it; `python3 scripts/governance_checks.py` fails if those copies drift.
+- Agent skills are the OpenSpec skills only. Rejected candidates are recorded in [docs/agent-workflows/skill-candidates.md](docs/agent-workflows/skill-candidates.md).
 
 ## Known Blockers
 

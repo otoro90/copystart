@@ -1,6 +1,7 @@
 ---
 name: 'Object storage'
 description: 'Use when uploading, downloading, deleting, or migrating files, or when using S3 or SeaweedFS.'
+applyTo: 'src/**/*{Storage,Attachment,ObjectKey}*'
 ---
 # Object Storage Rules
 

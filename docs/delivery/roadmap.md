@@ -5,7 +5,7 @@ Apply changes in this order. Each gate must pass before the next change starts i
 | # | Change / Owner | Gate to proceed |
 | --- | --- | --- |
 | 1 | `remediate-legacy-secrets-and-inventory` (CopyStart) | Tracked prototype values removed; active credential use checked; import inventory completed only for an owner-approved source, otherwise recorded not applicable |
-| 2 | `establish-project-governance` (CopyStart) | Docs, instructions, strict validation |
+| 2 | `establish-project-governance` (CopyStart, archived 2026-09-30) | Passed: docs, path-scoped instructions, governance checks, and strict validation |
 | 3 | `establish-github-ci-and-image-publishing` (CopyStart) | Read-only PR checks established; image publication waits for actual .NET/Angular targets and Dockerfiles; CI has no cluster credentials |
 | 4 | `modernize-service-platform-backend` (CopyStart) | .NET 10 skeleton, dependency audit, and domain tests pass; persistence waits for #5; source-data discovery does not block these tasks |
 | 5 | `add-multitenancy-and-zitadel-identity` (CopyStart) | Tenant ownership, capability registry, and OIDC provisioning boundary accepted |

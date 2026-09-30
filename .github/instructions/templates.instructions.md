@@ -1,6 +1,7 @@
 ---
 name: 'Vertical templates'
 description: 'Use when adding vertical-specific behavior, template configuration, labels, catalogs, or workflow options for a tenant type.'
+applyTo: '{src,web}/**/*{Template,Vertical}*'
 ---
 # Template Boundary
 
