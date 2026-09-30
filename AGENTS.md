@@ -23,3 +23,9 @@ CopyStart is being rebuilt from a single-company ASP.NET Core 6 MVC prototype in
 
 - Technical artifacts, code, and commit messages: English.
 - Business concepts may keep Spanish product vocabulary only in tenant templates and UI copy.
+
+## Git Workflow
+
+- This is a single-developer repository. By default, make focused commits directly on `master` and push them to `origin/master`.
+- Do not create feature branches or pull requests unless the user explicitly requests them.
+- Never force-push. If `master` is protected, diverged from `origin/master`, or cannot be updated with a fast-forward, stop and report the blocker instead of switching to a branch or PR workflow without approval.
