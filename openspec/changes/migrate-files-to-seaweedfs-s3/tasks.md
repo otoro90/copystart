@@ -15,7 +15,8 @@
 
 ## 3. Legacy Migration
 
-- [ ] 3.1 Generate a tenant-mapped file manifest from the approved legacy inventory
-- [ ] 3.2 Run resumable dry-run and isolated migration rehearsals with checksum reconciliation
-- [ ] 3.3 Execute cutover only after reconciliation, preserving source files through the rollback window
-- [ ] 3.4 Verify backup/restore and run strict OpenSpec validation
+- [ ] 3.1 Ask the authorized owner for an authoritative filesystem/database backup source; if none is confirmed, record import as not applicable and skip 3.2-3.4 without blocking the new storage lifecycle
+- [ ] 3.2 If an owner-approved source exists, generate a tenant-mapped file manifest from the approved inventory
+- [ ] 3.3 Run resumable dry-run and isolated migration rehearsals with checksum reconciliation
+- [ ] 3.4 Execute cutover only after reconciliation, preserving source files through the rollback window
+- [ ] 3.5 Verify backup/restore and run `openspec validate migrate-files-to-seaweedfs-s3 --strict`

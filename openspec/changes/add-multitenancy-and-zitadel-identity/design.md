@@ -17,7 +17,7 @@ CopyStart combines local ASP.NET Identity and business data in one context and h
 ## Decisions
 
 1. Use one ZITADEL organization per customer, one shared product project per environment, shared SPA/API applications, and a Project Grant to each customer organization.
-2. Terraform owns shared project, applications, actions, and role definitions. A constrained provisioning service may own tenant organizations and grants, persisting `OrganizationId`, `ProjectGrantId`, state, attempt, and error metadata.
+2. Mini-cluster protected Terraform owns shared project, applications, actions, role definitions, and the infrastructure provisioning identity. CopyStart runtime may create tenant organizations and grants only through a separately constrained identity, persisting `OrganizationId`, `ProjectGrantId`, state, attempt, and error metadata.
 3. Resolve anonymous tenant context from an exact `SiteDomain` record. Resolve authenticated context from validated organization/project authorization; host and optional request headers may select only among already authorized memberships.
 4. Fail closed for protected endpoints. Global health, discovery, onboarding callback, and public-site endpoints are explicitly classified rather than inferred from a missing tenant.
 5. Use layered isolation: tenant-aware aggregate keys and unique indexes, EF Core query filters, PostgreSQL RLS, tenant-qualified caches/object keys, and explicit tenant envelopes for background processing.
@@ -34,7 +34,7 @@ CopyStart combines local ASP.NET Identity and business data in one context and h
 ## Migration Plan
 
 1. Define tenant ownership and capability registry before final backend migrations.
-2. Provision shared ZITADEL resources through `provision-saas-platform-prerequisites`.
+2. Have mini-cluster `provision-copystart-platform-prerequisites` provision shared ZITADEL resources; consume the application runtime contract from CopyStart `provision-saas-platform-prerequisites`.
 3. Add tenant schema, constraints, query filters, RLS, and cross-tenant tests.
 4. Implement token validation and anonymous host discovery.
 5. Implement durable onboarding and membership administration.

@@ -10,7 +10,7 @@ The prototype writes uploads directly to a local filesystem path and stores mini
 - Use short-lived presigned upload/download URLs with separate internal and external S3 endpoints.
 - Create server-owned object keys and pending metadata before upload; validate object existence, size, checksum, authorization, CORS, and malware-scan outcome before making files available.
 - Define orphan cleanup, quarantine, retention, and deletion semantics.
-- Define a resumable legacy-file migration with reconciliation and rollback.
+- Define a resumable legacy-file migration with reconciliation and rollback only if an authoritative, owner-approved legacy file source is found; otherwise record import as not applicable.
 
 ## Capabilities
 
@@ -23,4 +23,4 @@ None.
 
 ## Impact
 
-Replaces `PathBaseFiles` and direct `File.Create` usage, introduces S3 client dependencies, and requires a dedicated bucket identity and secret contract. Depends on `modernize-service-platform-backend` and `add-multitenancy-and-zitadel-identity`; infrastructure work is coordinated with `deploy-saas-platform-to-mini-cluster`.
+Replaces `PathBaseFiles` and direct `File.Create` usage, introduces S3 client dependencies, and consumes the CopyStart runtime configuration contract. Depends on `modernize-service-platform-backend`, `add-multitenancy-and-zitadel-identity`, and CopyStart `provision-saas-platform-prerequisites`; infrastructure depends on mini-cluster `harden-seaweedfs-s3-security` and `provision-copystart-platform-prerequisites`, not on the deployment change. Legacy import is conditional on an authoritative, owner-approved source.

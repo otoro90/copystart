@@ -1,36 +1,36 @@
 ## ADDED Requirements
 
-### Requirement: Shared prerequisites are declaratively owned
-Development PostgreSQL, SeaweedFS, OpenBao/ESO, and shared ZITADEL resources MUST have one declared owner, least-privilege configuration, and no plaintext secrets in Git.
+### Requirement: Runtime prerequisites have an explicit application contract
+CopyStart SHALL define and validate the application-facing PostgreSQL, private object-storage, and OIDC configuration contract. Platform resources and injected secret values MUST remain owned by the mini-cluster repository.
 
-#### Scenario: GitOps reconciles prerequisites
-- **WHEN** the cluster is rebuilt from approved repositories and protected bootstrap inputs
-- **THEN** every prerequisite reaches its declared state without an imperative undocumented resource
+#### Scenario: Runtime configuration is reviewed
+- **WHEN** CopyStart documents or changes a required platform setting
+- **THEN** its name, purpose, sensitivity, source reference, and consuming readiness check are explicit and agree with the mini-cluster contract
 
-### Requirement: SeaweedFS is hardened before application use
-The shared S3 gateway MUST default to deny, remove anonymous application-data access, eliminate tracked live/test credentials, and provide a dedicated private CopyStart bucket identity.
+### Requirement: Runtime secrets are injected without repository values
+Database passwords, S3 credentials, and OIDC client secrets MUST be supplied through protected runtime references and MUST NOT be committed, embedded in images, logged, or accepted in client request payloads.
 
-#### Scenario: Anonymous request targets the CopyStart bucket
-- **WHEN** no valid signature or authorized temporary credential is supplied
-- **THEN** SeaweedFS denies read, list, write, and delete access
+#### Scenario: Secret reference is absent
+- **WHEN** a required credential is missing from the runtime environment
+- **THEN** the application fails startup or readiness closed and does not fall back to anonymous access or a checked-in value
 
-### Requirement: ZITADEL ownership is split explicitly
-Terraform SHALL own the shared product project, applications, roles, actions, and provisioning service identity, while runtime onboarding MAY own customer organizations and Project Grants through only that constrained identity.
+### Requirement: Tenant-owned data access is isolated
+Every request that reads or writes tenant-owned database rows or objects MUST use validated server-side tenant context and prevent access to another tenant's data.
 
-#### Scenario: Shared identity provisioning is rerun
-- **WHEN** the Terraform workflow executes against matching remote state
-- **THEN** it produces no duplicate project, application, role, or service identity
+#### Scenario: Tenant requests another tenant's object
+- **WHEN** an authenticated tenant requests an object not owned by its resolved server-side tenant context
+- **THEN** the application denies access without disclosing object metadata
 
-### Requirement: Bootstrap integration is bounded and idempotent
-The canonical cluster facade SHALL expose a `copystart-prerequisites` profile or module that supports preflight, dry-run, idempotent apply, check-only readiness, and documented rollback.
+### Requirement: Dependency readiness fails closed
+The application SHALL expose dependency-specific readiness for required PostgreSQL, OIDC metadata, and private object storage without treating a network connection alone as authorization success.
 
-#### Scenario: Prerequisite profile is rerun after success
-- **WHEN** no desired configuration changed
-- **THEN** it performs no destructive rotation or duplicate creation and reports all checks ready
+#### Scenario: A required dependency is unavailable or unauthorized
+- **WHEN** a configured dependency cannot be reached or authenticated
+- **THEN** readiness reports that dependency as unavailable without revealing secret values or marking the application ready
 
-### Requirement: Backups and restore are proven
-The database and object bucket MUST be included in documented backup schedules and SHALL pass a non-production restore rehearsal before workload production activation.
+### Requirement: Production configuration remains gated
+Production credentials and production workload activation MUST remain absent/disabled until a separately approved production cutover.
 
-#### Scenario: Restore rehearsal runs
-- **WHEN** operators restore the latest protected backup into isolated targets
-- **THEN** schema/data checks and representative object checksums reconcile without overwriting active resources
+#### Scenario: Development release is prepared
+- **WHEN** a development image or overlay is promoted
+- **THEN** it cannot populate production secrets or activate the production workload

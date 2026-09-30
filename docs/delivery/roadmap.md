@@ -2,17 +2,20 @@
 
 Apply changes in this order. Each gate must pass before the next change starts implementation.
 
-| # | Change | Gate to proceed |
+| # | Change / Owner | Gate to proceed |
 | --- | --- | --- |
-| 1 | `remediate-legacy-secrets-and-inventory` | Credentials rotated; deterministic inventory |
-| 2 | `establish-project-governance` | Docs, instructions, strict validation |
-| 3 | `modernize-service-platform-backend` (skeleton + domain) | Domain tests pass; persistence frozen until #4 contract |
-| 4 | `add-multitenancy-and-zitadel-identity` (contracts) | Tenant ownership and capability registry accepted |
-| 5 | `provision-saas-platform-prerequisites` | Default-deny S3, dev DB, ZITADEL project, Day-1 profile |
-| 6 | `build-angular-multisurface-frontend` | Spike passes budgets |
-| 7 | `add-versioned-vertical-templates` | Copier and automotive scenarios pass |
-| 8 | `migrate-files-to-seaweedfs-s3` | Cross-tenant denial and verified upload lifecycle |
-| 9 | `add-saas-subscriptions-and-entitlements` | Pilot pricing validated |
-| 10 | `deploy-saas-platform-to-mini-cluster` | Restore and rollback rehearsed; production stays disabled |
+| 1 | `remediate-legacy-secrets-and-inventory` (CopyStart) | Tracked prototype values removed; active credential use checked; import inventory completed only for an owner-approved source, otherwise recorded not applicable |
+| 2 | `establish-project-governance` (CopyStart) | Docs, instructions, strict validation |
+| 3 | `establish-github-ci-and-image-publishing` (CopyStart) | Read-only PR checks established; image publication waits for actual .NET/Angular targets and Dockerfiles; CI has no cluster credentials |
+| 4 | `modernize-service-platform-backend` (CopyStart) | .NET 10 skeleton, dependency audit, and domain tests pass; persistence waits for #5; source-data discovery does not block these tasks |
+| 5 | `add-multitenancy-and-zitadel-identity` (CopyStart) | Tenant ownership, capability registry, and OIDC provisioning boundary accepted |
+| 6 | `provision-saas-platform-prerequisites` (CopyStart runtime contract) | Database, storage, OIDC, secret-reference, and readiness expectations agreed with mini-cluster; no infrastructure is provisioned here |
+| 7 | `harden-seaweedfs-s3-security` (mini-cluster) | All consumers inventoried; one OpenBao/ESO owner; anonymous access denied; existing objects and required consumers verified |
+| 8 | `provision-copystart-platform-prerequisites` (mini-cluster) | Development DB/role, private bucket identity, protected secrets, shared ZITADEL resources, backup/restore, and Stage 6 readiness pass; production remains absent |
+| 9 | `build-angular-multisurface-frontend` (CopyStart) | Spike passes budgets |
+| 10 | `add-versioned-vertical-templates` (CopyStart) | Copier and automotive scenarios pass |
+| 11 | `migrate-files-to-seaweedfs-s3` (CopyStart) | Cross-tenant denial and verified upload lifecycle; migration only if an approved legacy source exists |
+| 12 | `add-saas-subscriptions-and-entitlements` (CopyStart) | Pilot pricing validated |
+| 13 | `deploy-saas-platform-to-mini-cluster` (CopyStart + mini-cluster) | CI digests, workload overlays, Argo integration, ingress, restore, and rollback rehearsed; production stays disabled |
 
-Changes 3 and 4 are refined together because the target schema depends on tenant ownership.
+Changes 4 and 5 are refined together because the target schema depends on tenant ownership. Changes 7 and 8 are mini-cluster infrastructure owners; CopyStart defines consumption and workload manifests only. Legacy data import and production activation remain separate, explicit decisions.

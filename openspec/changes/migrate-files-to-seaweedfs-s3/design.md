@@ -1,6 +1,6 @@
 ## Context
 
-CopyStart writes request files directly with `File.Create` beneath `PathBaseFiles` and stores only basic name, extension, and size metadata. GovCore demonstrates an S3 abstraction and separate internal/external clients, while the mini-cluster already runs SeaweedFS 3.80. Current shared SeaweedFS configuration contains anonymous read and tracked test credentials, so application integration is blocked until `provision-saas-platform-prerequisites` hardens it.
+CopyStart writes request files directly with `File.Create` beneath `PathBaseFiles` and stores only basic name, extension, and size metadata. The mini-cluster runs SeaweedFS 3.80, but the shared configuration currently contains anonymous read and tracked test credentials. Application use is blocked until mini-cluster `harden-seaweedfs-s3-security` completes; the bucket/identity is provisioned by mini-cluster `provision-copystart-platform-prerequisites`, while CopyStart's same-named change defines the runtime contract only. A legacy import additionally requires an authoritative, owner-approved file source.
 
 ## Goals / Non-Goals
 
@@ -22,7 +22,7 @@ CopyStart writes request files directly with `File.Create` beneath `PathBaseFile
 4. Use short-lived presigned PUT/GET URLs. Large files use multipart upload; normal uploads enforce content length, approved MIME types, checksums, and CORS origins.
 5. Scan newly uploaded objects before availability. Scanner choice is deferred, but the state contract and quarantine path are mandatory.
 6. Use an idempotent reconciliation worker for expired intents, missing objects, orphan objects, and pending deletions.
-7. Migrate legacy files from a checksum manifest after tenant ownership is mapped; never infer tenant from a filename.
+7. Migrate legacy files from a checksum manifest only when an authoritative source and owner approval exist and tenant ownership is mapped; never infer tenant from a filename. If no source is found, record import as not applicable without blocking the new storage lifecycle.
 
 ## Risks / Trade-offs
 
@@ -33,11 +33,11 @@ CopyStart writes request files directly with `File.Create` beneath `PathBaseFile
 
 ## Migration Plan
 
-1. Complete SeaweedFS hardening and provision the application bucket/identity.
+1. Complete mini-cluster SeaweedFS hardening and provision the application bucket/identity; consume the CopyStart runtime configuration contract.
 2. Implement metadata and disabled/test storage adapters.
 3. Implement presigned lifecycle, scan boundary, and reconciliation.
 4. Validate CORS, signatures, multipart behavior, and tenant denial against SeaweedFS 3.80.
-5. Generate the legacy manifest, dry-run, migrate, reconcile, and retain source files through the rollback window.
+5. If an approved legacy source exists, generate its manifest, dry-run, migrate, reconcile, and retain source files through the rollback window; otherwise record migration as not applicable.
 
 Rollback disables new uploads, returns the prior application release, and preserves both source files and migrated objects. Object deletion is postponed until reconciliation and acceptance complete.
 

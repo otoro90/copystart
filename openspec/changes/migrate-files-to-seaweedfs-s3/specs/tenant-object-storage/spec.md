@@ -28,9 +28,13 @@ Deletion, retention, orphan cleanup, and failed uploads SHALL be idempotent and 
 - **WHEN** the pending upload expires
 - **THEN** cleanup marks or removes the orphan metadata safely and does not affect another tenant's object
 
-### Requirement: Legacy files migrate resumably
-Legacy filesystem migration MUST use a manifest with source path, target key, size, checksum, tenant owner, status, and retry history.
+### Requirement: Approved legacy files migrate resumably
+Legacy filesystem migration SHALL run only when an authorized owner identifies an authoritative source and approves preservation/import. If performed, it MUST use a manifest with source path, target key, size, checksum, tenant owner, status, and retry history. Absence of a legacy source SHALL NOT block the new tenant-scoped storage lifecycle.
 
 #### Scenario: Migration stops midway
 - **WHEN** the migration is rerun from the same manifest
 - **THEN** verified objects are skipped and remaining objects resume without duplicate available records
+
+#### Scenario: No authoritative file source is identified
+- **WHEN** no owner-approved legacy filesystem or backup is available
+- **THEN** import is recorded as not applicable and the new storage service can proceed without inspecting unrelated filesystems or cluster buckets

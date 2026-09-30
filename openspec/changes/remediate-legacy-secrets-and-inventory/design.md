@@ -1,50 +1,53 @@
 ## Context
 
-`Application/CopyStart/appsettings.json` and `Application/docker-compose.yml` contain tracked PostgreSQL credentials. The application also stores uploads under `PathBaseFiles`, but there is no authoritative inventory of the database or filesystem. Migration work must not normalize this risk by copying it into a new architecture.
+The historical development configuration contains a PostgreSQL credential and the repository tracks one PNG beneath the prototype upload directory. No authoritative database dump or external upload-store snapshot has been confirmed. Migration work must not normalize this uncertainty by assuming all live cluster data belongs to the prototype.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Rotate exposed credentials and remove live values from tracked content.
-- Establish a deterministic, read-only inventory and migration baseline.
-- Prevent future commits containing secrets.
+- Remove the legacy development credential from tracked configuration and establish whether it remains active or was reused.
+- Record a privacy-preserving checksum inventory of the tracked PNG and any database/file snapshot explicitly nominated by its owner.
+- Provide evidence to decide whether a later import is applicable, without creating an importer or a generic data-discovery system.
 
 **Non-Goals:**
+- Rotate mini-cluster/OpenBao secrets or modify SeaweedFS configuration.
+- Create CI workflows or a continuous repository secret-scanning service.
+- Discover or inventory unapproved databases, cluster buckets, or users' personal files.
+- Automatically rewrite Git history.
 - Transform or migrate production data.
 - Select the target domain schema.
 - Delete the historical database, files, or Git history.
 
 ## Decisions
 
-1. Treat every tracked credential as compromised. Rotation happens through an authorized operator; reports record identifiers and timestamps, never replacement values.
-2. Inventory tools run with read-only database permissions and hash files in streaming mode. Outputs contain counts and digests, not sensitive row contents.
-3. Preserve an immutable source snapshot before any later migration. Destructive history rewriting requires a separate explicit decision because it affects every clone.
-4. Add secret scanning to local validation and CI with redacted findings and an allowlist review process.
-5. This is a protected Day-0/operator activity, not an automatic `bootstrap-full-cluster.sh` stage. New application secrets are handled by `provision-saas-platform-prerequisites`.
+1. Remove the credential from tracked prototype config immediately and replace it with an inert example. Ask the authorized database owner whether the old value remains accepted or was reused; rotate only active/reused credentials and verify rejection without recording the replacement.
+2. Assess Git history for exposure and report redacted paths/commit identifiers. History rewriting is not automatic; first revoke active credentials and separately evaluate operational consequences.
+3. Hash the tracked PNG in streaming mode and record path, size, media type, and SHA-256. Inventory database rows/schema or external files only when an owner identifies an accessible, immutable source snapshot and authorizes read-only inspection.
+4. If no authoritative data source is found, record database/file migration inventory as not applicable. Backend scaffolding, domain work, and dependency remediation do not wait for this conditional migration gate.
+5. This is a protected Day-0 repository/operator activity, not a cluster bootstrap stage. Mini-cluster/OpenBao credentials are owned by the mini-cluster changes; continuous secret scanning is owned by `establish-github-ci-and-image-publishing`.
 
 ## Risks / Trade-offs
 
-- [Credentials remain usable in an unknown environment] -> Enumerate owners and verify revocation with the backing service.
-- [Inventory exposes personal information] -> Record structural statistics and hashes; encrypt restricted reports and exclude them from Git.
-- [Rotation interrupts the legacy prototype] -> Confirm consumers, rotate in a controlled window, and retain a tested new-secret rollback path without restoring the compromised secret.
+- [Credential has been reused outside the prototype] -> Ask the authorized owner to identify consumers and rotate only affected active uses; never print replacement values.
+- [Inventory exposes personal information] -> Keep row-level content out of the report; store any restricted source snapshot/report outside Git with owner-approved access.
+- [No authoritative database or file snapshot exists] -> Mark the import inventory not applicable and keep the new service independent of prototype data.
 
 ## Migration Plan
 
-1. Discover and classify tracked secrets without echoing values.
-2. Rotate each credential and verify old-value rejection.
-3. Replace tracked values with placeholders or secret references.
-4. Create and checksum database and file snapshots.
-5. Run the read-only inventory twice and compare normalized output.
-6. Enable secret scanning and verify a synthetic credential is rejected.
+1. Replace tracked prototype credentials with inert placeholders and identify the authorized owner of any backing service.
+2. Verify whether each value is active/reused; if so, rotate it out of band and confirm the old value is rejected.
+3. Assess Git history and document redacted evidence; perform no history rewrite under this change.
+4. Hash the tracked PNG. Inventory an owner-provided immutable database or file snapshot only if one is confirmed and authorized.
+5. Run any applicable read-only inventory twice and compare normalized output; otherwise record the source as unavailable/not applicable.
 
 Rollback restores application configuration to the new credential reference. Compromised credentials are never reactivated.
 
 ## Research Evidence
 
-- Local repository inspection, 2026-09-27: tracked credentials in `Application/CopyStart/appsettings.json` and `Application/docker-compose.yml`; direct filesystem storage in `Areas/Soportes/Controllers/ArchivosController.cs`.
-- Decision verification, 2026-09-27: classified credential rotation as the first prerequisite for all migration work.
+- Local repository inspection, 2026-09-27: tracked development configuration contains PostgreSQL connection values; one PNG is tracked under `Application/CopyStart/filesystem/archivos/`; no tracked SQL dump was found.
+- Decision verification, 2026-09-27: credential revocation is conditional on current use, and data import is conditional on finding an authoritative source; neither blocks backend scaffolding or dependency audit.
 
 ## Open Questions
 
-- Which environments still accept the historical credentials?
-- Where are the authoritative database and file snapshots currently held?
+- Does an authorized owner confirm the historical PostgreSQL credential is still active or reused?
+- Is there an owner-approved source database or upload-store snapshot outside the repository?

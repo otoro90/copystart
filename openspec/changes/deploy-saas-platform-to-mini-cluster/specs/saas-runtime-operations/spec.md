@@ -1,11 +1,11 @@
 ## ADDED Requirements
 
-### Requirement: Workloads are GitOps-owned and ARM64-compatible
-CopyStart API, public site, and operations application MUST be built as immutable ARM64-compatible images and deployed only through reviewed GitOps manifests reconciled by Argo CD.
+### Requirement: Workloads consume verified images through GitOps
+CopyStart API, public site, and operations workloads MUST reference immutable ARM64-compatible image digests verified and published by CI, and MUST be deployed only through reviewed GitOps manifests reconciled by Argo CD.
 
-#### Scenario: A development image is promoted
-- **WHEN** CI publishes verified image digests and updates the development overlay
-- **THEN** Argo CD reconciles exactly those digests without an imperative production deployment
+#### Scenario: A development digest is promoted
+- **WHEN** the CI-owned promotion updates a development overlay to a verified image digest
+- **THEN** Argo CD reconciles exactly that digest without an imperative cluster deployment
 
 ### Requirement: Application and cluster repositories have separate ownership
 The CopyStart repository SHALL own workload bases and environment overlays, while mini-cluster SHALL own the Argo CD Applications and shared platform integration.

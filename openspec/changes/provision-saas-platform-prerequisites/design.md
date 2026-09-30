@@ -1,56 +1,40 @@
 ## Context
 
-The mini-cluster already provides K3s, Argo CD, PostgreSQL 17, OpenBao/ESO, ZITADEL, SeaweedFS 3.80, Traefik, monitoring, and backups. Its current SeaweedFS manifest includes anonymous read and committed test credentials, so it is not yet a safe foundation for tenant files. Shared ZITADEL resources and storage/database identities must exist before application integration tests, but workload deployment should remain a separate concern.
+The application needs stable PostgreSQL, object-storage, and OIDC expectations for development and production. The mini-cluster is the platform owner: its `provision-copystart-platform-prerequisites` change provisions app-specific resources and its `harden-seaweedfs-s3-security` change secures the shared gateway. This CopyStart change must define consumption, not reproduce that infrastructure work.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Provision secure development prerequisites reproducibly.
-- Remove the storage control-plane blockers discovered during research.
-- Establish clear Terraform, GitOps, bootstrap, and runtime ownership.
+- Define how the application receives database, private object-storage, and OIDC settings and secret references.
+- Require fail-closed configuration and tenant-isolation behavior with dependency-specific readiness.
+- Keep development and production contracts distinct and production consumption disabled until approved.
 
 **Non-Goals:**
-- Deploy CopyStart API or frontend workloads.
-- Activate production tenants or credentials automatically.
-- Replace shared PostgreSQL, SeaweedFS, ZITADEL, or OpenBao.
+- Create PostgreSQL roles/databases, SeaweedFS buckets/identities, OpenBao/ESO resources, ZITADEL resources, or Argo CD Applications.
+- Modify `scripts/bootstrap-full-cluster.sh`, shared manifests, cluster Terraform, backup schedules, or shared services.
+- Deploy application workloads or activate production credentials.
 
 ## Decisions
 
-1. Add a bounded `copystart-prerequisites` profile/module to `scripts/bootstrap-full-cluster.sh`, not unconditional mutation of every full Day-1 run.
-2. Stage mapping: Stage 1 validates protected bootstrap inputs; Stage 4 creates database role/database and OpenBao paths/policies; Stage 5 creates the SeaweedFS bucket/identity and applies restricted CORS; the protected post-readiness identity step reconciles ZITADEL Terraform; Stage 6 verifies all contracts.
-3. Remove anonymous read and tracked credentials from SeaweedFS configuration through a separately reviewable hardening migration. Credentials originate in protected bootstrap input, are stored in OpenBao, and reach workloads through ESO.
-4. Use a dedicated `copystart-dev` database/role and private `copystart-files-dev` bucket/identity. Production equivalents are declared but not populated or activated.
-5. Terraform owns shared ZITADEL resources with remote state in SeaweedFS. Runtime provisioning receives only the minimum management permissions for customer organizations and grants.
-6. Every helper supports `--check-only` and `--dry-run`, preserves unrelated secret fields, uses stdin/environment protected channels, and never prints secrets.
-7. Extend logical database and object-storage backup contracts and require an isolated restore rehearsal.
+1. CopyStart owns application configuration semantics and validation; mini-cluster owns the Secret/ExternalSecret values, infrastructure resources, and bootstrap implementation.
+2. Credentials are supplied at runtime through protected references and never stored in Git, image layers, logs, or API payloads. Non-secret endpoint/issuer/client metadata may use ordinary configuration.
+3. The runtime contract covers PostgreSQL, OIDC issuer/client/audience and constrained onboarding credentials when required, plus private S3 endpoint/bucket/region and tenant-scoped authorization. Concrete key names are settled alongside the target host/deployment implementation.
+4. Missing or conflicting required settings fail startup or readiness closed; no anonymous storage, development fallback, or cross-tenant object access is allowed.
+5. Development integration depends on the mini-cluster provision change and SeaweedFS hardening. Their ownership maps to Day-1 Stage 4 (database and secret references), Stage 5 (storage and shared identity), and Stage 6 (contract readiness). This application contract itself is Day-0 and adds no bootstrap stage.
+6. Mini-cluster owns idempotent provisioning, backup/restore, and infrastructure rollback. Application rollback uses the prior verified image/config revision and never deletes retained database or bucket data.
+7. Production values remain unpopulated and production workloads remain disabled until the separately approved activation gate.
 
 ## Risks / Trade-offs
 
-- [Hardening breaks existing anonymous consumers] -> Inventory requests first, migrate approved public assets, then switch default-deny with a tested rollback manifest.
-- [Bootstrap rotates credentials unexpectedly] -> Creation is idempotent; rotation requires an explicit flag and ownership check.
-- [Shared single-node services remain a failure domain] -> Document recovery objectives, backups, and that this environment is pilot-grade until redundancy is funded.
-- [Terraform/runtime both mutate ZITADEL] -> Enforce non-overlapping resource ownership and reconcile durable runtime provisioning records.
+- [Application expectations drift from injected resources] -> Validate configuration names and readiness against the mini-cluster contract before implementation and deployment.
+- [Secret values leak through diagnostics] -> Test redaction and ensure diagnostics expose only key names and dependency state.
+- [A service is reachable but authorization is wrong] -> Include tenant-isolation and authenticated storage/OIDC integration tests, not only port checks.
 
 ## Migration Plan
 
-1. Inventory SeaweedFS consumers and remediate tracked credentials.
-2. Add database, OpenBao/ESO, and SeaweedFS prerequisite modules with check-only tests.
-3. Add shared ZITADEL Terraform resources and remote-state safeguards.
-4. Integrate the bounded profile into the canonical facade.
-5. Run idempotency, readiness, backup, restore, and rollback rehearsals.
-6. Publish only development contracts to the application team.
+1. Agree the database, OIDC, and object-storage configuration contract with the mini-cluster owners.
+2. Implement typed configuration validation and fail-closed readiness in the target backend.
+3. Add tenant-isolation and authenticated integration checks using development prerequisites.
+4. Keep production configuration empty and deployment disabled until an explicit activation approval.
 
-Rollback uses Git revert plus Argo CD reconciliation for declarative resources, targeted Terraform restoration for shared identity, and credential overlap only with newly protected values. Buckets and databases use retain semantics and are not deleted by rollback.
-
-## Research Evidence
-
-- Mini-cluster `CONTEXT.md`, `SYSTEM.md`, and `bootstrap-full-cluster.sh`, inspected 2026-09-27: canonical six-stage Day-1 facade, protected post-bootstrap identity, SeaweedFS stage 5, OpenBao/ESO, and mandatory readiness/rollback contracts.
-- SeaweedFS official documentation via Context7 and web, accessed 2026-09-27: production access control requires default deny and persistent credentials/IAM; CORS should allow exact trusted origins.
-- ZITADEL official B2B documentation via Context7 and web, accessed 2026-09-27: shared projects and Project Grants are the intended B2B model.
-- Local manifest inspection, 2026-09-27: current S3 configuration has anonymous read and tracked test credentials.
-
-## Open Questions
-
-- Which current SeaweedFS objects rely on anonymous access?
-- Should CopyStart use static S3 credentials through ESO first or SeaweedFS STS with Kubernetes service accounts?
-- What pilot recovery objectives are affordable on the single active node?
+Rollback reverts the application configuration or image to the last verified development revision. It does not mutate platform resources, rotate cluster secrets, or delete database/bucket data. The mini-cluster change documents infrastructure rollback.

@@ -1,29 +1,26 @@
 ## ADDED Requirements
 
-### Requirement: Exposed credentials are revoked safely
-The project MUST identify tracked credentials, revoke or rotate them through an authorized secret owner, remove live values from the working tree, and retain non-secret evidence of completion.
+### Requirement: Legacy development configuration contains no live credentials
+The repository MUST replace live credential values in prototype configuration with inert examples or local-only secret references. An authorized owner SHALL determine whether an exposed value is still active or reused before it is rotated.
 
-#### Scenario: Tracked database credential is found
-- **WHEN** secret discovery identifies a credential in current files or Git history
-- **THEN** the credential is treated as compromised, rotated outside logs and commits, and replaced by a documented secret reference or inert placeholder
+#### Scenario: Historical credential is still active
+- **WHEN** the authorized service owner confirms a tracked historical credential remains accepted or was reused
+- **THEN** the owner rotates the affected credential out of band, verifies rejection of the old value, and records only redacted evidence
 
-### Requirement: Legacy inventory is non-mutating and reproducible
-The project SHALL provide a repeatable read-only inventory of schema objects, row counts, relationships, users, roles, files, sizes, checksums, and data-quality exceptions.
+### Requirement: Legacy inventory is explicitly scoped and non-mutating
+Any database or filesystem inventory SHALL use only an owner-identified, immutable source snapshot with read-only access and SHALL record structural metadata and checksums without row content or personal data.
 
-#### Scenario: Inventory is rerun against the same snapshot
-- **WHEN** the inventory command is executed twice against unchanged source data
-- **THEN** it produces equivalent normalized results without changing database rows or files
+#### Scenario: No authoritative snapshot is available
+- **WHEN** no database or external file snapshot is identified and authorized
+- **THEN** the change records that migration inventory as unavailable or not applicable and does not discover unrelated cluster resources
 
-### Requirement: Future secret exposure is blocked
-The repository MUST scan commits and release inputs for secrets and MUST fail validation when a credential-like value violates the approved policy.
+#### Scenario: Inventory is rerun against an unchanged snapshot
+- **WHEN** an authorized inventory is executed twice against the same immutable source
+- **THEN** it produces equivalent normalized results and does not modify the source
 
-#### Scenario: A credential is added to tracked configuration
-- **WHEN** CI scans the proposed change
-- **THEN** the check fails without printing the complete credential
-
-### Requirement: Migration evidence preserves rollback
-The inventory SHALL identify source snapshots, backup locations, checksums, extraction time, tool version, and unresolved anomalies without deleting source material.
+### Requirement: Tracked prototype uploads have non-sensitive integrity evidence
+The one tracked prototype PNG SHALL have a recorded path, byte size, media type, and SHA-256 digest; the inventory SHALL not infer that it represents the complete upload corpus.
 
 #### Scenario: A later migration requires reconciliation
-- **WHEN** target counts or file hashes differ from the baseline
-- **THEN** operators can compare them with the recorded source snapshot and restore the preserved source independently
+- **WHEN** a future migration is authorized and target counts or file hashes differ from the recorded source baseline
+- **THEN** operators can compare against that source evidence and keep the source independently available for rollback
