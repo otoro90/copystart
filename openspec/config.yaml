@@ -1,20 +1,21 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Product: multi-tenant SaaS for small repair and technical-service businesses, rebuilt from a .NET 6 MVC prototype.
+  Stack: .NET 10 modular monolith (EF Core 10, PostgreSQL, Wolverine), Angular 22 (SSR public site + operations SPA),
+  ZITADEL (organization per tenant, Project Grants), SeaweedFS S3, K3s ARM64 mini-cluster with Argo CD and OpenBao/ESO.
+  Tenant context is server-derived and fails closed. Templates configure; typed modules add behavior.
+  GovCore (Tramites) is a pattern source only. Read CONTEXT.md, SYSTEM.md, and docs/delivery/roadmap.md first.
+  Artifacts are written in English.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+rules:
+  proposal:
+    - State the prerequisite changes from docs/delivery/roadmap.md.
+    - Mark breaking changes with **BREAKING**.
+  design:
+    - Record sources with access date and version for material decisions.
+    - For infrastructure, state the Day-1 stage, idempotency, readiness check, and rollback.
+  tasks:
+    - Start with a prerequisite-verification task.
+    - Include tenant-isolation tests for tenant-owned data.
+    - End with strict OpenSpec validation.
