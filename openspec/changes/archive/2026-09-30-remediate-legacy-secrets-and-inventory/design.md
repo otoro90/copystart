@@ -46,8 +46,12 @@ Rollback restores application configuration to the new credential reference. Com
 
 - Local repository inspection, 2026-09-27: tracked development configuration contains PostgreSQL connection values; one PNG is tracked under `Application/CopyStart/filesystem/archivos/`; no tracked SQL dump was found.
 - Decision verification, 2026-09-27: credential revocation is conditional on current use, and data import is conditional on finding an authoritative source; neither blocks backend scaffolding or dependency audit.
+- Repository owner confirmation, 2026-09-30: the prototype has been stopped for years, was never deployed to production, and its PostgreSQL credential was not reused. No authoritative database or external-upload snapshot exists. The credential is retired; rotation is not applicable, and its historical value remains compromised and must never be reused.
+- Local inventory, 2026-09-30: `Application/CopyStart/filesystem/archivos/2ab1735c-b83c-4e41-af4a-c1dcd0af9c07` is a 761,227-byte PNG with SHA-256 `0fb86c2c1d52b9486b8e374c8c665cad3ca34eceae93052e699dcca1db291ea7`. This is one tracked file, not a complete upload corpus.
+- Git history assessment, 2026-09-30: credential-bearing configuration paths were touched in six commits: `5a59fd7` and `2883435` (2024-01-06), `3d93d15` (2022-10-21), `b3594d2` (2022-10-19), `e2fc0a6` (2022-10-05), and `d37e8ac` (2022-10-04). History was not rewritten.
+- Configuration remediation, 2026-09-30: tracked JSON and Compose defaults no longer contain a live credential. Local development uses .NET User Secrets or ignored `Application/.env`; Docker excludes local env files from its build context.
 
 ## Open Questions
 
-- Does an authorized owner confirm the historical PostgreSQL credential is still active or reused?
-- Is there an owner-approved source database or upload-store snapshot outside the repository?
+- Resolved: the owner confirms the historical credential is retired and was not reused; rotation is not applicable.
+- Resolved: no authoritative source database or external-upload snapshot is available; migration inventory is not applicable.

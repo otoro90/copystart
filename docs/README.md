@@ -10,3 +10,4 @@
 | Skill candidates | [agent-workflows/skill-candidates.md](agent-workflows/skill-candidates.md) |
 | Testing | [development/testing.md](development/testing.md) |
 | Security | [security/baseline.md](security/baseline.md) |
+| Legacy prototype inventory | [security/legacy-inventory.md](security/legacy-inventory.md) |

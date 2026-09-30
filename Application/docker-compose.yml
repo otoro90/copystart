@@ -10,8 +10,8 @@ services:
     depends_on:
       - postgres
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Database=CopyStartDB;User Id=postgres;Password=ots17332554;
+      ASPNETCORE_ENVIRONMENT: Docker
+      ConnectionStrings__DefaultConnection: ${COPYSTART_DB_CONNECTION:?Set COPYSTART_DB_CONNECTION in Application/.env}
 
   postgres:
     image: postgres
@@ -19,10 +19,10 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - DATABASE_HOST=127.0.0.1
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=ots17332554
-      - POSTGRES_DB=CopyStartDB
+      DATABASE_HOST: 127.0.0.1
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${COPYSTART_DB_PASSWORD:?Set COPYSTART_DB_PASSWORD in Application/.env}
+      POSTGRES_DB: CopyStartDB
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

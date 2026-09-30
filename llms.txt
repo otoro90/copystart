@@ -1,0 +1,26 @@
+# CopyStart project index
+
+CopyStart is a new multi-tenant SaaS for repair and technical-service businesses. The old .NET 6 MVC application is discovery evidence only; it is not the target architecture or a production data source.
+
+## Sources of truth
+
+- `CONTEXT.md`: verified product, architecture baseline, blockers, and legacy-source status.
+- `SYSTEM.md`: delivery rules, validation, and Definition of Done.
+- `AGENTS.md`: repository rules and OpenSpec workflow.
+- `docs/README.md`: documentation index.
+- `docs/delivery/roadmap.md`: required implementation order and gates.
+- `openspec/changes/`: planned behavior; update artifacts before implementation.
+
+## Security and legacy data
+
+- The historical PostgreSQL credential was tracked in prototype configuration and Git history. The owner confirms it is retired and was not reused. Treat its historical value as compromised and never reuse it; rotation is not applicable.
+- The repository has no authoritative legacy database dump or external-upload snapshot. There is no tenant-owned SaaS data in scope, and prototype-data migration is not applicable.
+- The sole tracked prototype upload is documented at `docs/security/legacy-inventory.md`; it is not a complete upload inventory.
+- Current local configuration uses .NET User Secrets or ignored `Application/.env`. Never commit or print secrets.
+- Shared SeaweedFS hardening is owned by the mini-cluster project and remains a separate blocker for storage integration.
+
+## Current target stack
+
+- Backend: .NET 10 LTS modular monolith, EF Core 10, Npgsql 10, Wolverine 6.
+- Frontend: Angular 22 with SSR public site and client-rendered operations app.
+- Identity: ZITADEL; storage: private SeaweedFS S3; runtime: mini-cluster K3s ARM64.

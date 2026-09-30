@@ -18,7 +18,9 @@ Last verified: 2026-09-30.
 | Workflow | String states assigned in controllers (`Por tramitar`, `Asignada`, `En ejecucion`, `Finalizado`) |
 | Files | Local filesystem via `PathBaseFiles` |
 | UI | Razor + AdminLTE with hard-coded Copy Start branding |
-| Security debt | Database credentials tracked in `appsettings.json` and `docker-compose.yml` |
+| Security debt | PostgreSQL credential values were tracked in prototype configuration and Git history. Current configuration has been cleaned; the owner confirms the prototype is retired, was never production, and the credential was not reused. Treat the historical value as compromised and never reuse it. |
+
+The prototype is product-discovery evidence only. No authoritative database dump or external upload snapshot is available, and no tenant-owned SaaS data is in scope. The new SaaS starts without importing prototype records; migration inventory is not applicable. The sole tracked file under `Application/CopyStart/filesystem/archivos/` is documented in [the legacy inventory report](docs/security/legacy-inventory.md), and does not represent a complete upload corpus.
 
 ## Target Baseline
 
@@ -32,6 +34,6 @@ Last verified: 2026-09-30.
 
 ## Known Blockers
 
-- Tracked legacy credentials must be rotated before any migration work.
-- Shared SeaweedFS still allows anonymous read and holds tracked test credentials; storage integration is blocked until hardened.
+- The historical CopyStart PostgreSQL credential is confirmed retired and unused; rotation is not applicable. Its exposed historical value remains compromised and must never be reused. No authoritative legacy database or upload snapshot exists, so prototype-data migration is not applicable.
+- Shared SeaweedFS is a separate mini-cluster concern: it still allows anonymous read and holds tracked test credentials. Storage integration remains blocked until the mini-cluster owner hardens it; this is not a CopyStart prototype data source.
 - Production stays disabled until restore, isolation, and rollback evidence is approved for a named pilot.
