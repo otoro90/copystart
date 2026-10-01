@@ -16,7 +16,8 @@ Rebuild the backend as a .NET 10 LTS modular monolith with Domain, Application, 
 ## Constraints
 
 - No transactional outbox until a concrete external side effect needs at-least-once delivery.
-- Legacy migration uses immutable snapshots, rehearsed imports, reconciliation, and a write-freeze cutover. Dual-write is rejected.
+- Legacy migration uses immutable snapshots, rehearsed imports, reconciliation, and a write-freeze cutover only if an owner later approves an authoritative snapshot. Dual-write is rejected. As of 2026-09-30 that snapshot does not exist, so import is not applicable and is not a backend-completion gate.
+- GovCore versions in Sources are a reference snapshot. They are not CopyStart's package pin. See [the backend foundation analysis](../backend-foundation.md).
 
 ## Sources
 

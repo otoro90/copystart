@@ -7,7 +7,8 @@ CopyStart is being rebuilt from a single-company ASP.NET Core 6 MVC prototype in
 - [CONTEXT.md](CONTEXT.md): current verified state and technology baseline.
 - [SYSTEM.md](SYSTEM.md): delivery rules and Definition of Done.
 - [docs/README.md](docs/README.md): architecture, decisions, and workflow guides.
-- `openspec/changes/`: planned behavior. OpenSpec is the source of truth for changes.
+- [docs/architecture/backend-foundation.md](docs/architecture/backend-foundation.md): verified backend analysis. The .NET 10 solution is not created yet.
+- `openspec/changes/`: planned behavior. OpenSpec is the source of truth for changes. Run the CLI from this repository root; the mini-cluster checkout is a different OpenSpec root.
 
 ## Non-Negotiable Rules
 

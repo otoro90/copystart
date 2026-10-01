@@ -55,8 +55,10 @@ GitHub PR/build/publish jobs are GitHub-side operations outside Day-1 bootstrap.
 - mini-cluster `SYSTEM.md`, `docs/iac-ownership-matrix.md`, and `scripts/bootstrap-full-cluster.sh`, inspected 2026-09-30: Argo CD owns workloads and the canonical Day-1 facade owns protected prerequisites and readiness.
 - GitHub official Actions security, token-permissions, image-publication, and self-hosted-runner documentation, accessed 2026-09-30: least privilege, immutable action pinning, GHCR with `GITHUB_TOKEN`, and persistent-runner risk. Docker official Buildx documentation, accessed 2026-09-30: ARM64 cross-build/QEMU tradeoffs.
 
-## Open Questions
+## Resolved Decisions
 
-- Is CopyStart public or private, and does the account plan support required reviewers on the intended environment?
-- Will GHCR images be private, and which cluster-side pull identity will own them?
-- Which vulnerability threshold and license policy must block publication for the first pilot?
+Verified against GitHub on 2026-09-30 and recorded in `docs/delivery/ci.md`:
+
+- The repository is public. `master` is the default branch and is not protected. Required reviewers are available for public repositories and are not configured. This change does not grant pull-request jobs an environment or cluster credential.
+- GHCR images for the SaaS stay private. The cluster pull identity remains with mini-cluster `provision-copystart-platform-prerequisites` and is not created by this change.
+- The first publication blocks critical and high vulnerabilities, and blocks GPL, AGPL, SSPL, and unclassified runtime licenses. MIT, Apache-2.0, BSD, ISC, and MPL-2.0 are allowed. No image is published until the target Dockerfiles exist.

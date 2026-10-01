@@ -20,7 +20,7 @@ graph TD
 | Templates | Versioned vertical defaults and tenant overrides |
 | Commercial | Plans, subscriptions, entitlements |
 
-Projects: `Domain`, `Application`, `Infrastructure`, `Api`, `UnitTests`, `E2ETests`.
+Target projects, not yet created: `Domain`, `Application`, `Infrastructure`, `Api`, `UnitTests`, `E2ETests` under `src/`. See [the backend foundation analysis](backend-foundation.md).
 
 ## Effective Access
 

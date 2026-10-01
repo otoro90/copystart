@@ -16,12 +16,14 @@ Last verified: 2026-09-30.
 | Runtime | .NET 6 MVC (`net6.0`), out of support since 2024-11-12 |
 | Identity | Local ASP.NET Identity with roles Administrador, Coordinador, Tecnico, Cliente |
 | Data | Single `ApplicationDbContext`, PostgreSQL, no tenant ownership |
-| Workflow | String states assigned in controllers (`Por tramitar`, `Asignada`, `En ejecucion`, `Finalizado`) |
+| Workflow | Two controller-assigned string fields. Request: `Por tramitar`, `Asignada`, `En servicio`, `Servicios Finalizados`, `Cancelada`. Work order: `Por confirmar`, `En ejecucion`, `Finalizado`. |
 | Files | Local filesystem via `PathBaseFiles` |
 | UI | Razor + AdminLTE with hard-coded Copy Start branding |
 | Security debt | PostgreSQL credential values were tracked in prototype configuration and Git history. Current configuration has been cleaned; the owner confirms the prototype is retired, was never production, and the credential was not reused. Treat the historical value as compromised and never reuse it. |
 
-The prototype is product-discovery evidence only. No authoritative database dump or external upload snapshot is available, and no tenant-owned SaaS data is in scope. The new SaaS starts without importing prototype records; migration inventory is not applicable. The sole tracked file under `Application/CopyStart/filesystem/archivos/` is documented in [the legacy inventory report](docs/security/legacy-inventory.md), and does not represent a complete upload corpus.
+The prototype is product-discovery evidence only. No authoritative database dump or external upload snapshot is available, and no tenant-owned SaaS data is in scope. The new SaaS starts without importing prototype records; migration inventory is not applicable. Do not ask the owner again unless this section changes. The sole tracked file under `Application/CopyStart/filesystem/archivos/` is documented in [the legacy inventory report](docs/security/legacy-inventory.md), and does not represent a complete upload corpus.
+
+`En ejecucion` and `Finalizado` are work-order states. They are not request states. The verified map, unused prototype packages, and the LibMan retire-with-Razor classification are in [the backend foundation analysis](docs/architecture/backend-foundation.md).
 
 ## Target Baseline
 
@@ -36,7 +38,13 @@ The prototype is product-discovery evidence only. No authoritative database dump
 ## Repository Controls
 
 - The Target Baseline table is the only current runtime-version source. `llms.txt` may repeat it; `python3 scripts/governance_checks.py` fails if those copies drift.
-- Agent skills are the OpenSpec skills only. Rejected candidates are recorded in [docs/agent-workflows/skill-candidates.md](docs/agent-workflows/skill-candidates.md).
+- Package pins are centrally defined in `Directory.Packages.props` and SDK version in `global.json` (10.0.103). The adopted pins are recorded in [the backend foundation analysis](docs/architecture/backend-foundation.md) and [the dependency inventory](docs/architecture/dependency-inventory.md).
+- Agent skills are the OpenSpec skills in `.github/skills`, exposed to Cursor through `.cursor/skills`. Rejected candidates are recorded in [docs/agent-workflows/skill-candidates.md](docs/agent-workflows/skill-candidates.md).
+- Run `openspec` from this repository root. The mini-cluster checkout is a different OpenSpec root.
+
+## Backend modernization
+
+`modernize-service-platform-backend` establishes the .NET 10 modular monolith backend (`src/` with `Domain`, `Application`, `Infrastructure`, `Api`, `UnitTests`, `E2ETests`) pinned via `global.json` (SDK 10.0.103) and `Directory.Packages.props`. Dependency disposition and LibMan retirement are recorded in [the dependency inventory](docs/architecture/dependency-inventory.md) and [the backend foundation analysis](docs/architecture/backend-foundation.md). Work request and work order lifecycles enforce typed transitions with in-memory UoW; persistence mapping stays frozen until tenant ownership is accepted in `add-multitenancy-and-zitadel-identity`.
 
 ## Known Blockers
 

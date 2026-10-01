@@ -1,6 +1,6 @@
 ## Context
 
-CopyStart targets unsupported .NET 6 and uses controllers as persistence and workflow services. `ApplicationDbContext` combines identity and business data; entities contain UI labels; status strings such as `Por tramitar`, `En ejecucion`, and `Finalizado` are assigned directly by controllers. Its package list pins EF Core/ASP.NET Core 6.0.9 and Npgsql 6.0.7, includes both SQL Server and PostgreSQL providers plus an old Npgsql Design package, and has no target dependency inventory. A baseline build fails because LibMan cannot resolve `datatables.net@1.12.1`. NuGet audit reports multiple vulnerable transitive packages. GovCore currently demonstrates a .NET 10 layered solution with Wolverine, EF Core 10, PostgreSQL, API middleware, and separate test projects, but its government-specific domain and permissive tenant behavior are not reusable.
+CopyStart targets unsupported .NET 6 and uses controllers as persistence and workflow services. `ApplicationDbContext` combines identity and business data; entities contain UI labels. Request status and work-order status are different fields. Request strings include `Por tramitar`, `Asignada`, `En servicio`, `Servicios Finalizados`, and `Cancelada`. Work-order strings are `Por confirmar`, `En ejecucion`, and `Finalizado`. Controllers assign those strings directly. The verified map is in `docs/architecture/backend-foundation.md`. GovCore patch versions cited below are a reference snapshot, not this repository's package pin. No `src/` solution exists yet. Its package list pins EF Core/ASP.NET Core 6.0.9 and Npgsql 6.0.7, includes both SQL Server and PostgreSQL providers plus an old Npgsql Design package, and has no target dependency inventory. A baseline build fails because LibMan cannot resolve `datatables.net@1.12.1`. NuGet audit reports multiple vulnerable transitive packages. GovCore currently demonstrates a .NET 10 layered solution with Wolverine, EF Core 10, PostgreSQL, API middleware, and separate test projects, but its government-specific domain and permissive tenant behavior are not reusable.
 
 ## Goals / Non-Goals
 
@@ -63,12 +63,12 @@ Rollback redirects users to the preserved legacy application and restores the pr
 - ASP.NET Core 10 official documentation via Context7, accessed 2026-09-27: built-in JWT/OIDC authentication, authorization, OpenAPI, health checks, rate limiting, and Problem Details support.
 - Local GovCore project files, 2026-09-27: .NET 10, EF Core 10.0.11, Npgsql 10.0.3, and Wolverine 6.32.0.
 - Local CopyStart inspection, 2026-09-27: direct `DbContext` use and string state transitions in MVC controllers.
-- Local project/package inventory, 2026-09-30: .NET SDK 10.0.103 reports `net6.0` as unsupported; direct versions include ASP.NET Core/EF Core 6.0.9 and Npgsql 6.0.7. The target graph reported vulnerable transitive packages including Npgsql, Microsoft.Extensions.Caching.Memory, MessagePack, and older System.* packages.
+- Local project/package inventory, 2026-09-30: .NET SDK 10.0.103 reports the prototype `net6.0` target as unsupported; direct versions include ASP.NET Core/EF Core 6.0.9 and Npgsql 6.0.7. The legacy graph, not a .NET 10 graph, was the one reported with vulnerable transitive packages including Npgsql, Microsoft.Extensions.Caching.Memory, MessagePack, and older System.* packages. The new solution has not been restored.
 - Local build, 2026-09-30: `dotnet build CopyStart.sln --no-restore` fails with `LIB002` because LibMan cannot resolve `datatables.net@1.12.1`; this is a legacy UI asset restore failure, not proof that the target backend design fails.
-- NuGet query, 2026-09-30: `dotnet list package --outdated --include-transitive` shows Npgsql EF provider 10.0.3 and .NET/EF packages 10.0.12 as available in the queried feeds; adopt only after compatibility verification.
+- NuGet stable feed, 2026-09-30: EF Core 10.0.12, Npgsql EF provider 10.0.3, WolverineFx 6.43.0, and FluentValidation 12.1.1 were available. These are feed evidence, not adopted pins. Re-check before writing `Directory.Packages.props`.
 
 ## Open Questions
 
-- Will the data owner identify an authoritative legacy database or file snapshot for preservation/import?
+- Resolved 2026-09-30: the owner did not identify an authoritative legacy database or file snapshot. Import is not applicable. See `CONTEXT.md`.
 - Which workflows from the copier business are still used today?
 - Should work-order numbering be tenant-configurable while retaining a stable internal identifier?

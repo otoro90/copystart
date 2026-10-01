@@ -12,4 +12,4 @@ GovCore (`Tramites/Forjanova.GovCore`) is a reference implementation. Verify cur
 | Tenant interceptor and state service test cases | Token logging in `auth.service.ts` |
 | Dual migration SQL discipline | Government roles (`citizen`, `officer`) |
 
-Verified versions (2026-09-27): .NET 10, EF Core 10.0.11, Npgsql 10.0.3, WolverineFx 6.32.0, Angular 22.1, angular-oauth2-oidc 22. The GovCore `ARCHITECTURE-OVERVIEW.md` still says .NET 8 / Angular 16 and is stale.
+GovCore snapshot (2026-09-27): .NET 10, EF Core 10.0.11, Npgsql 10.0.3, WolverineFx 6.32.0, Angular 22.1, angular-oauth2-oidc 22. These are GovCore versions, not CopyStart's adopted patch pins. CopyStart has no package pin until `Directory.Packages.props` exists; see [the backend foundation analysis](backend-foundation.md). The GovCore `ARCHITECTURE-OVERVIEW.md` still says .NET 8 / Angular 16 and is stale.
