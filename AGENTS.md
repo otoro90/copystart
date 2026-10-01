@@ -27,6 +27,8 @@ CopyStart is being rebuilt from a single-company ASP.NET Core 6 MVC prototype in
 
 ## Git Workflow
 
-- This is a single-developer repository. By default, make focused commits directly on `master` and push them to `origin/master`.
-- Do not create feature branches or pull requests unless the user explicitly requests them.
-- Never force-push. If `master` is protected, diverged from `origin/master`, or cannot be updated with a fast-forward, stop and report the blocker instead of switching to a branch or PR workflow without approval.
+- For routine, low-risk work, make focused commits directly on the repository's configured primary branch. The current remote has only `master`; CI and delivery documentation also target `master`.
+- The owner's desired `main`-only workflow requires a separate, coordinated migration of the GitHub default branch, workflow triggers, and documentation. Do not create or push a parallel `main` branch, rename the remote default, or migrate while the worktree contains uncommitted implementation work. Until that migration is completed, use `master` as the actual primary branch.
+- Use a Pull Request with CI and a reviewed plan for production infrastructure, security/identity, database migration, destructive data, or other high-impact changes when the owning workflow supports that gate.
+- Check `git status` before syncing. Run `git pull --rebase origin master` only when the worktree is clean; preserve dirty changes and coordinate with the collaborator to avoid overlapping work.
+- Never force-push. If the primary branch is protected, diverged, or cannot be updated with a fast-forward, stop and report the blocker.
