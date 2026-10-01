@@ -1,0 +1,6 @@
+# Retired prototype ASP.NET Identity password hashes. These are not connection
+# strings or API keys. The prototype was never production and these values
+# must not be reused. Fingerprints are path:rule:line so a moved hash fails closed.
+Application/CopyStart/Data/ApplicationDbContext.cs:generic-api-key:289
+Application/CopyStart/Migrations/ApplicationDbContextModelSnapshot.cs:generic-api-key:244
+Application/CopyStart/Migrations/20240106204823_initial.Designer.cs:generic-api-key:246

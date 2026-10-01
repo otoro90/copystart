@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>CopyStart.UnitTests</RootNamespace>
+    <AssemblyName>CopyStart.UnitTests</AssemblyName>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CopyStart.Domain\CopyStart.Domain.csproj" />
+    <ProjectReference Include="..\CopyStart.Application\CopyStart.Application.csproj" />
+    <ProjectReference Include="..\CopyStart.Infrastructure\CopyStart.Infrastructure.csproj" />
+    <ProjectReference Include="..\CopyStart.Api\CopyStart.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

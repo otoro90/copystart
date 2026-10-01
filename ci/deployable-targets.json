@@ -1,0 +1,26 @@
+{
+  "legacy": {
+    "publishable": false,
+    "paths": [
+      "Application/CopyStart.sln",
+      "Application/CopyStart/CopyStart.csproj",
+      "Application/Dockerfile",
+      "Application/CopyStart/libman.json"
+    ]
+  },
+  "components": [
+    {
+      "name": "backend",
+      "publishable": false,
+      "paths": [
+        "CopyStart.sln",
+        "src/CopyStart.Domain/CopyStart.Domain.csproj",
+        "src/CopyStart.Application/CopyStart.Application.csproj",
+        "src/CopyStart.Infrastructure/CopyStart.Infrastructure.csproj",
+        "src/CopyStart.Api/CopyStart.Api.csproj",
+        "src/CopyStart.UnitTests/CopyStart.UnitTests.csproj",
+        "src/CopyStart.E2ETests/CopyStart.E2ETests.csproj"
+      ]
+    }
+  ]
+}

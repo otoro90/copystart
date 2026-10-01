@@ -12,6 +12,8 @@ metadata:
 
 Implement tasks from an OpenSpec change.
 
+**CopyStart root:** Run every `openspec` command from the CopyStart repository that contains this skill. The nearest `openspec/` directory wins, and the mini-cluster checkout is a different root. Before editing, read `CONTEXT.md` and `docs/architecture/backend-foundation.md`. Analysis in that document is not implemented code: `src/` does not exist until this change creates it. GovCore patch versions are not CopyStart pins. Request states and work-order states are different fields.
+
 **Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`). Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
 
 **Input**: Optionally specify a change name. If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
