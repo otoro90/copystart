@@ -43,6 +43,7 @@ public class CreateWorkOrderHandler
             ?? throw new KeyNotFoundException($"Work request with ID '{command.WorkRequestId}' was not found.");
 
         var order = new WorkOrder(
+            tenantId: request.TenantId,
             workRequestId: command.WorkRequestId,
             technicianUserId: command.TechnicianUserId,
             diagnosticNotes: command.DiagnosticNotes,

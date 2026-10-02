@@ -4,11 +4,12 @@ using CopyStart.Domain.Exceptions;
 
 namespace CopyStart.Domain.Entities;
 
-public class WorkOrder : IAggregateRoot
+public class WorkOrder : IAggregateRoot, ITenantOwned
 {
     private readonly List<TimelineEvent> _timeline = new();
 
     public Guid Id { get; private set; }
+    public Guid TenantId { get; private set; }
     public string OrderNumber { get; private set; }
     public Guid WorkRequestId { get; private set; }
     public string TechnicianUserId { get; private set; }
@@ -28,12 +29,14 @@ public class WorkOrder : IAggregateRoot
     }
 
     public WorkOrder(
+        Guid tenantId,
         Guid workRequestId,
         string technicianUserId,
         string? diagnosticNotes = null,
         string actor = "system")
     {
         Id = Guid.NewGuid();
+        TenantId = tenantId == Guid.Empty ? throw new ArgumentException("Tenant ID is required.", nameof(tenantId)) : tenantId;
         OrderNumber = $"WO-{DateTimeOffset.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString("N")[..6].ToUpperInvariant()}";
         WorkRequestId = workRequestId == Guid.Empty ? throw new ArgumentException("Work request ID is required.", nameof(workRequestId)) : workRequestId;
         TechnicianUserId = string.IsNullOrWhiteSpace(technicianUserId) ? throw new ArgumentException("Technician user ID is required.", nameof(technicianUserId)) : technicianUserId;
@@ -42,6 +45,7 @@ public class WorkOrder : IAggregateRoot
         CreatedAt = DateTimeOffset.UtcNow;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "WorkOrderCreated",
             description: $"Work order created with status '{Status.ToLegacyString()}'.",
@@ -60,6 +64,7 @@ public class WorkOrder : IAggregateRoot
         StartedAt = DateTimeOffset.UtcNow;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "WorkOrderStarted",
             description: $"Work order execution started. Status changed to '{Status.ToLegacyString()}'.",
@@ -84,6 +89,7 @@ public class WorkOrder : IAggregateRoot
         CompletedAt = DateTimeOffset.UtcNow;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "WorkOrderCompleted",
             description: $"Work order completed. Status changed to '{Status.ToLegacyString()}'.",

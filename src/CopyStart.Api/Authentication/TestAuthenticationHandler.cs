@@ -40,7 +40,8 @@ public class TestAuthenticationHandler : AuthenticationHandler<AuthenticationSch
         {
             new Claim(ClaimTypes.NameIdentifier, actor),
             new Claim(ClaimTypes.Name, actor),
-            new Claim(ClaimTypes.Role, actor)
+            new Claim(ClaimTypes.Role, actor),
+            new Claim("tenant_id", "11111111-1111-4111-8111-111111111111")
         };
 
         var identity = new ClaimsIdentity(claims, SchemeName);

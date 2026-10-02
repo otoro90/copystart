@@ -4,11 +4,12 @@ using CopyStart.Domain.Exceptions;
 
 namespace CopyStart.Domain.Entities;
 
-public class WorkRequest : IAggregateRoot
+public class WorkRequest : IAggregateRoot, ITenantOwned
 {
     private readonly List<TimelineEvent> _timeline = new();
 
     public Guid Id { get; private set; }
+    public Guid TenantId { get; private set; }
     public string TrackingNumber { get; private set; }
     public Guid CustomerId { get; private set; }
     public Guid? AssetId { get; private set; }
@@ -34,6 +35,7 @@ public class WorkRequest : IAggregateRoot
     }
 
     public WorkRequest(
+        Guid tenantId,
         Guid customerId,
         string description,
         string contactName,
@@ -42,6 +44,7 @@ public class WorkRequest : IAggregateRoot
         string actor = "system")
     {
         Id = Guid.NewGuid();
+        TenantId = tenantId == Guid.Empty ? throw new ArgumentException("Tenant ID is required.", nameof(tenantId)) : tenantId;
         TrackingNumber = $"REQ-{DateTimeOffset.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString("N")[..6].ToUpperInvariant()}";
         CustomerId = customerId == Guid.Empty ? throw new ArgumentException("Customer ID is required.", nameof(customerId)) : customerId;
         AssetId = assetId; // Nullable: can be created without synthetic asset
@@ -52,6 +55,7 @@ public class WorkRequest : IAggregateRoot
         CreatedAt = DateTimeOffset.UtcNow;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "RequestCreated",
             description: $"Work request created with status '{Status.ToLegacyString()}'.",
@@ -75,6 +79,7 @@ public class WorkRequest : IAggregateRoot
         Status = WorkRequestStatus.Assigned;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "RequestAssigned",
             description: $"Request assigned to technician '{technicianUserId}'. Status changed to '{Status.ToLegacyString()}'.",
@@ -91,6 +96,7 @@ public class WorkRequest : IAggregateRoot
         Status = WorkRequestStatus.InService;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "ServiceStarted",
             description: $"Service started. Status changed to '{Status.ToLegacyString()}'.",
@@ -108,6 +114,7 @@ public class WorkRequest : IAggregateRoot
         CompletedAt = DateTimeOffset.UtcNow;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "RequestCompleted",
             description: $"Work request completed. Status changed to '{Status.ToLegacyString()}'.",
@@ -131,6 +138,7 @@ public class WorkRequest : IAggregateRoot
         CancellationReason = reason;
 
         _timeline.Add(new TimelineEvent(
+            tenantId: TenantId,
             actor: actor,
             eventType: "RequestCancelled",
             description: $"Work request cancelled. Reason: {reason}.",

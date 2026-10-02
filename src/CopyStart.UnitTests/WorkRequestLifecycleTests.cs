@@ -15,6 +15,7 @@ public class WorkRequestLifecycleTests
     {
         var customerId = Guid.NewGuid();
         var request = new WorkRequest(
+            tenantId: Guid.NewGuid(),
             customerId: customerId,
             description: "General diagnostic and maintenance",
             contactName: "Ana Gómez",
@@ -35,6 +36,7 @@ public class WorkRequestLifecycleTests
     public void WorkRequest_FullLifecycle_TransitionsThroughValidStates()
     {
         var request = new WorkRequest(
+            tenantId: Guid.NewGuid(),
             customerId: Guid.NewGuid(),
             description: "Replace toner and drum cartridge",
             contactName: "Carlos Pérez",
@@ -65,6 +67,7 @@ public class WorkRequestLifecycleTests
     public void WorkRequest_CanBeCancelled_WhenActive()
     {
         var request = new WorkRequest(
+            tenantId: Guid.NewGuid(),
             customerId: Guid.NewGuid(),
             description: "Calibration check",
             contactName: "Laura R.",
@@ -82,6 +85,7 @@ public class WorkRequestLifecycleTests
     public void WorkRequest_CannotBeCancelled_OnceCompleted()
     {
         var request = new WorkRequest(
+            tenantId: Guid.NewGuid(),
             customerId: Guid.NewGuid(),
             description: "Urgent fix",
             contactName: "Luis M.",
@@ -101,15 +105,16 @@ public class WorkRequestLifecycleTests
     public void OptionalModules_Asset_Procedure_Part_CanBeInstantiatedIndependently()
     {
         var customerId = Guid.NewGuid();
-        var asset = new Asset(customerId, "SN-998877", "Canon", "imageRUNNER ADVANCE", "Floor 2 Copy room");
+        var tenantId = Guid.NewGuid();
+        var asset = new Asset(tenantId, customerId, "SN-998877", "Canon", "imageRUNNER ADVANCE", "Floor 2 Copy room");
         Assert.Equal("SN-998877", asset.SerialNumber);
         Assert.True(asset.IsActive);
 
-        var procedure = new Procedure("PROC-01", "Standard Drum Replacement", "Step 1: Disconnect power...");
+        var procedure = new Procedure(tenantId, "PROC-01", "Standard Drum Replacement", "Step 1: Disconnect power...");
         Assert.Equal("PROC-01", procedure.Code);
         Assert.True(procedure.IsActive);
 
-        var part = new Part("PART-ROLLER-01", "Paper Pickup Roller", "Rubber feed roller", 15.50m, 20);
+        var part = new Part(tenantId, "PART-ROLLER-01", "Paper Pickup Roller", "Rubber feed roller", 15.50m, 20);
         Assert.Equal(20, part.AvailableStock);
         part.AdjustStock(-2);
         Assert.Equal(18, part.AvailableStock);
@@ -118,11 +123,12 @@ public class WorkRequestLifecycleTests
     [Fact]
     public void Customer_And_ServiceCatalog_AreModelledCorrectly()
     {
-        var customer = new Customer("Acme Corp", "contact@acme.com", "555-1234", "TAX-900123", "Calle 100 # 15-20");
+        var tenantId = Guid.NewGuid();
+        var customer = new Customer(tenantId, "Acme Corp", "contact@acme.com", "555-1234", "TAX-900123", "Calle 100 # 15-20");
         Assert.Equal("Acme Corp", customer.Name);
         Assert.True(customer.IsActive);
 
-        var catalogItem = new ServiceCatalogItem("MAINT-PREV", "Preventive Maintenance", "Full cleaning and calibration", 150.00m, TimeSpan.FromHours(2));
+        var catalogItem = new ServiceCatalogItem(tenantId, "MAINT-PREV", "Preventive Maintenance", "Full cleaning and calibration", 150.00m, TimeSpan.FromHours(2));
         Assert.Equal("MAINT-PREV", catalogItem.Code);
         Assert.Equal(150.00m, catalogItem.BasePrice);
     }

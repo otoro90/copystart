@@ -2,9 +2,10 @@ using CopyStart.Domain.Common;
 
 namespace CopyStart.Domain.Entities;
 
-public class ServiceCatalogItem : IAggregateRoot
+public class ServiceCatalogItem : IAggregateRoot, ITenantOwned
 {
     public Guid Id { get; private set; }
+    public Guid TenantId { get; private set; }
     public string Code { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
@@ -19,9 +20,10 @@ public class ServiceCatalogItem : IAggregateRoot
         Description = string.Empty;
     }
 
-    public ServiceCatalogItem(string code, string name, string description, decimal basePrice, TimeSpan estimatedDuration)
+    public ServiceCatalogItem(Guid tenantId, string code, string name, string description, decimal basePrice, TimeSpan estimatedDuration)
     {
         Id = Guid.NewGuid();
+        TenantId = tenantId == Guid.Empty ? throw new ArgumentException("Tenant ID is required.", nameof(tenantId)) : tenantId;
         Code = string.IsNullOrWhiteSpace(code) ? throw new ArgumentException("Item code is required.", nameof(code)) : code;
         Name = string.IsNullOrWhiteSpace(name) ? throw new ArgumentException("Item name is required.", nameof(name)) : name;
         Description = description ?? string.Empty;

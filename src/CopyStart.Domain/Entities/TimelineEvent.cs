@@ -1,8 +1,11 @@
+using CopyStart.Domain.Common;
+
 namespace CopyStart.Domain.Entities;
 
-public class TimelineEvent
+public class TimelineEvent : ITenantOwned
 {
     public Guid Id { get; private set; }
+    public Guid TenantId { get; private set; }
     public DateTimeOffset Timestamp { get; private set; }
     public string Actor { get; private set; }
     public string EventType { get; private set; }
@@ -19,6 +22,7 @@ public class TimelineEvent
     }
 
     public TimelineEvent(
+        Guid tenantId,
         string actor,
         string eventType,
         string description,
@@ -27,6 +31,7 @@ public class TimelineEvent
         string? metadata = null)
     {
         Id = Guid.NewGuid();
+        TenantId = tenantId == Guid.Empty ? throw new ArgumentException("Tenant ID is required.", nameof(tenantId)) : tenantId;
         Timestamp = DateTimeOffset.UtcNow;
         Actor = string.IsNullOrWhiteSpace(actor) ? throw new ArgumentException("Actor is required.", nameof(actor)) : actor;
         EventType = string.IsNullOrWhiteSpace(eventType) ? throw new ArgumentException("EventType is required.", nameof(eventType)) : eventType;

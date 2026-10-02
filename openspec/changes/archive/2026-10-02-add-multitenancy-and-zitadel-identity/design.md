@@ -24,6 +24,15 @@ CopyStart combines local ASP.NET Identity and business data in one context and h
 6. Keep application permissions in a canonical registry mapped to ZITADEL project roles. Frontend guards improve UX but never authorize API behavior.
 7. Migrate local users by verified email invitation/account linking; never migrate password hashes to ZITADEL.
 
+## Accepted Contracts
+
+- A person may hold memberships in multiple tenant organizations from the first release. A request's active organization must be selected deliberately from memberships already authorized by the validated identity; email domains, hostnames, and client-supplied tenant identifiers never create membership or authority.
+- The initial role set is `platform-operator` (platform operations only), `tenant-administrator`, `dispatcher`, `technician`, and `customer`. Platform operations use distinct endpoints and permissions; tenant roles cannot grant platform authority. The canonical capability registry defines API permissions and maps tenant roles to ZITADEL project roles. Tenant template and subscription gates remain independent of actor permissions.
+- Tenant membership records bind the internal person/account to a tenant and retain status, role assignments, and stable external identity references. Identity mapping uses the validated ZITADEL issuer and subject pair; email is an invitation/account-linking attribute, not a durable identity key. Revocation disables future authorization without deleting historical actor references.
+- Tenant-owned rows carry tenant ownership. Tenant-scoped unique keys and relationships include the tenant key, and cross-tenant relationships are rejected. Domain mappings are exact normalized hostnames with an active state; wildcard or suffix matching does not select a tenant.
+- Runtime database access uses a non-owner role without `BYPASSRLS`; tenant context is set transaction-locally for each unit of work. RLS policies apply to tenant-owned tables, including table owners where supported via `FORCE ROW LEVEL SECURITY`. Schema migrations use a separate deployment identity. Administrative exports use a separate explicitly authorized and audited path, never the application runtime role. Connection-pool reuse must not retain tenant context.
+- Caches, object keys, background-job envelopes, and audit records carry or derive the tenant identifier. Background work restores and validates tenant context before accessing tenant-owned data; actor references are stable and contain no credentials or tokens.
+
 ## Risks / Trade-offs
 
 - [Connection pooling leaks PostgreSQL tenant session state] -> Set and clear transaction-local tenant context and test pooled connections across tenants.
@@ -48,8 +57,8 @@ Rollback disables new tenant onboarding, restores the prior application release,
 - Local GovCore `TenantMiddleware`, `TenantService`, and tests, inspected 2026-09-27: useful claim and subdomain patterns plus permissive fallbacks that must not be copied.
 - Independent decision verification, 2026-09-27: required durable grant state, fail-closed resolution, and clear Terraform/application ownership.
 
-## Open Questions
+## Resolved Questions
 
-- Can one natural person belong to multiple customer organizations in the first release?
-- Which tenant roles are required by the two pilot businesses?
-- Which PostgreSQL role sets RLS context for migrations and administrative exports?
+- Multiple customer organizations per person are supported in the first release, with deliberate selection among authorized memberships.
+- The initial roles are platform operator, tenant administrator, dispatcher, technician, and customer; the capability registry is authoritative for permission mapping.
+- The runtime role is non-owner and has no `BYPASSRLS`; migrations and administrative exports use distinct identities, with exports explicitly authorized and audited. Tenant context is transaction-local.

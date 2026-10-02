@@ -1,6 +1,6 @@
 # CONTEXT — Verified Current State
 
-Last verified: 2026-09-30.
+Last verified: 2026-10-02.
 
 ## Product
 
@@ -44,7 +44,7 @@ The prototype is product-discovery evidence only. No authoritative database dump
 
 ## Backend modernization
 
-`modernize-service-platform-backend` establishes the .NET 10 modular monolith backend (`src/` with `Domain`, `Application`, `Infrastructure`, `Api`, `UnitTests`, `E2ETests`) pinned via `global.json` (SDK 10.0.103) and `Directory.Packages.props`. Dependency disposition and LibMan retirement are recorded in [the dependency inventory](docs/architecture/dependency-inventory.md) and [the backend foundation analysis](docs/architecture/backend-foundation.md). Work request and work order lifecycles enforce typed transitions with in-memory UoW; persistence mapping stays frozen until tenant ownership is accepted in `add-multitenancy-and-zitadel-identity`.
+`modernize-service-platform-backend` established the .NET 10 modular monolith backend (`src/` with `Domain`, `Application`, `Infrastructure`, `Api`, `UnitTests`, `E2ETests`) pinned via `global.json` (SDK 10.0.103) and `Directory.Packages.props`. Dependency disposition and LibMan retirement are recorded in [the dependency inventory](docs/architecture/dependency-inventory.md) and [the backend foundation analysis](docs/architecture/backend-foundation.md). `add-multitenancy-and-zitadel-identity` (archived 2026-10-02) established tenant ownership (`ITenantOwned`), EF query filters, composite constraints, RLS policies, `ClaimsTenantContext` supporting ZITADEL organization claims (`urn:zitadel:iam:org:id`), and hermetic in-memory test suites. `provision-saas-platform-prerequisites` (archived 2026-10-02) established strongly typed options (`PostgreSqlOptions`, `StorageOptions`, `ZitadelOptions`) and fail-closed readiness health checks. Phase 1 is complete; execution is governed by `orchestrate-roadmap-delivery` and [the master execution runbook](docs/delivery/master-execution-runbook.md).
 
 ## Known Blockers
 
