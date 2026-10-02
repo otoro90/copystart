@@ -14,10 +14,10 @@
 
 ## 3. Phase 2 Execution Gates (Mini-Cluster Infrastructure)
 
-- [ ] 3.1 Switch context to `mini-cluster` repository and execute `harden-seaweedfs-s3-security` preserving `tramites-app` bucket credentials
-- [ ] 3.2 Validate and archive `harden-seaweedfs-s3-security`
-- [ ] 3.3 Execute `provision-copystart-platform-prerequisites` provisioning `copystart_dev_db`, `copystart-dev-files` bucket, and isolated ZITADEL Org
-- [ ] 3.4 Validate and archive `provision-copystart-platform-prerequisites`
+- [x] 3.1 Switch context to `mini-cluster` repository and execute `harden-seaweedfs-s3-security` preserving `tramites-app` bucket credentials
+- [x] 3.2 Validate and archive `harden-seaweedfs-s3-security`
+- [x] 3.3 Execute `provision-copystart-platform-prerequisites` provisioning `copystart_dev_db`, `copystart-dev-files` bucket, and isolated ZITADEL Org
+- [x] 3.4 Validate and archive `provision-copystart-platform-prerequisites`
 
 ## 4. Phase 3 and Phase 4 Roadmap Alignment
 
