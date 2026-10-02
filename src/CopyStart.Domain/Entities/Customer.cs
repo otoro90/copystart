@@ -2,9 +2,10 @@ using CopyStart.Domain.Common;
 
 namespace CopyStart.Domain.Entities;
 
-public class Customer : IAggregateRoot
+public class Customer : IAggregateRoot, ITenantOwned
 {
     public Guid Id { get; private set; }
+    public Guid TenantId { get; private set; }
     public string Name { get; private set; }
     public string Email { get; private set; }
     public string Phone { get; private set; }
@@ -22,9 +23,10 @@ public class Customer : IAggregateRoot
         Address = string.Empty;
     }
 
-    public Customer(string name, string email, string phone, string identificationNumber, string address)
+    public Customer(Guid tenantId, string name, string email, string phone, string identificationNumber, string address)
     {
         Id = Guid.NewGuid();
+        TenantId = tenantId == Guid.Empty ? throw new ArgumentException("Tenant ID is required.", nameof(tenantId)) : tenantId;
         Name = string.IsNullOrWhiteSpace(name) ? throw new ArgumentException("Customer name is required.", nameof(name)) : name;
         Email = string.IsNullOrWhiteSpace(email) ? throw new ArgumentException("Customer email is required.", nameof(email)) : email;
         Phone = phone ?? string.Empty;

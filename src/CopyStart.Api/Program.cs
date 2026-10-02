@@ -34,6 +34,14 @@ builder.Services.AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>
 
 // Infrastructure layer
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<CopyStart.Infrastructure.Options.ZitadelOptions>(
+    builder.Configuration.GetSection(CopyStart.Infrastructure.Options.ZitadelOptions.SectionName));
+builder.Services.Configure<CopyStart.Infrastructure.Options.PostgreSqlOptions>(
+    builder.Configuration.GetSection(CopyStart.Infrastructure.Options.PostgreSqlOptions.SectionName));
+builder.Services.Configure<CopyStart.Infrastructure.Options.StorageOptions>(
+    builder.Configuration.GetSection(CopyStart.Infrastructure.Options.StorageOptions.SectionName));
+builder.Services.AddScoped<CopyStart.Application.Common.ITenantContext, ClaimsTenantContext>();
 
 // Authentication & Authorization: fail-closed until ZITADEL
 // In Testing environment, allows X-Test-Actor: staff

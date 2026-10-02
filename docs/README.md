@@ -8,6 +8,7 @@
 | Backend foundation analysis | [architecture/backend-foundation.md](architecture/backend-foundation.md) |
 | Dependency inventory | [architecture/dependency-inventory.md](architecture/dependency-inventory.md) |
 | Delivery order | [delivery/roadmap.md](delivery/roadmap.md) |
+| Master execution runbook | [delivery/master-execution-runbook.md](delivery/master-execution-runbook.md) |
 | CI and image publication | [delivery/ci.md](delivery/ci.md) |
 | Copilot usage | [agent-workflows/copilot-usage.md](agent-workflows/copilot-usage.md) |
 | Skill candidates | [agent-workflows/skill-candidates.md](agent-workflows/skill-candidates.md) |

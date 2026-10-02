@@ -1,4 +1,5 @@
 using CopyStart.Domain.Common;
+using CopyStart.Application.Common;
 using CopyStart.Domain.Entities;
 using CopyStart.Domain.Exceptions;
 using CopyStart.Domain.Repositories;
@@ -28,16 +29,19 @@ public class CreateWorkRequestHandler
 {
     private readonly IWorkRequestRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ITenantContext _tenantContext;
 
-    public CreateWorkRequestHandler(IWorkRequestRepository repository, IUnitOfWork unitOfWork)
+    public CreateWorkRequestHandler(IWorkRequestRepository repository, IUnitOfWork unitOfWork, ITenantContext tenantContext)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _tenantContext = tenantContext;
     }
 
     public async Task<WorkRequestDto> HandleAsync(CreateWorkRequestCommand command, CancellationToken ct)
     {
         var request = new WorkRequest(
+            tenantId: _tenantContext.GetTenantId(),
             customerId: command.CustomerId,
             description: command.Description,
             contactName: command.ContactName,

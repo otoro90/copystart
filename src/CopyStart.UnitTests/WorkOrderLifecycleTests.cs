@@ -12,7 +12,7 @@ public class WorkOrderLifecycleTests
     public void WorkOrder_Creation_SetsInitialState_And_RecordsTimelineEvent()
     {
         var requestId = Guid.NewGuid();
-        var order = new WorkOrder(requestId, "tech-123", "Printer roller jam", actor: "dispatcher");
+        var order = new WorkOrder(Guid.NewGuid(), requestId, "tech-123", "Printer roller jam", actor: "dispatcher");
 
         Assert.Equal(WorkOrderStatus.PendingConfirmation, order.Status);
         Assert.Equal("Por confirmar", order.Status.ToLegacyString());
@@ -29,7 +29,7 @@ public class WorkOrderLifecycleTests
     [Fact]
     public void WorkOrder_CanTransition_FromPendingConfirmation_ToInProgress()
     {
-        var order = new WorkOrder(Guid.NewGuid(), "tech-123", actor: "dispatcher");
+        var order = new WorkOrder(Guid.NewGuid(), Guid.NewGuid(), "tech-123", actor: "dispatcher");
         order.StartExecution("tech-123");
 
         Assert.Equal(WorkOrderStatus.InProgress, order.Status);
@@ -42,7 +42,7 @@ public class WorkOrderLifecycleTests
     [Fact]
     public void WorkOrder_CanTransition_FromInProgress_ToCompleted()
     {
-        var order = new WorkOrder(Guid.NewGuid(), "tech-123", actor: "dispatcher");
+        var order = new WorkOrder(Guid.NewGuid(), Guid.NewGuid(), "tech-123", actor: "dispatcher");
         order.StartExecution("tech-123");
         order.Complete("Replaced feed roller and cleaned sensor.", "tech-123");
 
@@ -59,7 +59,7 @@ public class WorkOrderLifecycleTests
     {
         // Arrange
         var uow = new InMemoryUnitOfWork();
-        var order = new WorkOrder(Guid.NewGuid(), "tech-123", actor: "dispatcher");
+        var order = new WorkOrder(Guid.NewGuid(), Guid.NewGuid(), "tech-123", actor: "dispatcher");
         order.StartExecution("tech-123");
         order.Complete("Fixed drive gear", "tech-123");
 
@@ -102,7 +102,7 @@ public class WorkOrderLifecycleTests
     [Fact]
     public void WorkOrder_CannotSkipExecution_DirectlyToCompleted()
     {
-        var order = new WorkOrder(Guid.NewGuid(), "tech-123", actor: "dispatcher");
+        var order = new WorkOrder(Guid.NewGuid(), Guid.NewGuid(), "tech-123", actor: "dispatcher");
 
         var ex = Assert.Throws<InvalidStateTransitionException>(() =>
         {

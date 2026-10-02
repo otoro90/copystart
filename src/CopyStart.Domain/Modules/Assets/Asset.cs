@@ -2,9 +2,10 @@ using CopyStart.Domain.Common;
 
 namespace CopyStart.Domain.Modules.Assets;
 
-public class Asset : IAggregateRoot
+public class Asset : IAggregateRoot, ITenantOwned
 {
     public Guid Id { get; private set; }
+    public Guid TenantId { get; private set; }
     public Guid CustomerId { get; private set; }
     public string SerialNumber { get; private set; }
     public string Brand { get; private set; }
@@ -20,9 +21,10 @@ public class Asset : IAggregateRoot
         Description = string.Empty;
     }
 
-    public Asset(Guid customerId, string serialNumber, string brand, string model, string description)
+    public Asset(Guid tenantId, Guid customerId, string serialNumber, string brand, string model, string description)
     {
         Id = Guid.NewGuid();
+        TenantId = tenantId == Guid.Empty ? throw new ArgumentException("Tenant ID is required.", nameof(tenantId)) : tenantId;
         CustomerId = customerId;
         SerialNumber = string.IsNullOrWhiteSpace(serialNumber) ? throw new ArgumentException("Serial number is required.", nameof(serialNumber)) : serialNumber;
         Brand = brand ?? string.Empty;

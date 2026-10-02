@@ -7,13 +7,16 @@ CopyStart is being rebuilt from a single-company ASP.NET Core 6 MVC prototype in
 - [CONTEXT.md](CONTEXT.md): current verified state and technology baseline.
 - [SYSTEM.md](SYSTEM.md): delivery rules and Definition of Done.
 - [docs/README.md](docs/README.md): architecture, decisions, and workflow guides.
-- [docs/architecture/backend-foundation.md](docs/architecture/backend-foundation.md): verified backend analysis. The .NET 10 solution is not created yet.
+- [docs/delivery/master-execution-runbook.md](docs/delivery/master-execution-runbook.md): authoritative multi-repository execution runbook and blast-radius guardrails.
+- [docs/architecture/backend-foundation.md](docs/architecture/backend-foundation.md): verified backend analysis. The .NET 10 solution is established under `src/`.
 - `openspec/changes/`: planned behavior. OpenSpec is the source of truth for changes. Run the CLI from this repository root; the mini-cluster checkout is a different OpenSpec root.
 
 ## Non-Negotiable Rules
 
 - Plan and implement through OpenSpec. Update the affected change artifacts before any post-apply code change.
-- Apply changes in the order recorded in [docs/delivery/roadmap.md](docs/delivery/roadmap.md). Do not skip a prerequisite gate.
+- Apply changes in the order recorded in [docs/delivery/roadmap.md](docs/delivery/roadmap.md) and [docs/delivery/master-execution-runbook.md](docs/delivery/master-execution-runbook.md). Do not skip a prerequisite gate.
+- Decouple application verification from live cluster state: use in-memory handlers (`TestAuthenticationHandler`), mock claims, and typed options contracts (`ZitadelOptions`, `PostgreSqlOptions`, `StorageOptions`) instead of stalling on physical cluster availability.
+- Zero-impact on shared infrastructure: operations targeting `mini-cluster` must strictly preserve existing `GovCo.Tramites` and `Ecclesiae` databases, buckets, secrets, and identities.
 - Treat `Application/CopyStart` as legacy discovery evidence, not as the target architecture.
 - Never commit, print, or log secrets, tokens, connection strings, or presigned URLs.
 - Tenant context comes only from validated server-side identity or verified host mapping. Missing or conflicting context fails closed.

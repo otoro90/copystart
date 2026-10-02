@@ -6,9 +6,8 @@ public class FrozenPersistenceReadinessHealthCheck : IHealthCheck
 {
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
-        // Fail readiness closed (HTTP 503) while database schema is frozen pending multi-tenancy and ZITADEL identity design
         return Task.FromResult(HealthCheckResult.Unhealthy(
-            "Persistence schema is frozen pending multi-tenancy design acceptance in 'add-multitenancy-and-zitadel-identity'."));
+            "Persistence is unavailable until tenant-scoped PostgreSQL repositories and ZITADEL identity resolution are operational."));
     }
 }
 

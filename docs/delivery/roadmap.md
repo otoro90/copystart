@@ -8,8 +8,8 @@ Apply changes in this order. Each gate must pass before the next change starts i
 | 2 | `establish-project-governance` (CopyStart, archived 2026-09-30) | Passed: docs, path-scoped instructions, governance checks, and strict validation |
 | 3 | `establish-github-ci-and-image-publishing` (CopyStart) | Read-only PR checks established; image publication waits for actual .NET/Angular targets and Dockerfiles; CI has no cluster credentials |
 | 4 | `modernize-service-platform-backend` (CopyStart, archived 2026-09-30) | Passed: .NET 10 modular monolith skeleton, dependency audit, CPM pins, domain & architecture tests pass; persistence waits for #5; source import recorded not applicable |
-| 5 | `add-multitenancy-and-zitadel-identity` (CopyStart) | Tenant ownership, capability registry, and OIDC provisioning boundary accepted |
-| 6 | `provision-saas-platform-prerequisites` (CopyStart runtime contract) | Database, storage, OIDC, secret-reference, and readiness expectations agreed with mini-cluster; no infrastructure is provisioned here |
+| 5 | `add-multitenancy-and-zitadel-identity` (CopyStart, archived 2026-10-02) | Passed: Tenant ownership (ITenantOwned), RLS policies, EF Core global filters, ClaimsTenantContext, ZITADEL org claims, and hermetic in-memory test suites pass |
+| 6 | `provision-saas-platform-prerequisites` (CopyStart runtime contract, archived 2026-10-02) | Passed: Strongly typed PostgreSqlOptions, StorageOptions, ZitadelOptions, readiness health checks, and fail-closed validation verified without cluster mutation |
 | 7 | `harden-seaweedfs-s3-security` (mini-cluster) | All consumers inventoried; one OpenBao/ESO owner; anonymous access denied; existing objects and required consumers verified |
 | 8 | `provision-copystart-platform-prerequisites` (mini-cluster) | Development DB/role, private bucket identity, protected secrets, shared ZITADEL resources, backup/restore, and Stage 6 readiness pass; production remains absent |
 | 9 | `build-angular-multisurface-frontend` (CopyStart) | Spike passes budgets |
