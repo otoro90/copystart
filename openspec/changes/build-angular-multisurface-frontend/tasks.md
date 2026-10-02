@@ -1,8 +1,8 @@
 ## 1. Framework Spike
 
-- [ ] 1.1 Define measurable SSR, hydration, bundle, accessibility, and tablet-workflow acceptance budgets
-- [ ] 1.2 Build a disposable Angular 22 spike for tenant SSR, OIDC PKCE, one work-order form, and lazy routing
-- [ ] 1.3 Measure the spike and record whether any reevaluation trigger requires a React/Next.js comparison
+- [x] 1.1 Define measurable SSR, hydration, bundle, accessibility, and tablet-workflow acceptance budgets
+- [x] 1.2 Build a disposable Angular 22 spike for tenant SSR, OIDC PKCE, one work-order form, and lazy routing
+- [x] 1.3 Measure the spike and record whether any reevaluation trigger requires a React/Next.js comparison
 
 ## 2. Workspace and Shared Libraries
 
