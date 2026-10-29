@@ -35,3 +35,9 @@ CopyStart is being rebuilt from a single-company ASP.NET Core 6 MVC prototype in
 - Use a Pull Request with CI and a reviewed plan for production infrastructure, security/identity, database migration, destructive data, or other high-impact changes when the owning workflow supports that gate.
 - Check `git status` before syncing. Run `git pull --rebase origin master` only when the worktree is clean; preserve dirty changes and coordinate with the collaborator to avoid overlapping work.
 - Never force-push. If the primary branch is protected, diverged, or cannot be updated with a fast-forward, stop and report the blocker.
+
+## Docs-as-Code Governance & Policy on Lessons Learned
+
+- Documentation is strictly organized under `/docs/` following the four Diátaxis quadrants: `tutorials/`, `runbooks/`, `architecture/` (C4 Model with `classDef`), and `reference/`.
+- Architectural decisions must be formally recorded under `docs/adr/` using MADR v4 (`ADR-0001` to `ADR-0005`).
+- **PROHIBITION OF STANDALONE LESSONS-LEARNED FILES**: It is strictly forbidden to create folders or files matching `docs/lecciones-aprendidas/` or `LECCIONES-APRENDIDAS-*.md`. Any retrospective feedback or lessons learned requested by the user must be communicated as structured text in the chat and integrated directly into the relevant **Runbook**, **Skill**, **ADR**, or `AGENTS.md`.
